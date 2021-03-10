@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"meader.gitee.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="堆内存逻辑分区(不适用不分代垃圾收集器) jvm 内存空间  注意： 一个进程都有一套方法区和堆一个线程都有一套Java虚拟机栈和程序计数器 各空间详解         指针碰撞  title: java锁、JVM等TLAB   （指针碰撞的解决思路）TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。  逃逸分析   标量替换 栈上分配 同步消除 对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java JVM">
+<meta property="og:url" content="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/index.html">
+<meta property="og:site_name" content="meadel的博客">
+<meta property="og:description" content="堆内存逻辑分区(不适用不分代垃圾收集器) jvm 内存空间  注意： 一个进程都有一套方法区和堆一个线程都有一套Java虚拟机栈和程序计数器 各空间详解         指针碰撞  title: java锁、JVM等TLAB   （指针碰撞的解决思路）TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。  逃逸分析   标量替换 栈上分配 同步消除 对象">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png">
+<meta property="article:published_time" content="2021-03-01T01:41:38.428Z">
+<meta property="article:modified_time" content="2021-03-10T09:45:16.907Z">
+<meta property="article:author" content="meadel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png">
+
+<link rel="canonical" href="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>java JVM | meadel的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">meadel的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java JVM
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-01 09:41:38" itemprop="dateCreated datePublished" datetime="2021-03-01T09:41:38+08:00">2021-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-10 17:45:16" itemprop="dateModified" datetime="2021-03-10T17:45:16+08:00">2021-03-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
+<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
+<p> 注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
+<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
+<hr>
+<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
+<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
+<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
+<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
+<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
+<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
+<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
+<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
+<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
+<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
+<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
+<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
+<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
+<p>工作线程与回收线程同时进行</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" rel="prev" title="java锁、JVM等">
+      <i class="fa fa-chevron-left"></i> java锁、JVM等
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" rel="next" title="java CMS">
+      java CMS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%86%85%E5%AD%98%E9%80%BB%E8%BE%91%E5%88%86%E5%8C%BA-%E4%B8%8D%E9%80%82%E7%94%A8%E4%B8%8D%E5%88%86%E4%BB%A3%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">堆内存逻辑分区(不适用不分代垃圾收集器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jvm-%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">jvm 内存空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">各空间详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E"><span class="nav-number">4.</span> <span class="nav-text">指针碰撞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#title-java%E9%94%81%E3%80%81JVM%E7%AD%89"><span class="nav-number"></span> <span class="nav-text">title: java锁、JVM等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TLAB-%EF%BC%88%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">TLAB   （指针碰撞的解决思路）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">逃逸分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text">标量替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text">栈上分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%B6%88%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">同步消除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%EF%BC%8C%E5%9C%A8jvm%E5%B1%82%E9%9D%A2%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%EF%BC%9B%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">6.</span> <span class="nav-text">对象创建过程，在jvm层面的内存分配；流程图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AA%E8%A6%81%E6%98%AF%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%80%E5%AE%9A%E6%98%AF%E6%88%90%E5%AF%B9%E5%87%BA%E7%8E%B0%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E5%90%88%E6%9C%893%E7%A7%8D"><span class="nav-number">7.</span> <span class="nav-text">只要是分代模型，一定是成对出现，常见的组合有3种</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk1-8%E5%8F%AF%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%B8%8D%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">jdk1.8可用分代模型，也可不用分代模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Serial-%EF%BC%88-SWT%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">Serial     （ SWT）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-Scavenge"><span class="nav-number">10.</span> <span class="nav-text">Parallel Scavenge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ParNew"><span class="nav-number">11.</span> <span class="nav-text">ParNew</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-%EF%BC%88concurrent-mark-sweep-%E5%B9%B6%E5%8F%91%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">CMS （concurrent mark sweep  并发标记清除）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
