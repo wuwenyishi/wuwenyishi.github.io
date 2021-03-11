@@ -252,6 +252,27 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式（一）</title>
+    <url>/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
+    <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
+<h4 id="原型模式"><a class="markdownIt-Anchor" href="#原型模式"></a> 原型模式</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316" /></p>
+<span id="more"></span>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947" /></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java学习笔记（二）</title>
     <url>/blog/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
     <content><![CDATA[<h4 id="单例双重检查锁"><a class="markdownIt-Anchor" href="#单例双重检查锁"></a> 单例，双重检查锁</h4>
@@ -318,24 +339,39 @@
       </tags>
   </entry>
   <entry>
-    <title>设计模式（一）</title>
-    <url>/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
-    <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
-<h4 id="原型模式"><a class="markdownIt-Anchor" href="#原型模式"></a> 原型模式</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316" /></p>
-<span id="more"></span>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947" /></p>
+    <title>分布式事务 --  JTA</title>
+    <url>/blog/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/</url>
+    <content><![CDATA[<h2 id="分布式事务二"><a class="markdownIt-Anchor" href="#分布式事务二"></a> 分布式事务（二）</h2>
 <blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+<p>文章来源：</p>
+<ul>
+<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
 </blockquote>
+<h3 id="transactional-详解"><a class="markdownIt-Anchor" href="#transactional-详解"></a> @Transactional 详解</h3>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771" /></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img" /></p>
+<h3 id="jta"><a class="markdownIt-Anchor" href="#jta"></a> JTA</h3>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647" /></p>
 ]]></content>
       <categories>
-        <category>设计模式</category>
+        <category>分布式</category>
       </categories>
       <tags>
-        <tag>设计模式</tag>
+        <tag>事务</tag>
       </tags>
   </entry>
   <entry>
@@ -432,42 +468,6 @@
 <p>总结</p>
 <p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png" alt="image-20210310115019855" /></p>
 <p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png" alt="image-20210310115109923" /></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式事务 --  JTA</title>
-    <url>/blog/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/</url>
-    <content><![CDATA[<h2 id="分布式事务二"><a class="markdownIt-Anchor" href="#分布式事务二"></a> 分布式事务（二）</h2>
-<blockquote>
-<p>文章来源：</p>
-<ul>
-<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
-<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
-<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
-<li></li>
-</ul>
-</blockquote>
-<h3 id="transactional-详解"><a class="markdownIt-Anchor" href="#transactional-详解"></a> @Transactional 详解</h3>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771" /></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<span id="more"></span>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img" /></p>
-<h3 id="jta"><a class="markdownIt-Anchor" href="#jta"></a> JTA</h3>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647" /></p>
 ]]></content>
       <categories>
         <category>分布式</category>
