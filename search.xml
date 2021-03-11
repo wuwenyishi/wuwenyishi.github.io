@@ -1,56 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>设计模式（二）</title>
-    <url>/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/</url>
-    <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
-<h4 id="调停者模式-对内"><a class="markdownIt-Anchor" href="#调停者模式-对内"></a> 调停者模式 （对内）</h4>
-<p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698" /></p>
-<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
-<span id="more"></span>
-<h4 id="门面模式-对外"><a class="markdownIt-Anchor" href="#门面模式-对外"></a> 门面模式 （对外）</h4>
-<p>要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。</p>
-<p>图解：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png" alt="image-20210304103935715" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png" alt="image-20210304104706445" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png" alt="20210304104745" /></p>
-<h4 id="装饰器模式"><a class="markdownIt-Anchor" href="#装饰器模式"></a> 装饰器模式</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png" alt="image-20210304105512902" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png" alt="20210304111428" /></p>
-<h4 id="责任链模式-难"><a class="markdownIt-Anchor" href="#责任链模式-难"></a> 责任链模式 （难）</h4>
-<blockquote>
-<p>相关文章：<a href="https://refactoringguru.cn/design-patterns/chain-of-responsibility">https://refactoringguru.cn/design-patterns/chain-of-responsibility</a></p>
-</blockquote>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png" alt="image-20210304114339970" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png" alt="image-20210304114712508" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png" alt="20210304115025" /></p>
-<h4 id="观察者模式-重要"><a class="markdownIt-Anchor" href="#观察者模式-重要"></a> 观察者模式 （重要）</h4>
-<blockquote>
-<p>相关文章：<a href="https://refactoringguru.cn/design-patterns/observer">https://refactoringguru.cn/design-patterns/observer</a></p>
-</blockquote>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png" alt="image-20210304132453845" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png" alt="image-20210304132849343" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png" alt="image-20210304132920344" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png" alt="20210304133031" /></p>
-<h4 id="命令模式"><a class="markdownIt-Anchor" href="#命令模式"></a> 命令模式</h4>
-<blockquote>
-<p>相关文章：<a href="https://refactoringguru.cn/design-patterns/command">https://refactoringguru.cn/design-patterns/command</a></p>
-</blockquote>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png" alt="image-20210304140011639" /></p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java学习笔记（二）</title>
     <url>/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
     <content><![CDATA[<h4 id="堆内存逻辑分区不适用不分代垃圾收集器"><a class="markdownIt-Anchor" href="#堆内存逻辑分区不适用不分代垃圾收集器"></a> 堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
@@ -115,40 +65,6 @@
       </categories>
       <tags>
         <tag>GC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java学习笔记（一）</title>
-    <url>/blog/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
-    <content><![CDATA[<h4 id="cms-浮动垃圾"><a class="markdownIt-Anchor" href="#cms-浮动垃圾"></a> CMS  – 浮动垃圾</h4>
-<p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="cms-错标"><a class="markdownIt-Anchor" href="#cms-错标"></a> CMS – 错标</h4>
-<p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="cms-重新标记"><a class="markdownIt-Anchor" href="#cms-重新标记"></a> CMS – 重新标记</h4>
-<p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<span id="more"></span>
-<h4 id="cms-从线程角度"><a class="markdownIt-Anchor" href="#cms-从线程角度"></a> CMS 从线程角度</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722" /></p>
-<p>过程简述：</p>
-<p>先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用cms收集器呢"><a class="markdownIt-Anchor" href="#什么情况下才选择使用cms收集器呢"></a> 什么情况下才选择使用CMS收集器呢</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618" /></p>
-<h4 id="cms的调优"><a class="markdownIt-Anchor" href="#cms的调优"></a> <strong>CMS的调优</strong></h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194" /></p>
-<h4 id="jdk8默认垃圾回收器"><a class="markdownIt-Anchor" href="#jdk8默认垃圾回收器"></a> JDK8默认垃圾回收器</h4>
-<p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>CMS</tag>
       </tags>
   </entry>
   <entry>
@@ -243,6 +159,90 @@
 <p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170407.png" alt="image-20210303170406566" /></p>
 <p>步骤四：具体调用</p>
 <p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170512.png" alt="image-20210303170511413" /></p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（一）</title>
+    <url>/blog/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
+    <content><![CDATA[<h4 id="cms-浮动垃圾"><a class="markdownIt-Anchor" href="#cms-浮动垃圾"></a> CMS  – 浮动垃圾</h4>
+<p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="cms-错标"><a class="markdownIt-Anchor" href="#cms-错标"></a> CMS – 错标</h4>
+<p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="cms-重新标记"><a class="markdownIt-Anchor" href="#cms-重新标记"></a> CMS – 重新标记</h4>
+<p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<span id="more"></span>
+<h4 id="cms-从线程角度"><a class="markdownIt-Anchor" href="#cms-从线程角度"></a> CMS 从线程角度</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722" /></p>
+<p>过程简述：</p>
+<p>先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用cms收集器呢"><a class="markdownIt-Anchor" href="#什么情况下才选择使用cms收集器呢"></a> 什么情况下才选择使用CMS收集器呢</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618" /></p>
+<h4 id="cms的调优"><a class="markdownIt-Anchor" href="#cms的调优"></a> <strong>CMS的调优</strong></h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194" /></p>
+<h4 id="jdk8默认垃圾回收器"><a class="markdownIt-Anchor" href="#jdk8默认垃圾回收器"></a> JDK8默认垃圾回收器</h4>
+<p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CMS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式（二）</title>
+    <url>/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/</url>
+    <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
+<h4 id="调停者模式-对内"><a class="markdownIt-Anchor" href="#调停者模式-对内"></a> 调停者模式 （对内）</h4>
+<p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698" /></p>
+<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
+<span id="more"></span>
+<h4 id="门面模式-对外"><a class="markdownIt-Anchor" href="#门面模式-对外"></a> 门面模式 （对外）</h4>
+<p>要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。</p>
+<p>图解：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png" alt="image-20210304103935715" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png" alt="image-20210304104706445" /></p>
+<p>代码示例：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png" alt="20210304104745" /></p>
+<h4 id="装饰器模式"><a class="markdownIt-Anchor" href="#装饰器模式"></a> 装饰器模式</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png" alt="image-20210304105512902" /></p>
+<p>代码示例：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png" alt="20210304111428" /></p>
+<h4 id="责任链模式-难"><a class="markdownIt-Anchor" href="#责任链模式-难"></a> 责任链模式 （难）</h4>
+<blockquote>
+<p>相关文章：<a href="https://refactoringguru.cn/design-patterns/chain-of-responsibility">https://refactoringguru.cn/design-patterns/chain-of-responsibility</a></p>
+</blockquote>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png" alt="image-20210304114339970" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png" alt="image-20210304114712508" /></p>
+<p>代码示例：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png" alt="20210304115025" /></p>
+<h4 id="观察者模式-重要"><a class="markdownIt-Anchor" href="#观察者模式-重要"></a> 观察者模式 （重要）</h4>
+<blockquote>
+<p>相关文章：<a href="https://refactoringguru.cn/design-patterns/observer">https://refactoringguru.cn/design-patterns/observer</a></p>
+</blockquote>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png" alt="image-20210304132453845" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png" alt="image-20210304132849343" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png" alt="image-20210304132920344" /></p>
+<p>代码示例：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png" alt="20210304133031" /></p>
+<h4 id="命令模式"><a class="markdownIt-Anchor" href="#命令模式"></a> 命令模式</h4>
+<blockquote>
+<p>相关文章：<a href="https://refactoringguru.cn/design-patterns/command">https://refactoringguru.cn/design-patterns/command</a></p>
+</blockquote>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png" alt="image-20210304140011639" /></p>
 ]]></content>
       <categories>
         <category>设计模式</category>
