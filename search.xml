@@ -35,6 +35,73 @@
       </tags>
   </entry>
   <entry>
+    <title>java学习笔记（二）</title>
+    <url>/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
+    <content><![CDATA[<h4 id="堆内存逻辑分区不适用不分代垃圾收集器"><a class="markdownIt-Anchor" href="#堆内存逻辑分区不适用不分代垃圾收集器"></a> 堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206" /></p>
+<span id="more"></span>
+<h4 id="jvm-内存空间"><a class="markdownIt-Anchor" href="#jvm-内存空间"></a> jvm 内存空间</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713" /></p>
+<p>注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br />
+<strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a class="markdownIt-Anchor" href="#各空间详解"></a> 各空间详解</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611" /></p>
+<h4 id="指针碰撞"><a class="markdownIt-Anchor" href="#指针碰撞"></a> 指针碰撞</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520" /></p>
+<hr />
+<h2 id="title-java锁-jvm等"><a class="markdownIt-Anchor" href="#title-java锁-jvm等"></a> title: java锁、JVM等</h2>
+<h4 id="tlab-指针碰撞的解决思路"><a class="markdownIt-Anchor" href="#tlab-指针碰撞的解决思路"></a> TLAB   （指针碰撞的解决思路）</h4>
+<p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935" /></p>
+<h4 id="逃逸分析"><a class="markdownIt-Anchor" href="#逃逸分析"></a> <strong>逃逸分析</strong></h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img" /></p>
+<h4 id="标量替换"><a class="markdownIt-Anchor" href="#标量替换"></a> 标量替换</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png" alt="" /></p>
+<h4 id="栈上分配"><a class="markdownIt-Anchor" href="#栈上分配"></a> 栈上分配</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817" /></p>
+<h4 id="同步消除"><a class="markdownIt-Anchor" href="#同步消除"></a> 同步消除</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420" /></p>
+<h4 id="对象创建过程在jvm层面的内存分配流程图"><a class="markdownIt-Anchor" href="#对象创建过程在jvm层面的内存分配流程图"></a> 对象创建过程，在jvm层面的内存分配；流程图</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945" /></p>
+<h4 id="只要是分代模型一定是成对出现常见的组合有3种"><a class="markdownIt-Anchor" href="#只要是分代模型一定是成对出现常见的组合有3种"></a> 只要是分代模型，一定是成对出现，常见的组合有3种</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png" alt="" /></p>
+<h4 id="jdk18可用分代模型也可不用分代模型"><a class="markdownIt-Anchor" href="#jdk18可用分代模型也可不用分代模型"></a> jdk1.8可用分代模型，也可不用分代模型</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283" /></p>
+<h4 id="serial-swt"><a class="markdownIt-Anchor" href="#serial-swt"></a> Serial     （ SWT）</h4>
+<p>属于单线程回收</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192" /></p>
+<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
+<h4 id="parallel-scavenge"><a class="markdownIt-Anchor" href="#parallel-scavenge"></a> Parallel Scavenge</h4>
+<p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386" /></p>
+<h4 id="parnew"><a class="markdownIt-Anchor" href="#parnew"></a> ParNew</h4>
+<p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245" /></p>
+<h4 id="cms-concurrent-mark-sweep-并发标记清除"><a class="markdownIt-Anchor" href="#cms-concurrent-mark-sweep-并发标记清除"></a> CMS （concurrent mark sweep  并发标记清除）</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829" /></p>
+<p>工作线程与回收线程同时进行</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636" /></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>GC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式（三）</title>
     <url>/blog/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/</url>
     <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
@@ -135,73 +202,6 @@
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记（二）</title>
-    <url>/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
-    <content><![CDATA[<h4 id="堆内存逻辑分区不适用不分代垃圾收集器"><a class="markdownIt-Anchor" href="#堆内存逻辑分区不适用不分代垃圾收集器"></a> 堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206" /></p>
-<span id="more"></span>
-<h4 id="jvm-内存空间"><a class="markdownIt-Anchor" href="#jvm-内存空间"></a> jvm 内存空间</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713" /></p>
-<p>注意：</p>
-<p><strong>一个进程都有一套方法区和堆</strong><br />
-<strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
-<h4 id="各空间详解"><a class="markdownIt-Anchor" href="#各空间详解"></a> 各空间详解</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611" /></p>
-<h4 id="指针碰撞"><a class="markdownIt-Anchor" href="#指针碰撞"></a> 指针碰撞</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520" /></p>
-<hr />
-<h2 id="title-java锁-jvm等"><a class="markdownIt-Anchor" href="#title-java锁-jvm等"></a> title: java锁、JVM等</h2>
-<h4 id="tlab-指针碰撞的解决思路"><a class="markdownIt-Anchor" href="#tlab-指针碰撞的解决思路"></a> TLAB   （指针碰撞的解决思路）</h4>
-<p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935" /></p>
-<h4 id="逃逸分析"><a class="markdownIt-Anchor" href="#逃逸分析"></a> <strong>逃逸分析</strong></h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img" /></p>
-<h4 id="标量替换"><a class="markdownIt-Anchor" href="#标量替换"></a> 标量替换</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png" alt="" /></p>
-<h4 id="栈上分配"><a class="markdownIt-Anchor" href="#栈上分配"></a> 栈上分配</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817" /></p>
-<h4 id="同步消除"><a class="markdownIt-Anchor" href="#同步消除"></a> 同步消除</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420" /></p>
-<h4 id="对象创建过程在jvm层面的内存分配流程图"><a class="markdownIt-Anchor" href="#对象创建过程在jvm层面的内存分配流程图"></a> 对象创建过程，在jvm层面的内存分配；流程图</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945" /></p>
-<h4 id="只要是分代模型一定是成对出现常见的组合有3种"><a class="markdownIt-Anchor" href="#只要是分代模型一定是成对出现常见的组合有3种"></a> 只要是分代模型，一定是成对出现，常见的组合有3种</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png" alt="" /></p>
-<h4 id="jdk18可用分代模型也可不用分代模型"><a class="markdownIt-Anchor" href="#jdk18可用分代模型也可不用分代模型"></a> jdk1.8可用分代模型，也可不用分代模型</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283" /></p>
-<h4 id="serial-swt"><a class="markdownIt-Anchor" href="#serial-swt"></a> Serial     （ SWT）</h4>
-<p>属于单线程回收</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192" /></p>
-<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
-<h4 id="parallel-scavenge"><a class="markdownIt-Anchor" href="#parallel-scavenge"></a> Parallel Scavenge</h4>
-<p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386" /></p>
-<h4 id="parnew"><a class="markdownIt-Anchor" href="#parnew"></a> ParNew</h4>
-<p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
-<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245" /></p>
-<h4 id="cms-concurrent-mark-sweep-并发标记清除"><a class="markdownIt-Anchor" href="#cms-concurrent-mark-sweep-并发标记清除"></a> CMS （concurrent mark sweep  并发标记清除）</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829" /></p>
-<p>工作线程与回收线程同时进行</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636" /></p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>GC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式（二）</title>
     <url>/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/</url>
     <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
@@ -243,27 +243,6 @@
 <p>相关文章：<a href="https://refactoringguru.cn/design-patterns/command">https://refactoringguru.cn/design-patterns/command</a></p>
 </blockquote>
 <p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png" alt="image-20210304140011639" /></p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式（一）</title>
-    <url>/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
-    <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
-<h4 id="原型模式"><a class="markdownIt-Anchor" href="#原型模式"></a> 原型模式</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316" /></p>
-<span id="more"></span>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947" /></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
-</blockquote>
 ]]></content>
       <categories>
         <category>设计模式</category>
@@ -336,6 +315,27 @@
       </categories>
       <tags>
         <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式（一）</title>
+    <url>/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
+    <content><![CDATA[<h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
+<h4 id="原型模式"><a class="markdownIt-Anchor" href="#原型模式"></a> 原型模式</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316" /></p>
+<span id="more"></span>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947" /></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -477,56 +477,6 @@
       </tags>
   </entry>
   <entry>
-    <title>springBoot整合Nacos</title>
-    <url>/blog/2021/03/10/springboot%E6%95%B4%E5%90%88nacos/</url>
-    <content><![CDATA[<h4 id="下载服务端压缩包"><a class="markdownIt-Anchor" href="#下载服务端压缩包"></a> 下载服务端压缩包</h4>
-<p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk</p>
-<h4 id="启动"><a class="markdownIt-Anchor" href="#启动"></a> 启动</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821" /></p>
-<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a></p>
-<p>账户密码默认：nacos/nacos</p>
-<span id="more"></span>
-<h4 id="登录首页"><a class="markdownIt-Anchor" href="#登录首页"></a> 登录首页</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764" /></p>
-<h4 id="客户端设置与代码实现-springboot-项目"><a class="markdownIt-Anchor" href="#客户端设置与代码实现-springboot-项目"></a> 客户端设置与代码实现 （Springboot 项目）</h4>
-<ol>
-<li>
-<p>新建  命名空间</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721" /></p>
-</li>
-</ol>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311" /></p>
-<p>新建配置</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015" /></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513" /></p>
-<p>与服务端配置对比</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139" /></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853" /></p>
-<p>测试获取配置信息：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176" /></p>
-<p>测试：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444" /></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>nacos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式事务之seata</title>
     <url>/blog/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/</url>
     <content><![CDATA[<blockquote>
@@ -576,6 +526,56 @@
       </categories>
       <tags>
         <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springBoot整合Nacos</title>
+    <url>/blog/2021/03/10/springboot%E6%95%B4%E5%90%88nacos/</url>
+    <content><![CDATA[<h4 id="下载服务端压缩包"><a class="markdownIt-Anchor" href="#下载服务端压缩包"></a> 下载服务端压缩包</h4>
+<p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk</p>
+<h4 id="启动"><a class="markdownIt-Anchor" href="#启动"></a> 启动</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821" /></p>
+<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a></p>
+<p>账户密码默认：nacos/nacos</p>
+<span id="more"></span>
+<h4 id="登录首页"><a class="markdownIt-Anchor" href="#登录首页"></a> 登录首页</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764" /></p>
+<h4 id="客户端设置与代码实现-springboot-项目"><a class="markdownIt-Anchor" href="#客户端设置与代码实现-springboot-项目"></a> 客户端设置与代码实现 （Springboot 项目）</h4>
+<ol>
+<li>
+<p>新建  命名空间</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721" /></p>
+</li>
+</ol>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311" /></p>
+<p>新建配置</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015" /></p>
+<p>代码配置</p>
+<p>maven引用</p>
+<!--nacos组件-->
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>新建 bootstrap.yml 文件，内容如下：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513" /></p>
+<p>与服务端配置对比</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139" /></p>
+<p>新建获取配置信息文件，示例：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853" /></p>
+<p>测试获取配置信息：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176" /></p>
+<p>测试：</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444" /></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>nacos</tag>
       </tags>
   </entry>
 </search>
