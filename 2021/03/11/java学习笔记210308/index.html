@@ -22,35 +22,25 @@
     var CONFIG = {"hostname":"meader.gitee.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="设计模式  调停者模式 （对内） 部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。  在实际应用中最多的就是消息中间件 – MQ。">
+  <meta name="description" content="设计模式  原型模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式（二）">
-<meta property="og:url" content="https://meader.gitee.io/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/index.html">
+<meta property="og:title" content="设计模式（一）">
+<meta property="og:url" content="https://meader.gitee.io/blog/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/index.html">
 <meta property="og:site_name" content="meadel的博客">
-<meta property="og:description" content="设计模式  调停者模式 （对内） 部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。  在实际应用中最多的就是消息中间件 – MQ。">
+<meta property="og:description" content="设计模式  原型模式">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png">
-<meta property="article:published_time" content="2021-03-04T01:28:06.322Z">
-<meta property="article:modified_time" content="2021-03-11T06:36:19.957Z">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png">
+<meta property="article:published_time" content="2021-03-11T11:37:43.437Z">
+<meta property="article:modified_time" content="2021-03-11T06:36:16.306Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png">
 
-<link rel="canonical" href="https://meader.gitee.io/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
+<link rel="canonical" href="https://meader.gitee.io/blog/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/">
 
 
 <script id="page-configurations">
@@ -63,7 +53,7 @@
   };
 </script>
 
-  <title>设计模式（二） | meadel的博客</title>
+  <title>设计模式（一） | meadel的博客</title>
   
 
 
@@ -210,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://meader.gitee.io/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
+    <link itemprop="mainEntityOfPage" href="https://meader.gitee.io/blog/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4171334607,909811051&fm=26&gp=0.jpg#/images/avatar.gif">
@@ -223,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          设计模式（二）
+          设计模式（一）
         </h1>
 
         <div class="post-meta">
@@ -232,16 +222,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-03-04 09:28:06" itemprop="dateCreated datePublished" datetime="2021-03-04T09:28:06+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-11 19:37:43 / 修改时间：14:36:16" itemprop="dateCreated datePublished" datetime="2021-03-11T19:37:43+08:00">2021-03-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-11 14:36:19" itemprop="dateModified" datetime="2021-03-11T14:36:19+08:00">2021-03-11</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -258,7 +242,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>398</span>
+              <span>76</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -278,44 +262,15 @@
 
       
         <h3 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h3>
-<h4 id="调停者模式-对内"><a class="markdownIt-Anchor" href="#调停者模式-对内"></a> 调停者模式 （对内）</h4>
-<p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698" /></p>
-<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
+<h4 id="原型模式"><a class="markdownIt-Anchor" href="#原型模式"></a> 原型模式</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316" /></p>
 <span id="more"></span>
-<h4 id="门面模式-对外"><a class="markdownIt-Anchor" href="#门面模式-对外"></a> 门面模式 （对外）</h4>
-<p>要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。</p>
-<p>图解：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png" alt="image-20210304103935715" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png" alt="image-20210304104706445" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png" alt="20210304104745" /></p>
-<h4 id="装饰器模式"><a class="markdownIt-Anchor" href="#装饰器模式"></a> 装饰器模式</h4>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png" alt="image-20210304105512902" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png" alt="20210304111428" /></p>
-<h4 id="责任链模式-难"><a class="markdownIt-Anchor" href="#责任链模式-难"></a> 责任链模式 （难）</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947" /></p>
 <blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/chain-of-responsibility">https://refactoringguru.cn/design-patterns/chain-of-responsibility</a></p>
+<p>关于设计模式，推荐一个网址：[undefined]: <a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
 </blockquote>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png" alt="image-20210304114339970" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png" alt="image-20210304114712508" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png" alt="20210304115025" /></p>
-<h4 id="观察者模式-重要"><a class="markdownIt-Anchor" href="#观察者模式-重要"></a> 观察者模式 （重要）</h4>
-<blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/observer">https://refactoringguru.cn/design-patterns/observer</a></p>
-</blockquote>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png" alt="image-20210304132453845" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png" alt="image-20210304132849343" /></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png" alt="image-20210304132920344" /></p>
-<p>代码示例：</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png" alt="20210304133031" /></p>
-<h4 id="命令模式"><a class="markdownIt-Anchor" href="#命令模式"></a> 命令模式</h4>
-<blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/command">https://refactoringguru.cn/design-patterns/command</a></p>
-</blockquote>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png" alt="image-20210304140011639" /></p>
 
     </div>
 
@@ -326,10 +281,10 @@
   <div class="popular-posts-header">相关帖子</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\blog\2021\03\03\Java学习笔记210303\" rel="bookmark">设计模式（三）</a></div>
+      <div class="popular-posts-title"><a href="\blog\2021\03\11\Java学习笔记210303\" rel="bookmark">设计模式（三）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\blog\2021\03\08\java学习笔记210308\" rel="bookmark">设计模式（一）</a></div>
+      <div class="popular-posts-title"><a href="\blog\2021\03\11\Java学习笔记210304\" rel="bookmark">设计模式（二）</a></div>
     </li>
   </ul>
 
@@ -346,12 +301,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/blog/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" rel="prev" title="设计模式（三）">
-      <i class="fa fa-chevron-left"></i> 设计模式（三）
+    <a href="/blog/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" rel="prev" title="设计模式（二）">
+      <i class="fa fa-chevron-left"></i> 设计模式（二）
     </a></div>
       <div class="post-nav-item">
-    <a href="/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/" rel="next" title="设计模式（一）">
-      设计模式（一） <i class="fa fa-chevron-right"></i>
+    <a href="/blog/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/" rel="next" title="分布式事务">
+      分布式事务 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -411,7 +366,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text"> 设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%81%9C%E8%80%85%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E5%86%85"><span class="nav-number">1.1.</span> <span class="nav-text"> 调停者模式 （对内）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E5%A4%96"><span class="nav-number">1.2.</span> <span class="nav-text"> 门面模式 （对外）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text"> 装饰器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F-%E9%9A%BE"><span class="nav-number">1.4.</span> <span class="nav-text"> 责任链模式 （难）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F-%E9%87%8D%E8%A6%81"><span class="nav-number">1.5.</span> <span class="nav-text"> 观察者模式 （重要）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.6.</span> <span class="nav-text"> 命令模式</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text"> 设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text"> 原型模式</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
