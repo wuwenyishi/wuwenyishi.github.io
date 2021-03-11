@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>meadel的博客</title>
   
-  <subtitle>欢迎来的我的博客</subtitle>
+  <subtitle>欢迎来到我的博客</subtitle>
   <link href="https://meader.gitee.io/blog/atom.xml" rel="self"/>
   
   <link href="https://meader.gitee.io/blog/"/>
