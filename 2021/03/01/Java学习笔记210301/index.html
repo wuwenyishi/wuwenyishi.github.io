@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no,email=no,adress=no">
-  <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
-  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
-  
-  
-  <title>java学习笔记（二） | meadel</title>
-  <meta name="description" content="堆内存逻辑分区(不适用不分代垃圾收集器) jvm 内存空间  注意： 一个进程都有一套方法区和堆一个线程都有一套Java虚拟机栈和程序计数器 各空间详解         指针碰撞  title: java锁、JVM等TLAB   （指针碰撞的解决思路）TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。  逃逸分析   标量替换 栈上分配 同步消除 对象">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <link rel="manifest" href="/blog/images/manifest.json">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"meader.gitee.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="堆内存逻辑分区(不适用不分代垃圾收集器)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java学习笔记（二）">
 <meta property="og:url" content="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/index.html">
 <meta property="og:site_name" content="meadel的博客">
-<meta property="og:description" content="堆内存逻辑分区(不适用不分代垃圾收集器) jvm 内存空间  注意： 一个进程都有一套方法区和堆一个线程都有一套Java虚拟机栈和程序计数器 各空间详解         指针碰撞  title: java锁、JVM等TLAB   （指针碰撞的解决思路）TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。  逃逸分析   标量替换 栈上分配 同步消除 对象">
+<meta property="og:description" content="堆内存逻辑分区(不适用不分代垃圾收集器)">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png">
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png">
@@ -53,740 +57,533 @@
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png">
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png">
 <meta property="article:published_time" content="2021-03-01T01:41:38.428Z">
-<meta property="article:modified_time" content="2021-03-11T02:51:45.943Z">
+<meta property="article:modified_time" content="2021-03-11T06:36:31.688Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="GC">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png">
-  <!-- Canonical links -->
-  <link rel="canonical" href="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/index.html">
-  
-  
-    <link rel="icon" href="/favicon.png" type="image/x-icon">
-  
-  
-<link rel="stylesheet" href="/blog/css/style.css">
 
+<link rel="canonical" href="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "none",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>java学习笔记（二） | meadel的博客</title>
   
-  
-  
-  
-<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/blog/atom.xml" title="meadel的博客" type="application/atom+xml">
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/blog/atom.xml" title="meadel的博客" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
-  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-  <div class="slimContent">
-    <div class="navbar-header">
-      
-      
-      <div class="profile-block text-center">
-        <a id="avatar" href="https://blog.csdn.net/xue_mind" target="_blank">
-          <img class="img-circle img-rotate" src="/blog/images/avatar.jpg" width="200" height="200">
-        </a>
-        <h2 id="name" class="hidden-xs hidden-sm">meadel</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">菜鸟</h3>
-        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> shanghai, China</small>
-      </div>
-      
-      <div class="search" id="search-form-wrap">
-
-    <form class="search-form sidebar-form">
-        <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="搜索" />
-            <span class="input-group-btn">
-                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
-            </span>
-        </div>
-    </form>
-    <div class="ins-search">
-  <div class="ins-search-mask"></div>
-  <div class="ins-search-container">
-    <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
-      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    <div class="ins-section-wrapper">
-      <div class="ins-section-container"></div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">meadel的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">欢迎来的我的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
-</div>
-      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav menu-highlight">
-        
-        
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
-          <a href="/blog/.">
-            
-            <i class="icon icon-home-fill"></i>
-            
-            <span class="menu-title">首页</span>
-          </a>
-        </li>
-        
-        
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives">
-            
-            <i class="icon icon-archives-fill"></i>
-            
-            <span class="menu-title">归档</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/blog/categories">
-            
-            <i class="icon icon-folder"></i>
-            
-            <span class="menu-title">分类</span>
-          </a>
-        </li>
-        
-        
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags">
-            
-            <i class="icon icon-tags"></i>
-            
-            <span class="menu-title">标签</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-repository">
-          <a href="/blog/repository">
-            
-            <i class="icon icon-project"></i>
-            
-            <span class="menu-title">项目</span>
-          </a>
-        </li>
-        
-      </ul>
-      
-	
-    <ul class="social-links">
-    	
-        <li><a href="https://github.com/wuwenyishi" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-        <li><a href="https://weibo.com/u/1648620324" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
-        
-        <li><a href="https://gitee.com/meader" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
-        
-        <li><a href="https://blog.csdn.net/xue_mind" target="_blank" title="Blog" data-toggle=tooltip data-placement=top><i class="icon icon-Blog"></i></a></li>
-        
-    </ul>
 
-    </nav>
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
   </div>
-</header>
-
-  
-    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
-  <div class="slimContent">
-    
-      <div class="widget">
-    <h3 class="widget-title">公告</h3>
-    <div class="widget-body">
-        <div id="board">
-            <div class="content">
-                <p>欢迎交流与分享经验!</p>
-            </div>
-        </div>
-    </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
 
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E4%BA%8B%E5%8A%A1/">事务</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
+</div>
+    </header>
 
     
-      
-  <div class="widget">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CMS/" rel="tag">CMS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GC/" rel="tag">GC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/nacos/" rel="tag">nacos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">3</span></li></ul>
-    </div>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget-body tagcloud">
-      <a href="/blog/tags/CMS/" style="font-size: 13px;">CMS</a> <a href="/blog/tags/GC/" style="font-size: 13px;">GC</a> <a href="/blog/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/blog/tags/nacos/" style="font-size: 13px;">nacos</a> <a href="/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13.5px;">分布式</a> <a href="/blog/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 14px;">设计模式</a>
-    </div>
-  </div>
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">三月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget-body">
-      <ul class="recent-post-list list-unstyled ">
-        
-          <li>
-            
-            <div class="item-thumb">
-              <a href="/blog/2021/03/10/springboot%E6%95%B4%E5%90%88nacos/" class="thumb">
-    
-    
-        <span class="thumb-image thumb-none"></span>
-    
-</a>
-
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/blog/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
-              </p>
-              <p class="item-title">
-                <a href="/blog/2021/03/10/springboot%E6%95%B4%E5%90%88nacos/" class="title">springboot整合nacos</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-03-10T09:24:14.469Z" itemprop="datePublished">2021-03-10</time>
-              </p>
-            </div>
-          </li>
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
           
-          <li>
-            
-            <div class="item-thumb">
-              <a href="/blog/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/" class="thumb">
-    
-    
-        <span class="thumb-image thumb-none"></span>
-    
-</a>
 
-            </div>
+          <div class="content post posts-expand">
             
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/blog/categories/%E4%BA%8B%E5%8A%A1/">事务</a>
-              </p>
-              <p class="item-title">
-                <a href="/blog/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/" class="title">分布式事务（一）</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-03-10T09:06:19.368Z" itemprop="datePublished">2021-03-10</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-thumb">
-              <a href="/blog/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/" class="thumb">
-    
-    
-        <span class="thumb-image thumb-none"></span>
-    
-</a>
-
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/blog/categories/%E4%BA%8B%E5%8A%A1/">事务</a>
-              </p>
-              <p class="item-title">
-                <a href="/blog/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/" class="title">分布式事务（二）</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-03-10T03:58:16.276Z" itemprop="datePublished">2021-03-10</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-thumb">
-              <a href="/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/" class="thumb">
-    
-    
-        <span class="thumb-image thumb-none"></span>
-    
-</a>
-
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/blog/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-              </p>
-              <p class="item-title">
-                <a href="/blog/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/" class="title">设计模式（一）</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-03-08T03:36:56.433Z" itemprop="datePublished">2021-03-08</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-thumb">
-              <a href="/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" class="thumb">
-    
-    
-        <span class="thumb-image thumb-none"></span>
-    
-</a>
-
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/blog/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-              </p>
-              <p class="item-title">
-                <a href="/blog/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" class="title">设计模式（二）</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-03-04T01:28:06.322Z" itemprop="datePublished">2021-03-04</time>
-              </p>
-            </div>
-          </li>
-          
-      </ul>
-    </div>
-  </div>
-  
 
     
-  </div>
-</aside>
-
   
   
-<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
-  <div class="slimContent">
-    <nav id="toc" class="article-toc">
-      <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E5%86%85%E5%AD%98%E9%80%BB%E8%BE%91%E5%88%86%E5%8C%BA-%E4%B8%8D%E9%80%82%E7%94%A8%E4%B8%8D%E5%88%86%E4%BB%A3%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">堆内存逻辑分区(不适用不分代垃圾收集器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm-%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="toc-number">2.</span> <span class="toc-text">jvm 内存空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">各空间详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E"><span class="toc-number">4.</span> <span class="toc-text">指针碰撞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#title-java%E9%94%81%E3%80%81JVM%E7%AD%89"><span class="toc-number"></span> <span class="toc-text">title: java锁、JVM等</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TLAB-%EF%BC%88%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">TLAB   （指针碰撞的解决思路）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">逃逸分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">标量替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D"><span class="toc-number">4.</span> <span class="toc-text">栈上分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%B6%88%E9%99%A4"><span class="toc-number">5.</span> <span class="toc-text">同步消除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%EF%BC%8C%E5%9C%A8jvm%E5%B1%82%E9%9D%A2%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%EF%BC%9B%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">6.</span> <span class="toc-text">对象创建过程，在jvm层面的内存分配；流程图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E8%A6%81%E6%98%AF%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%80%E5%AE%9A%E6%98%AF%E6%88%90%E5%AF%B9%E5%87%BA%E7%8E%B0%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E5%90%88%E6%9C%893%E7%A7%8D"><span class="toc-number">7.</span> <span class="toc-text">只要是分代模型，一定是成对出现，常见的组合有3种</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jdk1-8%E5%8F%AF%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%B8%8D%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B"><span class="toc-number">8.</span> <span class="toc-text">jdk1.8可用分代模型，也可不用分代模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serial-%EF%BC%88-SWT%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">Serial     （ SWT）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">10.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ParNew"><span class="toc-number">11.</span> <span class="toc-text">ParNew</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CMS-%EF%BC%88concurrent-mark-sweep-%E5%B9%B6%E5%8F%91%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">CMS （concurrent mark sweep  并发标记清除）</span></a></li></ol>
-    </nav>
-  </div>
-</aside>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/">
 
-<main class="main" role="main">
-  <div class="content">
-  <article id="post-Java学习笔记210301" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-    
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      java学习笔记（二）
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" class="article-date">
-	  <time datetime="2021-03-01T01:41:38.428Z" itemprop="datePublished">2021-03-01</time>
-	</a>
-</span>
-        
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
-  </span>
-
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/blog/tags/GC/" rel="tag">GC</a>
-  </span>
-
-
-        
-	<span class="article-read hidden-xs">
-	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
-	    <span id="busuanzi_container_page_pv">
-			<span id="busuanzi_value_page_pv">0</span>
-		</span>
-	</span>
-
-
-	<span class="article-read hidden-xs">
-    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
-    	<span id="/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" class="leancloud_visitors"  data-flag-title="java学习笔记（二）">0</span>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4171334607,909811051&fm=26&gp=0.jpg#/images/avatar.gif">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来的我的博客">
     </span>
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/#comments" class="article-comment-link">评论</a></span>
-        
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java学习笔记（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-01 09:41:38" itemprop="dateCreated datePublished" datetime="2021-03-01T09:41:38+08:00">2021-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-11 14:36:31" itemprop="dateModified" datetime="2021-03-11T14:36:31+08:00">2021-03-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>528</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
-<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
-<p> 注意：</p>
-<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
-<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
-<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
-<hr>
-<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
-<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
-<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
-<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
-<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
-<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
-<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
-<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
-<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
+        <h4 id="堆内存逻辑分区不适用不分代垃圾收集器"><a class="markdownIt-Anchor" href="#堆内存逻辑分区不适用不分代垃圾收集器"></a> 堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206" /></p>
+<span id="more"></span>
+<h4 id="jvm-内存空间"><a class="markdownIt-Anchor" href="#jvm-内存空间"></a> jvm 内存空间</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713" /></p>
+<p>注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br />
+<strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a class="markdownIt-Anchor" href="#各空间详解"></a> 各空间详解</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611" /></p>
+<h4 id="指针碰撞"><a class="markdownIt-Anchor" href="#指针碰撞"></a> 指针碰撞</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520" /></p>
+<hr />
+<h2 id="title-java锁-jvm等"><a class="markdownIt-Anchor" href="#title-java锁-jvm等"></a> title: java锁、JVM等</h2>
+<h4 id="tlab-指针碰撞的解决思路"><a class="markdownIt-Anchor" href="#tlab-指针碰撞的解决思路"></a> TLAB   （指针碰撞的解决思路）</h4>
+<p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935" /></p>
+<h4 id="逃逸分析"><a class="markdownIt-Anchor" href="#逃逸分析"></a> <strong>逃逸分析</strong></h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230" /></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img" /></p>
+<h4 id="标量替换"><a class="markdownIt-Anchor" href="#标量替换"></a> 标量替换</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png" alt="" /></p>
+<h4 id="栈上分配"><a class="markdownIt-Anchor" href="#栈上分配"></a> 栈上分配</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817" /></p>
+<h4 id="同步消除"><a class="markdownIt-Anchor" href="#同步消除"></a> 同步消除</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420" /></p>
+<h4 id="对象创建过程在jvm层面的内存分配流程图"><a class="markdownIt-Anchor" href="#对象创建过程在jvm层面的内存分配流程图"></a> 对象创建过程，在jvm层面的内存分配；流程图</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945" /></p>
+<h4 id="只要是分代模型一定是成对出现常见的组合有3种"><a class="markdownIt-Anchor" href="#只要是分代模型一定是成对出现常见的组合有3种"></a> 只要是分代模型，一定是成对出现，常见的组合有3种</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png" alt="" /></p>
+<h4 id="jdk18可用分代模型也可不用分代模型"><a class="markdownIt-Anchor" href="#jdk18可用分代模型也可不用分代模型"></a> jdk1.8可用分代模型，也可不用分代模型</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283" /></p>
+<h4 id="serial-swt"><a class="markdownIt-Anchor" href="#serial-swt"></a> Serial     （ SWT）</h4>
+<p>属于单线程回收</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192" /></p>
 <p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
-<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
-<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<h4 id="parallel-scavenge"><a class="markdownIt-Anchor" href="#parallel-scavenge"></a> Parallel Scavenge</h4>
+<p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386" /></p>
+<h4 id="parnew"><a class="markdownIt-Anchor" href="#parnew"></a> ParNew</h4>
+<p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
 <p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
-<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245" /></p>
+<h4 id="cms-concurrent-mark-sweep-并发标记清除"><a class="markdownIt-Anchor" href="#cms-concurrent-mark-sweep-并发标记清除"></a> CMS （concurrent mark sweep  并发标记清除）</h4>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829" /></p>
 <p>工作线程与回收线程同时进行</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636" /></p>
 
+    </div>
+
+    
+    
+    
       
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/blog/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" rel="prev" title="java学习笔记（二）">
+      <i class="fa fa-chevron-left"></i> java学习笔记（二）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" rel="next" title="java学习笔记（一）">
+      java学习笔记（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
+      </footer>
     
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" title="java学习笔记（二）" target="_blank" rel="external">https://meader.gitee.io/blog/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
-
-
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://blog.csdn.net/xue_mind" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/blog/images/avatar.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://blog.csdn.net/xue_mind" target="_blank"><span class="text-dark">meadel</span><small class="ml-1x">菜鸟</small></a></h3>
-        <div>个人简介。</div>
-      </div>
-    </figure>
-  </div>
-</div>
-
-
-    </div>
   </article>
   
-    
-  <section id="comments">
-  	
-  </section>
+  
+  
 
 
-  
-</div>
 
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/blog/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" title="java学习笔记（一）"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/blog/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" title="java学习笔记（二）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-    <li class="toggle-toc">
-      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
-        <span>[&nbsp;</span><span>文章目录</span>
-        <i class="text-collapsed icon icon-anchor"></i>
-        <i class="text-in icon icon-close"></i>
-        <span>]</span>
-      </a>
-    </li>
-    
-  </ul>
-  
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
-  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
-    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
-  </div> -->
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-<!-- Modal -->
-<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content donate">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-        <div class="donate-box">
-          <div class="donate-head">
-            <p>感谢您的支持，我会继续努力的!</p>
           </div>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
-              <div class="donate-payimg">
-                <img src="/blog/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
-              <div class="donate-payimg">
-                <img src="/blog/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
-            </div>
-          </div>
-          <div class="donate-footer">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          
 
-
-
-</main>
-
-  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
-	
-	
-    <ul class="social-links">
-    	
-        <li><a href="https://github.com/wuwenyishi" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-        <li><a href="https://weibo.com/u/1648620324" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
-        
-        <li><a href="https://gitee.com/meader" target="_blank" title="Gitee" data-toggle=tooltip data-placement=top><i class="icon icon-gitee"></i></a></li>
-        
-        <li><a href="https://blog.csdn.net/xue_mind" target="_blank" title="Blog" data-toggle=tooltip data-placement=top><i class="icon icon-Blog"></i></a></li>
-        
-    </ul>
-
-    <div class="copyright">
-    	
-        <div class="publishby">
-        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
-        </div>
-    </div>
-</footer>
-  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script>
-window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
-<script src="/blog/js/plugin.min.js"></script>
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%86%85%E5%AD%98%E9%80%BB%E8%BE%91%E5%88%86%E5%8C%BA%E4%B8%8D%E9%80%82%E7%94%A8%E4%B8%8D%E5%88%86%E4%BB%A3%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text"> 堆内存逻辑分区(不适用不分代垃圾收集器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jvm-%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text"> jvm 内存空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text"> 各空间详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E"><span class="nav-number">4.</span> <span class="nav-text"> 指针碰撞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#title-java%E9%94%81-jvm%E7%AD%89"><span class="nav-number"></span> <span class="nav-text"> title: java锁、JVM等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tlab-%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text"> TLAB   （指针碰撞的解决思路）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text"> 逃逸分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text"> 标量替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text"> 栈上分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%B6%88%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text"> 同步消除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%E5%9C%A8jvm%E5%B1%82%E9%9D%A2%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">6.</span> <span class="nav-text"> 对象创建过程，在jvm层面的内存分配；流程图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AA%E8%A6%81%E6%98%AF%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%E4%B8%80%E5%AE%9A%E6%98%AF%E6%88%90%E5%AF%B9%E5%87%BA%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E5%90%88%E6%9C%893%E7%A7%8D"><span class="nav-number">7.</span> <span class="nav-text"> 只要是分代模型，一定是成对出现，常见的组合有3种</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk18%E5%8F%AF%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%E4%B9%9F%E5%8F%AF%E4%B8%8D%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text"> jdk1.8可用分代模型，也可不用分代模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#serial-swt"><span class="nav-number">9.</span> <span class="nav-text"> Serial     （ SWT）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parallel-scavenge"><span class="nav-number">10.</span> <span class="nav-text"> Parallel Scavenge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parnew"><span class="nav-number">11.</span> <span class="nav-text"> ParNew</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cms-concurrent-mark-sweep-%E5%B9%B6%E5%8F%91%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4"><span class="nav-number">12.</span> <span class="nav-text"> CMS （concurrent mark sweep  并发标记清除）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meadel"
+      src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4171334607,909811051&fm=26&gp=0.jpg#/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">欢迎来的我的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wywenyishi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wywenyishi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/blog/x_minde@163.com" title="E-Mail → x_minde@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/1648620324" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1648620324" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
 
 
-<script src="/blog/js/application.js"></script>
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      其他博客网站外链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/xue_mind" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;xue_mind" rel="noopener" target="_blank">CSDN</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-    <script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(未命名)',
-        },
-        ROOT_URL: '/blog/',
-        CONTENT_URL: '/blog/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
+      </div>
+    </main>
 
-<script src="/blog/js/insight.js"></script>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
+        
 
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">4k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4 分钟</span>
+</div>
 
-
-
-
-   
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-<!-- custom analytics part create by xiamo -->
-<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
-<script defer>
-AV.init({
-  appId: 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
-  appKey: 'RfiNClAkp7Ewe9rlzrjAQEXC# leancloud &lt;AppKey&gt;'
-});
-
-function showTime(Counter) {
-	var query = new AV.Query(Counter);
-		var visitors= $('.leancloud_visitors');
-		query.greaterThanOrEqualTo("time", 0);		
-		query.find({
-			success: function(results) {
-				if (results.length == 0) {				
-					return;
-				}
-				var data = results;
-				visitors.each(function(){
-					var url = $(this).attr('id').trim();					
-					for (var i = 0; i < data.length; i++) {
-						var object = data[i];
-						var content = object.get('time');
-						var _url = object.get('url')
-						if(url == _url){
-							$(this).text(content);
-						}
-					}
-				})
-				
-			},
-			error: function(object, error) {
-				console.log("Error: " + error.code + " " + error.message);
-			}
-		});
-}
-
-function addCount(Counter) {
-	var Counter = AV.Object.extend("Counter");
-	url = $(".leancloud_visitors").attr('id').trim();
-	title = $(".leancloud_visitors").attr('data-flag-title').trim();
-	var query = new AV.Query(Counter);
-	query.equalTo("url", url);
-	query.find({
-		success: function(results) {
-			if (results.length > 0) {
-				var counter = results[0];
-				counter.fetchWhenSave(true);
-				counter.increment("time");
-				counter.save(null, {
-					success: function(counter) {
-						var content = counter.get('time');
-						$(document.getElementById(url)).text(content);
-					},
-					error: function(counter, error) {
-						console.log('Failed to save Visitor num, with error message: ' + error.message);
-					}
-				});
-			} else {
-				var newcounter = new Counter();
-				newcounter.set("title", title);
-				newcounter.set("url", url);
-				newcounter.set("time", 1);
-				newcounter.save(null, {
-					success: function(newcounter) {
-					    console.log("newcounter.get('time')="+newcounter.get('time'));
-						var content = newcounter.get('time');
-						$(document.getElementById(url)).text(content);
-					},
-					error: function(newcounter, error) {
-						console.log('Failed to create');
-					}
-				});
-			}
-		},
-		error: function(error) {
-			console.log('Error:' + error.code + " " + error.message);
-		}
-	});
-}
-$(function() {
-	var Counter = AV.Object.extend("Counter");
-	if ($('.leancloud_visitors').length == 1) {
-		addCount(Counter);
-	} else {
-		showTime(Counter);
-	}
-}); 
-</script>
-
-
-
-   
+        
 
 
 
 
 
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+<script src="/blog/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
 
 </body>
 </html>
