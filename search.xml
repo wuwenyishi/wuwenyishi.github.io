@@ -206,59 +206,6 @@
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记（二）</title>
-    <url>/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
-    <content><![CDATA[<h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
-<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
-<li>申请内存，设默认值 0 </li>
-<li>设置初始值 </li>
-<li>建立关联</li>
-</ol>
-<span id="more"></span>
-
-<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
-<p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
-<h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
-<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
-<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
-<p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
-<h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
-<p>没有加锁的对象与加锁的对象的内存布局对比</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
-<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
-<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
-<p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
-<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
-<h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
-<p>解决：加版本号</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
-<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
-<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
-<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
-<p> 如何让第二个线程先执行</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Map集合详解</title>
     <url>/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<blockquote>
@@ -351,6 +298,59 @@
       </categories>
       <tags>
         <tag>map</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（二）</title>
+    <url>/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
+    <content><![CDATA[<h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
+<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
+<li>申请内存，设默认值 0 </li>
+<li>设置初始值 </li>
+<li>建立关联</li>
+</ol>
+<span id="more"></span>
+
+<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
+<p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
+<h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
+<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
+<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
+<p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
+<h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
+<p>没有加锁的对象与加锁的对象的内存布局对比</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
+<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
+<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
+<p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
+<h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
+<p>解决：加版本号</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
+<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
+<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
+<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
+<p> 如何让第二个线程先执行</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -495,6 +495,54 @@
       </tags>
   </entry>
   <entry>
+    <title>分布式事务之seata</title>
+    <url>/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/</url>
+    <content><![CDATA[<blockquote>
+<p>文章来源</p>
+<ul>
+<li><a href="https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/">https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/</a></li>
+<li>官网：<a href="http://seata.io/zh-cn/index.html">http://seata.io/zh-cn/index.html</a></li>
+<li>推荐文章：<a href="https://www.cnblogs.com/chengxy-nds/p/14046856.html">https://www.cnblogs.com/chengxy-nds/p/14046856.html</a></li>
+<li></li>
+</ul>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/QxsNJBC7TiaLyZv.png" alt="image-20210311152028639"></p>
+<span id="more"></span>
+
+
+
+<h3 id="分布式事务问题产生原因"><a href="#分布式事务问题产生原因" class="headerlink" title="分布式事务问题产生原因"></a>分布式事务问题产生原因</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153056539.png" alt="image-20210311153056539"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153133798.png" alt="image-20210311153133798"></p>
+<h3 id="数据一致性问题"><a href="#数据一致性问题" class="headerlink" title="数据一致性问题"></a>数据一致性问题</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153222409.png" alt="image-20210311153222409"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153254270.png" alt="image-20210311153254270"></p>
+<h3 id="seata"><a href="#seata" class="headerlink" title="seata"></a>seata</h3><h4 id="什么是seata"><a href="#什么是seata" class="headerlink" title="什么是seata"></a>什么是seata</h4><p>官网介绍</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/QxsNJBC7TiaLyZv.png" alt="image-20210311152028639"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153456333.png" alt="image-20210311153456333"></p>
+<h4 id="分布式事务-Seata-解决方案"><a href="#分布式事务-Seata-解决方案" class="headerlink" title="分布式事务 Seata 解决方案"></a>分布式事务 Seata 解决方案</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153638276.png" alt="image-20210311153638276"></p>
+<h5 id="AT-模式"><a href="#AT-模式" class="headerlink" title="AT 模式"></a>AT 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153810577.png" alt="image-20210311153810577"></p>
+<p>执行流程</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154207648.png" alt="image-20210311154207648"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154303985.png" alt="image-20210311154303985"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154439965.png" alt="image-20210311154439965"></p>
+<h5 id="TCC-模式"><a href="#TCC-模式" class="headerlink" title="TCC 模式"></a>TCC 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154540770.png" alt="image-20210311154540770"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154603265.png" alt="image-20210311154603265"></p>
+<p><strong>业务模型分 2 阶段设计</strong></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154913051.png" alt="image-20210311154913051"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155124114.png" alt="image-20210311155124114"></p>
+<h5 id="Saga-模式"><a href="#Saga-模式" class="headerlink" title="Saga 模式"></a>Saga 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155236693.png" alt="image-20210311155236693"></p>
+<h5 id="XA-模式"><a href="#XA-模式" class="headerlink" title="XA 模式"></a>XA 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155404143.png" alt="image-20210311155404143"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155447736.png" alt="image-20210311155447736"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155520511.png" alt="image-20210311155520511"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155622601.png" alt="image-20210311155622601"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springBoot整合seata（一）</title>
     <url>/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/</url>
     <content><![CDATA[<blockquote>
@@ -564,51 +612,52 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务之seata</title>
-    <url>/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/</url>
+    <title>Seata-server启动闪退问题</title>
+    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
-<p>文章来源</p>
-<ul>
-<li><a href="https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/">https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/</a></li>
-<li>官网：<a href="http://seata.io/zh-cn/index.html">http://seata.io/zh-cn/index.html</a></li>
-<li>推荐文章：<a href="https://www.cnblogs.com/chengxy-nds/p/14046856.html">https://www.cnblogs.com/chengxy-nds/p/14046856.html</a></li>
-<li></li>
-</ul>
+<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
 </blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/QxsNJBC7TiaLyZv.png" alt="image-20210311152028639"></p>
+<p>第一步：查看错误日志</p>
+<p>打开cmd</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
 <span id="more"></span>
 
 
 
-<h3 id="分布式事务问题产生原因"><a href="#分布式事务问题产生原因" class="headerlink" title="分布式事务问题产生原因"></a>分布式事务问题产生原因</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153056539.png" alt="image-20210311153056539"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153133798.png" alt="image-20210311153133798"></p>
-<h3 id="数据一致性问题"><a href="#数据一致性问题" class="headerlink" title="数据一致性问题"></a>数据一致性问题</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153222409.png" alt="image-20210311153222409"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153254270.png" alt="image-20210311153254270"></p>
-<h3 id="seata"><a href="#seata" class="headerlink" title="seata"></a>seata</h3><h4 id="什么是seata"><a href="#什么是seata" class="headerlink" title="什么是seata"></a>什么是seata</h4><p>官网介绍</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/QxsNJBC7TiaLyZv.png" alt="image-20210311152028639"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153456333.png" alt="image-20210311153456333"></p>
-<h4 id="分布式事务-Seata-解决方案"><a href="#分布式事务-Seata-解决方案" class="headerlink" title="分布式事务 Seata 解决方案"></a>分布式事务 Seata 解决方案</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153638276.png" alt="image-20210311153638276"></p>
-<h5 id="AT-模式"><a href="#AT-模式" class="headerlink" title="AT 模式"></a>AT 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311153810577.png" alt="image-20210311153810577"></p>
-<p>执行流程</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154207648.png" alt="image-20210311154207648"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154303985.png" alt="image-20210311154303985"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154439965.png" alt="image-20210311154439965"></p>
-<h5 id="TCC-模式"><a href="#TCC-模式" class="headerlink" title="TCC 模式"></a>TCC 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154540770.png" alt="image-20210311154540770"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154603265.png" alt="image-20210311154603265"></p>
-<p><strong>业务模型分 2 阶段设计</strong></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311154913051.png" alt="image-20210311154913051"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155124114.png" alt="image-20210311155124114"></p>
-<h5 id="Saga-模式"><a href="#Saga-模式" class="headerlink" title="Saga 模式"></a>Saga 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155236693.png" alt="image-20210311155236693"></p>
-<h5 id="XA-模式"><a href="#XA-模式" class="headerlink" title="XA 模式"></a>XA 模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155404143.png" alt="image-20210311155404143"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155447736.png" alt="image-20210311155447736"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155520511.png" alt="image-20210311155520511"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210311155622601.png" alt="image-20210311155622601"></p>
+<p>运行seata-server.bat查看错误信息</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
+<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
+<p>找到出错目录</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
+<p>搜索jvm.dll</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
+<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
+<p>返回cmd，重新运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
+<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
+<p>用记事本方式打开seata-server.bat，找到参数设置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
+<p>将其设置为1024,1024，512即可</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
+<p>然后再次在cmd窗口中运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
+<p>如此解决了seata-server闪退的问题</p>
+<p>问题二</p>
+<p>启动报下面的错误</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
+<p>打开nacos，找到配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
+<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
+<p>启动成功：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
 ]]></content>
       <categories>
-        <category>分布式</category>
+        <category>BUG</category>
       </categories>
       <tags>
-        <tag>事务</tag>
+        <tag>Seata</tag>
       </tags>
   </entry>
   <entry>
@@ -657,55 +706,6 @@
       </categories>
       <tags>
         <tag>nacos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Seata-server启动闪退问题</title>
-    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
-</blockquote>
-<p>第一步：查看错误日志</p>
-<p>打开cmd</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
-<span id="more"></span>
-
-
-
-<p>运行seata-server.bat查看错误信息</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
-<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
-<p>找到出错目录</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
-<p>搜索jvm.dll</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
-<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
-<p>返回cmd，重新运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
-<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
-<p>用记事本方式打开seata-server.bat，找到参数设置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
-<p>将其设置为1024,1024，512即可</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
-<p>然后再次在cmd窗口中运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
-<p>如此解决了seata-server闪退的问题</p>
-<p>问题二</p>
-<p>启动报下面的错误</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
-<p>打开nacos，找到配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
-<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
-<p>启动成功：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Seata</tag>
       </tags>
   </entry>
 </search>
