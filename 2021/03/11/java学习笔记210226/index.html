@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,22 +15,25 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="单例，双重检查锁 new 一个对象氛围三步 申请内存，设默认值 0  设置初始值  建立关联">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java学习笔记（二）">
 <meta property="og:url" content="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="meadel&#39;s blog">
 <meta property="og:description" content="单例，双重检查锁 new 一个对象氛围三步 申请内存，设默认值 0  设置初始值  建立关联">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png">
@@ -56,7 +60,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png">
 <meta property="article:published_time" content="2021-03-11T12:32:50.550Z">
 <meta property="article:modified_time" content="2021-03-11T06:36:37.801Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="meadel">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png">
@@ -71,10 +75,10 @@
     sidebar: "none",
     isHome : false,
     isPost : true,
-    lang   : 'en'
+    lang   : 'zh-CN'
   };
 </script>
-<title>java学习笔记（二） | Hexo</title>
+<title>java学习笔记（二） | meadel's blog</title>
   
 
 
@@ -124,7 +128,10 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -132,22 +139,58 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">meadel's blog</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">这个世界需要我们改变</p>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -160,53 +203,85 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%EF%BC%8C%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">单例，双重检查锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%B0%9B%E5%9B%B4%E4%B8%89%E6%AD%A5"><span class="nav-number">2.</span> <span class="nav-text">new 一个对象氛围三步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E6%9C%89%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">new 对象的时候会有一个问题，就是指令重排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile-%E6%98%AFJVM%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">volatile 是JVM的关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">一些面试问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">线程的原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-number">7.</span> <span class="nav-text">java对象的内存布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">轻量级锁的种类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">9.</span> <span class="nav-text">重量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">10.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CAS%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">CAS存在的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-%E4%B8%8E-reentrantlock-%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9"><span class="nav-number">12.</span> <span class="nav-text">synchronized 与 reentrantlock 的共同点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-%E4%B8%8E-reentrantlock-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">synchronized 与 reentrantlock 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text">面试题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+    <img class="site-author-image" itemprop="image" alt="meadel"
+      src="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">欢迎来到我的博客</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">10</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">3</span>
-        <span class="site-state-item-name">categories</span></a>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wuwenyishi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wuwenyishi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/x_minde@163.com" title="E-Mail → x_minde@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      其他博客网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/xue_mind" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;xue_mind" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://gitee.com/meader" title="https:&#x2F;&#x2F;gitee.com&#x2F;meader" rel="noopener" target="_blank">GITEE</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yuque.com/meader" title="https:&#x2F;&#x2F;www.yuque.com&#x2F;meader" rel="noopener" target="_blank">YUQUE</a>
+        </li>
+    </ul>
+  </div>
 
         </div>
       </div>
+        <div class="back-to-top animated" role="button">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -215,10 +290,9 @@
     </header>
 
     
-  <div class="back-to-top" role="button">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wuwenyishi" class="github-corner" title="my GitHub" aria-label="my GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -235,17 +309,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="meadel's blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -258,22 +332,45 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="Created: 2021-03-11 20:32:50 / Modified: 14:36:37" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
+      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:37" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
         </span>
     </span>
 
   
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>551</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -283,7 +380,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
+        <h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
 <h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
 <li>申请内存，设默认值 0 </li>
 <li>设置初始值 </li>
@@ -291,50 +388,69 @@
 </ol>
 <span id="more"></span>
 
-<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
+<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
 <p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
 <h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
-<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
-<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
+<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
+<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
 <p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
 <h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
 <p>没有加锁的对象与加锁的对象的内存布局对比</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
-<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
-<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
+<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
+<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
 <p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
 <h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
 <h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
 <p>解决：加版本号</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
-<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
-<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
+<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
+<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
 <h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
 <p> 如何让第二个线程先执行</p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
-<p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
 
     </div>
 
     
     
     
+      
+
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" title="java学习笔记（二）">http://example.com/2021/03/11/java学习笔记210226/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/JVM/" rel="tag"># JVM</a>
+              <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
           </div>
 
         
@@ -384,38 +500,127 @@
 
   <footer class="footer">
     <div class="footer-inner">
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>简体中文</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="">
+      
+        <option value="zh-CN" data-href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" selected="">
+          简体中文
+        </option>
+      
+        <option value="en" data-href="/en/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
 
 
 <div class="copyright">
-  &copy; 
+  &copy; 2020 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">4k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="/js/local-search.js"></script>
 
 
+
+
+
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
 
   
 
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/',]
+      });
+      });
+  </script>
 
 </body>
 </html>
