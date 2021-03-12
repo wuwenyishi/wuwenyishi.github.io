@@ -27,27 +27,35 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="CMS  – 浮动垃圾在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。 CMS – 错标一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。 CMS – 重新标记在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。 重新标记完成，下一步就是并发处">
+<meta name="description" content="参考文章：https:&#x2F;&#x2F;www.pianshen.com&#x2F;article&#x2F;97751361089&#x2F;  第一步：查看错误日志 打开cmd">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java学习笔记（一）">
-<meta property="og:url" content="https://xuemingde.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/index.html">
+<meta property="og:title" content="Seata-server启动闪退问题">
+<meta property="og:url" content="https://xuemingde.com/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="CMS  – 浮动垃圾在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。 CMS – 错标一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。 CMS – 重新标记在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。 重新标记完成，下一步就是并发处">
+<meta property="og:description" content="参考文章：https:&#x2F;&#x2F;www.pianshen.com&#x2F;article&#x2F;97751361089&#x2F;  第一步：查看错误日志 打开cmd">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png">
-<meta property="article:published_time" content="2021-03-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-12T03:07:53.253Z">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png">
+<meta property="article:published_time" content="2021-03-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-12T08:43:06.551Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="CMS">
+<meta property="article:tag" content="Seata">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
 <script class="page-configurations">
@@ -59,7 +67,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>java学习笔记（一） | meadel's blog</title>
+<title>Seata-server启动闪退问题 | meadel's blog</title>
   
 
 
@@ -291,7 +299,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -304,7 +312,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          java学习笔记（一）
+          Seata-server启动闪退问题
         </h1>
 
         <div class="post-meta-container">
@@ -314,23 +322,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-03-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-02T00:00:00+08:00">2021-03-02</time>
+      <time title="创建时间：2021-03-12 00:00:00 / 修改时间：16:43:06" itemprop="dateCreated datePublished" datetime="2021-03-12T00:00:00+08:00">2021-03-12</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-12 11:07:53" itemprop="dateModified" datetime="2021-03-12T11:07:53+08:00">2021-03-12</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+          <a href="/categories/BUG/" itemprop="url" rel="index"><span itemprop="name">BUG</span></a>
         </span>
     </span>
 
@@ -349,7 +351,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>441</span>
+      <span>545</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -367,23 +369,44 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+        <blockquote>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
+</blockquote>
+<p>第一步：查看错误日志</p>
+<p>打开cmd</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
 <span id="more"></span>
 
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+
+
+<p>运行seata-server.bat查看错误信息</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
+<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
+<p>找到出错目录</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
+<p>搜索jvm.dll</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
+<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
+<p>返回cmd，重新运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
+<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
+<p>用记事本方式打开seata-server.bat，找到参数设置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
+<p>将其设置为1024,1024，512即可</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
+<p>然后再次在cmd窗口中运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
+<p>如此解决了seata-server闪退的问题</p>
+<p>问题二</p>
+<p>启动报下面的错误</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
+<p>打开nacos，找到配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
+<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
+<p>启动成功：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
 
     </div>
 
@@ -403,7 +426,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://xuemingde.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" title="java学习笔记（一）">https://xuemingde.com/2021/03/02/Java学习笔记210302/</a>
+      <a href="https://xuemingde.com/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/" title="Seata-server启动闪退问题">https://xuemingde.com/2021/03/12/常见BUG（一）/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -412,20 +435,20 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/CMS/" rel="tag"><i class="fa fa-tag"></i> CMS</a>
+              <a href="/tags/Seata/" rel="tag"><i class="fa fa-tag"></i> Seata</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" rel="prev" title="java学习笔记（二）">
-                  <i class="fa fa-chevron-left"></i> java学习笔记（二）
+                <a href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/" rel="prev" title="分布式事务之seata">
+                  <i class="fa fa-chevron-left"></i> 分布式事务之seata
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" rel="next" title="设计模式（三）">
-                  设计模式（三） <i class="fa fa-chevron-right"></i>
+                <a href="/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/" rel="next" title="springBoot整合seata（一）">
+                  springBoot整合seata（一） <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -473,11 +496,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" selected="">
+        <option value="zh-CN" data-href="/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" selected="">
+        <option value="en" data-href="/en/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/" selected="">
           English
         </option>
       
@@ -582,7 +605,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/',]
       });
       });
   </script>
