@@ -27,39 +27,48 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="CMS  – 浮动垃圾在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。 CMS – 错标一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。 CMS – 重新标记在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。 重新标记完成，下一步就是并发处">
+<meta name="description" content="设计模式调停者模式 （对内）部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。  在实际应用中最多的就是消息中间件 – MQ。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java学习笔记（一）">
-<meta property="og:url" content="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/index.html">
+<meta property="og:title" content="设计模式（二）">
+<meta property="og:url" content="http://example.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="CMS  – 浮动垃圾在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。 CMS – 错标一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。 CMS – 重新标记在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。 重新标记完成，下一步就是并发处">
+<meta property="og:description" content="设计模式调停者模式 （对内）部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。  在实际应用中最多的就是消息中间件 – MQ。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png">
-<meta property="article:published_time" content="2021-03-11T12:32:50.554Z">
-<meta property="article:modified_time" content="2021-03-11T06:36:28.164Z">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png">
+<meta property="article:published_time" content="2021-03-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-12T03:08:09.991Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="CMS">
+<meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png">
 
 
-<link rel="canonical" href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
+<link rel="canonical" href="http://example.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
 
 
 <script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
-    sidebar: "none",
+    sidebar: "",
     isHome : false,
     isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>java学习笔记（一） | meadel's blog</title>
+<title>设计模式（二） | meadel's blog</title>
   
 
 
@@ -184,7 +193,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -197,6 +206,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">设计模式</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -291,7 +301,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -304,7 +314,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          java学习笔记（一）
+          设计模式（二）
         </h1>
 
         <div class="post-meta-container">
@@ -314,17 +324,23 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:28" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
+      <time title="创建时间：2021-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-04T00:00:00+08:00">2021-03-04</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:08:09" itemprop="dateModified" datetime="2021-03-12T11:08:09+08:00">2021-03-12</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
         </span>
     </span>
 
@@ -343,7 +359,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>441</span>
+      <span>398</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -361,23 +377,39 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+        <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698"></p>
+<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
 <span id="more"></span>
 
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+<h4 id="门面模式-（对外）"><a href="#门面模式-（对外）" class="headerlink" title="门面模式 （对外）"></a>门面模式 （对外）</h4><p>要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。</p>
+<p>图解：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png" alt="image-20210304103935715"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png" alt="image-20210304104706445"></p>
+<p>代码示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png" alt="20210304104745"></p>
+<h4 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png" alt="image-20210304105512902"></p>
+<p>代码示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png" alt="20210304111428"></p>
+<h4 id="责任链模式-（难）"><a href="#责任链模式-（难）" class="headerlink" title="责任链模式 （难）"></a>责任链模式 （难）</h4><blockquote>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/chain-of-responsibility">https://refactoringguru.cn/design-patterns/chain-of-responsibility</a></p>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png" alt="image-20210304114339970"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png" alt="image-20210304114712508"></p>
+<p>代码示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png" alt="20210304115025"></p>
+<h4 id="观察者模式-（重要）"><a href="#观察者模式-（重要）" class="headerlink" title="观察者模式 （重要）"></a>观察者模式 （重要）</h4><blockquote>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/observer">https://refactoringguru.cn/design-patterns/observer</a></p>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png" alt="image-20210304132453845"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png" alt="image-20210304132849343"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png" alt="image-20210304132920344"></p>
+<p>代码示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png" alt="20210304133031"></p>
+<h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><blockquote>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/command">https://refactoringguru.cn/design-patterns/command</a></p>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png" alt="image-20210304140011639"></p>
 
     </div>
 
@@ -385,6 +417,15 @@
     
     
       
+  <div class="popular-posts-header">相关帖子</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\03\03\Java学习笔记210303\" rel="bookmark">设计模式（三）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\03\08\java学习笔记210308\" rel="bookmark">设计模式（一）</a></div>
+    </li>
+  </ul>
 
 
     <footer class="post-footer">
@@ -397,7 +438,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" title="java学习笔记（一）">http://example.com/2021/03/11/Java学习笔记210302/</a>
+      <a href="http://example.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" title="设计模式（二）">http://example.com/2021/03/04/Java学习笔记210304/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -406,20 +447,20 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/CMS/" rel="tag"><i class="fa fa-tag"></i> CMS</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" rel="prev" title="java学习笔记（二）">
-                  <i class="fa fa-chevron-left"></i> java学习笔记（二）
+                <a href="/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" rel="prev" title="设计模式（三）">
+                  <i class="fa fa-chevron-left"></i> 设计模式（三）
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" rel="next" title="设计模式（三）">
-                  设计模式（三） <i class="fa fa-chevron-right"></i>
+                <a href="/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/" rel="next" title="springBoot整合Nacos">
+                  springBoot整合Nacos <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -467,11 +508,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" selected="">
+        <option value="zh-CN" data-href="/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" selected="">
+        <option value="en" data-href="/en/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" selected="">
           English
         </option>
       
@@ -576,7 +617,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/',]
       });
       });
   </script>

@@ -282,830 +282,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/" class="post-title-link" itemprop="url">分布式事务 --  JTA</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：15:11:56" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>499</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
-<li></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/" class="post-title-link" itemprop="url">分布式事务</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：15:25:24" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>553</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
-<p>文章来源：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
-<p>具体不多讲，详情看文章来源</p>
-</blockquote>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png" alt="image-20210310095052994"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/" class="post-title-link" itemprop="url">设计模式（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:16" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>76</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" class="post-title-link" itemprop="url">设计模式（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:19" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>398</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698"></p>
-<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" class="post-title-link" itemprop="url">设计模式（三）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:24" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>344</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>有8种写法，比较完美的有两种</p>
-<ol>
-<li><p>第一种写法 饿汉式 （推荐使用）</p>
-<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303095809.png" alt="image-20210303095807254"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" class="post-title-link" itemprop="url">java学习笔记（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:28" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>441</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" class="post-title-link" itemprop="url">java学习笔记（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:31" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>528</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" class="post-title-link" itemprop="url">java学习笔记（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-11 20:32:50 / 修改时间：14:36:37" itemprop="dateCreated datePublished" datetime="2021-03-11T20:32:50+08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>551</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
-<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
-<li>申请内存，设默认值 0 </li>
-<li>设置初始值 </li>
-<li>建立关联</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1220,6 +396,340 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/" class="post-title-link" itemprop="url">分布式事务 --  JTA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-10T00:00:00+08:00">2021-03-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:07:07" itemprop="dateModified" datetime="2021-03-12T11:07:07+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>499</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/" class="post-title-link" itemprop="url">分布式事务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-09T00:00:00+08:00">2021-03-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:06:57" itemprop="dateModified" datetime="2021-03-12T11:06:57+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>553</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
+<p>文章来源：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
+<p>具体不多讲，详情看文章来源</p>
+</blockquote>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png" alt="image-20210310095052994"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/" class="post-title-link" itemprop="url">设计模式（一）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-08T00:00:00+08:00">2021-03-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:08:21" itemprop="dateModified" datetime="2021-03-12T11:08:21+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>76</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1297,6 +807,544 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" class="post-title-link" itemprop="url">设计模式（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-04T00:00:00+08:00">2021-03-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:08:09" itemprop="dateModified" datetime="2021-03-12T11:08:09+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>398</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698"></p>
+<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" class="post-title-link" itemprop="url">设计模式（三）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T00:00:00+08:00">2021-03-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:08:03" itemprop="dateModified" datetime="2021-03-12T11:08:03+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>344</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>有8种写法，比较完美的有两种</p>
+<ol>
+<li><p>第一种写法 饿汉式 （推荐使用）</p>
+<p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303095809.png" alt="image-20210303095807254"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" class="post-title-link" itemprop="url">java学习笔记（一）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-02T00:00:00+08:00">2021-03-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:07:53" itemprop="dateModified" datetime="2021-03-12T11:07:53+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>441</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" class="post-title-link" itemprop="url">java学习笔记（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-01T00:00:00+08:00">2021-03-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:07:35" itemprop="dateModified" datetime="2021-03-12T11:07:35+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>528</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" class="post-title-link" itemprop="url">java学习笔记（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-26T00:00:00+08:00">2021-02-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 11:07:23" itemprop="dateModified" datetime="2021-03-12T11:07:23+08:00">2021-03-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>551</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
+<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
+<li>申请内存，设默认值 0 </li>
+<li>设置初始值 </li>
+<li>建立关联</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
