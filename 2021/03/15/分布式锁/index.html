@@ -27,31 +27,42 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="欢迎来到我的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="meadel&#39;s blog">
-<meta property="og:url" content="https://xuemingde.com/index.html">
+<meta name="description" content="为什么要分布式锁什么是分布式锁 当在分布式模型下，数据只有一份（或有限制），此时需要利用锁的技术控制某一时刻修改数据的进程数。 与单机模式下的锁不仅需要保证进程可见，还需要考虑进程与锁之间的网络问题。（我觉得分布式情况下之所以问题变得复杂，主要就是需要考虑到网络的延时和不可靠。。。一个大坑） 分布式锁还是可以将标记存在内存，只是该内存不是某个进程分配的内存而是公共内存如 Redis、Memcach">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式锁">
+<meta property="og:url" content="https://xuemingde.com/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="欢迎来到我的博客">
+<meta property="og:description" content="为什么要分布式锁什么是分布式锁 当在分布式模型下，数据只有一份（或有限制），此时需要利用锁的技术控制某一时刻修改数据的进程数。 与单机模式下的锁不仅需要保证进程可见，还需要考虑进程与锁之间的网络问题。（我觉得分布式情况下之所以问题变得复杂，主要就是需要考虑到网络的延时和不可靠。。。一个大坑） 分布式锁还是可以将标记存在内存，只是该内存不是某个进程分配的内存而是公共内存如 Redis、Memcach">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607657980932-e7be9bfa-d222-407f-bf5a-1e29054d2b54.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607657994147-cd6b551c-aa7d-4dbc-a812-62c078e76b67.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607670900145-fb2a2f04-3885-424f-91d7-096327be2640.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607670976467-2e7148d4-a1fb-46a1-962f-ed3344c90506.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607671455219-53c5e944-4e3d-46f7-9003-cde5f431b8ff.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607671510560-5da451d2-ae36-4a97-af79-7e4f953b6454.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1608010901340-ac6cc428-5810-47f3-b91b-423feb19b5b7.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1608027684749-b12735be-e685-4c0c-975b-67153a935048.jpeg">
+<meta property="article:published_time" content="2021-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T03:24:48.101Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="meadel">
+<meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607657980932-e7be9bfa-d222-407f-bf5a-1e29054d2b54.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
 
 
 <script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>meadel's blog - We need to change the world</title>
+<title>分布式锁 | meadel's blog</title>
   
 
 
@@ -176,7 +187,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -189,6 +200,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">为什么要分布式锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">Redis实现分布式锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redisson-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">3.</span> <span class="nav-text">Redisson 实现分布式锁</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -272,16 +284,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -294,9 +307,9 @@
       <meta itemprop="name" content="meadel's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="post-title-link" itemprop="url">分布式锁</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          分布式锁
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -320,6 +333,13 @@
     </span>
 
   
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -345,7 +365,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
+        <h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
 <li>当在分布式模型下，数据只有一份（或有限制），此时需要利用锁的技术控制某一时刻修改数据的进程数。</li>
 <li>与单机模式下的锁不仅需要保证进程可见，还需要考虑进程与锁之间的网络问题。（我觉得分布式情况下之所以问题变得复杂，主要就是需要考虑到网络的延时和不可靠。。。一个大坑）</li>
 <li>分布式锁还是可以将标记存在内存，只是该内存不是某个进程分配的内存而是公共内存如 Redis、Memcache。至于利用数据库、文件等做锁与单机的实现是一样的，只要保证标记能互斥就行。</li>
@@ -425,18 +445,53 @@
 <h4 id="原理图解析"><a href="#原理图解析" class="headerlink" title="原理图解析"></a>原理图解析</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1608027684749-b12735be-e685-4c0c-975b-67153a935048.jpeg" alt="image"></p>
 <p> while循环获取锁是CAS机制，等待锁。</p>
 
-      
     </div>
 
     
     
     
       
+  <div class="popular-posts-header">相关帖子</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\03\15\java锁\" rel="bookmark">java锁</a></div>
+    </li>
+  </ul>
 
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://xuemingde.com/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" title="分布式锁">https://xuemingde.com/2021/03/15/分布式锁/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/15/java%E9%94%81/" rel="prev" title="java锁">
+                  <i class="fa fa-chevron-left"></i> java锁
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -444,9 +499,7 @@
 
 
 
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+
 
 
 <script>
@@ -483,11 +536,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/index.html" selected="">
+        <option value="zh-CN" data-href="/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/index.html" selected="">
+        <option value="en" data-href="/en/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" selected="">
           English
         </option>
       
@@ -592,7 +645,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/',]
       });
       });
   </script>
