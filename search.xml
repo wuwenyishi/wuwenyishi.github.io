@@ -1,37 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>java学习笔记（一）</title>
-    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
-    <content><![CDATA[<h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<span id="more"></span>
-
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>CMS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式（三）</title>
     <url>/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/</url>
-    <content><![CDATA[<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>有8种写法，比较完美的有两种</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>有8种写法，比较完美的有两种</p>
 <ol>
 <li><p>第一种写法 饿汉式 （推荐使用）</p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303095809.png" alt="image-20210303095807254"></p>
@@ -112,9 +84,87 @@
       </tags>
   </entry>
   <entry>
+    <title>java学习笔记（一）</title>
+    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<span id="more"></span>
+
+<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
+<p>过程简述：</p>
+<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
+<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
+<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CMS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（二）</title>
+    <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
+<span id="more"></span>
+
+<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
+<p> 注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
+<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
+<hr>
+<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
+<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
+<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
+<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
+<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
+<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
+<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
+<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
+<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
+<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
+<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
+<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
+<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
+<p>工作线程与回收线程同时进行</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>GC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式（二）</title>
     <url>/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/</url>
-    <content><![CDATA[<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698"></p>
 <p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
 <span id="more"></span>
@@ -158,7 +208,7 @@
   <entry>
     <title>Map集合详解</title>
     <url>/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
 <p>参考文章：<a href="https://cloud.tencent.com/developer/article/1609351">深入理解JDK8 HashMap</a></p>
 </blockquote>
 <h4 id="Map集合都有哪些实现"><a href="#Map集合都有哪些实现" class="headerlink" title="Map集合都有哪些实现"></a>Map集合都有哪些实现</h4><p>HashMap <br>HashTable  <br>LinkedHashMap <br>TreeMap <br>ConcurrentHashMap</p>
@@ -252,9 +302,29 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式（一）</title>
+    <url>/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+<span id="more"></span>
+
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java学习笔记（二）</title>
     <url>/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
-    <content><![CDATA[<h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
 <h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
 <li>申请内存，设默认值 0 </li>
 <li>设置初始值 </li>
@@ -305,79 +375,43 @@
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记（二）</title>
-    <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
-    <content><![CDATA[<h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
-<span id="more"></span>
-
-<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
-<p> 注意：</p>
-<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
-<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
-<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
-<hr>
-<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
-<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
-<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
-<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
-<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
-<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
-<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
-<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
-<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
-<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
-<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
-<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
-<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
-<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
-<p>工作线程与回收线程同时进行</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>GC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式（一）</title>
-    <url>/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
-    <content><![CDATA[<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-<span id="more"></span>
-
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+    <title>分布式事务 --  JTA</title>
+    <url>/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
 </blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
 ]]></content>
       <categories>
-        <category>设计模式</category>
+        <category>分布式</category>
       </categories>
       <tags>
-        <tag>设计模式</tag>
+        <tag>事务</tag>
       </tags>
   </entry>
   <entry>
     <title>分布式事务</title>
     <url>/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/</url>
-    <content><![CDATA[<h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
 <p>文章来源：<a href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
 <p>具体不多讲，详情看文章来源</p>
 </blockquote>
@@ -462,43 +496,9 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务 --  JTA</title>
-    <url>/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/</url>
-    <content><![CDATA[<h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
-<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
-<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
-<li></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<span id="more"></span>
-
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式事务之seata</title>
     <url>/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
 <p>文章来源</p>
 <ul>
 <li><a href="https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/">https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/</a></li>
@@ -542,7 +542,7 @@
   <entry>
     <title>springBoot整合seata（一）</title>
     <url>/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
 <p>参考文章</p>
 <ul>
 <li><a href="https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo">https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo</a></li>
@@ -611,20 +611,20 @@
   <entry>
     <title>一些简单的面试题（一）</title>
     <url>/2021/03/15/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210315/</url>
-    <content><![CDATA[<h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114157472.png" alt="image-20210315114157472"></p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114401023.png" alt="image-20210315114401023"></p>
 <blockquote>
 <p>如果更深一些，会问一些Shiro的工作流程或者原理，需要对源码有一些了解了，SpringSecurity也是如此。所以在工作中多看一些源码，会对实现原理和工作流程有很大的帮助。</p>
 <p>推荐文章：<a href="https://www.cnblogs.com/yuluoxingkong/p/8385711.html">https://www.cnblogs.com/yuluoxingkong/p/8385711.html</a></p>
 </blockquote>
-<h4 id="shiro认证流程"><a href="#shiro认证流程" class="headerlink" title="shiro认证流程"></a>shiro认证流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20170312125241625" alt="img"></p>
-<h4 id="shiro授权流程"><a href="#shiro授权流程" class="headerlink" title="shiro授权流程"></a>shiro授权流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20170312142941667" alt="img"></p>
+<h4 id="shiro认证流程"><a href="#shiro认证流程" class="headerlink" title="shiro认证流程"></a>shiro认证流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315151223390.png" alt="image-20210315151223390"></p>
+<h4 id="shiro授权流程"><a href="#shiro授权流程" class="headerlink" title="shiro授权流程"></a>shiro授权流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315151208566.png" alt="image-20210315151208566"></p>
 <h4 id="Shiro的权限控制方式"><a href="#Shiro的权限控制方式" class="headerlink" title="Shiro的权限控制方式"></a>Shiro的权限控制方式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120723741.png" alt="image-20210315120723741"></p>
 <h4 id="Shiro-的三大核心组件"><a href="#Shiro-的三大核心组件" class="headerlink" title="Shiro 的三大核心组件"></a>Shiro 的三大核心组件</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120609581.png" alt="image-20210315120609581"></p>
 <h4 id="什么是粗颗粒和细颗粒权限"><a href="#什么是粗颗粒和细颗粒权限" class="headerlink" title="什么是粗颗粒和细颗粒权限"></a>什么是粗颗粒和细颗粒权限</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120812562.png" alt="image-20210315120812562"></p>
 <h4 id="粗颗粒和细颗粒如何授权"><a href="#粗颗粒和细颗粒如何授权" class="headerlink" title="粗颗粒和细颗粒如何授权"></a>粗颗粒和细颗粒如何授权</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120915946.png" alt="image-20210315120915946"></p>
-<video src="https://ks-xpc15.xpccdn.com/da95029c-99f8-4487-b635-0d74ea23f41e.mp4" preload="metadata" controlslist="nodownload" controls playsinline poster=""></video>]]></content>
+]]></content>
       <categories>
         <category>面试</category>
       </categories>
@@ -635,7 +635,7 @@
   <entry>
     <title>springBoot整合Nacos</title>
     <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
-    <content><![CDATA[<h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
 <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
 <p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
@@ -681,9 +681,99 @@
       </tags>
   </entry>
   <entry>
+    <title>Seata-server启动闪退问题</title>
+    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
+</blockquote>
+<p>第一步：查看错误日志</p>
+<p>打开cmd</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
+<p>运行seata-server.bat查看错误信息</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
+<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
+<p>找到出错目录</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
+<p>搜索jvm.dll</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
+<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
+<p>返回cmd，重新运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
+<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
+<p>用记事本方式打开seata-server.bat，找到参数设置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
+<p>将其设置为1024,1024，512即可</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
+<p>然后再次在cmd窗口中运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
+<p>如此解决了seata-server闪退的问题</p>
+<p>问题二</p>
+<p>启动报下面的错误</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
+<p>打开nacos，找到配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
+<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
+<p>启动成功：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Seata</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爱，死亡和机器人</title>
+    <url>/2021/03/15/%E8%A7%86%E9%A2%91/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="第1集"><a href="#第1集" class="headerlink" title="第1集"></a>第1集</h3><div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/81cc9e771ab84809849e09940812ab32/bbaca0675be44e5682aae966ac42f3fe-4fe128eb9da136b384eb384dc3654045-sd.mp4?sign=1e16d9532848b7385ec3ab5a59957c55&t=604f2f3e"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第2集"><a href="#第2集" class="headerlink" title="第2集"></a>第2集</h3><div id="dplayer1" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/bc9ad44b4a5b4683b84aa73071efa728/04823c9d50294a12902bf5f5ac10f931-1b1bd3b0212bdbe40f943c1b7742a1a8-sd.mp4?sign=99a1059d5a636e76ab0c6b7f4f07738b&t=604f3018"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第3集"><a href="#第3集" class="headerlink" title="第3集"></a>第3集</h3><div id="dplayer2" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer2"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/c411893aef794ae6bbc1411607a9bd6d/8cfedef466cd48b38bab190fd7b7031e-6e248d3e3c6274f5bb4bd0378d3bc364-sd.mp4?sign=cce69cc89d278636f79557dc56139bc1&t=604f3037"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第4集"><a href="#第4集" class="headerlink" title="第4集"></a>第4集</h3><div id="dplayer3" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer3"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/a787030c6d4c468e8368f6379b3f7f68/d6d3bd8a58b94fcfa74b7789471fea34-ae0a6d0f1660183d5a0a63a3187e3323-sd.mp4?sign=c05df920bd9b0fe97f8e87a358335f25&t=604f3055"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第5集"><a href="#第5集" class="headerlink" title="第5集"></a>第5集</h3><div id="dplayer4" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer4"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/e803f9773c56495abd5b73332acefde6/ab09cf8d07294772b6d4fd037a5acf53-f2220bf24cbb44fb2b64048a598a35d7-sd.mp4?sign=e18a3ff9952d830ac7989f1c8f6c77c9&t=604f307b"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第6集"><a href="#第6集" class="headerlink" title="第6集"></a>第6集</h3><div id="dplayer5" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer5"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/3e64b8d5170e4459bf091bdf68ff847c/202c07a44e194c91a3f8dfc119b2d3b2-65ee322bdf6c872e49b249a1bccf535c-sd.mp4?sign=932257ff3f8854da7198ade2dc083666&t=604f30a3"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第7集"><a href="#第7集" class="headerlink" title="第7集"></a>第7集</h3><div id="dplayer6" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer6"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/9199db0d86f342d697e67b941f4091ec/b7e099125d9f4f758ae83a85967979a2-f355da1a2ffcf6988a80572d2fc54f8b-sd.mp4?sign=38560359a0259dc91dec605d1f68ecf9&t=604f30ce"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第8集"><a href="#第8集" class="headerlink" title="第8集"></a>第8集</h3><div id="dplayer7" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer7"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/094e89a8ada84935808c14c50d9d7cb7/5ba102d7233e43e3bd988f13200d1a20-004fc2bc9728300671e4b2a69e8dc304-sd.mp4?sign=04359cf2367ac13d75fd3b9d2a3b3547&t=604f30e6"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第9集"><a href="#第9集" class="headerlink" title="第9集"></a>第9集</h3><div id="dplayer8" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer8"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/839377156159436b9e8758675c464e1c/4e1d05d5e4164aa3949e2bcf8f4831fa-7498c4051e861f9848c44ce2d0061132-sd.mp4?sign=229b682d33ca630938296d01bc5daf41&t=604f30fb"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第10集"><a href="#第10集" class="headerlink" title="第10集"></a>第10集</h3><div id="dplayer9" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer9"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/f2744d253473424fa4903a576e2f6ab9/df6148bce6604004a9782ba6cba6515c-dca4812877175bb5f0817c66c4e1788b-sd.mp4?sign=002063fd6470a380b099d835d6a4b588&t=604f310f"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第11集"><a href="#第11集" class="headerlink" title="第11集"></a>第11集</h3><div id="dplayer10" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer10"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/9f728ccf0bf1490686fa90e57b23cda0/83e0421e0e504c60b6ef0f8a6180cab3-31b98bb43db5af9ffb75cc126307c3d4-sd.mp4?sign=02ea79e80d3564c84ff3eda3fb128a43&t=604f3118"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第12集"><a href="#第12集" class="headerlink" title="第12集"></a>第12集</h3><div id="dplayer11" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer11"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/48821a7a9d63495aae431edbeb715c1e/6732129ed77a469f9b4c510fef1b7eb3-fda3ac5860bc4d82594122f4431ffa7e-sd.mp4?sign=46ff5cf5636c5e3a78ffbffcb8e53029&t=604f314d"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第13集"><a href="#第13集" class="headerlink" title="第13集"></a>第13集</h3><div id="dplayer12" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer12"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/620e625ec3154b31b3fa09103ea64d69/1c6110844b46407e84c1d622d99738d8-94fec40076d98a0e7e5b6adf9653542c-sd.mp4?sign=12a4d877b3544a79ca6874d815f3a4f5&t=604f318a"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第14集"><a href="#第14集" class="headerlink" title="第14集"></a>第14集</h3><div id="dplayer13" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer13"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/e806039d01354643b1ae575a0b3e8ac3/1a89817ff0d64453a8d469e6a5a424f6-f6f17032fecf342328b1dce515728ae7-sd.mp4?sign=027cb311107176b0b1d3b180ce590b04&t=604f31f7"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第15集"><a href="#第15集" class="headerlink" title="第15集"></a>第15集</h3><div id="dplayer14" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer14"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/29a194f643664c80abb2dca8ca386350/f92dec786d8847e595e3f14919768a82-7f4bef3de7a143e1ff5fbd4990b3b777-sd.mp4?sign=676609e86311f02316ab830958caa2b4&t=604f3205"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第16集"><a href="#第16集" class="headerlink" title="第16集"></a>第16集</h3><div id="dplayer15" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer15"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/2b9a129e032444289bfe38adb01f04cd/19e65dfc42ac423d92d25b26ba96731a-e9e9b550d7ab4128c6a2bceb6eec7ff8-sd.mp4?sign=915023901f21304bfbee8d4d8199764c&t=604f320e"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第17集"><a href="#第17集" class="headerlink" title="第17集"></a>第17集</h3><div id="dplayer16" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer16"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/52650c071ee743949df2c6727a847dda/c6a850784e434a63871fa7dc3240c679-210a777efaaed9ce796e84cc3135e019-sd.mp4?sign=fc2916c0932b318c00e4525a126f5888&t=604f3217"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> 
+
+<h3 id="第18集"><a href="#第18集" class="headerlink" title="第18集"></a>第18集</h3><div id="dplayer17" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer17"),"autoplay":true,"hotkey":true,"preload":"metadata","video":{"url":"https://qn-cdn-web-local.rr.tv/eceb0bc8039342ee942bdbebdc4d6040/7a11286d8ed94733884db6ec67801d85-6884639498443228d390f6360b35e105-sd.mp4?sign=100b707a42db446dc859fcd62b16f5ca&t=604f3220"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script> ]]></content>
+      <categories>
+        <category>视频</category>
+      </categories>
+      <tags>
+        <tag>视频</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式锁</title>
     <url>/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
-    <content><![CDATA[<h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
 <li>当在分布式模型下，数据只有一份（或有限制），此时需要利用锁的技术控制某一时刻修改数据的进程数。</li>
 <li>与单机模式下的锁不仅需要保证进程可见，还需要考虑进程与锁之间的网络问题。（我觉得分布式情况下之所以问题变得复杂，主要就是需要考虑到网络的延时和不可靠。。。一个大坑）</li>
 <li>分布式锁还是可以将标记存在内存，只是该内存不是某个进程分配的内存而是公共内存如 Redis、Memcache。至于利用数据库、文件等做锁与单机的实现是一样的，只要保证标记能互斥就行。</li>
@@ -771,54 +861,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Seata-server启动闪退问题</title>
-    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
-</blockquote>
-<p>第一步：查看错误日志</p>
-<p>打开cmd</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
-<p>运行seata-server.bat查看错误信息</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
-<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
-<p>找到出错目录</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
-<p>搜索jvm.dll</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
-<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
-<p>返回cmd，重新运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
-<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
-<p>用记事本方式打开seata-server.bat，找到参数设置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
-<p>将其设置为1024,1024，512即可</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
-<p>然后再次在cmd窗口中运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
-<p>如此解决了seata-server闪退的问题</p>
-<p>问题二</p>
-<p>启动报下面的错误</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
-<p>打开nacos，找到配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
-<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
-<p>启动成功：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Seata</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java锁</title>
     <url>/2021/03/15/java%E9%94%81/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
 <p>java 中的锁</p>
 </blockquote>
 <h3 id=""><a href="#" class="headerlink" title=""></a><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607395612436-12737bf6-516f-49fb-b00f-41287fe5cbe8.png"></h3><h3 id="java中有哪些锁"><a href="#java中有哪些锁" class="headerlink" title="java中有哪些锁"></a>java中有哪些锁</h3><ul>
