@@ -204,7 +204,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -282,7 +282,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -295,7 +295,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/" class="post-title-link" itemprop="url">java学习笔记（一）</a>
+          <a href="/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" class="post-title-link" itemprop="url">设计模式（三）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -306,14 +306,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-03-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-02T00:00:00+08:00">2021-03-02</time>
+      <time title="创建时间：2021-03-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T00:00:00+08:00">2021-03-03</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-12 11:07:53" itemprop="dateModified" datetime="2021-03-12T11:07:53+08:00">2021-03-12</time>
+        <time title="修改时间：2021-03-15 09:56:44" itemprop="dateModified" datetime="2021-03-15T09:56:44+08:00">2021-03-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -321,7 +321,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
         </span>
     </span>
 
@@ -333,7 +333,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>441</span>
+      <span>344</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -351,18 +351,79 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>有8种写法，比较完美的有两种</p>
+<ol>
+<li><p>第一种写法 饿汉式 （推荐使用）</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303095809.png" alt="image-20210303095807254"></p>
+</li>
+<li><p>第二种写法 （与第一个没多大区别）</p>
+</li>
+</ol>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303100334.png" alt="image-20210303100333399"></p>
+<ol start="3">
+<li><p>第三种  懒汉式</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303100646.png" alt="image-20210303100645328"></p>
+</li>
+</ol>
+<blockquote>
+<p>在多线程的情况下，会出现混乱的问题。</p>
+</blockquote>
+<ol start="4">
+<li><p>第四种写法 也称为懒汉式 ，为了解决3的问题，加锁，但是效率会降低</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303101652.png" alt="image-20210303101650114"></p>
+</li>
+</ol>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303101828.png" alt="image-20210303101827498"></p>
+<ol start="5">
+<li><p>第五种写法 也称为懒汉式 但还是不能彻底混乱的问题</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303104008.png" alt="image-20210303103235098"></p>
+</li>
+<li><p>第六种写法 也称为懒汉式  双重检查</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303104005.png" alt="image-20210303104003250"></p>
+</li>
+<li><p>第七种写法   比较完美的写法之一 ，静态内部类 ，比第一个完美一些 ，JVM保证了线程安全  </p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303104251.png" alt="image-20210303104248470"></p>
+</li>
+<li><p>第八种写法 完美之二的写法  但实际应用很少</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303104859.png" alt="image-20210303104858499"></p>
+</li>
+</ol>
+<h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>简单示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303142704.png" alt="20210303142542"></p>
+<h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p>定义：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303165428.png" alt="image-20210303165427631"></p>
+<h5 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303175832.png" alt="image-20210303175831580"></p>
+<p>示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303180006.png" alt="20210303175920"></p>
+<p>示例2：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303181728.png" alt="20210303181719"></p>
+<h5 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303180146.png" alt="image-20210303180145554"></p>
+<p>简单示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303180257.png" alt="20210303180236"></p>
+<p>示例2 （<strong>多个工厂方法模式</strong>）：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303182328.png" alt="image-20210303182326999"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303182512.png" alt="image-20210303182511513"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303182536.png" alt="image-20210303182535497"></p>
+<p>示例三：（<strong>静态工厂方法模式</strong>）</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303182834.png" alt="image-20210303182833553"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303182911.png" alt="image-20210303182910733"></p>
+<h5 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h5><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303180358.png" alt="image-20210303180357927"></p>
+<p>简单示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303180654.png" alt="20210303180632"></p>
+<p>示例2：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303183022.png" alt="20210303183012"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303183306.png" alt="image-20210303183304996"></p>
+<h4 id="（扩展：工厂模式-策略模式-示例）"><a href="#（扩展：工厂模式-策略模式-示例）" class="headerlink" title="（扩展：工厂模式 + 策略模式   示例）"></a>（扩展：工厂模式 + 策略模式   示例）</h4><p>步骤一：创建一个接口</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170119.png" alt="image-20210303170118294"></p>
+<p>步骤二：创建实现接口的实体类。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170236.png" alt="image-20210303170234895"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170256.png" alt="image-20210303170255248"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170320.png" alt="image-20210303170319633"></p>
+<p>步骤三：创建工厂</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170407.png" alt="image-20210303170406566"></p>
+<p>步骤四：具体调用</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210303170512.png" alt="image-20210303170511413"></p>
+
       
     </div>
 
@@ -383,7 +444,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
