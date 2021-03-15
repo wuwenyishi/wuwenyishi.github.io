@@ -27,31 +27,51 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="欢迎来到我的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="meadel&#39;s blog">
-<meta property="og:url" content="https://xuemingde.com/index.html">
+<meta name="description" content="java 中的锁  java中有哪些锁 公平锁&#x2F;非公平锁 可重入锁 独享锁&#x2F;共享锁 互斥锁&#x2F;读写锁 乐观锁&#x2F;悲观锁 分段锁 偏向锁&#x2F;轻量级锁&#x2F;重量级锁 自旋锁乐观锁 VS 悲观锁  乐观锁的概念乐观锁认为自己在使用数据时不会有别的线程修改数据，所以不会添加锁，只是在更新数据的时候去判断之前有没有别的线程更新了这个数据。如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java锁">
+<meta property="og:url" content="https://xuemingde.com/2021/03/15/java%E9%94%81/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="欢迎来到我的博客">
+<meta property="og:description" content="java 中的锁  java中有哪些锁 公平锁&#x2F;非公平锁 可重入锁 独享锁&#x2F;共享锁 互斥锁&#x2F;读写锁 乐观锁&#x2F;悲观锁 分段锁 偏向锁&#x2F;轻量级锁&#x2F;重量级锁 自旋锁乐观锁 VS 悲观锁  乐观锁的概念乐观锁认为自己在使用数据时不会有别的线程修改数据，所以不会添加锁，只是在更新数据的时候去判断之前有没有别的线程更新了这个数据。如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607395612436-12737bf6-516f-49fb-b00f-41287fe5cbe8.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396932222-6d3fc249-1ac9-496e-b076-a90db2424fe2.png#align=left&display=inline&height=464&margin=%5Bobject%20Object%5D&name=image.png&originHeight=464&originWidth=1002&size=116933&status=done&style=none&width=1002">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&name=image.png&originHeight=432&originWidth=1190&size=149419&status=done&style=none&width=1190">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607406106200-96579fc8-48b4-47af-993e-892570923983.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607406297240-967f6d60-9f95-4e45-9e81-45b1e8ba458c.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607406912576-cb145224-f1bd-4705-92f2-00766c7917be.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607407107342-ddbcd750-d249-4081-9f98-09c0776c4df8.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607407945887-50d5ac0c-4f6b-4f8e-9719-dd2db42cf528.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607407982065-1029f8ba-3d52-4154-93ce-f292373b872b.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607408071437-b37f524d-0b66-429c-a6e9-ba9343a442f1.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607409491864-00996bca-1008-462f-bcdf-7da6289a5dce.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607409508426-3d3eba67-a2fe-45ed-8e53-2495311930bc.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607409655969-5a4ef5f7-f90d-4230-8a83-6456744c9c10.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607502407490-9f054ec0-56bf-4ac2-9ced-132b595a28dc.png#align=left&display=inline&height=437&margin=%5Bobject%20Object%5D&name=image.png&originHeight=437&originWidth=763&size=117359&status=done&style=none&width=763">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607502715747-638ee7bb-c7b7-4982-b443-6af1e3536af7.png#align=left&display=inline&height=383&margin=%5Bobject%20Object%5D&name=image.png&originHeight=383&originWidth=833&size=243064&status=done&style=none&width=833">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607411662289-d43558c2-7ed3-4594-a93b-ef44d3bc6e12.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607411766822-17c6529f-8c0d-4801-b6fa-57d498b4084e.png">
+<meta property="article:published_time" content="2021-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T01:58:32.429Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="meadel">
+<meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1607395612436-12737bf6-516f-49fb-b00f-41287fe5cbe8.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/15/java%E9%94%81/">
 
 
 <script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>meadel's blog - We need to change the world</title>
+<title>java锁 | meadel's blog</title>
   
 
 
@@ -176,7 +196,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -189,6 +209,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">java中有哪些锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%90%E8%A7%82%E9%94%81-VS-%E6%82%B2%E8%A7%82%E9%94%81"><span class="nav-number">4.</span> <span class="nav-text">乐观锁 VS 悲观锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E9%94%81-VS-%E9%80%82%E5%BA%94%E6%80%A7%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">5.</span> <span class="nav-text">自旋锁 VS 适应性自旋锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E5%B9%B3%E9%94%81-VS-%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="nav-number">6.</span> <span class="nav-text">公平锁 VS 非公平锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81-VS-%E9%9D%9E%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81"><span class="nav-number">7.</span> <span class="nav-text">可重入锁 VS 非可重入锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8B%AC%E4%BA%AB%E9%94%81-VS-%E5%85%B1%E4%BA%AB%E9%94%81"><span class="nav-number">8.</span> <span class="nav-text">独享锁 VS 共享锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E9%94%81-VS-%E5%81%8F%E5%90%91%E9%94%81-VS-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81-VS-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">9.</span> <span class="nav-text">无锁 VS 偏向锁 VS 轻量级锁 VS 重量级锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronized"><span class="nav-number">10.</span> <span class="nav-text">Synchronized</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile"><span class="nav-number">11.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AQS"><span class="nav-number">12.</span> <span class="nav-text">AQS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAS"><span class="nav-number">13.</span> <span class="nav-text">CAS</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -272,16 +293,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/15/java%E9%94%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -294,9 +316,9 @@
       <meta itemprop="name" content="meadel's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/15/java%E9%94%81/" class="post-title-link" itemprop="url">java锁</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          java锁
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -320,6 +342,13 @@
     </span>
 
   
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -345,7 +374,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
+        <blockquote>
 <p>java 中的锁</p>
 </blockquote>
 <h3 id=""><a href="#" class="headerlink" title=""></a><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607395612436-12737bf6-516f-49fb-b00f-41287fe5cbe8.png"></h3><h3 id="java中有哪些锁"><a href="#java中有哪些锁" class="headerlink" title="java中有哪些锁"></a>java中有哪些锁</h3><ul>
@@ -508,7 +537,6 @@
 <p>一个共享变量的操作可以用CAS保证其原子性，多个共享变量的操作，循环CAS是无法保证其原子性的。有个取巧的办法，java先行者设计的AtomicReference类，我们可以通过将多个变量放到一个对象里面，然后由AtomicReference进行原子性地更新。</p>
 <h4 id="CAS典型应用场景"><a href="#CAS典型应用场景" class="headerlink" title="CAS典型应用场景"></a><strong>CAS典型应用场景</strong></h4><p>1、乐观锁思想<br>CAS解决并发的思路可以在很多场景中借鉴，在数据库使用中，可以采用这种方式来避免加锁操作，比如大家学习Hibernate时候的乐观锁。<br>2、Java Concurren<br>Java Concurrent包下大量使用CAS实现并发控制，比如Atomic*，ReentrantLock等。<br>比如AtomicInteger中，就使用CAS。<br>Java无法直接访问底层操作系统，而是通过本地（native）方法来访问。JVM开了一个后门，JDK中有一个类Unsafe，它提供了硬件级别的原子操作。</p>
 
-      
     </div>
 
     
@@ -518,8 +546,38 @@
 
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://xuemingde.com/2021/03/15/java%E9%94%81/" title="java锁">https://xuemingde.com/2021/03/15/java锁/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/" rel="prev" title="Map集合详解">
+                  <i class="fa fa-chevron-left"></i> Map集合详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -527,9 +585,7 @@
 
 
 
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+
 
 
 <script>
@@ -566,11 +622,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/index.html" selected="">
+        <option value="zh-CN" data-href="/2021/03/15/java%E9%94%81/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/index.html" selected="">
+        <option value="en" data-href="/en/2021/03/15/java%E9%94%81/" selected="">
           English
         </option>
       
@@ -675,7 +731,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/15/java%E9%94%81/',]
       });
       });
   </script>
