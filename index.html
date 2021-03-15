@@ -204,7 +204,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -307,7 +307,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-03-15 00:00:00 / 修改时间：09:58:32" itemprop="dateCreated datePublished" datetime="2021-03-15T00:00:00+08:00">2021-03-15</time>
+      <time title="创建时间：2021-03-15 00:00:00 / 修改时间：10:18:59" itemprop="dateCreated datePublished" datetime="2021-03-15T00:00:00+08:00">2021-03-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -356,12 +356,12 @@
 <li>乐观锁/悲观锁</li>
 <li>分段锁</li>
 <li>偏向锁/轻量级锁/重量级锁</li>
-<li>自旋锁<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><h3 id="乐观锁-VS-悲观锁"><a href="#乐观锁-VS-悲观锁" class="headerlink" title="乐观锁 VS 悲观锁"></a>乐观锁 VS 悲观锁</h3></li>
+<li>自旋锁</li>
 </ul>
-<h4 id="乐观锁的概念"><a href="#乐观锁的概念" class="headerlink" title="乐观锁的概念"></a>乐观锁的概念</h4><p>乐观锁认为自己在使用数据时不会有别的线程修改数据，所以不会添加锁，只是在更新数据的时候去判断之前有没有别的线程更新了这个数据。如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线程更新，则根据不同的实现方式执行不同的操作（例如报错或者自动重试）。<br><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396932222-6d3fc249-1ac9-496e-b076-a90db2424fe2.png#align=left&display=inline&height=464&margin=%5Bobject%20Object%5D&name=image.png&originHeight=464&originWidth=1002&size=116933&status=done&style=none&width=1002" alt="image.png"></p>
+<h3 id="乐观锁-VS-悲观锁"><a href="#乐观锁-VS-悲观锁" class="headerlink" title="乐观锁 VS 悲观锁"></a>乐观锁 VS 悲观锁</h3><h4 id="乐观锁的概念"><a href="#乐观锁的概念" class="headerlink" title="乐观锁的概念"></a>乐观锁的概念</h4><p>乐观锁认为自己在使用数据时不会有别的线程修改数据，所以不会添加锁，只是在更新数据的时候去判断之前有没有别的线程更新了这个数据。如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线程更新，则根据不同的实现方式执行不同的操作（例如报错或者自动重试）。<br><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607396932222-6d3fc249-1ac9-496e-b076-a90db2424fe2.png" alt="image.png"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ------------------------- 乐观锁的调用方式 -------------------------</span></span><br><span class="line"><span class="keyword">private</span> AtomicInteger atomicInteger = <span class="keyword">new</span> AtomicInteger();  <span class="comment">// 需要保证多个线程使用的是同一个AtomicInteger</span></span><br><span class="line">atomicInteger.incrementAndGet(); <span class="comment">//执行自增1</span></span><br></pre></td></tr></table></figure>
 <h4 id="悲观锁的概念"><a href="#悲观锁的概念" class="headerlink" title="悲观锁的概念"></a>悲观锁的概念</h4><p>悲观锁认为自己在使用数据的时候一定有别的线程来修改数据，因此在获取数据的时候会先加锁，确保数据不会被别的线程修改。Java中，synchronized关键字和Lock的实现类都是悲观锁。</p>
-<p><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&name=image.png&originHeight=432&originWidth=1190&size=149419&status=done&style=none&width=1190" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png" alt="image.png"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ------------------------- 悲观锁的调用方式 -------------------------</span></span><br><span class="line"><span class="comment">// synchronized</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 操作同步资源</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ReentrantLock</span></span><br><span class="line"><span class="keyword">private</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock(); <span class="comment">// 需要保证多个线程使用的是同一个锁</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyPublicResources</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	lock.lock();</span><br><span class="line">	<span class="comment">// 操作同步资源</span></span><br><span class="line">	lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="乐观锁在java中的实现"><a href="#乐观锁在java中的实现" class="headerlink" title="乐观锁在java中的实现"></a>乐观锁在java中的实现</h4><p>乐观锁在Java中是通过使用无锁编程来实现，最常采用的是CAS算法，Java原子类中的递增操作就通过CAS自旋实现的。</p>
 <blockquote>
@@ -407,7 +407,7 @@
 <h3 id="无锁-VS-偏向锁-VS-轻量级锁-VS-重量级锁"><a href="#无锁-VS-偏向锁-VS-轻量级锁-VS-重量级锁" class="headerlink" title="无锁 VS 偏向锁 VS 轻量级锁 VS 重量级锁"></a>无锁 VS 偏向锁 VS 轻量级锁 VS 重量级锁</h3><blockquote>
 <p>这四种锁是指锁的状态，专门针对synchronized的，涉及到锁升级过程。</p>
 </blockquote>
-<p><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607502407490-9f054ec0-56bf-4ac2-9ced-132b595a28dc.png#align=left&display=inline&height=437&margin=%5Bobject%20Object%5D&name=image.png&originHeight=437&originWidth=763&size=117359&status=done&style=none&width=763" alt="image.png"></p>
+<p><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png" alt="image.png"></p>
 <h4 id="java对象头"><a href="#java对象头" class="headerlink" title="java对象头"></a>java对象头</h4><p>在说java对象头之前，先提一个问题，Object obi = new Object();占几个字符？<br>答案是：</p>
 <ul>
 <li>未开启指针压缩</li>
@@ -416,7 +416,7 @@
 <ul>
 <li>开启了指针压缩(默认是开启的)<br>开启指针压缩后，Class Pointer会被压缩为4字节，</li>
 </ul>
-<p>**      最终大小为：8(Mark Word)+4(Klass Point)+4(对齐填充)=16字节**<br><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607502715747-638ee7bb-c7b7-4982-b443-6af1e3536af7.png#align=left&display=inline&height=383&margin=%5Bobject%20Object%5D&name=image.png&originHeight=383&originWidth=833&size=243064&status=done&style=none&width=833" alt="image.png"><br>java对象头的组成：</p>
+<p><strong>最终大小为：8(Mark Word)+4(Klass Point)+4(对齐填充)=16字节</strong><br><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png" alt="image.png"><br>java对象头的组成：</p>
 <ul>
 <li>Mark Word</li>
 <li>Klass Point</li>
@@ -528,7 +528,7 @@
 
 
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
