@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>java学习笔记（二）</title>
+    <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
+<span id="more"></span>
+
+<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
+<p> 注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
+<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
+<hr>
+<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
+<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
+<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
+<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
+<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
+<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
+<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
+<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
+<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
+<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
+<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
+<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
+<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
+<p>工作线程与回收线程同时进行</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>GC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（一）</title>
+    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<span id="more"></span>
+
+<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
+<p>过程简述：</p>
+<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
+<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
+<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CMS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式（三）</title>
     <url>/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>有8种写法，比较完美的有两种</p>
@@ -84,56 +162,6 @@
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记（二）</title>
-    <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
-<span id="more"></span>
-
-<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
-<p> 注意：</p>
-<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
-<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
-<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
-<hr>
-<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
-<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
-<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
-<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
-<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
-<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
-<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
-<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
-<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
-<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
-<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
-<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
-<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
-<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
-<p>工作线程与回收线程同时进行</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>GC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式（二）</title>
     <url>/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
@@ -175,121 +203,6 @@
       </categories>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java学习笔记（一）</title>
-    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<span id="more"></span>
-
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>CMS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式事务</title>
-    <url>/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
-<p>文章来源：<a href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
-<p>具体不多讲，详情看文章来源</p>
-</blockquote>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png" alt="image-20210310095052994"></p>
-<span id="more"></span>
-
-<h3 id="分布式事务产生的情景"><a href="#分布式事务产生的情景" class="headerlink" title="分布式事务产生的情景"></a>分布式事务产生的情景</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111105762.png" alt="image-20210310111105762"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111122121.png" alt="image-20210310111122121"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111135604.png" alt="image-20210310111135604"></p>
-<h3 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111713208.png" alt="image-20210310111713208"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111823153.png" alt="image-20210310111823153"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111839653.png" alt="image-20210310111839653"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112230088.png" alt="image-20210310112230088"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112245668.png" alt="image-20210310112245668"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112305735.png" alt="image-20210310112305735"></p>
-<p>**重点 **</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112443572.png" alt="image-20210310112443572"></p>
-<p><strong>CPA的组合方式</strong></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112909937.png" alt="image-20210310112909937"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112932874.png" alt="image-20210310112932874"></p>
-<p>总结</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113100211.png" alt="image-20210310113100211"></p>
-<p><strong>几个分布式架构CPA</strong></p>
-<ul>
-<li><p>zookeeper（Dubbo）：CP</p>
-</li>
-<li><p>eureka（springcloud  - netflix）：AP</p>
-</li>
-<li><p>nacos：（Springcloud  - alibaba）：AP</p>
-</li>
-<li><p>redis集群：AP</p>
-</li>
-</ul>
-<h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113839296.png" alt="image-20210310113839296"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113947118.png" alt="image-20210310113947118"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114211959.png" alt="image-20210310114211959"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114558794.png" alt="image-20210310114558794"></p>
-<p>ACID 和 BASE 的区别与联系ACID 和 BASE 的区别与联系</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114325451.png" alt="image-20210310114325451"></p>
-<p>CAP 与 BASE 关系</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114440621.png" alt="image-20210310114440621"></p>
-<h3 id="分布式事务解决方案"><a href="#分布式事务解决方案" class="headerlink" title="分布式事务解决方案"></a>分布式事务解决方案</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095942828.png" alt="image-20210310095942828"></p>
-<h4 id="2PC-两阶段提交"><a href="#2PC-两阶段提交" class="headerlink" title="**2PC **  两阶段提交"></a>**2PC **  两阶段提交</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310100845788.png" alt="image-20210310100845788"></p>
-<p>假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103855011.png" alt="image-20210310103855011"></p>
-<p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103910529.png" alt="image-20210310103910529"></p>
-<p>如果第二阶段提交失败会如何？</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104040403.png" alt="image-20210310104040403"></p>
-<p>协调者故障</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104139596.png" alt="image-20210310104139596"></p>
-<p>总结</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104522151.png" alt="image-20210310104522151"></p>
-<h4 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104742475.png" alt="image-20210310104742475"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-885daf4ba34102d6e1047b0b67910652_r.jpg" alt="img"></p>
-<p>总结</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105402382.png" alt="image-20210310105402382"></p>
-<h4 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105753937.png" alt="image-20210310105753937"></p>
-<p>流程</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105851289.png" alt="image-20210310105851289"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg" alt="img"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110112096.png" alt="image-20210310110112096"></p>
-<blockquote>
-<p><strong>幂等性：就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用</strong></p>
-</blockquote>
-<h4 id="本地消息列表"><a href="#本地消息列表" class="headerlink" title="本地消息列表"></a>本地消息列表</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110342821.png" alt="image-20210310110342821"></p>
-<h4 id="消息事务"><a href="#消息事务" class="headerlink" title="消息事务"></a>消息事务</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110553662.png" alt="image-20210310110553662"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-72ba7bed684e855606c44ddda185987d_720w.jpg" alt="img"></p>
-<p>可以看到消息事务实现的也是最终一致性。</p>
-<h4 id="最大努力通知-（MQ就是一种）"><a href="#最大努力通知-（MQ就是一种）" class="headerlink" title="最大努力通知 （MQ就是一种）"></a>最大努力通知 （MQ就是一种）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114807940.png" alt="image-20210310114807940"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114822848.png" alt="image-20210310114822848"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114907740.png" alt="image-20210310114907740"></p>
-<p>总结</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png" alt="image-20210310115019855"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png" alt="image-20210310115109923"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
       </tags>
   </entry>
   <entry>
@@ -389,60 +302,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务 --  JTA</title>
-    <url>/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
-<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
-<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
-<li></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<span id="more"></span>
-
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式（一）</title>
-    <url>/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-<span id="more"></span>
-
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java学习笔记（二）</title>
     <url>/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
@@ -496,6 +355,147 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式（一）</title>
+    <url>/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+<span id="more"></span>
+
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式事务</title>
+    <url>/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
+<p>文章来源：<a href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
+<p>具体不多讲，详情看文章来源</p>
+</blockquote>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png" alt="image-20210310095052994"></p>
+<span id="more"></span>
+
+<h3 id="分布式事务产生的情景"><a href="#分布式事务产生的情景" class="headerlink" title="分布式事务产生的情景"></a>分布式事务产生的情景</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111105762.png" alt="image-20210310111105762"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111122121.png" alt="image-20210310111122121"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111135604.png" alt="image-20210310111135604"></p>
+<h3 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111713208.png" alt="image-20210310111713208"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111823153.png" alt="image-20210310111823153"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111839653.png" alt="image-20210310111839653"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112230088.png" alt="image-20210310112230088"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112245668.png" alt="image-20210310112245668"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112305735.png" alt="image-20210310112305735"></p>
+<p>**重点 **</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112443572.png" alt="image-20210310112443572"></p>
+<p><strong>CPA的组合方式</strong></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112909937.png" alt="image-20210310112909937"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112932874.png" alt="image-20210310112932874"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113100211.png" alt="image-20210310113100211"></p>
+<p><strong>几个分布式架构CPA</strong></p>
+<ul>
+<li><p>zookeeper（Dubbo）：CP</p>
+</li>
+<li><p>eureka（springcloud  - netflix）：AP</p>
+</li>
+<li><p>nacos：（Springcloud  - alibaba）：AP</p>
+</li>
+<li><p>redis集群：AP</p>
+</li>
+</ul>
+<h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113839296.png" alt="image-20210310113839296"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113947118.png" alt="image-20210310113947118"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114211959.png" alt="image-20210310114211959"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114558794.png" alt="image-20210310114558794"></p>
+<p>ACID 和 BASE 的区别与联系ACID 和 BASE 的区别与联系</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114325451.png" alt="image-20210310114325451"></p>
+<p>CAP 与 BASE 关系</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114440621.png" alt="image-20210310114440621"></p>
+<h3 id="分布式事务解决方案"><a href="#分布式事务解决方案" class="headerlink" title="分布式事务解决方案"></a>分布式事务解决方案</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095942828.png" alt="image-20210310095942828"></p>
+<h4 id="2PC-两阶段提交"><a href="#2PC-两阶段提交" class="headerlink" title="**2PC **  两阶段提交"></a>**2PC **  两阶段提交</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310100845788.png" alt="image-20210310100845788"></p>
+<p>假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103855011.png" alt="image-20210310103855011"></p>
+<p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103910529.png" alt="image-20210310103910529"></p>
+<p>如果第二阶段提交失败会如何？</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104040403.png" alt="image-20210310104040403"></p>
+<p>协调者故障</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104139596.png" alt="image-20210310104139596"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104522151.png" alt="image-20210310104522151"></p>
+<h4 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104742475.png" alt="image-20210310104742475"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-885daf4ba34102d6e1047b0b67910652_r.jpg" alt="img"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105402382.png" alt="image-20210310105402382"></p>
+<h4 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105753937.png" alt="image-20210310105753937"></p>
+<p>流程</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105851289.png" alt="image-20210310105851289"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg" alt="img"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110112096.png" alt="image-20210310110112096"></p>
+<blockquote>
+<p><strong>幂等性：就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用</strong></p>
+</blockquote>
+<h4 id="本地消息列表"><a href="#本地消息列表" class="headerlink" title="本地消息列表"></a>本地消息列表</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110342821.png" alt="image-20210310110342821"></p>
+<h4 id="消息事务"><a href="#消息事务" class="headerlink" title="消息事务"></a>消息事务</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110553662.png" alt="image-20210310110553662"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-72ba7bed684e855606c44ddda185987d_720w.jpg" alt="img"></p>
+<p>可以看到消息事务实现的也是最终一致性。</p>
+<h4 id="最大努力通知-（MQ就是一种）"><a href="#最大努力通知-（MQ就是一种）" class="headerlink" title="最大努力通知 （MQ就是一种）"></a>最大努力通知 （MQ就是一种）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114807940.png" alt="image-20210310114807940"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114822848.png" alt="image-20210310114822848"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114907740.png" alt="image-20210310114907740"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png" alt="image-20210310115019855"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png" alt="image-20210310115109923"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式事务 --  JTA</title>
+    <url>/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式事务之seata</title>
     <url>/2021/03/11/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210311/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -540,6 +540,75 @@
       </tags>
   </entry>
   <entry>
+    <title>springBoot整合seata（一）</title>
+    <url>/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>参考文章</p>
+<ul>
+<li><a href="https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo">https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo</a></li>
+<li><a href="https://thinkingcao.blog.csdn.net/article/details/109320221">https://thinkingcao.blog.csdn.net/article/details/109320221</a></li>
+</ul>
+</blockquote>
+<h2 id="安装seata"><a href="#安装seata" class="headerlink" title="安装seata"></a>安装seata</h2><blockquote>
+<p>在安装了nacos的前提下</p>
+</blockquote>
+<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>下载seata-1.3.0</p>
+<p><a href="https://codeload.github.com/seata/seata/zip/v1.3.0">https://codeload.github.com/seata/seata/zip/v1.3.0</a></p>
+<p>下载seata-server-1.4.1</p>
+<p><a href="https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip">https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip</a></p>
+<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>在你的参与全局事务的数据库中加入undo_log这张表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;undo_log&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;     BIGINT(20)   NOT NULL COMMENT &#39;branch transaction id&#39;,</span><br><span class="line">    &#96;xid&#96;           VARCHAR(100) NOT NULL COMMENT &#39;global transaction id&#39;,</span><br><span class="line">    &#96;context&#96;       VARCHAR(128) NOT NULL COMMENT &#39;undo_log context,such as serialization&#39;,</span><br><span class="line">    &#96;rollback_info&#96; LONGBLOB     NOT NULL COMMENT &#39;rollback info&#39;,</span><br><span class="line">    &#96;log_status&#96;    INT(11)      NOT NULL COMMENT &#39;0:normal status,1:defense status&#39;,</span><br><span class="line">    &#96;log_created&#96;   DATETIME(6)  NOT NULL COMMENT &#39;create datetime&#39;,</span><br><span class="line">    &#96;log_modified&#96;  DATETIME(6)  NOT NULL COMMENT &#39;modify datetime&#39;,</span><br><span class="line">    UNIQUE KEY &#96;ux_undo_log&#96; (&#96;xid&#96;, &#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  AUTO_INCREMENT &#x3D; 1</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8 COMMENT &#x3D;&#39;AT transaction mode undo table&#39;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在你的mysql数据库中创建名为seata的库,并使用以下下sql</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;global_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;xid&#96;                       VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;            BIGINT,</span><br><span class="line">    &#96;status&#96;                    TINYINT      NOT NULL,</span><br><span class="line">    &#96;application_id&#96;            VARCHAR(32),</span><br><span class="line">    &#96;transaction_service_group&#96; VARCHAR(32),</span><br><span class="line">    &#96;transaction_name&#96;          VARCHAR(128),</span><br><span class="line">    &#96;timeout&#96;                   INT,</span><br><span class="line">    &#96;begin_time&#96;                BIGINT,</span><br><span class="line">    &#96;application_data&#96;          VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;                DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;              DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;xid&#96;),</span><br><span class="line">    KEY &#96;idx_gmt_modified_status&#96; (&#96;gmt_modified&#96;, &#96;status&#96;),</span><br><span class="line">    KEY &#96;idx_transaction_id&#96; (&#96;transaction_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;branch_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;         BIGINT       NOT NULL,</span><br><span class="line">    &#96;xid&#96;               VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;    BIGINT,</span><br><span class="line">    &#96;resource_group_id&#96; VARCHAR(32),</span><br><span class="line">    &#96;resource_id&#96;       VARCHAR(256),</span><br><span class="line">    &#96;branch_type&#96;       VARCHAR(8),</span><br><span class="line">    &#96;status&#96;            TINYINT,</span><br><span class="line">    &#96;client_id&#96;         VARCHAR(64),</span><br><span class="line">    &#96;application_data&#96;  VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;        DATETIME(6),</span><br><span class="line">    &#96;gmt_modified&#96;      DATETIME(6),</span><br><span class="line">    PRIMARY KEY (&#96;branch_id&#96;),</span><br><span class="line">    KEY &#96;idx_xid&#96; (&#96;xid&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;lock_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;row_key&#96;        VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;xid&#96;            VARCHAR(96),</span><br><span class="line">    &#96;transaction_id&#96; BIGINT,</span><br><span class="line">    &#96;branch_id&#96;      BIGINT       NOT NULL,</span><br><span class="line">    &#96;resource_id&#96;    VARCHAR(256),</span><br><span class="line">    &#96;table_name&#96;     VARCHAR(32),</span><br><span class="line">    &#96;pk&#96;             VARCHAR(36),</span><br><span class="line">    &#96;gmt_create&#96;     DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;   DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;row_key&#96;),</span><br><span class="line">    KEY &#96;idx_branch_id&#96; (&#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三部"><a href="#第三部" class="headerlink" title="第三部"></a>第三部</h3><p>在你的项目中引入seata依赖</p>
+<p>如果你的微服务是dubbo:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你是springcloud</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>从官方github仓库拿到参考配置做修改:<a href="https://github.com/seata/seata/tree/develop/script/client">https://github.com/seata/seata/tree/develop/script/client</a></p>
+<p>加到你项目的application.yml中.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">application-id:</span> <span class="string">applicationName</span></span><br><span class="line">  <span class="attr">tx-service-group:</span> <span class="string">my_test_tx_group</span></span><br><span class="line">  <span class="attr">enable-auto-data-source-proxy:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">serverAddr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">registry:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">application:</span> <span class="string">seata-server</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><p>运行你下载的nacos,并参考<a href="https://github.com/seata/seata/tree/develop/script/config-center">https://github.com/seata/seata/tree/develop/script/config-center</a> 的config.txt并修改</p>
+<p>文件在</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312170639465.png" alt="image-20210312170639465"></p>
+<p>修改config.txt</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">service.vgroupMapping.my_test_tx_group</span>=<span class="string">default</span></span><br><span class="line"><span class="meta">store.mode</span>=<span class="string">db</span></span><br><span class="line"><span class="meta">store.db.datasource</span>=<span class="string">druid</span></span><br><span class="line"><span class="meta">store.db.dbType</span>=<span class="string">mysql</span></span><br><span class="line"><span class="meta">store.db.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">store.db.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="meta">store.db.user</span>=<span class="string">username</span></span><br><span class="line"><span class="meta">store.db.password</span>=<span class="string">password</span></span><br><span class="line"><span class="meta">store.db.minConn</span>=<span class="string">5</span></span><br><span class="line"><span class="meta">store.db.maxConn</span>=<span class="string">30</span></span><br><span class="line"><span class="meta">store.db.globalTable</span>=<span class="string">global_table</span></span><br><span class="line"><span class="meta">store.db.branchTable</span>=<span class="string">branch_table</span></span><br><span class="line"><span class="meta">store.db.queryLimit</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">store.db.lockTable</span>=<span class="string">lock_table</span></span><br><span class="line"><span class="meta">store.db.maxWait</span>=<span class="string">5000</span></span><br></pre></td></tr></table></figure>
+
+<p>运行仓库中提供的nacos脚本,将以上信息提交到nacos控制台,如果有需要更改,可直接通过控制台更改</p>
+<p>进入文件夹下</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171029260.png" alt="image-20210312171029260"></p>
+<p>右键</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171131042.png" alt="image-20210312171131042"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171216907.png" alt="image-20210312171216907"></p>
+<p> 进入nacos查看</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171537526.png" alt="image-20210312171537526"></p>
+<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><p>更改server中的registry.conf</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171654248.png" alt="image-20210312171654248"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171805716.png" alt="image-20210312171805716"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171822584.png" alt="image-20210312171822584"></p>
+<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>运行seata-server</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171941551.png" alt="image-20210312171941551"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312172018047.png" alt="image-20210312172018047"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>seata</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一些简单的面试题（一）</title>
     <url>/2021/03/15/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210315/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
@@ -562,6 +631,54 @@
       </categories>
       <tags>
         <tag>java面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springBoot整合Nacos</title>
+    <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
+<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
+<p>账户密码默认：nacos/nacos </p>
+<span id="more"></span>
+
+<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764"></p>
+<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
+<li><p>新建  命名空间</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721"></p>
+</li>
+</ol>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311"></p>
+<p>新建配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015"></p>
+<p>代码配置</p>
+<p>maven引用</p>
+<!--nacos组件-->
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<p>新建 bootstrap.yml 文件，内容如下：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513"></p>
+<p>与服务端配置对比</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139"></p>
+<p>新建获取配置信息文件，示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853"></p>
+<p>测试获取配置信息：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176"></p>
+<p>测试：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>nacos</tag>
       </tags>
   </entry>
   <entry>
@@ -652,123 +769,6 @@
       </categories>
       <tags>
         <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springBoot整合seata（一）</title>
-    <url>/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>参考文章</p>
-<ul>
-<li><a href="https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo">https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo</a></li>
-<li><a href="https://thinkingcao.blog.csdn.net/article/details/109320221">https://thinkingcao.blog.csdn.net/article/details/109320221</a></li>
-</ul>
-</blockquote>
-<h2 id="安装seata"><a href="#安装seata" class="headerlink" title="安装seata"></a>安装seata</h2><blockquote>
-<p>在安装了nacos的前提下</p>
-</blockquote>
-<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>下载seata-1.3.0</p>
-<p><a href="https://codeload.github.com/seata/seata/zip/v1.3.0">https://codeload.github.com/seata/seata/zip/v1.3.0</a></p>
-<p>下载seata-server-1.4.1</p>
-<p><a href="https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip">https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip</a></p>
-<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>在你的参与全局事务的数据库中加入undo_log这张表</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;undo_log&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;     BIGINT(20)   NOT NULL COMMENT &#39;branch transaction id&#39;,</span><br><span class="line">    &#96;xid&#96;           VARCHAR(100) NOT NULL COMMENT &#39;global transaction id&#39;,</span><br><span class="line">    &#96;context&#96;       VARCHAR(128) NOT NULL COMMENT &#39;undo_log context,such as serialization&#39;,</span><br><span class="line">    &#96;rollback_info&#96; LONGBLOB     NOT NULL COMMENT &#39;rollback info&#39;,</span><br><span class="line">    &#96;log_status&#96;    INT(11)      NOT NULL COMMENT &#39;0:normal status,1:defense status&#39;,</span><br><span class="line">    &#96;log_created&#96;   DATETIME(6)  NOT NULL COMMENT &#39;create datetime&#39;,</span><br><span class="line">    &#96;log_modified&#96;  DATETIME(6)  NOT NULL COMMENT &#39;modify datetime&#39;,</span><br><span class="line">    UNIQUE KEY &#96;ux_undo_log&#96; (&#96;xid&#96;, &#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  AUTO_INCREMENT &#x3D; 1</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8 COMMENT &#x3D;&#39;AT transaction mode undo table&#39;;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在你的mysql数据库中创建名为seata的库,并使用以下下sql</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;global_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;xid&#96;                       VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;            BIGINT,</span><br><span class="line">    &#96;status&#96;                    TINYINT      NOT NULL,</span><br><span class="line">    &#96;application_id&#96;            VARCHAR(32),</span><br><span class="line">    &#96;transaction_service_group&#96; VARCHAR(32),</span><br><span class="line">    &#96;transaction_name&#96;          VARCHAR(128),</span><br><span class="line">    &#96;timeout&#96;                   INT,</span><br><span class="line">    &#96;begin_time&#96;                BIGINT,</span><br><span class="line">    &#96;application_data&#96;          VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;                DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;              DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;xid&#96;),</span><br><span class="line">    KEY &#96;idx_gmt_modified_status&#96; (&#96;gmt_modified&#96;, &#96;status&#96;),</span><br><span class="line">    KEY &#96;idx_transaction_id&#96; (&#96;transaction_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;branch_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;         BIGINT       NOT NULL,</span><br><span class="line">    &#96;xid&#96;               VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;    BIGINT,</span><br><span class="line">    &#96;resource_group_id&#96; VARCHAR(32),</span><br><span class="line">    &#96;resource_id&#96;       VARCHAR(256),</span><br><span class="line">    &#96;branch_type&#96;       VARCHAR(8),</span><br><span class="line">    &#96;status&#96;            TINYINT,</span><br><span class="line">    &#96;client_id&#96;         VARCHAR(64),</span><br><span class="line">    &#96;application_data&#96;  VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;        DATETIME(6),</span><br><span class="line">    &#96;gmt_modified&#96;      DATETIME(6),</span><br><span class="line">    PRIMARY KEY (&#96;branch_id&#96;),</span><br><span class="line">    KEY &#96;idx_xid&#96; (&#96;xid&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;lock_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;row_key&#96;        VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;xid&#96;            VARCHAR(96),</span><br><span class="line">    &#96;transaction_id&#96; BIGINT,</span><br><span class="line">    &#96;branch_id&#96;      BIGINT       NOT NULL,</span><br><span class="line">    &#96;resource_id&#96;    VARCHAR(256),</span><br><span class="line">    &#96;table_name&#96;     VARCHAR(32),</span><br><span class="line">    &#96;pk&#96;             VARCHAR(36),</span><br><span class="line">    &#96;gmt_create&#96;     DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;   DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;row_key&#96;),</span><br><span class="line">    KEY &#96;idx_branch_id&#96; (&#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
-
-<h3 id="第三部"><a href="#第三部" class="headerlink" title="第三部"></a>第三部</h3><p>在你的项目中引入seata依赖</p>
-<p>如果你的微服务是dubbo:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果你是springcloud</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>从官方github仓库拿到参考配置做修改:<a href="https://github.com/seata/seata/tree/develop/script/client">https://github.com/seata/seata/tree/develop/script/client</a></p>
-<p>加到你项目的application.yml中.</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">application-id:</span> <span class="string">applicationName</span></span><br><span class="line">  <span class="attr">tx-service-group:</span> <span class="string">my_test_tx_group</span></span><br><span class="line">  <span class="attr">enable-auto-data-source-proxy:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">serverAddr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">registry:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">application:</span> <span class="string">seata-server</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><p>运行你下载的nacos,并参考<a href="https://github.com/seata/seata/tree/develop/script/config-center">https://github.com/seata/seata/tree/develop/script/config-center</a> 的config.txt并修改</p>
-<p>文件在</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312170639465.png" alt="image-20210312170639465"></p>
-<p>修改config.txt</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">service.vgroupMapping.my_test_tx_group</span>=<span class="string">default</span></span><br><span class="line"><span class="meta">store.mode</span>=<span class="string">db</span></span><br><span class="line"><span class="meta">store.db.datasource</span>=<span class="string">druid</span></span><br><span class="line"><span class="meta">store.db.dbType</span>=<span class="string">mysql</span></span><br><span class="line"><span class="meta">store.db.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">store.db.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="meta">store.db.user</span>=<span class="string">username</span></span><br><span class="line"><span class="meta">store.db.password</span>=<span class="string">password</span></span><br><span class="line"><span class="meta">store.db.minConn</span>=<span class="string">5</span></span><br><span class="line"><span class="meta">store.db.maxConn</span>=<span class="string">30</span></span><br><span class="line"><span class="meta">store.db.globalTable</span>=<span class="string">global_table</span></span><br><span class="line"><span class="meta">store.db.branchTable</span>=<span class="string">branch_table</span></span><br><span class="line"><span class="meta">store.db.queryLimit</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">store.db.lockTable</span>=<span class="string">lock_table</span></span><br><span class="line"><span class="meta">store.db.maxWait</span>=<span class="string">5000</span></span><br></pre></td></tr></table></figure>
-
-<p>运行仓库中提供的nacos脚本,将以上信息提交到nacos控制台,如果有需要更改,可直接通过控制台更改</p>
-<p>进入文件夹下</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171029260.png" alt="image-20210312171029260"></p>
-<p>右键</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171131042.png" alt="image-20210312171131042"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171216907.png" alt="image-20210312171216907"></p>
-<p> 进入nacos查看</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171537526.png" alt="image-20210312171537526"></p>
-<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><p>更改server中的registry.conf</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171654248.png" alt="image-20210312171654248"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171805716.png" alt="image-20210312171805716"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171822584.png" alt="image-20210312171822584"></p>
-<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>运行seata-server</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171941551.png" alt="image-20210312171941551"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312172018047.png" alt="image-20210312172018047"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>seata</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springBoot整合Nacos</title>
-    <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
-<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
-<p>账户密码默认：nacos/nacos </p>
-<span id="more"></span>
-
-<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764"></p>
-<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
-<li><p>新建  命名空间</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721"></p>
-</li>
-</ol>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311"></p>
-<p>新建配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015"></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513"></p>
-<p>与服务端配置对比</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139"></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853"></p>
-<p>测试获取配置信息：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176"></p>
-<p>测试：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>nacos</tag>
       </tags>
   </entry>
   <entry>
