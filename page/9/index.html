@@ -206,7 +206,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -219,7 +219,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/" class="post-title-link" itemprop="url">分布式事务</a>
+          <a href="/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/" class="post-title-link" itemprop="url">分布式事务 --  JTA</a>
         </h2>
 
         <div class="post-meta-container">
@@ -311,14 +311,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-03-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-09T00:00:00+08:00">2021-03-09</time>
+      <time title="创建时间：2021-03-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-10T00:00:00+08:00">2021-03-10</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-12 11:06:57" itemprop="dateModified" datetime="2021-03-12T11:06:57+08:00">2021-03-12</time>
+        <time title="修改时间：2021-03-12 11:07:07" itemprop="dateModified" datetime="2021-03-12T11:07:07+08:00">2021-03-12</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -338,7 +338,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>553</span>
+      <span>499</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -356,14 +356,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
-<p>文章来源：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
-<p>具体不多讲，详情看文章来源</p>
+          <h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
 </blockquote>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png" alt="image-20210310095052994"></p>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/09/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210309/#more" rel="contents">
+              <a class="btn" href="/2021/03/10/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210310/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -389,7 +400,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
