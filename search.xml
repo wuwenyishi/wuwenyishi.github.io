@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>关于一些MQ的面试题</title>
+    <url>/2021/03/16/21031701/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
+</blockquote>
+<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java学习笔记（二）</title>
     <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
@@ -48,6 +75,34 @@
       </categories>
       <tags>
         <tag>GC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（一）</title>
+    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<span id="more"></span>
+
+<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
+<p>过程简述：</p>
+<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
+<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
+<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CMS</tag>
       </tags>
   </entry>
   <entry>
@@ -134,61 +189,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/2021/03/16/21031701/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
-</blockquote>
-<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java学习笔记（一）</title>
-    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<span id="more"></span>
-
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>CMS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式（二）</title>
     <url>/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
@@ -233,56 +233,31 @@
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记（二）</title>
-    <url>/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
-<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
-<li>申请内存，设默认值 0 </li>
-<li>设置初始值 </li>
-<li>建立关联</li>
-</ol>
-<span id="more"></span>
-
-<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
-<p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
-<h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
-<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
-<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
-<p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
-<h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
-<p>没有加锁的对象与加锁的对象的内存布局对比</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
-<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
-<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
-<p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
-<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
-<h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
-<p>解决：加版本号</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
-<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
-<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
-<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
-<p> 如何让第二个线程先执行</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
+    <title>RabbitMQ防止数据丢失问题简单介绍</title>
+    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
+</blockquote>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
 ]]></content>
       <categories>
-        <category>学习笔记</category>
+        <category>面试</category>
       </categories>
       <tags>
-        <tag>JVM</tag>
+        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -399,6 +374,59 @@
       </categories>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（二）</title>
+    <url>/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
+<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
+<li>申请内存，设默认值 0 </li>
+<li>设置初始值 </li>
+<li>建立关联</li>
+</ol>
+<span id="more"></span>
+
+<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
+<p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
+<h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
+<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
+<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
+<p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
+<h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
+<p>没有加锁的对象与加锁的对象的内存布局对比</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
+<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
+<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
+<p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
+<h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
+<p>解决：加版本号</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
+<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
+<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
+<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
+<p> 如何让第二个线程先执行</p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
+<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -661,54 +689,6 @@
       </tags>
   </entry>
   <entry>
-    <title>springBoot整合Nacos</title>
-    <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
-<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
-<p>账户密码默认：nacos/nacos </p>
-<span id="more"></span>
-
-<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764"></p>
-<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
-<li><p>新建  命名空间</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721"></p>
-</li>
-</ol>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311"></p>
-<p>新建配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015"></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513"></p>
-<p>与服务端配置对比</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139"></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853"></p>
-<p>测试获取配置信息：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176"></p>
-<p>测试：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>nacos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式锁</title>
     <url>/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
@@ -796,6 +776,54 @@
       </categories>
       <tags>
         <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springBoot整合Nacos</title>
+    <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
+<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
+<p>账户密码默认：nacos/nacos </p>
+<span id="more"></span>
+
+<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764"></p>
+<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
+<li><p>新建  命名空间</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721"></p>
+</li>
+</ol>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311"></p>
+<p>新建配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015"></p>
+<p>代码配置</p>
+<p>maven引用</p>
+<!--nacos组件-->
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<p>新建 bootstrap.yml 文件，内容如下：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513"></p>
+<p>与服务端配置对比</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139"></p>
+<p>新建获取配置信息文件，示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853"></p>
+<p>测试获取配置信息：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176"></p>
+<p>测试：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>nacos</tag>
       </tags>
   </entry>
   <entry>
