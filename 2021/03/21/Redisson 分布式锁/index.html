@@ -27,19 +27,29 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="欢迎来到我的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="meadel&#39;s blog">
-<meta property="og:url" content="https://xuemingde.com/archives/2021/02/index.html">
+<meta name="description" content="推荐文章：Springboot使用分布式锁（基于redisson），   常见的分布式锁实现方案 Redisson原理分析图解 加锁机制 watch dog自动延期机制 为啥要用lua脚本呢 可重入加锁机制 Redis分布式锁的缺点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redisson 分布式锁">
+<meta property="og:url" content="https://xuemingde.com/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="欢迎来到我的博客">
+<meta property="og:description" content="推荐文章：Springboot使用分布式锁（基于redisson），   常见的分布式锁实现方案 Redisson原理分析图解 加锁机制 watch dog自动延期机制 为啥要用lua脚本呢 可重入加锁机制 Redis分布式锁的缺点">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png">
+<meta property="article:published_time" content="2021-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T11:44:49.996Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="meadel">
+<meta property="article:tag" content="Redisson">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/archives/2021/02/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
 
 
 <script class="page-configurations">
@@ -47,11 +57,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>归档 | meadel's blog</title>
+<title>Redisson 分布式锁 | meadel's blog</title>
   
 
 
@@ -176,7 +186,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
 	
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
@@ -190,6 +200,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">常见的分布式锁实现方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redisson%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E5%9B%BE%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">Redisson原理分析图解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">加锁机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch-dog%E8%87%AA%E5%8A%A8%E5%BB%B6%E6%9C%9F%E6%9C%BA%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">watch dog自动延期机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E8%A6%81%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%91%A2"><span class="nav-number">2.3.</span> <span class="nav-text">为啥要用lua脚本呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E5%8A%A0%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text">可重入加锁机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">Redis分布式锁的缺点</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1468592465&auto=1&height=66"></iframe>
@@ -277,49 +288,153 @@
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 19 篇日志。 继续努力。</span>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redisson 分布式锁
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-21 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-21T00:00:00+08:00">2021-03-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-22 19:44:49" itemprop="dateModified" datetime="2021-03-22T19:44:49+08:00">2021-03-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
       </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>106</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>推荐文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/tianyaleixiaowu/article/details/90036180">Springboot使用分布式锁（基于redisson）</a>， </p>
+</blockquote>
+<h2 id="常见的分布式锁实现方案"><a href="#常见的分布式锁实现方案" class="headerlink" title="常见的分布式锁实现方案"></a><strong>常见的分布式锁实现方案</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt="image.png"></strong></p>
+<h2 id="Redisson原理分析图解"><a href="#Redisson原理分析图解" class="headerlink" title="Redisson原理分析图解"></a>Redisson原理分析图解</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt="image"></p>
+<h3 id="加锁机制"><a href="#加锁机制" class="headerlink" title="加锁机制"></a>加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt="image.png"></p>
+<h3 id="watch-dog自动延期机制"><a href="#watch-dog自动延期机制" class="headerlink" title="watch dog自动延期机制"></a>watch dog自动延期机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt="image.png"></p>
+<h3 id="为啥要用lua脚本呢"><a href="#为啥要用lua脚本呢" class="headerlink" title="为啥要用lua脚本呢"></a>为啥要用lua脚本呢</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt="image.png"></p>
+<h3 id="可重入加锁机制"><a href="#可重入加锁机制" class="headerlink" title="可重入加锁机制"></a>可重入加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt="image.png"></p>
+<h2 id="Redis分布式锁的缺点"><a href="#Redis分布式锁的缺点" class="headerlink" title="Redis分布式锁的缺点"></a>Redis分布式锁的缺点</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt="image.png"></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-02-26T00:00:00+08:00"
-              content="2021-02-26">
-          02-26
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" itemprop="url">
-            <span itemprop="name">java学习笔记（二）</span>
-          </a>
-      </div>
-
+    
+    
+    
       
-    </header>
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://xuemingde.com/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" title="Redisson 分布式锁">https://xuemingde.com/2021/03/21/Redisson 分布式锁/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Redisson/" rel="tag"><i class="fa fa-tag"></i> Redisson</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" rel="prev" title="RabbitMQ防止数据丢失问题简单介绍">
+                  <i class="fa fa-chevron-left"></i> RabbitMQ防止数据丢失问题简单介绍
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 
 <script>
@@ -356,11 +471,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/archives/2021/02/index.html" selected="">
+        <option value="zh-CN" data-href="/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/archives/2021/02/index.html" selected="">
+        <option value="en" data-href="/en/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" selected="">
           English
         </option>
       
@@ -465,7 +580,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/archives/2021/02/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/',]
       });
       });
   </script>
