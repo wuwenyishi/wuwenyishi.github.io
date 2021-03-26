@@ -27,36 +27,40 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="推荐文章：消息Ack确认机制 ， RabbitMQ如何处理消息丢失 ， RabbitMQ防止数据丢失  数据丢失的原因 消息持久化  消息确认机制confirm机制   生产者确认模式实现原理 理解RabbitMQ Confirm消息确认机制 RabbitMQ Confirm确认机制流程图 事务机制(ACK)    ACK工作原理">
+<meta name="description" content="相关文章：文章1    并发编程三要素(线程三大特性) 线程的状态 线程的实现方式 sleep() 和 wait() 有什么区别 notify()和 notifyAll()有什么区别 线程的 run() 和 start() 有什么区别 Runnable接口和Callable接口的区别 是继承Thread类好还是实现Runnable接口好 你在哪里用到了多线程 什么是多线程安全 如何解决多线程之间">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RabbitMQ防止数据丢失问题简单介绍">
-<meta property="og:url" content="https://xuemingde.com/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:title" content="多线程面试题">
+<meta property="og:url" content="https://xuemingde.com/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="推荐文章：消息Ack确认机制 ， RabbitMQ如何处理消息丢失 ， RabbitMQ防止数据丢失  数据丢失的原因 消息持久化  消息确认机制confirm机制   生产者确认模式实现原理 理解RabbitMQ Confirm消息确认机制 RabbitMQ Confirm确认机制流程图 事务机制(ACK)    ACK工作原理">
+<meta property="og:description" content="相关文章：文章1    并发编程三要素(线程三大特性) 线程的状态 线程的实现方式 sleep() 和 wait() 有什么区别 notify()和 notifyAll()有什么区别 线程的 run() 和 start() 有什么区别 Runnable接口和Callable接口的区别 是继承Thread类好还是实现Runnable接口好 你在哪里用到了多线程 什么是多线程安全 如何解决多线程之间">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png">
-<meta property="article:published_time" content="2021-03-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-19T05:40:01.814Z">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png">
+<meta property="article:published_time" content="2021-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-26T08:57:10.779Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="MQ">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/">
 
 
 <script class="page-configurations">
@@ -68,7 +72,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>RabbitMQ防止数据丢失问题简单介绍 | meadel's blog</title>
+<title>多线程面试题 | meadel's blog</title>
   
 
 
@@ -207,7 +211,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">数据丢失的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">消息持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">消息确认机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#confirm%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.</span> <span class="nav-text">confirm机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6-ACK"><span class="nav-number">3.3.</span> <span class="nav-text">事务机制(ACK)</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0-%E7%BA%BF%E7%A8%8B%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">并发编程三要素(线程三大特性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">线程的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">线程的实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-%E5%92%8C-wait-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text">sleep() 和 wait() 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#notify-%E5%92%8C-notifyAll-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">notify()和 notifyAll()有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84-run-%E5%92%8C-start-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">6.</span> <span class="nav-text">线程的 run() 和 start() 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Runnable%E6%8E%A5%E5%8F%A3%E5%92%8CCallable%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text">Runnable接口和Callable接口的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E7%BB%A7%E6%89%BFThread%E7%B1%BB%E5%A5%BD%E8%BF%98%E6%98%AF%E5%AE%9E%E7%8E%B0Runnable%E6%8E%A5%E5%8F%A3%E5%A5%BD"><span class="nav-number">8.</span> <span class="nav-text">是继承Thread类好还是实现Runnable接口好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E5%9C%A8%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">9.</span> <span class="nav-text">你在哪里用到了多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">10.</span> <span class="nav-text">什么是多线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">如何解决多线程之间线程安全问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%88%96%E4%BD%BF%E7%94%A8%E9%94%81%E8%83%BD%E8%A7%A3%E5%86%B3%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E5%91%A2"><span class="nav-number">12.</span> <span class="nav-text">为什么使用线程同步或使用锁能解决线程安全问题呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">13.</span> <span class="nav-text">什么是多线程之间同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="nav-number">14.</span> <span class="nav-text">什么是守护线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="nav-number">15.</span> <span class="nav-text">多线程有什么用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SynchronizedMap%E5%92%8CConcurrentHashMap%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">16.</span> <span class="nav-text">SynchronizedMap和ConcurrentHashMap有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">17.</span> <span class="nav-text">什么是线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread%E7%B1%BB%E4%B8%AD%E7%9A%84yield%E6%96%B9%E6%B3%95%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="nav-number">18.</span> <span class="nav-text">Thread类中的yield方法有什么作用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1468592465&auto=1&height=66"></iframe>
@@ -306,7 +310,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -319,7 +323,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          RabbitMQ防止数据丢失问题简单介绍
+          多线程面试题
         </h1>
 
         <div class="post-meta-container">
@@ -331,7 +335,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-03-19 00:00:00 / 修改时间：13:40:01" itemprop="dateCreated datePublished" datetime="2021-03-19T00:00:00+08:00">2021-03-19</time>
+      <time title="创建时间：2021-03-26 00:00:00 / 修改时间：16:57:10" itemprop="dateCreated datePublished" datetime="2021-03-26T00:00:00+08:00">2021-03-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -358,7 +362,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>145</span>
+      <span>296</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -377,22 +381,26 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>推荐文章：<a target="_blank" rel="noopener" href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://blog.51cto.com/14975073/2591029">文章1</a>  </p>
 </blockquote>
-<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
-<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
-<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
-<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
-<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
-<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+<h3 id="并发编程三要素-线程三大特性"><a href="#并发编程三要素-线程三大特性" class="headerlink" title="并发编程三要素(线程三大特性)"></a>并发编程三要素(<strong>线程三大特性)</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
+<h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
+<h3 id="sleep-和-wait-有什么区别"><a href="#sleep-和-wait-有什么区别" class="headerlink" title="sleep() 和 wait() 有什么区别"></a>sleep() 和 wait() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt="image.png"></p>
+<h3 id="notify-和-notifyAll-有什么区别"><a href="#notify-和-notifyAll-有什么区别" class="headerlink" title="notify()和 notifyAll()有什么区别"></a>notify()和 notifyAll()有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt="image.png"></p>
+<h3 id="线程的-run-和-start-有什么区别"><a href="#线程的-run-和-start-有什么区别" class="headerlink" title="线程的 run() 和 start() 有什么区别"></a>线程的 run() 和 start() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt="image.png"></p>
+<h3 id="Runnable接口和Callable接口的区别"><a href="#Runnable接口和Callable接口的区别" class="headerlink" title="Runnable接口和Callable接口的区别"></a>Runnable接口和Callable接口的区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt="image.png"></p>
+<h3 id="是继承Thread类好还是实现Runnable接口好"><a href="#是继承Thread类好还是实现Runnable接口好" class="headerlink" title="是继承Thread类好还是实现Runnable接口好"></a><strong>是继承Thread类好还是实现Runnable接口好</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt="image.png"></p>
+<h3 id="你在哪里用到了多线程"><a href="#你在哪里用到了多线程" class="headerlink" title="你在哪里用到了多线程"></a><strong>你在哪里用到了多线程</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt="image.png"></p>
+<h3 id="什么是多线程安全"><a href="#什么是多线程安全" class="headerlink" title="什么是多线程安全"></a><strong>什么是多线程安全</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt="image.png"></p>
+<h3 id="如何解决多线程之间线程安全问题"><a href="#如何解决多线程之间线程安全问题" class="headerlink" title="如何解决多线程之间线程安全问题"></a><strong>如何解决多线程之间线程安全问题</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt="image.png"></p>
+<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><a href="#为什么使用线程同步或使用锁能解决线程安全问题呢" class="headerlink" title="为什么使用线程同步或使用锁能解决线程安全问题呢"></a><strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt="image.png"></strong></p>
+<h3 id="什么是多线程之间同步"><a href="#什么是多线程之间同步" class="headerlink" title="什么是多线程之间同步"></a><strong>什么是多线程之间同步</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt="image.png"></strong></p>
+<h3 id="什么是守护线程"><a href="#什么是守护线程" class="headerlink" title="什么是守护线程"></a><strong>什么是守护线程</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
+<h3 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
+<h3 id="SynchronizedMap和ConcurrentHashMap有什么区别"><a href="#SynchronizedMap和ConcurrentHashMap有什么区别" class="headerlink" title="SynchronizedMap和ConcurrentHashMap有什么区别"></a>SynchronizedMap和ConcurrentHashMap有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
+<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
+<h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
 
     </div>
 
@@ -400,12 +408,6 @@
     
     
       
-  <div class="popular-posts-header">相关帖子</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2021\03\16\21031701\" rel="bookmark">关于一些MQ的面试题</a></div>
-    </li>
-  </ul>
 
 
     <footer class="post-footer">
@@ -418,7 +420,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://xuemingde.com/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" title="RabbitMQ防止数据丢失问题简单介绍">https://xuemingde.com/2021/03/19/RabbitMQ防止数据丢失问题简单介绍/</a>
+      <a href="https://xuemingde.com/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" title="多线程面试题">https://xuemingde.com/2021/03/26/多线程面试题/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -427,21 +429,18 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/03/16/21031701/" rel="prev" title="关于一些MQ的面试题">
-                  <i class="fa fa-chevron-left"></i> 关于一些MQ的面试题
+                <a href="/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/" rel="prev" title="SQL优化和SQL注入问题">
+                  <i class="fa fa-chevron-left"></i> SQL优化和SQL注入问题
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" rel="next" title="Redisson 分布式锁">
-                  Redisson 分布式锁 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -488,11 +487,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" selected="">
+        <option value="zh-CN" data-href="/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" selected="">
+        <option value="en" data-href="/en/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" selected="">
           English
         </option>
       
@@ -597,7 +596,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/',]
       });
       });
   </script>

@@ -28,34 +28,6 @@
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记（一）</title>
-    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<span id="more"></span>
-
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>CMS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java学习笔记（二）</title>
     <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
@@ -101,6 +73,34 @@
       </categories>
       <tags>
         <tag>GC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（一）</title>
+    <url>/2021/03/02/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210302/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<span id="more"></span>
+
+<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
+<p>过程简述：</p>
+<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
+<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
+<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CMS</tag>
       </tags>
   </entry>
   <entry>
@@ -787,51 +787,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Seata-server启动闪退问题</title>
-    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
-</blockquote>
-<p>第一步：查看错误日志</p>
-<p>打开cmd</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
-<p>运行seata-server.bat查看错误信息</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
-<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
-<p>找到出错目录</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
-<p>搜索jvm.dll</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
-<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
-<p>返回cmd，重新运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
-<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
-<p>用记事本方式打开seata-server.bat，找到参数设置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
-<p>将其设置为1024,1024，512即可</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
-<p>然后再次在cmd窗口中运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
-<p>如此解决了seata-server闪退的问题</p>
-<p>问题二</p>
-<p>启动报下面的错误</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
-<p>打开nacos，找到配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
-<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
-<p>启动成功：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Seata</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式锁</title>
     <url>/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
@@ -919,6 +874,83 @@
       </categories>
       <tags>
         <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Seata-server启动闪退问题</title>
+    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
+</blockquote>
+<p>第一步：查看错误日志</p>
+<p>打开cmd</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
+<p>运行seata-server.bat查看错误信息</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
+<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
+<p>找到出错目录</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
+<p>搜索jvm.dll</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
+<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
+<p>返回cmd，重新运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
+<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
+<p>用记事本方式打开seata-server.bat，找到参数设置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
+<p>将其设置为1024,1024，512即可</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
+<p>然后再次在cmd窗口中运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
+<p>如此解决了seata-server闪退的问题</p>
+<p>问题二</p>
+<p>启动报下面的错误</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
+<p>打开nacos，找到配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
+<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
+<p>启动成功：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Seata</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多线程面试题</title>
+    <url>/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>相关文章：<a href="https://blog.51cto.com/14975073/2591029">文章1</a>  </p>
+</blockquote>
+<h3 id="并发编程三要素-线程三大特性"><a href="#并发编程三要素-线程三大特性" class="headerlink" title="并发编程三要素(线程三大特性)"></a>并发编程三要素(<strong>线程三大特性)</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
+<h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
+<h3 id="sleep-和-wait-有什么区别"><a href="#sleep-和-wait-有什么区别" class="headerlink" title="sleep() 和 wait() 有什么区别"></a>sleep() 和 wait() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt="image.png"></p>
+<h3 id="notify-和-notifyAll-有什么区别"><a href="#notify-和-notifyAll-有什么区别" class="headerlink" title="notify()和 notifyAll()有什么区别"></a>notify()和 notifyAll()有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt="image.png"></p>
+<h3 id="线程的-run-和-start-有什么区别"><a href="#线程的-run-和-start-有什么区别" class="headerlink" title="线程的 run() 和 start() 有什么区别"></a>线程的 run() 和 start() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt="image.png"></p>
+<h3 id="Runnable接口和Callable接口的区别"><a href="#Runnable接口和Callable接口的区别" class="headerlink" title="Runnable接口和Callable接口的区别"></a>Runnable接口和Callable接口的区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt="image.png"></p>
+<h3 id="是继承Thread类好还是实现Runnable接口好"><a href="#是继承Thread类好还是实现Runnable接口好" class="headerlink" title="是继承Thread类好还是实现Runnable接口好"></a><strong>是继承Thread类好还是实现Runnable接口好</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt="image.png"></p>
+<h3 id="你在哪里用到了多线程"><a href="#你在哪里用到了多线程" class="headerlink" title="你在哪里用到了多线程"></a><strong>你在哪里用到了多线程</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt="image.png"></p>
+<h3 id="什么是多线程安全"><a href="#什么是多线程安全" class="headerlink" title="什么是多线程安全"></a><strong>什么是多线程安全</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt="image.png"></p>
+<h3 id="如何解决多线程之间线程安全问题"><a href="#如何解决多线程之间线程安全问题" class="headerlink" title="如何解决多线程之间线程安全问题"></a><strong>如何解决多线程之间线程安全问题</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt="image.png"></p>
+<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><a href="#为什么使用线程同步或使用锁能解决线程安全问题呢" class="headerlink" title="为什么使用线程同步或使用锁能解决线程安全问题呢"></a><strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt="image.png"></strong></p>
+<h3 id="什么是多线程之间同步"><a href="#什么是多线程之间同步" class="headerlink" title="什么是多线程之间同步"></a><strong>什么是多线程之间同步</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt="image.png"></strong></p>
+<h3 id="什么是守护线程"><a href="#什么是守护线程" class="headerlink" title="什么是守护线程"></a><strong>什么是守护线程</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
+<h3 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
+<h3 id="SynchronizedMap和ConcurrentHashMap有什么区别"><a href="#SynchronizedMap和ConcurrentHashMap有什么区别" class="headerlink" title="SynchronizedMap和ConcurrentHashMap有什么区别"></a>SynchronizedMap和ConcurrentHashMap有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
+<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
+<h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
