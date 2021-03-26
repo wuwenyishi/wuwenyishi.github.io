@@ -27,46 +27,28 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="单例，双重检查锁 new 一个对象氛围三步 申请内存，设默认值 0  设置初始值  建立关联">
+<meta name="description" content="分布式事务（二） 文章来源：  http:&#x2F;&#x2F;codin.im&#x2F;2018&#x2F;06&#x2F;25&#x2F;implementing-distributed-transaction-with-spring&#x2F; https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;6844903666273484814 https:&#x2F;&#x2F;blog.csdn.net&#x2F;jiangyu1013&#x2F;article&#x2F;details&#x2F;84397366    @T">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java学习笔记（二）">
-<meta property="og:url" content="https://xuemingde.com/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/index.html">
+<meta property="og:title" content="分布式事务 --  JTA">
+<meta property="og:url" content="https://xuemingde.com/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="单例，双重检查锁 new 一个对象氛围三步 申请内存，设默认值 0  设置初始值  建立关联">
+<meta property="og:description" content="分布式事务（二） 文章来源：  http:&#x2F;&#x2F;codin.im&#x2F;2018&#x2F;06&#x2F;25&#x2F;implementing-distributed-transaction-with-spring&#x2F; https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;6844903666273484814 https:&#x2F;&#x2F;blog.csdn.net&#x2F;jiangyu1013&#x2F;article&#x2F;details&#x2F;84397366    @T">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png">
-<meta property="article:published_time" content="2021-02-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-12T03:07:23.506Z">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png">
+<meta property="article:published_time" content="2021-03-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-26T09:09:59.257Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="事务">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/">
 
 
 <script class="page-configurations">
@@ -78,7 +60,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>java学习笔记（二） | meadel's blog</title>
+<title>分布式事务 --  JTA | meadel's blog</title>
   
 
 
@@ -203,7 +185,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
 	
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
@@ -217,6 +199,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%88%E4%BA%8C%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">分布式事务（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Transactional-%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.1.</span> <span class="nav-text">@Transactional 详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JTA"><span class="nav-number">1.2.</span> <span class="nav-text">JTA</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1468592465&auto=1&height=66"></iframe>
@@ -315,7 +298,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -328,7 +311,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          java学习笔记（二）
+          分布式事务 --  JTA
         </h1>
 
         <div class="post-meta-container">
@@ -339,14 +322,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-26T00:00:00+08:00">2021-02-26</time>
+      <time title="创建时间：2021-03-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-10T00:00:00+08:00">2021-03-10</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-12 11:07:23" itemprop="dateModified" datetime="2021-03-12T11:07:23+08:00">2021-03-12</time>
+        <time title="修改时间：2021-03-26 17:09:59" itemprop="dateModified" datetime="2021-03-26T17:09:59+08:00">2021-03-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -354,7 +337,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
         </span>
     </span>
 
@@ -373,7 +356,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>551</span>
+      <span>499</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -391,48 +374,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226094709.png"></p>
-<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
-<li>申请内存，设默认值 0 </li>
-<li>设置初始值 </li>
-<li>建立关联</li>
-</ol>
-<span id="more"></span>
-
-<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226095658.png"></p>
-<p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226100612.png"></p>
-<h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226101428.png"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102705.png" alt="image-20210226102702495"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226102800.png" alt="image-20210226102757830"></p>
-<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226103831.png" alt="image-20210226103830233"></p>
-<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111409.png" alt="image-20210226111407167"></p>
-<p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226111719.png" alt="image-20210226111718278"></p>
-<h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
-<p>没有加锁的对象与加锁的对象的内存布局对比</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226112221.png" alt="image-20210226112218624"></p>
-<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226113106.png" alt="image-20210226113105033"></p>
-<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226114604.png" alt="image-20210226114602603"></p>
-<p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
-<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
-<h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226134646.png" alt="image-20210226134644249"></p>
-<p>解决：加版本号</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226135543.png" alt="image-20210226135541370"></p>
-<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141427.png" alt="image-20210226141426173"></p>
-<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141654.png" alt="image-20210226141652907"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226141850.png" alt="image-20210226141849362"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142156.png" alt="image-20210226142154906"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226142315.png" alt="image-20210226142314198"></p>
-<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226145644.png" alt="image-20210226145643215"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150103.png" alt="image-20210226150102063"></p>
-<p> 如何让第二个线程先执行</p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150342.png" alt="image-20210226150339682"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150748.png" alt="image-20210226150746706"></p>
-<p><img data-src="https://raw.githubusercontent.com/wuwenyishi/wuwen/master/pictureBed/20210226150827.png" alt="image-20210226150826706"> </p>
+        <h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
 
     </div>
 
@@ -440,6 +402,15 @@
     
     
       
+  <div class="popular-posts-header">相关帖子</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\03\11\分布式事务之seata\" rel="bookmark">分布式事务之seata</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\03\09\分布式事务\" rel="bookmark">分布式事务</a></div>
+    </li>
+  </ul>
 
 
     <footer class="post-footer">
@@ -452,7 +423,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://xuemingde.com/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" title="java学习笔记（二）">https://xuemingde.com/2021/02/26/java学习笔记210226/</a>
+      <a href="https://xuemingde.com/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/" title="分布式事务 --  JTA">https://xuemingde.com/2021/03/10/分布式事务 --  JTA/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -461,17 +432,20 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
+              <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="prev" title="分布式事务">
+                  <i class="fa fa-chevron-left"></i> 分布式事务
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/" rel="next" title="java学习笔记（二）">
-                  java学习笔记（二） <i class="fa fa-chevron-right"></i>
+                <a href="/2021/03/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%B9%8Bseata/" rel="next" title="分布式事务之seata">
+                  分布式事务之seata <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -519,11 +493,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" selected="">
+        <option value="zh-CN" data-href="/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/" selected="">
+        <option value="en" data-href="/en/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/" selected="">
           English
         </option>
       
@@ -628,7 +602,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/02/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210226/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/',]
       });
       });
   </script>

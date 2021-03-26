@@ -27,36 +27,64 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="设计模式调停者模式 （对内）部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。  在实际应用中最多的就是消息中间件 – MQ。 门面模式 （对外）要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。 图解：   代码示例：  装饰器模式 代码示例：">
+<meta name="description" content="分布式事务（一） 文章来源：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;183753774   、https:&#x2F;&#x2F;www.cnblogs.com&#x2F;dyzcs&#x2F;p&#x2F;13780668.html  、  具体不多讲，详情看文章来源  事务 分布式事务产生的情景   CAP定理      **重点 **  CPA的组合方式   总结  几个分布式架构CPA  zookeeper（Dubbo）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式（二）">
-<meta property="og:url" content="https://xuemingde.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/index.html">
+<meta property="og:title" content="分布式事务">
+<meta property="og:url" content="https://xuemingde.com/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="设计模式调停者模式 （对内）部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。  在实际应用中最多的就是消息中间件 – MQ。 门面模式 （对外）要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。 图解：   代码示例：  装饰器模式 代码示例：">
+<meta property="og:description" content="分布式事务（一） 文章来源：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;183753774   、https:&#x2F;&#x2F;www.cnblogs.com&#x2F;dyzcs&#x2F;p&#x2F;13780668.html  、  具体不多讲，详情看文章来源  事务 分布式事务产生的情景   CAP定理      **重点 **  CPA的组合方式   总结  几个分布式架构CPA  zookeeper（Dubbo）">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png">
-<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png">
-<meta property="article:published_time" content="2021-03-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-26T02:14:27.961Z">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111105762.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111122121.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111135604.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111713208.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111823153.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111839653.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112230088.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112245668.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112305735.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112443572.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112909937.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112932874.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113100211.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113839296.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113947118.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114211959.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114558794.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114325451.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114440621.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095942828.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310100845788.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103855011.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103910529.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104040403.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104139596.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104522151.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104742475.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-885daf4ba34102d6e1047b0b67910652_r.jpg">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105402382.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105753937.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105851289.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110112096.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110342821.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110553662.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-72ba7bed684e855606c44ddda185987d_720w.jpg">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114807940.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114822848.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114907740.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png">
+<meta property="article:published_time" content="2021-03-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-26T09:10:01.672Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="事务">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">
 
 
 <script class="page-configurations">
@@ -68,7 +96,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>设计模式（二） | meadel's blog</title>
+<title>分布式事务 | meadel's blog</title>
   
 
 
@@ -207,7 +235,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">设计模式</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%88%E4%B8%80%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">分布式事务（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%BA%A7%E7%94%9F%E7%9A%84%E6%83%85%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">分布式事务产生的情景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP%E5%AE%9A%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">CAP定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BASE-%E7%90%86%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">BASE 理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.5.</span> <span class="nav-text">分布式事务解决方案</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1468592465&auto=1&height=66"></iframe>
@@ -306,7 +334,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -319,7 +347,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          设计模式（二）
+          分布式事务
         </h1>
 
         <div class="post-meta-container">
@@ -330,14 +358,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-04T00:00:00+08:00">2021-03-04</time>
+      <time title="创建时间：2021-03-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-09T00:00:00+08:00">2021-03-09</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-26 10:14:27" itemprop="dateModified" datetime="2021-03-26T10:14:27+08:00">2021-03-26</time>
+        <time title="修改时间：2021-03-26 17:10:01" itemprop="dateModified" datetime="2021-03-26T17:10:01+08:00">2021-03-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -345,7 +373,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
         </span>
     </span>
 
@@ -364,7 +392,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>398</span>
+      <span>553</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -382,37 +410,80 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698"></p>
-<p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
-<h4 id="门面模式-（对外）"><a href="#门面模式-（对外）" class="headerlink" title="门面模式 （对外）"></a>门面模式 （对外）</h4><p>要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。</p>
-<p>图解：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png" alt="image-20210304103935715"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104708.png" alt="image-20210304104706445"></p>
-<p>代码示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304104804.png" alt="20210304104745"></p>
-<h4 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304105514.png" alt="image-20210304105512902"></p>
-<p>代码示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304112222.png" alt="20210304111428"></p>
-<h4 id="责任链模式-（难）"><a href="#责任链模式-（难）" class="headerlink" title="责任链模式 （难）"></a>责任链模式 （难）</h4><blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/chain-of-responsibility">https://refactoringguru.cn/design-patterns/chain-of-responsibility</a></p>
+        <h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
+<p>文章来源：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/183753774">https://zhuanlan.zhihu.com/p/183753774</a>   、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dyzcs/p/13780668.html">https://www.cnblogs.com/dyzcs/p/13780668.html</a>  、 </p>
+<p>具体不多讲，详情看文章来源</p>
 </blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114341.png" alt="image-20210304114339970"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304114713.png" alt="image-20210304114712508"></p>
-<p>代码示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304115041.png" alt="20210304115025"></p>
-<h4 id="观察者模式-（重要）"><a href="#观察者模式-（重要）" class="headerlink" title="观察者模式 （重要）"></a>观察者模式 （重要）</h4><blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/observer">https://refactoringguru.cn/design-patterns/observer</a></p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095052994.png" alt="image-20210310095052994"></p>
+<h3 id="分布式事务产生的情景"><a href="#分布式事务产生的情景" class="headerlink" title="分布式事务产生的情景"></a>分布式事务产生的情景</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111105762.png" alt="image-20210310111105762"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111122121.png" alt="image-20210310111122121"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111135604.png" alt="image-20210310111135604"></p>
+<h3 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111713208.png" alt="image-20210310111713208"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111823153.png" alt="image-20210310111823153"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310111839653.png" alt="image-20210310111839653"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112230088.png" alt="image-20210310112230088"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112245668.png" alt="image-20210310112245668"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112305735.png" alt="image-20210310112305735"></p>
+<p>**重点 **</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112443572.png" alt="image-20210310112443572"></p>
+<p><strong>CPA的组合方式</strong></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112909937.png" alt="image-20210310112909937"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310112932874.png" alt="image-20210310112932874"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113100211.png" alt="image-20210310113100211"></p>
+<p><strong>几个分布式架构CPA</strong></p>
+<ul>
+<li><p>zookeeper（Dubbo）：CP</p>
+</li>
+<li><p>eureka（springcloud  - netflix）：AP</p>
+</li>
+<li><p>nacos：（Springcloud  - alibaba）：AP</p>
+</li>
+<li><p>redis集群：AP</p>
+</li>
+</ul>
+<h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113839296.png" alt="image-20210310113839296"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310113947118.png" alt="image-20210310113947118"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114211959.png" alt="image-20210310114211959"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114558794.png" alt="image-20210310114558794"></p>
+<p>ACID 和 BASE 的区别与联系ACID 和 BASE 的区别与联系</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114325451.png" alt="image-20210310114325451"></p>
+<p>CAP 与 BASE 关系</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114440621.png" alt="image-20210310114440621"></p>
+<h3 id="分布式事务解决方案"><a href="#分布式事务解决方案" class="headerlink" title="分布式事务解决方案"></a>分布式事务解决方案</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310095942828.png" alt="image-20210310095942828"></p>
+<h4 id="2PC-两阶段提交"><a href="#2PC-两阶段提交" class="headerlink" title="**2PC **  两阶段提交"></a>**2PC **  两阶段提交</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310100845788.png" alt="image-20210310100845788"></p>
+<p>假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103855011.png" alt="image-20210310103855011"></p>
+<p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310103910529.png" alt="image-20210310103910529"></p>
+<p>如果第二阶段提交失败会如何？</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104040403.png" alt="image-20210310104040403"></p>
+<p>协调者故障</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104139596.png" alt="image-20210310104139596"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104522151.png" alt="image-20210310104522151"></p>
+<h4 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310104742475.png" alt="image-20210310104742475"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-885daf4ba34102d6e1047b0b67910652_r.jpg" alt="img"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105402382.png" alt="image-20210310105402382"></p>
+<h4 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105753937.png" alt="image-20210310105753937"></p>
+<p>流程</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310105851289.png" alt="image-20210310105851289"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg" alt="img"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110112096.png" alt="image-20210310110112096"></p>
+<blockquote>
+<p><strong>幂等性：就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用</strong></p>
 </blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132455.png" alt="image-20210304132453845"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132850.png" alt="image-20210304132849343"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304132921.png" alt="image-20210304132920344"></p>
-<p>代码示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304133054.png" alt="20210304133031"></p>
-<h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns/command">https://refactoringguru.cn/design-patterns/command</a></p>
-</blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304140012.png" alt="image-20210304140011639"></p>
+<h4 id="本地消息列表"><a href="#本地消息列表" class="headerlink" title="本地消息列表"></a>本地消息列表</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110342821.png" alt="image-20210310110342821"></p>
+<h4 id="消息事务"><a href="#消息事务" class="headerlink" title="消息事务"></a>消息事务</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310110553662.png" alt="image-20210310110553662"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/v2-72ba7bed684e855606c44ddda185987d_720w.jpg" alt="img"></p>
+<p>可以看到消息事务实现的也是最终一致性。</p>
+<h4 id="最大努力通知-（MQ就是一种）"><a href="#最大努力通知-（MQ就是一种）" class="headerlink" title="最大努力通知 （MQ就是一种）"></a>最大努力通知 （MQ就是一种）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114807940.png" alt="image-20210310114807940"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114822848.png" alt="image-20210310114822848"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310114907740.png" alt="image-20210310114907740"></p>
+<p>总结</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png" alt="image-20210310115019855"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png" alt="image-20210310115109923"></p>
 
     </div>
 
@@ -423,10 +494,10 @@
   <div class="popular-posts-header">相关帖子</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2021\03\03\Java学习笔记210303\" rel="bookmark">设计模式（三）</a></div>
+      <div class="popular-posts-title"><a href="\2021\03\10\分布式事务 --  JTA\" rel="bookmark">分布式事务 --  JTA</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2021\03\08\java学习笔记210308\" rel="bookmark">设计模式（一）</a></div>
+      <div class="popular-posts-title"><a href="\2021\03\11\分布式事务之seata\" rel="bookmark">分布式事务之seata</a></div>
     </li>
   </ul>
 
@@ -441,7 +512,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://xuemingde.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" title="设计模式（二）">https://xuemingde.com/2021/03/04/Java学习笔记210304/</a>
+      <a href="https://xuemingde.com/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" title="分布式事务">https://xuemingde.com/2021/03/09/分布式事务/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -450,20 +521,20 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
+              <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/03/03/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210303/" rel="prev" title="设计模式（三）">
-                  <i class="fa fa-chevron-left"></i> 设计模式（三）
+                <a href="/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="设计模式（一）">
+                  <i class="fa fa-chevron-left"></i> 设计模式（一）
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/" rel="next" title="springBoot整合Nacos">
-                  springBoot整合Nacos <i class="fa fa-chevron-right"></i>
+                <a href="/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/" rel="next" title="分布式事务 --  JTA">
+                  分布式事务 --  JTA <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -511,11 +582,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" selected="">
+        <option value="zh-CN" data-href="/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/" selected="">
+        <option value="en" data-href="/en/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" selected="">
           English
         </option>
       
@@ -620,7 +691,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/04/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210304/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/',]
       });
       });
   </script>
