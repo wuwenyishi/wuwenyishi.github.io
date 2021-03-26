@@ -1,56 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>java学习笔记（二）</title>
-    <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
-<span id="more"></span>
-
-<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
-<p> 注意：</p>
-<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
-<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
-<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
-<hr>
-<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
-<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
-<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
-<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
-<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
-<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
-<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
-<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
-<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
-<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
-<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
-<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
-<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
-<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
-<p>工作线程与回收线程同时进行</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>GC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于一些MQ的面试题</title>
     <url>/2021/03/16/21031701/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -103,6 +53,54 @@
       </categories>
       <tags>
         <tag>CMS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（二）</title>
+    <url>/2021/03/01/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210301/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301144548.png" alt="image-20210301144546206"></p>
+<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301145713.png" alt="image-20210301145711713"></p>
+<p> 注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150550.png" alt="image-20210301150548679"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150843.png" alt="image-20210301150841856"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150951.webp" alt="img"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151013.png" alt="image-20210301151012040"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301150727.png" alt="image-20210301150713776"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151201.png" alt="image-20210301151159632"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151627.png" alt="image-20210301151625877"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301151826.png" alt="image-20210301151821164"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301152826.png" alt="image-20210301152825611"></p>
+<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301154851.png" alt="image-20210301154850520"></p>
+<hr>
+<h2 id="title-java锁、JVM等"><a href="#title-java锁、JVM等" class="headerlink" title="title: java锁、JVM等"></a>title: java锁、JVM等</h2><h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301155427.png" alt="image-20210301155425935"></p>
+<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160619.png" alt="image-20210301160618259"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160710.png" alt="image-20210301160709230"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301160801.png" alt="img"></p>
+<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301163759.png"></p>
+<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301165936.png" alt="image-20210301165930817"></p>
+<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170028.png" alt="image-20210301170027420"></p>
+<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301170547.png" alt="image-20210301170545945"></p>
+<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301172948.png"></p>
+<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173045.png" alt="image-20210301171243283"></p>
+<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173053.png" alt="image-20210301171615192"></p>
+<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
+<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301173058.png" alt="image-20210301172618386"></p>
+<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175352.png" alt="image-20210301175351245"></p>
+<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301175844.png" alt="image-20210301175842829"></p>
+<p>工作线程与回收线程同时进行</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210301180541.png" alt="image-20210301180538636"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>GC</tag>
       </tags>
   </entry>
   <entry>
@@ -194,8 +192,6 @@
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="调停者模式-（对内）"><a href="#调停者模式-（对内）" class="headerlink" title="调停者模式 （对内）"></a>调停者模式 （对内）</h4><p>部门内部打交道。每个类之间都不要互相打交道了，都通过一个调停者来交互。</p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103804.png" alt="image-20210304103801698"></p>
 <p><strong>在实际应用中最多的就是消息中间件 – MQ</strong>。</p>
-<span id="more"></span>
-
 <h4 id="门面模式-（对外）"><a href="#门面模式-（对外）" class="headerlink" title="门面模式 （对外）"></a>门面模式 （对外）</h4><p>要和系统中的多个类打交道，还必须理解这多个类之前的关系，太麻烦了，可以直接把这些错综复杂关系的类用一个Facade门面封装起来，就是对外的一个门面，调用者只需要和这个门面打交道即可。</p>
 <p>图解：</p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304103936.png" alt="image-20210304103935715"></p>
@@ -378,23 +374,39 @@
       </tags>
   </entry>
   <entry>
-    <title>设计模式（一）</title>
-    <url>/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-<span id="more"></span>
-
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+    <title>SQL优化和SQL注入问题</title>
+    <url>/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Mysq如何防止sql注入"><a href="#Mysq如何防止sql注入" class="headerlink" title="Mysq如何防止sql注入"></a>Mysq如何防止sql注入</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577043492-442c592a-804e-4088-b2c9-638a75b161e2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577087040-e9f6cd55-6e3e-4222-b765-0a92dba38d06.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577122583-79d2acfc-d7f7-4621-a111-377d794dc8ed.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577268648-ffe8d2d7-47a1-4950-a640-13536b8995a2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577373081-556a9755-06b5-468c-b408-6300bb732919.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577415889-ba502d4b-200a-4001-b248-74fb0a392ec4.png" alt="image.png"></p>
+<h2 id="sql优化"><a href="#sql优化" class="headerlink" title="sql优化"></a>sql优化</h2><blockquote>
+<p>参考文章：<a href="https://blog.csdn.net/qq_38789941/article/details/83744271">文章一</a>，<a href="http://www.360doc.com/content/19/0131/15/16619343_812364509.shtml">文章二</a>，<a href="https://database.51cto.com/art/202008/623584.htm">文章三</a></p>
 </blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578389551-55a77709-b74e-4540-ae8f-04b5e4179322.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578441174-96b41421-3b20-40f0-9fd1-48eb450ea3df.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578463749-932b1d5a-0af6-4e0d-a631-821d61d0f2c1.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578525260-6a9732d6-9fa4-487a-bba3-988e62a88cc4.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578758297-eb44d2e5-a1d4-485d-8b2f-ad6f509113ab.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577654854-44419b96-5af4-44b2-b389-d00314469079.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577693679-2c2663b4-5efd-401f-aa98-57b5061806e1.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577751426-63b9766f-35d1-4687-bb88-c62324292220.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577825406-1ed6ee37-a0ed-43f8-9851-56531236c3ff.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577960384-46bfe1d5-528f-4431-8c29-960672e1511b.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578045790-15018eba-4314-482f-8eb7-a77058b40e82.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578168179-dbf58c50-3575-475f-a6d1-cef3fd469276.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578207948-033e7d81-2693-4b3e-8cd9-37203abf5a77.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210324175324481.png" alt="image-20210324175324481"></p>
 ]]></content>
       <categories>
-        <category>设计模式</category>
+        <category>面试</category>
       </categories>
       <tags>
-        <tag>设计模式</tag>
+        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -448,6 +460,24 @@
       </categories>
       <tags>
         <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式（一）</title>
+    <url>/2021/03/08/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210308/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -580,7 +610,6 @@
 <li><a href="https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/">https://www.sofastack.tech/blog/seata-distributed-transaction-deep-dive/</a></li>
 <li>官网：<a href="http://seata.io/zh-cn/index.html">http://seata.io/zh-cn/index.html</a></li>
 <li>推荐文章：<a href="https://www.cnblogs.com/chengxy-nds/p/14046856.html">https://www.cnblogs.com/chengxy-nds/p/14046856.html</a></li>
-<li></li>
 </ul>
 </blockquote>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/QxsNJBC7TiaLyZv.png" alt="image-20210311152028639"></p>
@@ -758,6 +787,51 @@
       </tags>
   </entry>
   <entry>
+    <title>Seata-server启动闪退问题</title>
+    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
+</blockquote>
+<p>第一步：查看错误日志</p>
+<p>打开cmd</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
+<p>运行seata-server.bat查看错误信息</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
+<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
+<p>找到出错目录</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
+<p>搜索jvm.dll</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
+<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
+<p>返回cmd，重新运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
+<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
+<p>用记事本方式打开seata-server.bat，找到参数设置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
+<p>将其设置为1024,1024，512即可</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
+<p>然后再次在cmd窗口中运行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
+<p>如此解决了seata-server闪退的问题</p>
+<p>问题二</p>
+<p>启动报下面的错误</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
+<p>打开nacos，找到配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
+<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
+<p>启动成功：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Seata</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式锁</title>
     <url>/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
@@ -845,51 +919,6 @@
       </categories>
       <tags>
         <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Seata-server启动闪退问题</title>
-    <url>/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>参考文章：<a href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
-</blockquote>
-<p>第一步：查看错误日志</p>
-<p>打开cmd</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
-<p>运行seata-server.bat查看错误信息</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
-<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
-<p>找到出错目录</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
-<p>搜索jvm.dll</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
-<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
-<p>返回cmd，重新运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
-<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
-<p>用记事本方式打开seata-server.bat，找到参数设置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
-<p>将其设置为1024,1024，512即可</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
-<p>然后再次在cmd窗口中运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
-<p>如此解决了seata-server闪退的问题</p>
-<p>问题二</p>
-<p>启动报下面的错误</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
-<p>打开nacos，找到配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
-<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
-<p>启动成功：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Seata</tag>
       </tags>
   </entry>
   <entry>

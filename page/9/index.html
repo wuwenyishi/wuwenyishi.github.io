@@ -206,7 +206,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -219,7 +219,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/12/%E5%B8%B8%E8%A7%81BUG%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">Seata-server启动闪退问题</a>
+          <a href="/2021/03/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0210312/" class="post-title-link" itemprop="url">springBoot整合seata（一）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -318,7 +318,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-15 09:52:46" itemprop="dateModified" datetime="2021-03-15T09:52:46+08:00">2021-03-15</time>
+        <time title="修改时间：2021-03-15 10:31:20" itemprop="dateModified" datetime="2021-03-15T10:31:20+08:00">2021-03-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -326,7 +326,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/BUG/" itemprop="url" rel="index"><span itemprop="name">BUG</span></a>
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
         </span>
     </span>
 
@@ -338,14 +338,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>545</span>
+      <span>4.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -357,39 +357,63 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://www.pianshen.com/article/97751361089/">https://www.pianshen.com/article/97751361089/</a></p>
+<p>参考文章</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo">https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo</a></li>
+<li><a target="_blank" rel="noopener" href="https://thinkingcao.blog.csdn.net/article/details/109320221">https://thinkingcao.blog.csdn.net/article/details/109320221</a></li>
+</ul>
 </blockquote>
-<p>第一步：查看错误日志</p>
-<p>打开cmd</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/51f427944a211ae872822076007567e3.png" alt="img"></p>
-<p>运行seata-server.bat查看错误信息</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/d6aa39237babca365050ee5a2cdaaf1b.png" alt="img"></p>
-<p>Error: missing server’ JVl at C:\ Program Files (x86)\ Javaljre1. 8. 0_221\ bin\ server \ jvn. d11<br>Please instal1 or use the TRE or TDK that contains these missing components</p>
-<p>找到出错目录</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/dd08f00ad0d66c1d03d8a4c13a5cb16b.png" alt="img"></p>
-<p>搜索jvm.dll</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/cdf348d3c0180b22eb39ccf59338cbcd.png" alt="img"></p>
-<p>在bin文件夹新建server，复制jvm.dll黏贴</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/5efb1191067265b42c97f139f3a7f6a5.png" alt="img"></p>
-<p>返回cmd，重新运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/7ef391ac9de4b7b27c4ca1fb5b78ba0d.png" alt="img"></p>
-<p>说明我们没有足够的内存去使用，所以我们要降级我们内存的配置</p>
-<p>用记事本方式打开seata-server.bat，找到参数设置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/57d754d19a5aa3a373861fadaa01d4d4.png" alt="img"></p>
-<p>将其设置为1024,1024，512即可</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/bb870c732e5a25d30a14c8aafce72d18.png" alt="img"></p>
-<p>然后再次在cmd窗口中运行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/9540a6fbf3b5bf045543e90fe103cfd8.png" alt="img"></p>
-<p>如此解决了seata-server闪退的问题</p>
-<p>问题二</p>
-<p>启动报下面的错误</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312162616878.png" alt="image-20210312162616878"></p>
-<p>打开nacos，找到配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163932230.png" alt="image-20210312163932230"></p>
-<p>在链接后面加上&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC，然后发布，重新执行seata-server.bat</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312163953737.png" alt="image-20210312163953737"></p>
-<p>启动成功：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312164119600.png" alt="image-20210312164119600"></p>
+<h2 id="安装seata"><a href="#安装seata" class="headerlink" title="安装seata"></a>安装seata</h2><blockquote>
+<p>在安装了nacos的前提下</p>
+</blockquote>
+<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>下载seata-1.3.0</p>
+<p><a target="_blank" rel="noopener" href="https://codeload.github.com/seata/seata/zip/v1.3.0">https://codeload.github.com/seata/seata/zip/v1.3.0</a></p>
+<p>下载seata-server-1.4.1</p>
+<p><a target="_blank" rel="noopener" href="https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip">https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip</a></p>
+<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>在你的参与全局事务的数据库中加入undo_log这张表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;undo_log&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;     BIGINT(20)   NOT NULL COMMENT &#39;branch transaction id&#39;,</span><br><span class="line">    &#96;xid&#96;           VARCHAR(100) NOT NULL COMMENT &#39;global transaction id&#39;,</span><br><span class="line">    &#96;context&#96;       VARCHAR(128) NOT NULL COMMENT &#39;undo_log context,such as serialization&#39;,</span><br><span class="line">    &#96;rollback_info&#96; LONGBLOB     NOT NULL COMMENT &#39;rollback info&#39;,</span><br><span class="line">    &#96;log_status&#96;    INT(11)      NOT NULL COMMENT &#39;0:normal status,1:defense status&#39;,</span><br><span class="line">    &#96;log_created&#96;   DATETIME(6)  NOT NULL COMMENT &#39;create datetime&#39;,</span><br><span class="line">    &#96;log_modified&#96;  DATETIME(6)  NOT NULL COMMENT &#39;modify datetime&#39;,</span><br><span class="line">    UNIQUE KEY &#96;ux_undo_log&#96; (&#96;xid&#96;, &#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  AUTO_INCREMENT &#x3D; 1</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8 COMMENT &#x3D;&#39;AT transaction mode undo table&#39;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在你的mysql数据库中创建名为seata的库,并使用以下下sql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;global_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;xid&#96;                       VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;            BIGINT,</span><br><span class="line">    &#96;status&#96;                    TINYINT      NOT NULL,</span><br><span class="line">    &#96;application_id&#96;            VARCHAR(32),</span><br><span class="line">    &#96;transaction_service_group&#96; VARCHAR(32),</span><br><span class="line">    &#96;transaction_name&#96;          VARCHAR(128),</span><br><span class="line">    &#96;timeout&#96;                   INT,</span><br><span class="line">    &#96;begin_time&#96;                BIGINT,</span><br><span class="line">    &#96;application_data&#96;          VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;                DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;              DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;xid&#96;),</span><br><span class="line">    KEY &#96;idx_gmt_modified_status&#96; (&#96;gmt_modified&#96;, &#96;status&#96;),</span><br><span class="line">    KEY &#96;idx_transaction_id&#96; (&#96;transaction_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;branch_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;         BIGINT       NOT NULL,</span><br><span class="line">    &#96;xid&#96;               VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;    BIGINT,</span><br><span class="line">    &#96;resource_group_id&#96; VARCHAR(32),</span><br><span class="line">    &#96;resource_id&#96;       VARCHAR(256),</span><br><span class="line">    &#96;branch_type&#96;       VARCHAR(8),</span><br><span class="line">    &#96;status&#96;            TINYINT,</span><br><span class="line">    &#96;client_id&#96;         VARCHAR(64),</span><br><span class="line">    &#96;application_data&#96;  VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;        DATETIME(6),</span><br><span class="line">    &#96;gmt_modified&#96;      DATETIME(6),</span><br><span class="line">    PRIMARY KEY (&#96;branch_id&#96;),</span><br><span class="line">    KEY &#96;idx_xid&#96; (&#96;xid&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;lock_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;row_key&#96;        VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;xid&#96;            VARCHAR(96),</span><br><span class="line">    &#96;transaction_id&#96; BIGINT,</span><br><span class="line">    &#96;branch_id&#96;      BIGINT       NOT NULL,</span><br><span class="line">    &#96;resource_id&#96;    VARCHAR(256),</span><br><span class="line">    &#96;table_name&#96;     VARCHAR(32),</span><br><span class="line">    &#96;pk&#96;             VARCHAR(36),</span><br><span class="line">    &#96;gmt_create&#96;     DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;   DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;row_key&#96;),</span><br><span class="line">    KEY &#96;idx_branch_id&#96; (&#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三部"><a href="#第三部" class="headerlink" title="第三部"></a>第三部</h3><p>在你的项目中引入seata依赖</p>
+<p>如果你的微服务是dubbo:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你是springcloud</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>从官方github仓库拿到参考配置做修改:<a target="_blank" rel="noopener" href="https://github.com/seata/seata/tree/develop/script/client">https://github.com/seata/seata/tree/develop/script/client</a></p>
+<p>加到你项目的application.yml中.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">application-id:</span> <span class="string">applicationName</span></span><br><span class="line">  <span class="attr">tx-service-group:</span> <span class="string">my_test_tx_group</span></span><br><span class="line">  <span class="attr">enable-auto-data-source-proxy:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">serverAddr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">registry:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">application:</span> <span class="string">seata-server</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><p>运行你下载的nacos,并参考<a target="_blank" rel="noopener" href="https://github.com/seata/seata/tree/develop/script/config-center">https://github.com/seata/seata/tree/develop/script/config-center</a> 的config.txt并修改</p>
+<p>文件在</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312170639465.png" alt="image-20210312170639465"></p>
+<p>修改config.txt</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">service.vgroupMapping.my_test_tx_group</span>=<span class="string">default</span></span><br><span class="line"><span class="meta">store.mode</span>=<span class="string">db</span></span><br><span class="line"><span class="meta">store.db.datasource</span>=<span class="string">druid</span></span><br><span class="line"><span class="meta">store.db.dbType</span>=<span class="string">mysql</span></span><br><span class="line"><span class="meta">store.db.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">store.db.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="meta">store.db.user</span>=<span class="string">username</span></span><br><span class="line"><span class="meta">store.db.password</span>=<span class="string">password</span></span><br><span class="line"><span class="meta">store.db.minConn</span>=<span class="string">5</span></span><br><span class="line"><span class="meta">store.db.maxConn</span>=<span class="string">30</span></span><br><span class="line"><span class="meta">store.db.globalTable</span>=<span class="string">global_table</span></span><br><span class="line"><span class="meta">store.db.branchTable</span>=<span class="string">branch_table</span></span><br><span class="line"><span class="meta">store.db.queryLimit</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">store.db.lockTable</span>=<span class="string">lock_table</span></span><br><span class="line"><span class="meta">store.db.maxWait</span>=<span class="string">5000</span></span><br></pre></td></tr></table></figure>
+
+<p>运行仓库中提供的nacos脚本,将以上信息提交到nacos控制台,如果有需要更改,可直接通过控制台更改</p>
+<p>进入文件夹下</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171029260.png" alt="image-20210312171029260"></p>
+<p>右键</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171131042.png" alt="image-20210312171131042"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171216907.png" alt="image-20210312171216907"></p>
+<p> 进入nacos查看</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171537526.png" alt="image-20210312171537526"></p>
+<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><p>更改server中的registry.conf</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171654248.png" alt="image-20210312171654248"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171805716.png" alt="image-20210312171805716"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171822584.png" alt="image-20210312171822584"></p>
+<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>运行seata-server</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312171941551.png" alt="image-20210312171941551"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210312172018047.png" alt="image-20210312172018047"></p>
 
       
     </div>
@@ -411,7 +435,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 

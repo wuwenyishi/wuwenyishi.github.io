@@ -206,7 +206,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -219,7 +219,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/15/java%E9%94%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Map集合详解</a>
+          <a href="/2021/03/15/java%E9%94%81/" class="post-title-link" itemprop="url">java锁</a>
         </h2>
 
         <div class="post-meta-container">
@@ -310,16 +310,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-12T00:00:00+08:00">2021-03-12</time>
+      <time title="创建时间：2021-03-15 00:00:00 / 修改时间：10:18:59" itemprop="dateCreated datePublished" datetime="2021-03-15T00:00:00+08:00">2021-03-15</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-15 09:49:53" itemprop="dateModified" datetime="2021-03-15T09:49:53+08:00">2021-03-15</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -338,14 +332,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.9k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -357,90 +351,167 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1609351">深入理解JDK8 HashMap</a></p>
+<p>java 中的锁</p>
 </blockquote>
-<h4 id="Map集合都有哪些实现"><a href="#Map集合都有哪些实现" class="headerlink" title="Map集合都有哪些实现"></a>Map集合都有哪些实现</h4><p>HashMap <br>HashTable  <br>LinkedHashMap <br>TreeMap <br>ConcurrentHashMap</p>
-<h4 id="HashMap-的数据结构"><a href="#HashMap-的数据结构" class="headerlink" title="HashMap 的数据结构"></a><strong>HashMap 的数据结构</strong></h4><p>哈希表结构（链表散列：数组+链表）实现，结合数组和链表的优点。当链表长度超过 8 时，链表转换为红黑树。</p>
-<h4 id="putIfAbsent与put的区别"><a href="#putIfAbsent与put的区别" class="headerlink" title="putIfAbsent与put的区别"></a>putIfAbsent与put的区别</h4><p>putIfAbsent：如果传入key对应的value已经存在，就返回存在的value，不进行替换。如果不存在，就添加key和value，返回null。<br>put：key存在覆盖，不存在插入。</p>
-<h4 id="什么是哈希冲突"><a href="#什么是哈希冲突" class="headerlink" title="什么是哈希冲突"></a>什么是哈希冲突</h4><p>当输入两个不同值，根据同一散列函数计算出相同的散列值的现象，我们就把它叫做碰撞（哈希碰撞）。</p>
-<h4 id="HashMap-使用哪种方法来解决哈希冲突？"><a href="#HashMap-使用哪种方法来解决哈希冲突？" class="headerlink" title="HashMap 使用哪种方法来解决哈希冲突？"></a>HashMap 使用哪种方法来解决哈希冲突？</h4><p>使用链表和红黑树来解决哈希冲突</p>
-<h4 id="HashMap-的扩容为什么是-2-n"><a href="#HashMap-的扩容为什么是-2-n" class="headerlink" title="HashMap 的扩容为什么是 2^n"></a>HashMap 的扩容为什么是 2^n</h4><p>这样做的目的是为了让散列更加均匀，从而减少哈希碰撞，以提供代码的执行效率。</p>
-<h4 id="HashMap-在-JDK-7-多线程中使用会导致什么问题"><a href="#HashMap-在-JDK-7-多线程中使用会导致什么问题" class="headerlink" title="HashMap 在 JDK 7 多线程中使用会导致什么问题"></a>HashMap 在 JDK 7 多线程中使用会导致什么问题</h4><p>HashMap 在 JDK 7 中会导致死循环的问题。因为在 JDK 7 中，多线程进行 HashMap 扩容时会导致链表的循环引用，这个时候使用 get() 获取元素时就会导致死循环，造成 CPU 100% 的情况。</p>
-<h4 id="HashMap-在-JDK-7-和-JDK-8-中有哪些不同"><a href="#HashMap-在-JDK-7-和-JDK-8-中有哪些不同" class="headerlink" title="HashMap 在 JDK 7 和 JDK 8 中有哪些不同"></a>HashMap 在 JDK 7 和 JDK 8 中有哪些不同</h4><ul>
-<li>存储结构：JDK 7 使用的是数组 + 链表；JDK 8 使用的是数组 + 链表 + 红黑树。</li>
-<li>存放数据的规则：JDK 7 无冲突时，存放数组；冲突时，存放链表；JDK 8 在没有冲突的情况下直接存放数组，有冲突时，当链表长度小于 8 时，存放在单链表结构中，当链表长度大于 8 时，树化并存放至红黑树的数据结构中。链表转换为红黑树的另一个条件，哈希表长度必须大于等于64才会转换，否则会扩容。</li>
-<li>插入数据方式：JDK 7 使用的是头插法（先将原位置的数据移到后 1 位，再插入数据到该位置）；JDK 8 使用的是尾插法（直接插入到链表尾部/红黑树）。</li>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607395612436-12737bf6-516f-49fb-b00f-41287fe5cbe8.png"></h3><h3 id="java中有哪些锁"><a href="#java中有哪些锁" class="headerlink" title="java中有哪些锁"></a>java中有哪些锁</h3><ul>
+<li>公平锁/非公平锁</li>
+<li>可重入锁</li>
+<li>独享锁/共享锁</li>
+<li>互斥锁/读写锁</li>
+<li>乐观锁/悲观锁</li>
+<li>分段锁</li>
+<li>偏向锁/轻量级锁/重量级锁</li>
+<li>自旋锁</li>
 </ul>
-<h4 id="链表转换为红黑树"><a href="#链表转换为红黑树" class="headerlink" title="链表转换为红黑树"></a>链表转换为红黑树</h4><p>当链表长度大于等于8的时候，链表可能会被转换为红黑树，这里之所以说是可能，是因为还要满足另外一个条件：哈希表长度大于等于64，否则哈希表会尝试扩容。</p>
-<h4 id="红黑树退化成链表"><a href="#红黑树退化成链表" class="headerlink" title="红黑树退化成链表"></a>红黑树退化成链表</h4><p>当红黑树节点小于等于6的时候，红黑树会转换成普通的链表。</p>
-<h4 id="HashMap-扩容"><a href="#HashMap-扩容" class="headerlink" title="**HashMap 扩容 **"></a>**HashMap 扩容 **</h4><p>在没有设置容量的时候，默认容量是16，而HashMap的加载因子是0.75，当存储的元素个数超过了闸值（当前容量值*0.75），就会自动触发扩容，扩容的大小事原来的一倍（当前容量值 * 2）。<br>扩容过程：<br>遍历整个数组，将同一个位置的元素按链表顺序取出，先将当前元素指向的下一个元素存起来，一个一个存放到新表的位置中（记住不一定是同一位置，因为长度变了，所有数组数据都要重新Hash，因为长度变了，Hash的规则也变了），根据新数组长度，重新生成数组索引，将当前位置的元素链表头指向即将新加入的元素，然后放入数组中，完成同一位置元素链表的拼接，最先添加的元素总在链表末尾，然后继续循环，拿出下一个元素。</p>
-<h4 id="重新调整HashMap大小存在什么问题（JDK-7）"><a href="#重新调整HashMap大小存在什么问题（JDK-7）" class="headerlink" title="重新调整HashMap大小存在什么问题（JDK 7）"></a>重新调整HashMap大小存在什么问题（JDK 7）</h4><p>当重新调整HashMap大小的时候，确实存在条件竞争，因为如果两个线程都发现HashMap需要重新调整大小了，它们会同时试着调整大小。在调整大小的过程中，存储在链表中的元素的次序会反过来，因为移动到新的bucket位置的时候，HashMap并不会将元素放在链表的尾部，而是放在头部，这是为了避免尾部遍历(tail traversing)。如果条件竞争发生了，那么就死循环了。(多线程的环境下不使用HashMap）。</p>
-<h4 id="多线程环境下使用HashMap为什么会出现死循环"><a href="#多线程环境下使用HashMap为什么会出现死循环" class="headerlink" title="多线程环境下使用HashMap为什么会出现死循环"></a>多线程环境下使用HashMap为什么会出现死循环</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210315094833.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315094912288.png" alt="image-20210315094912288"></p>
-<h4 id="HashMap-put执行过程"><a href="#HashMap-put执行过程" class="headerlink" title="HashMap put执行过程"></a>HashMap put执行过程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1606100383222-b82eb9d3-e207-4c7a-9a1f-d401c97e0a0e.png" alt="image"></p>
-<p>源码解析：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Implements Map.put and related methods</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> hash hash for key</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key the key</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value the value to put</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> onlyIfAbsent if true, don&#x27;t change existing value</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> evict if false, the table is in creation mode.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> previous value, or null if none</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,</span></span></span><br><span class="line"><span class="function"><span class="params">			   <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">	Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="keyword">int</span> n, i;</span><br><span class="line">	<span class="comment">//底层存储数据的数组tab为空，进行第一次扩容，同时初始化tab</span></span><br><span class="line">	<span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">		n = (tab = resize()).length;</span><br><span class="line">	<span class="comment">//计算要存储数据的下标index，如果当前位置为null，直接插入</span></span><br><span class="line">	<span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>)</span><br><span class="line">		tab[i] = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		Node&lt;K,V&gt; e; K k;</span><br><span class="line">		<span class="comment">//tab[i]的首个元素就是key，直接覆盖</span></span><br><span class="line">		<span class="keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">			((k = p.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">			e = p;</span><br><span class="line">		<span class="comment">//tab[i]为TreeNode，进行红黑树的插入</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">			e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="keyword">this</span>, tab, hash, key, value);</span><br><span class="line">		<span class="comment">//链表遍历</span></span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> binCount = <span class="number">0</span>; ; ++binCount) &#123;</span><br><span class="line">				<span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) &#123;</span><br><span class="line">					p.next = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">					<span class="comment">//链表长度大于8，转换为红黑树进行处理</span></span><br><span class="line">					<span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span></span><br><span class="line">						treeifyBin(tab, hash);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//找到已经存在的key，直接覆盖</span></span><br><span class="line">				<span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">					((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				p = e;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123; <span class="comment">// existing mapping for key</span></span><br><span class="line">			V oldValue = e.value;</span><br><span class="line">			<span class="keyword">if</span> (!onlyIfAbsent || oldValue == <span class="keyword">null</span>)</span><br><span class="line">				e.value = value;</span><br><span class="line">			afterNodeAccess(e);</span><br><span class="line">			<span class="keyword">return</span> oldValue;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	++modCount;</span><br><span class="line">	<span class="comment">//数据插入完成，size超过了扩容的阀值(容量*负载因子)，进行扩容</span></span><br><span class="line">	<span class="keyword">if</span> (++size &gt; threshold)</span><br><span class="line">		resize();</span><br><span class="line">	afterNodeInsertion(evict);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="HashMap-get执行过程"><a href="#HashMap-get执行过程" class="headerlink" title="HashMap get执行过程"></a>HashMap get执行过程</h4><p>先得到key的hash值，再把这个hash值与length-1按位与（取余），得到table数组的下标。取出这个下标值的key，与传入的key比较，如果相同那就是这个了。如果不同呢，那就沿着这个单向链表向后找，直到找到或找到结束也找不到。</p>
-<h4 id="HashMap-在-put-时，如果数组中已经有了这个-key，我不想把-value-覆盖怎么办？取值时，如果得到的-value-是空时，想返回默认值怎么办？"><a href="#HashMap-在-put-时，如果数组中已经有了这个-key，我不想把-value-覆盖怎么办？取值时，如果得到的-value-是空时，想返回默认值怎么办？" class="headerlink" title="HashMap 在 put 时，如果数组中已经有了这个 key，我不想把 value 覆盖怎么办？取值时，如果得到的 value 是空时，想返回默认值怎么办？"></a>HashMap 在 put 时，如果数组中已经有了这个 key，我不想把 value 覆盖怎么办？取值时，如果得到的 value 是空时，想返回默认值怎么办？</h4><p>如果数组有了 key，但不想覆盖 value ，可以选择 putIfAbsent 方法，这个方法有个内置变量 onlyIfAbsent，内置是 true ，就不会覆盖，我们平时使用的 put 方法，内置 onlyIfAbsent 为 false，是允许覆盖的。<br>取值时，如果为空，想返回默认值，可以使用 getOrDefault 方法，方法第一参数为 key，第二个参数为你想返回的默认值，如 map.getOrDefault(“2”,“0”)，当 map 中没有 key 为 2 的值时，会默认返回 0，而不是空。</p>
-<h4 id="HashMap和HashTable之间的区别"><a href="#HashMap和HashTable之间的区别" class="headerlink" title="HashMap和HashTable之间的区别"></a>HashMap和HashTable之间的区别</h4><ol>
-<li>继承父类不同</li>
-</ol>
-<p>Hashtable继承自Dictionary类，而HashMap继承自AbstractMap类。但二者都实现了Map接口</p>
-<ol start="2">
-<li>线程安全不同</li>
-</ol>
-<p>HashMap不是线程安全的。<br>Hashtable是线程安全的，因为它每个方法中都加入了Synchronize。</p>
-<ol start="3">
-<li>是否提供了contains方法</li>
-</ol>
-<p>HashMap把Hashtable的contains方法去掉了，改成containsValue和containsKey，因为contains方法容易让人引起误解。<br>Hashtable则保留了contains，containsValue和containsKey三个方法，其中contains和containsValue功能相同。</p>
-<ol start="4">
-<li>key和value是否允许null值</li>
-</ol>
-<p>两者的key和value都是对象，key不能重复，value能重复。<br>HashMap的key可以为null，但当且仅当只能有一个key为null，但可以有多个value为null。当get()方法返回null值时，可能是 HashMap中没有该键，也可能使该键所对应的值为null。因此，在HashMap中不能由get()方法来判断HashMap中是否存在某个键， 而应该用containsKey()方法来判断。<br>Hashtable中key和value都不允许出现null值。但是如果在Hashtable中有类似put(null,null)的操作，编译同样可以通过，因为key和value都是Object类型，但运行时会抛出NullPointerException异常，这是JDK的规范规定的。</p>
-<ol start="5">
-<li>两个遍历方式的内部实现上不同</li>
-</ol>
-<p>Hashtable、HashMap都使用了 Iterator（迭代器）。而由于历史原因，Hashtable还使用了Enumeration（枚举）的方式 。</p>
-<ol start="6">
-<li>hash值不同</li>
-</ol>
-<p>HashTable直接使用对象的hashCode。<br>HashMap重新计算hash值。</p>
-<ol start="7">
-<li>内部实现使用的数组初始化和扩容方式不同</li>
-</ol>
-<p> HashTable在不指定容量的情况下的默认容量为11，而HashMap为16。<br>Hashtable不要求底层数组的容量一定要为2的整数次幂，而HashMap则要求一定为2的整数次幂。<br>Hashtable扩容时，将容量变为原来的2倍加1，而HashMap扩容时，将容量变为原来的2倍。</p>
-<h4 id="线程安全的Map都有哪些"><a href="#线程安全的Map都有哪些" class="headerlink" title="线程安全的Map都有哪些"></a>线程安全的Map都有哪些</h4><p>线程安全的有HashTable、ConcurrentHashMap、SynchronizedMap，性能最好的是ConcurrentHashMap。</p>
-<h4 id="为什么说HashMap是不安全的"><a href="#为什么说HashMap是不安全的" class="headerlink" title="为什么说HashMap是不安全的"></a>为什么说HashMap是不安全的</h4><p>HashMap会进行resize操作，在resize操作的时候会造成线程不安全。下面将举两个可能出现线程不安全的地方。</p>
-<ol>
-<li>put的时候导致的多线程数据不一致。</li>
-</ol>
-<p>比如有两个线程A和B，首先A希望插入一个key-value对到HashMap中，首先计算记录所要落到的桶的索引坐标，然后获取到该桶里面的链表头结点，此时线程A的时间片用完了，而此时线程B被调度得以执行，和线程A一样执行，只不过线程B成功将记录插到了桶里面，假设线程A插入的记录计算出来的桶索引和线程B要插入的记录计算出来的桶索引是一样的，那么当线程B成功插入之后，线程A再次被调度运行时，它依然持有过期的链表头但是它对此一无所知，以至于它认为它应该这样做，如此一来就覆盖了线程B插入的记录，这样线程B插入的记录就凭空消失了，造成了数据不一致的行为。</p>
-<ol start="2">
-<li>HashMap的get操作可能因为resize而引起死循环（cpu100%）</li>
-</ol>
-<h4 id="ConcurrentHashMap是如何实现线程安全的"><a href="#ConcurrentHashMap是如何实现线程安全的" class="headerlink" title="ConcurrentHashMap是如何实现线程安全的"></a>ConcurrentHashMap是如何实现线程安全的</h4><p>ConcurrentHashMap的put方法和HashMap的逻辑相差不大，主要是新增了线程安全部分，在添加元素时候，采用synchronized来保证线程安全，然后计算size的时候采用CAS操作进行计算。<br>put的简单流程：</p>
-<ol>
-<li>判断key和vaule是否为空，如果为空，直接抛出异常。</li>
-<li>判断table数组是否已经初始化完毕，如果没有初始化，进行初始化。</li>
-<li>计算key的hash值，如果该位置为空，直接构造节点放入。</li>
-<li>如果table正在扩容，进入帮助扩容方法。</li>
-<li>最后开启同步锁，进行插入操作，如果开启了覆盖选项，直接覆盖，否则，构造节点添加到尾部，如果节点数超过红黑树阈值，进行红黑树转换。如果当前节点是树节点，进行树插入操作。</li>
-<li>最后统计size大小，并计算是否需要扩容。</li>
-</ol>
-<p>get的简单流程：</p>
-<ol>
-<li>直接计算hash值，查找的节点如果key和hash值相等，直接返回该节点的value就行，value值使用了volatile关键字修饰了。</li>
-<li>如果table正在扩容，就调用ForwardingNode的find方法查找节点。</li>
-<li>如果没有扩容，直接循环遍历链表，查找到key和hash值一样的节点值即可。</li>
-</ol>
-<p>扩容：<br>HashMap的线程安全问题大部分出在扩容(rehash)的过程中。<br>ConcurrentHashMap的扩容只针对每个segment中的HashEntry数组进行扩容。<br>由put的源码可知，ConcurrentHashMap在rehash的时候是有锁的，所以在rehash的过程中，其他线程无法对segment的hash表做操作，这就保证了线程安全。</p>
+<h3 id="乐观锁-VS-悲观锁"><a href="#乐观锁-VS-悲观锁" class="headerlink" title="乐观锁 VS 悲观锁"></a>乐观锁 VS 悲观锁</h3><h4 id="乐观锁的概念"><a href="#乐观锁的概念" class="headerlink" title="乐观锁的概念"></a>乐观锁的概念</h4><p>乐观锁认为自己在使用数据时不会有别的线程修改数据，所以不会添加锁，只是在更新数据的时候去判断之前有没有别的线程更新了这个数据。如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线程更新，则根据不同的实现方式执行不同的操作（例如报错或者自动重试）。<br><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607396932222-6d3fc249-1ac9-496e-b076-a90db2424fe2.png" alt="image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ------------------------- 乐观锁的调用方式 -------------------------</span></span><br><span class="line"><span class="keyword">private</span> AtomicInteger atomicInteger = <span class="keyword">new</span> AtomicInteger();  <span class="comment">// 需要保证多个线程使用的是同一个AtomicInteger</span></span><br><span class="line">atomicInteger.incrementAndGet(); <span class="comment">//执行自增1</span></span><br></pre></td></tr></table></figure>
+<h4 id="悲观锁的概念"><a href="#悲观锁的概念" class="headerlink" title="悲观锁的概念"></a>悲观锁的概念</h4><p>悲观锁认为自己在使用数据的时候一定有别的线程来修改数据，因此在获取数据的时候会先加锁，确保数据不会被别的线程修改。Java中，synchronized关键字和Lock的实现类都是悲观锁。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png" alt="image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ------------------------- 悲观锁的调用方式 -------------------------</span></span><br><span class="line"><span class="comment">// synchronized</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 操作同步资源</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ReentrantLock</span></span><br><span class="line"><span class="keyword">private</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock(); <span class="comment">// 需要保证多个线程使用的是同一个锁</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyPublicResources</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	lock.lock();</span><br><span class="line">	<span class="comment">// 操作同步资源</span></span><br><span class="line">	lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="乐观锁在java中的实现"><a href="#乐观锁在java中的实现" class="headerlink" title="乐观锁在java中的实现"></a>乐观锁在java中的实现</h4><p>乐观锁在Java中是通过使用无锁编程来实现，最常采用的是CAS算法，Java原子类中的递增操作就通过CAS自旋实现的。</p>
 <blockquote>
-<p>具体可参考文章：<a target="_blank" rel="noopener" href="https://m.php.cn/faq/446158.html">https://m.php.cn/faq/446158.html</a></p>
+<p>悲观锁在Java中的使用，就是利用各种锁。</p>
 </blockquote>
-<h4 id="hashCode-和-equals-方法的重要性体现在什么地方"><a href="#hashCode-和-equals-方法的重要性体现在什么地方" class="headerlink" title="hashCode() 和 equals() 方法的重要性体现在什么地方"></a>hashCode() 和 equals() 方法的重要性体现在什么地方</h4><p>哈希表（HashTable）又叫做散列表，根它通过把key映射到表中一个位置来访问记录，以加快查找速度。这个映射函数就叫做散列（哈希）函数，存放记录的数组叫做散列表。<br>哈希表是一个时间和空间上平衡的例子。如果没有空间的限制，我们可以直接用键来作为数组的索引，这样可以将查找时间做到最快（O(1)）。如果没有时间的限制，我们可以使用无序链表进行顺序查找，这样只需要很少的内存</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><ul>
+<li>悲观锁适合写操作多的场景，先加锁可以保证写操作时数据正确。</li>
+<li>乐观锁适合读操作多的场景，不加锁的特点能够使其读操作的性能大幅提升</li>
+</ul>
+<h3 id="自旋锁-VS-适应性自旋锁"><a href="#自旋锁-VS-适应性自旋锁" class="headerlink" title="自旋锁 VS 适应性自旋锁"></a>自旋锁 VS 适应性自旋锁</h3><h4 id="自旋锁的概念"><a href="#自旋锁的概念" class="headerlink" title="自旋锁的概念"></a>自旋锁的概念</h4><p>当一个线程尝试去获取某一把锁的时候，如果这个锁此时已经被别人获取(占用)，那么此线程就无法获取到这把锁，该线程将会等待，间隔一段时间后会再次尝试获取。这种采用循环加锁 -&gt; 等待的机制被称为自旋锁(spinlock)。</p>
+<h4 id="概念图"><a href="#概念图" class="headerlink" title="概念图"></a>概念图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607406106200-96579fc8-48b4-47af-993e-892570923983.png"></p>
+<h4 id="自旋锁的实现原理"><a href="#自旋锁的实现原理" class="headerlink" title="自旋锁的实现原理"></a>自旋锁的实现原理</h4><p>自旋锁的实现原理同样也是CAS，AtomicInteger中调用unsafe进行自增操作的源码中的do-while循环就是一个自旋操作，如果修改数值失败则通过循环来执行自旋，直至修改成功。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607406297240-967f6d60-9f95-4e45-9e81-45b1e8ba458c.png"></p>
+<h4 id="适应性自旋锁"><a href="#适应性自旋锁" class="headerlink" title="适应性自旋锁"></a>适应性自旋锁</h4><p>自旋锁在JDK1.4.2中引入，使用-XX:+UseSpinning来开启。JDK 6中变为默认开启，并且引入了自适应的自旋锁（适应性自旋锁）。<br>自适应意味着自旋的时间（次数）不再固定，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也是很有可能再次成功，进而它将允许自旋等待持续相对更长的时间。如果对于某个锁，自旋很少成功获得过，那在以后尝试获取这个锁时将可能省略掉自旋过程，直接阻塞线程，避免浪费处理器资源。</p>
+<h4 id="自旋锁的优缺点"><a href="#自旋锁的优缺点" class="headerlink" title="自旋锁的优缺点"></a>自旋锁的优缺点</h4><p>自旋锁尽可能的减少线程的阻塞，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换！<br>但是如果锁的竞争激烈，或者持有锁的线程需要长时间占用锁执行同步块，这时候就不适合使用自旋锁了，因为自旋锁在获取锁前一直都是占用 cpu 做无用功，占着 XX 不 XX，同时有大量线程在竞争一个锁，会导致获取锁的时间很长，线程自旋的消耗大于线程阻塞挂起操作的消耗，其它需要 cpu 的线程又不能获取到 cpu，造成 cpu 的浪费。所以这种情况下我们要关闭自旋锁。</p>
+<h4 id="java简单实现自旋锁"><a href="#java简单实现自旋锁" class="headerlink" title="java简单实现自旋锁"></a>java简单实现自旋锁</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpinLockTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AtomicBoolean available = <span class="keyword">new</span> AtomicBoolean(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环检测尝试获取锁</span></span><br><span class="line">        <span class="keyword">while</span> (!tryLock())&#123;</span><br><span class="line">            <span class="comment">// doSomething...</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 尝试获取锁，成功返回true，失败返回false</span></span><br><span class="line">        <span class="keyword">return</span> available.compareAndSet(<span class="keyword">false</span>,<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!available.compareAndSet(<span class="keyword">true</span>,<span class="keyword">false</span>))&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;释放锁失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这种简单的自旋锁有一个问题：无法保证多线程竞争的公平性。对于上面的SpinlockTest，当多个线程想要获取锁时，谁最先将available设为false谁就能最先获得锁，这可能会造成某些线程一直都未获取到锁造成线程饥饿。</p>
+</blockquote>
+<h3 id="公平锁-VS-非公平锁"><a href="#公平锁-VS-非公平锁" class="headerlink" title="公平锁 VS 非公平锁"></a>公平锁 VS 非公平锁</h3><h4 id="公平锁概念"><a href="#公平锁概念" class="headerlink" title="公平锁概念"></a>公平锁概念</h4><p>是指多个线程按照申请锁的顺序来获取锁，线程直接进入队列中排队，队列中的第一个线程才能获得锁。公平锁的优点是等待锁的线程不会饿死。缺点是整体吞吐效率相对非公平锁要低，等待队列中除第一个线程以外的所有线程都会阻塞，CPU唤醒阻塞线程的开销比非公平锁大。</p>
+<h4 id="非公平锁概念"><a href="#非公平锁概念" class="headerlink" title="非公平锁概念"></a>非公平锁概念</h4><p>是多个线程加锁时直接尝试获取锁，获取不到才会到等待队列的队尾等待。但如果此时锁刚好可用，那么这个线程可以无需阻塞直接获取到锁，所以非公平锁有可能出现后申请锁的线程先获取锁的场景。非公平锁的优点是可以减少唤起线程的开销，整体的吞吐效率高，因为线程有几率不阻塞直接获得锁，CPU不必唤醒所有线程。缺点是处于等待队列中的线程可能会饿死，或者等很久才会获得锁。</p>
+<h4 id="两个对比图"><a href="#两个对比图" class="headerlink" title="两个对比图"></a>两个对比图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607406912576-cb145224-f1bd-4705-92f2-00766c7917be.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607407107342-ddbcd750-d249-4081-9f98-09c0776c4df8.png"></p>
+<h4 id="源码讲解公平锁和非公平锁"><a href="#源码讲解公平锁和非公平锁" class="headerlink" title="源码讲解公平锁和非公平锁"></a>源码讲解公平锁和非公平锁</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607407945887-50d5ac0c-4f6b-4f8e-9719-dd2db42cf528.png">根据代码可知，ReentrantLock里面有一个内部类Sync，Sync继承AQS（AbstractQueuedSynchronizer），添加锁和释放锁的大部分操作实际上都是在Sync中实现的。它有公平锁FairSync和非公平锁NonfairSync两个子类。ReentrantLock默认使用非公平锁，也可以通过构造器来显示的指定使用公平锁。</p>
+<p>看一下公平锁与非公平锁的加锁方法的源码:</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607407982065-1029f8ba-3d52-4154-93ce-f292373b872b.png"><br>通过上图中的源代码对比，我们可以明显的看出公平锁与非公平锁的lock()方法唯一的区别就在于公平锁在获取同步状态时多了一个限制条件：hasQueuedPredecessors()。<br><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607408071437-b37f524d-0b66-429c-a6e9-ba9343a442f1.png"><br>再进入hasQueuedPredecessors()，可以看到该方法主要做一件事情：主要是判断当前线程是否位于同步队列中的第一个。如果是则返回true，否则返回false。<br>综上，公平锁就是通过同步队列来实现多个线程按照申请锁的顺序来获取锁，从而实现公平的特性。非公平锁加锁时不考虑排队等待问题，直接尝试获取锁，所以存在后申请却先获得锁的情况。</p>
+<h3 id="可重入锁-VS-非可重入锁"><a href="#可重入锁-VS-非可重入锁" class="headerlink" title="可重入锁 VS 非可重入锁"></a>可重入锁 VS 非可重入锁</h3><h4 id="可重入锁概念"><a href="#可重入锁概念" class="headerlink" title="可重入锁概念"></a>可重入锁概念</h4><p>又名递归锁，是指在同一个线程在外层方法获取锁的时候，再进入该线程的内层方法会自动获取锁（前提锁对象得是同一个对象或者class），不会因为之前已经获取过还没释放而阻塞。Java中ReentrantLock和synchronized都是可重入锁，可重入锁的一个优点是可一定程度避免死锁。</p>
+<h4 id="可重入锁示例代码解析"><a href="#可重入锁示例代码解析" class="headerlink" title="可重入锁示例代码解析"></a>可重入锁示例代码解析</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Widget</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;方法1执行...&quot;</span>);</span><br><span class="line">        doOthers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doOthers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;方法2执行...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，类中的两个方法都是被内置锁synchronized修饰的，doSomething()方法中调用doOthers()方法。因为内置锁是可重入的，所以同一个线程在调用doOthers()时可以直接获得当前对象的锁，进入doOthers()进行操作。<br>如果是一个不可重入锁，那么当前线程在调用doOthers()之前需要将执行doSomething()时获取当前对象的锁释放掉，实际上该对象锁已被当前线程所持有，且无法释放。所以此时会出现死锁。</p>
+<h4 id="为什么可重入锁就可以在嵌套调用时可以自动获得锁呢"><a href="#为什么可重入锁就可以在嵌套调用时可以自动获得锁呢" class="headerlink" title="为什么可重入锁就可以在嵌套调用时可以自动获得锁呢"></a>为什么可重入锁就可以在嵌套调用时可以自动获得锁呢</h4><p>还是打水的例子，有多个人在排队打水，此时管理员允许锁和同一个人的多个水桶绑定。这个人用多个水桶打水时，第一个水桶和锁绑定并打完水之后，第二个水桶也可以直接和锁绑定并开始打水，所有的水桶都打完水之后打水人才会将锁还给管理员。这个人的所有打水流程都能够成功执行，后续等待的人也能够打到水。这就是可重入锁。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607409491864-00996bca-1008-462f-bcdf-7da6289a5dce.png"></p>
+<p>但如果是非可重入锁的话，此时管理员只允许锁和同一个人的一个水桶绑定。第一个水桶和锁绑定打完水之后并不会释放锁，导致第二个水桶不能和锁绑定也无法打水。当前线程出现死锁，整个等待队列中的所有线程都无法被唤醒。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607409508426-3d3eba67-a2fe-45ed-8e53-2495311930bc.png"></p>
+<h4 id="ReentrantLock（可重入锁）和NonReentrantLock（不可重入锁）源码对比"><a href="#ReentrantLock（可重入锁）和NonReentrantLock（不可重入锁）源码对比" class="headerlink" title="ReentrantLock（可重入锁）和NonReentrantLock（不可重入锁）源码对比"></a>ReentrantLock（可重入锁）和NonReentrantLock（不可重入锁）源码对比</h4><p>通过重入锁ReentrantLock以及非可重入锁NonReentrantLock的源码来对比分析一下为什么非可重入锁在重复调用同步资源时会出现死锁。</p>
+<p>首先ReentrantLock和NonReentrantLock都继承父类AQS，其父类AQS中维护了一个同步状态status来计数重入次数，status初始值为0。<br>当线程尝试获取锁时，可重入锁先尝试获取并更新status值，如果status == 0表示没有其他线程在执行同步代码，则把status置为1，当前线程开始执行。如果status != 0，则判断当前线程是否是获取到这个锁的线程，如果是的话执行status+1，且当前线程可以再次获取锁。而非可重入锁是直接去获取并尝试更新当前status的值，如果status != 0的话会导致其获取锁失败，当前线程阻塞。<br>释放锁时，可重入锁同样先获取当前status的值，在当前线程是持有锁的线程的前提下。如果status-1 == 0，则表示当前线程所有重复获取锁的操作都已经执行完毕，然后该线程才会真正释放锁。而非可重入锁则是在确定当前线程是持有锁的线程之后，直接将status置为0，将锁释放。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607409655969-5a4ef5f7-f90d-4230-8a83-6456744c9c10.png"></p>
+<h3 id="独享锁-VS-共享锁"><a href="#独享锁-VS-共享锁" class="headerlink" title="独享锁 VS 共享锁"></a>独享锁 VS 共享锁</h3><blockquote>
+<p>独享锁与共享锁也是通过AQS来实现的，通过实现不同的方法，来实现独享或者共享。</p>
+</blockquote>
+<h4 id="独享锁概念"><a href="#独享锁概念" class="headerlink" title="独享锁概念"></a>独享锁概念</h4><p>也叫排他锁，是指该锁一次只能被一个线程所持有。如果线程T对数据A加上排它锁后，则其他线程不能再对A加任何类型的锁。获得排它锁的线程即能读数据又能修改数据。JDK中的synchronized和JUC中Lock的实现类就是互斥锁。在上面的公平锁和非公平锁，添加的锁都是独享锁。</p>
+<h4 id="共享锁概念"><a href="#共享锁概念" class="headerlink" title="共享锁概念"></a>共享锁概念</h4><p>指该锁可被多个线程所持有。如果线程T对数据A加上共享锁后，则其他线程只能对A再加共享锁，不能加排它锁。获得共享锁的线程只能读数据，不能修改数据。</p>
+<h4 id="ReadWriteLock"><a href="#ReadWriteLock" class="headerlink" title="ReadWriteLock"></a>ReadWriteLock</h4><p>对于ReentrantLock而言，ReentrantLock是一个独享锁，即公平锁与非公平锁时独享锁。而对ReadWriteLock而言，它的读是一个共享锁，而写是一个独享锁。读锁作为一个共享锁可以保证并发是的高可读性。独享锁，和共享锁都是通过AQS来实现的，实现不同方法来实现独享，和共享。</p>
+<h3 id="无锁-VS-偏向锁-VS-轻量级锁-VS-重量级锁"><a href="#无锁-VS-偏向锁-VS-轻量级锁-VS-重量级锁" class="headerlink" title="无锁 VS 偏向锁 VS 轻量级锁 VS 重量级锁"></a>无锁 VS 偏向锁 VS 轻量级锁 VS 重量级锁</h3><blockquote>
+<p>这四种锁是指锁的状态，专门针对synchronized的，涉及到锁升级过程。</p>
+</blockquote>
+<p><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png" alt="image.png"></p>
+<h4 id="java对象头"><a href="#java对象头" class="headerlink" title="java对象头"></a>java对象头</h4><p>在说java对象头之前，先提一个问题，Object obi = new Object();占几个字符？<br>答案是：</p>
+<ul>
+<li>未开启指针压缩</li>
+</ul>
+<p><strong>占用大小为：8(Mark Word)+8(Klass Point)=16字节</strong></p>
+<ul>
+<li>开启了指针压缩(默认是开启的)<br>开启指针压缩后，Class Pointer会被压缩为4字节，</li>
+</ul>
+<p><strong>最终大小为：8(Mark Word)+4(Klass Point)+4(对齐填充)=16字节</strong><br><img data-src="https://cdn.nlark.com/yuque/0/2020/png/1746217/1607396994341-ea09e533-483e-4557-b005-923e11eeee9f.png" alt="image.png"><br>java对象头的组成：</p>
+<ul>
+<li>Mark Word</li>
+<li>Klass Point</li>
+<li>对齐填充（在Mark Word占有字节数 + Klass Point占有字节数 = 8的倍数时，此出占有字节数为0）</li>
+</ul>
+<p><strong>Mark Word</strong>：默认存储对象的HashCode，分代年龄和锁标志位信息。这些信息都是与对象自身定义无关的数据，所以Mark Word被设计成一个非固定的数据结构以便在极小的空间内存存储尽量多的数据。它会根据对象的状态复用自己的存储空间，也就是说在运行期间Mark Word里存储的数据会随着锁标志位的变化而变化。<br>锁的信息就存储在<strong>Mark Word里面。</strong></p>
+<p><strong>Klass Point</strong>：对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。（Object.class 信息，对象里设置的信息也会存放在这里）</p>
+<h4 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h4><p>Monitor可以理解为一个同步工具或一种同步机制，通常被描述为一个对象。每一个Java对象就有一把看不见的锁，称为内部锁或者Monitor锁。<br>Monitor是线程私有的数据结构，每一个线程都有一个可用monitor record列表，同时还有一个全局的可用列表。每一个被锁住的对象都会和一个monitor关联，同时monitor中有一个Owner字段存放拥有该锁的线程的唯一标识，表示该锁被这个线程占用。<br>现在话题回到synchronized，synchronized通过Monitor来实现线程同步，Monitor是依赖于底层的操作系统的Mutex Lock（互斥锁）来实现的线程同步。<br>如同我们在自旋锁中提到的“阻塞或唤醒一个Java线程需要操作系统切换CPU状态来完成，这种状态转换需要耗费处理器时间。如果同步代码块中的内容过于简单，状态转换消耗的时间有可能比用户代码执行的时间还要长”。这种方式就是synchronized最初实现同步的方式，这就是JDK 6之前synchronized效率低的原因。这种依赖于操作系统Mutex Lock所实现的锁我们称之为“重量级锁”，JDK 6中为了减少获得锁和释放锁带来的性能消耗，引入了“偏向锁”和“轻量级锁”。<br>所以目前锁一共有4种状态，级别从低到高依次是：无锁、偏向锁、轻量级锁和重量级锁。锁状态只能升级不能降级。</p>
+<h4 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h4><p>无锁没有对资源进行锁定，所有的线程都能访问并修改同一个资源，但同时只有一个线程能修改成功。<br>无锁的特点就是修改操作在循环内进行，线程会不断的尝试修改共享资源。如果没有冲突就修改成功并退出，否则就会继续循环尝试。如果有多个线程修改同一个值，必定会有一个线程能修改成功，而其他修改失败的线程会不断重试直到修改成功。上面我们介绍的CAS原理及应用即是无锁的实现。无锁无法全面代替有锁，但无锁在某些场合下的性能是非常高的。<br>也有一种说法，此处是刚new 出一个新对象，没有任何操作。</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>偏向锁是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁，降低获取锁的代价。<br>在大多数情况下，锁总是由同一线程多次获得，不存在多线程竞争，所以出现了偏向锁。其目标就是在只有一个线程执行同步代码块时能够提高性能。<br>当一个线程访问同步代码块并获取锁时，会在Mark Word里存储锁偏向的线程ID。在线程进入和退出同步块时不再通过CAS操作来加锁和解锁，而是检测Mark Word里是否存储着指向当前线程的偏向锁。引入偏向锁是为了在无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径，因为轻量级锁的获取及释放依赖多次CAS原子指令，而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令即可。<br>偏向锁只有遇到其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁，线程不会主动释放偏向锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，判断锁对象是否处于被锁定状态。撤销偏向锁后恢复到无锁（标志位为“01”）或轻量级锁（标志位为“00”）的状态。<br>偏向锁在JDK 6及以后的JVM里是默认启用的。可以通过JVM参数关闭偏向锁：-XX:-UseBiasedLocking=false，关闭之后程序默认会进入轻量级锁状态。<br>此处也可以说说无锁态，因为只有一个线程，没有产生锁竞争的问题。</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>是指当锁是偏向锁的时候，被另外的线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，从而提高性能。<br>在代码进入同步块的时候，如果同步对象锁状态为无锁状态（锁标志位为“01”状态，是否为偏向锁为“0”），虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的Mark Word的拷贝，然后拷贝对象头中的Mark Word复制到锁记录中。<br>拷贝成功后，虚拟机将使用CAS操作尝试将对象的Mark Word更新为指向Lock Record的指针，并将Lock Record里的owner指针指向对象的Mark Word。<br>如果这个更新动作成功了，那么这个线程就拥有了该对象的锁，并且对象Mark Word的锁标志位设置为“00”，表示此对象处于轻量级锁定状态。<br>如果轻量级锁的更新操作失败了，虚拟机首先会检查对象的Mark Word是否指向当前线程的栈帧，如果是就说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行，否则说明多个线程竞争锁。<br>若当前只有一个等待线程，则该线程通过自旋进行等待。但是当自旋超过一定的次数，或者一个线程在持有锁，一个在自旋，又有第三个来访时，轻量级锁升级为重量级锁。<br>此处是有多个线程产生了锁竞争，自旋的次数过多，等待时间过度，就会进入队列，升级为重量级锁。</p>
+<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p>升级为重量级锁时，锁标志的状态值变为“10”，此时Mark Word中存储的是指向重量级锁的指针，此时等待锁的线程都会进入阻塞状态。<br>进入重量级锁之后，等待锁的线程会进入队列，不在自旋等待获取锁，释放了cpu，但是持有锁的线程释放锁之后，需要操作系统那调取某个线程。</p>
+<h3 id="Synchronized"><a href="#Synchronized" class="headerlink" title="Synchronized"></a>Synchronized</h3><h4 id="Synchronized的使用"><a href="#Synchronized的使用" class="headerlink" title="Synchronized的使用"></a>Synchronized的使用</h4><p>有三种使用方法分别对应三种不同的作用域</p>
+<ol>
+<li><p>修饰普通同步方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//写法一</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">// todo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写法二</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="comment">// todo</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>作用域：写法一和写法二十等价的，锁住得是整个方法的内容。</p>
+</li>
+<li><p>修饰静态方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//写法三</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>作用域：<br>写法三与前面两个不一样，因为static方法是针对类而不是实例。但是我们注意到任何一个类都有一个由JVM自动创建的Class实例，因此，对static方法添加synchronized，锁住的是该类的Class实例。上述synchronized static方法实际上相当于：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(Counter.class) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ol start="3">
+<li>修饰代码块<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//写法一 锁住的是method这个方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="comment">// todo</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写法二 锁住的是Counter这个类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(Counter.class) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="Synchronized的实现原理"><a href="#Synchronized的实现原理" class="headerlink" title="Synchronized的实现原理"></a>Synchronized的实现原理</h4><p>Java对象头和monitor是实现synchronized的基础。<br>synchronized的信息存放在java对象头的Mark Word里面。<br>(关于monitor 的解释，看资料看不懂，就不多做多解释了，文章地址：<a target="_blank" rel="noopener" href="https://xiaomi-info.github.io/2020/03/24/synchronized/">文章一</a>，文章来自小米团队)</p>
+<h4 id="synchronized和lock-的区别"><a href="#synchronized和lock-的区别" class="headerlink" title="synchronized和lock 的区别"></a>synchronized和lock 的区别</h4><ul>
+<li>Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；</li>
+<li>synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；</li>
+<li>Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；</li>
+<li>通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。</li>
+<li>Lock可以提高多个线程进行读操作的效率。（可以通过readwritelock实现读写分离）</li>
+<li>性能上来说，在资源竞争不激烈的情形下，Lock性能稍微比synchronized差点（编译程序通常会尽可能的进行优化synchronized）。但是当同步非常激烈的时候，synchronized的性能一下子能下降好几十倍。而ReentrantLock确还能维持常态。</li>
+</ul>
+<h4 id="synchronized与volatile的区别"><a href="#synchronized与volatile的区别" class="headerlink" title="synchronized与volatile的区别"></a>synchronized与volatile的区别</h4><p>volatile的作用有两个，一个是使变量具有可见性，另一个是禁止指令重排序。</p>
+<ol>
+<li>volatile仅能使用在变量级别；  synchronized则可以使用在变量、方法、和类级别的</li>
+<li>volatile仅能实现变量的修改可见性，并不能保证原子性；synchronized则可以保证变量的修改可见性和原子性</li>
+<li>volatile不会造成线程的阻塞； synchronized可能会造成线程的阻塞。</li>
+<li>volatile标记的变量不会被编译器优化；synchronized标记的变量可以被编译器优化</li>
+</ol>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><blockquote>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1745313">文章一</a></p>
+</blockquote>
+<h4 id="volatile关键字的特性"><a href="#volatile关键字的特性" class="headerlink" title="volatile关键字的特性"></a>volatile关键字的特性</h4><ul>
+<li>保证了不同线程对该变量操作的内存可见性;（但是不能保证原子性）</li>
+<li>禁止指令重排序；</li>
+</ul>
+<h4 id="什么是内存可见性"><a href="#什么是内存可见性" class="headerlink" title="什么是内存可见性"></a>什么是内存可见性</h4><p>可见性就是，多线程环境中，对共享变量的修改对于其他线程是否立即可见。</p>
+<h4 id="为什么volatile能够保证内存可见性"><a href="#为什么volatile能够保证内存可见性" class="headerlink" title="为什么volatile能够保证内存可见性"></a>为什么volatile能够保证内存可见性</h4><p>线程对变量操作时会从主内存中读取到自己的工作内存中，当线程对变量进行了修改后，那么其他已经读取了此变量的线程中的变量副本就会失效，这样其他线程在使用变量的时候，发现已经失效，那么就会去主内存中重新获取，这样获取到的就只最新的值了。<br>因为一台计算机有多台CPU，同一个变量，在多个CPU中缓存的值有可能不一样，那么以谁缓存的值为准呢？<br>既然大家都有自己的值，那么各个CPU间就产生了一种协议，来保证按照一定的规律为准，来确定共享变量的准确值，这样各个CPU在读写共享变量时都按照协议来操作。<br>这就是缓存一致性协议。</p>
+<p>最著名的缓存一致性协议就是Intel的MESI了，说MESI时，先解释一下，缓存行：</p>
+<blockquote>
+<p> 缓存行（cache line）：CPU高速缓存的中可以分配的最小存储单位，高速缓存中的变量都是存在缓存行中的。  </p>
+</blockquote>
+<p>MESI的核心思想就是，当CPU对变量进行写操作时发现，变量是共享变量，那么就会通知其他CPU中将该变量的缓存行设置为无效状态。当其他CPU在操作变量时发现此变量在的缓存行已经无效，那么就会去主内存中重新读取最新的变量。</p>
+<p>CPU和其他部件的进行通信是通过总线来进行的，所以每个CPU通过嗅探总线上的传播数据，来检查自己缓存的值是不是过期了，当处理器发现自己换成行对应的内存地址被修改后，就会将自己工作内存中的缓存行设置成无须状态，当CPU对此变量进行修改时会重新从系统主内存中读取变量。</p>
+<h4 id="什么是指令重排序"><a href="#什么是指令重排序" class="headerlink" title="什么是指令重排序"></a>什么是指令重排序</h4><p>一般来说，我们写程序的时候，都是要把先代码从上往下写，默认的认为程序是自顶向下顺序执行的，但是CPU为了提高效率，在保证最终结果准确的情况下，是会对指令进行重新排序的。就是说写在前的代码不一定先执行，在后面的也不一定晚执行。<br>JMM在是允许指令重排序的，在保证最后结果正确的情况下，处理器可以尽情的发挥，提高执行效率。<br>当多个线程执行代码的时候重排序的情况就更为突出了，各个CPU为了提高自己的效率，有可能会产生竞争情况，这样就有可能导致最终执行的正确性。<br>所以为了保证在多个线程下最终执行的正确性，将变量用volatile进行修饰，这样就会达到禁止指令重排序的效果（其实也可以通过加锁，还有一些其他已知规则来实现禁止指令重排序，但是我们这里只讨论volatile的实现方式）</p>
+<h4 id="volatile是如何实现指令重排序的呢"><a href="#volatile是如何实现指令重排序的呢" class="headerlink" title="volatile是如何实现指令重排序的呢"></a>volatile是如何实现指令重排序的呢</h4><p><strong>内存屏障</strong><br><em>内存屏障是一组CPU指令，用于实现对内存操作的顺序限制。</em><br>（内存屏障就不做多解释，太深奥，看资料有些蒙蔽）</p>
+<h3 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h3><h4 id="什么是AQS"><a href="#什么是AQS" class="headerlink" title="什么是AQS"></a>什么是AQS</h4><p>AbstractQueueSynchronized的缩写，也叫抽象的队列式同步器。定义了一套多线程访问共享资源的同步器框架。</p>
+<h4 id="从ReentrantLock的实现看AQS的原理及应用"><a href="#从ReentrantLock的实现看AQS的原理及应用" class="headerlink" title="从ReentrantLock的实现看AQS的原理及应用"></a>从ReentrantLock的实现看AQS的原理及应用</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607411662289-d43558c2-7ed3-4594-a93b-ef44d3bc6e12.png"></p>
+<h4 id="ReentrantLock与Synchronized-区别"><a href="#ReentrantLock与Synchronized-区别" class="headerlink" title="ReentrantLock与Synchronized 区别"></a>ReentrantLock与Synchronized 区别</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1607411766822-17c6529f-8c0d-4801-b6fa-57d498b4084e.png"></p>
+<p>代码区别示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// **************************Synchronized的使用方式**************************</span></span><br><span class="line"><span class="comment">// 1.用于代码块</span></span><br><span class="line"><span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;&#125;</span><br><span class="line"><span class="comment">// 2.用于对象</span></span><br><span class="line"><span class="keyword">synchronized</span> (object) &#123;&#125;</span><br><span class="line"><span class="comment">// 3.用于方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span> <span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 4.可重入</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// **************************ReentrantLock的使用方式**************************</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span> <span class="params">()</span> throw Exception </span>&#123;</span><br><span class="line">	<span class="comment">// 1.初始化选择公平锁、非公平锁</span></span><br><span class="line">	ReentrantLock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line">	<span class="comment">// 2.可用于代码块</span></span><br><span class="line">	lock.lock();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 3.支持多种加锁方式，比较灵活; 具有可重入特性</span></span><br><span class="line">			<span class="keyword">if</span>(lock.tryLock(<span class="number">100</span>, TimeUnit.MILLISECONDS))&#123; &#125;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="comment">// 4.手动释放锁</span></span><br><span class="line">			lock.unlock()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>更多资料请看：<a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html</a><br>来自美团团队</p>
+</blockquote>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><h4 id="什么是CSA"><a href="#什么是CSA" class="headerlink" title="什么是CSA"></a>什么是CSA</h4><p>CAS是英文单词CompareAndSwap的缩写，中文意思是：比较并替换。CAS需要有3个操作数：内存地址V，旧的预期值A，即将要更新的目标值B。<br>CAS指令执行时，当且仅当内存地址V的值与预期值A相等时，将内存地址V的值修改为B，否则就什么都不做。整个比较并替换的操作是一个原子操作。</p>
+<h4 id="CAS的底层实现"><a href="#CAS的底层实现" class="headerlink" title="CAS的底层实现"></a>CAS的底层实现</h4><p>CAS的底层其实是通过一条硬件指令来实现的。理论上我们可以使用同步锁的方式来达到相同的效果，但是这并不是我们想要的效果（性能高、线程安全）。因此我们只能从硬件指令上着手考虑。通过硬件指令，我们可以让看起来多步的操作只需要一条指令就可以完成。</p>
+<blockquote>
+<p>具体可以查看源码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CASDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">        AtomicInteger atomicInteger = <span class="keyword">new</span> AtomicInteger(<span class="number">10</span>);</span><br><span class="line">        Thread.sleep(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            atomicInteger.getAndIncrement();</span><br><span class="line">        &#125;,<span class="string">&quot;zhonghu&quot;</span>).start();</span><br><span class="line">        atomicInteger.getAndIncrement();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAdd</span><span class="params">(<span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, delta);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAddInt</span><span class="params">(Object var1, <span class="keyword">long</span> var2, <span class="keyword">int</span> var4)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> var5;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            var5 = <span class="keyword">this</span>.getIntVolatile(var1, var2);</span><br><span class="line">        &#125; <span class="keyword">while</span>(!<span class="keyword">this</span>.compareAndSwapInt(var1, var2, var5, var5 + var4));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> var5;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="CAS的优点"><a href="#CAS的优点" class="headerlink" title="CAS的优点"></a>CAS的优点</h4><p>保证原子性的方式只有加锁，无论是**内置锁(synchronized),<strong>还是</strong>显示锁(ReentrantLock),**加锁意味着线程阻塞，如果竞争激烈，很可能导致频繁的线程上下文切换，从而大大降低了性能。<br>CAS机制是一种乐观锁，可以避免这些问题，使得执行效率很大的提高。</p>
+<h4 id="CAS的缺点"><a href="#CAS的缺点" class="headerlink" title="CAS的缺点"></a>CAS的缺点</h4><p>CAS虽然很高效的解决原子操作，但是CAS仍然存在三大问题。ABA问题，循环时间长开销大和只能保证一个共享变量的原子操作。</p>
+<ol>
+<li>ABA问题</li>
+</ol>
+<p>CAS操作需要检查当前内存的变量值是否和刚刚读取的值相同，假设一个变量是A，变成了B，之后又变成了A，所以在进行CAS操作的时候检查到它的值没有发生变化。ABA的解决方案就是加上版本号1A-&gt;2B-&gt;3A，类似这种。<br>java先行者们也给我们提供了<strong>AtomicStampedReference</strong>来解决ABA的问题，其中的预期标志也类似于版本号的功能。</p>
+<ol start="2">
+<li>循环时间长开销大</li>
+</ol>
+<p>多线程竞争激烈的情况下进行CAS操作，会导致某些线程长时间空循环，也就是说它什么都没做，只是不停地在浪费处理器的处理时间而已。</p>
+<ol start="3">
+<li>只能保证一个共享变量的原子操作</li>
+</ol>
+<p>一个共享变量的操作可以用CAS保证其原子性，多个共享变量的操作，循环CAS是无法保证其原子性的。有个取巧的办法，java先行者设计的AtomicReference类，我们可以通过将多个变量放到一个对象里面，然后由AtomicReference进行原子性地更新。</p>
+<h4 id="CAS典型应用场景"><a href="#CAS典型应用场景" class="headerlink" title="CAS典型应用场景"></a><strong>CAS典型应用场景</strong></h4><p>1、乐观锁思想<br>CAS解决并发的思路可以在很多场景中借鉴，在数据库使用中，可以采用这种方式来避免加锁操作，比如大家学习Hibernate时候的乐观锁。<br>2、Java Concurren<br>Java Concurrent包下大量使用CAS实现并发控制，比如Atomic*，ReentrantLock等。<br>比如AtomicInteger中，就使用CAS。<br>Java无法直接访问底层操作系统，而是通过本地（native）方法来访问。JVM开了一个后门，JDK中有一个类Unsafe，它提供了硬件级别的原子操作。</p>
 
       
     </div>
@@ -462,7 +533,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
