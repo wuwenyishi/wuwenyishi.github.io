@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>RabbitMQ防止数据丢失问题简单介绍</title>
+    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
+</blockquote>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Map集合详解</title>
     <url>/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -97,55 +125,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RabbitMQ防止数据丢失问题简单介绍</title>
-    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
-</blockquote>
-<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
-<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
-<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
-<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
-<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
-<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redisson 分布式锁</title>
-    <url>/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://blog.csdn.net/tianyaleixiaowu/article/details/90036180">Springboot使用分布式锁（基于redisson）</a>， </p>
-</blockquote>
-<h2 id="常见的分布式锁实现方案"><a href="#常见的分布式锁实现方案" class="headerlink" title="常见的分布式锁实现方案"></a><strong>常见的分布式锁实现方案</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt="image.png"></strong></p>
-<h2 id="Redisson原理分析图解"><a href="#Redisson原理分析图解" class="headerlink" title="Redisson原理分析图解"></a>Redisson原理分析图解</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt="image"></p>
-<h3 id="加锁机制"><a href="#加锁机制" class="headerlink" title="加锁机制"></a>加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt="image.png"></p>
-<h3 id="watch-dog自动延期机制"><a href="#watch-dog自动延期机制" class="headerlink" title="watch dog自动延期机制"></a>watch dog自动延期机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt="image.png"></p>
-<h3 id="为啥要用lua脚本呢"><a href="#为啥要用lua脚本呢" class="headerlink" title="为啥要用lua脚本呢"></a>为啥要用lua脚本呢</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt="image.png"></p>
-<h3 id="可重入加锁机制"><a href="#可重入加锁机制" class="headerlink" title="可重入加锁机制"></a>可重入加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt="image.png"></p>
-<h2 id="Redis分布式锁的缺点"><a href="#Redis分布式锁的缺点" class="headerlink" title="Redis分布式锁的缺点"></a>Redis分布式锁的缺点</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Redisson</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis面试题</title>
     <url>/2021/03/26/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="支持的数据结构"><a href="#支持的数据结构" class="headerlink" title="支持的数据结构"></a>支持的数据结构</h3><ol>
@@ -184,10 +163,31 @@
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1605595240335-fef65e1b-6f04-432d-b59b-d3275920d741.png" alt="image"></p>
 ]]></content>
       <categories>
-        <category>面试</category>
+        <category>Redis</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redisson 分布式锁</title>
+    <url>/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://blog.csdn.net/tianyaleixiaowu/article/details/90036180">Springboot使用分布式锁（基于redisson）</a>， </p>
+</blockquote>
+<h2 id="常见的分布式锁实现方案"><a href="#常见的分布式锁实现方案" class="headerlink" title="常见的分布式锁实现方案"></a><strong>常见的分布式锁实现方案</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt="image.png"></strong></p>
+<h2 id="Redisson原理分析图解"><a href="#Redisson原理分析图解" class="headerlink" title="Redisson原理分析图解"></a>Redisson原理分析图解</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt="image"></p>
+<h3 id="加锁机制"><a href="#加锁机制" class="headerlink" title="加锁机制"></a>加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt="image.png"></p>
+<h3 id="watch-dog自动延期机制"><a href="#watch-dog自动延期机制" class="headerlink" title="watch dog自动延期机制"></a>watch dog自动延期机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt="image.png"></p>
+<h3 id="为啥要用lua脚本呢"><a href="#为啥要用lua脚本呢" class="headerlink" title="为啥要用lua脚本呢"></a>为啥要用lua脚本呢</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt="image.png"></p>
+<h3 id="可重入加锁机制"><a href="#可重入加锁机制" class="headerlink" title="可重入加锁机制"></a>可重入加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt="image.png"></p>
+<h2 id="Redis分布式锁的缺点"><a href="#Redis分布式锁的缺点" class="headerlink" title="Redis分布式锁的缺点"></a>Redis分布式锁的缺点</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Redisson</tag>
       </tags>
   </entry>
   <entry>
@@ -224,6 +224,32 @@
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记（一）</title>
+    <url>/2021/03/02/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
+<p>过程简述：</p>
+<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
+<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
+<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CMS</tag>
       </tags>
   </entry>
   <entry>
@@ -269,32 +295,6 @@
       </categories>
       <tags>
         <tag>BUG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java学习笔记（一）</title>
-    <url>/2021/03/02/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="CMS-–-浮动垃圾"><a href="#CMS-–-浮动垃圾" class="headerlink" title="CMS  – 浮动垃圾"></a>CMS  – 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="CMS-–-错标"><a href="#CMS-–-错标" class="headerlink" title="CMS – 错标"></a>CMS – 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="CMS-–-重新标记"><a href="#CMS-–-重新标记" class="headerlink" title="CMS – 重新标记"></a>CMS – 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
-<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302095208.png" alt="image-20210302095206722"></p>
-<p>过程简述：</p>
-<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<p>再经过并发标记，在标记过程中可能会产生错标</p>
-<p>重新标记会对错标进行修正</p>
-<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>CMS</tag>
       </tags>
   </entry>
   <entry>
@@ -512,6 +512,33 @@
       </tags>
   </entry>
   <entry>
+    <title>关于一些MQ的面试题</title>
+    <url>/2021/03/16/%E5%85%B3%E4%BA%8E%E4%B8%80%E4%BA%9BMQ%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
+</blockquote>
+<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一些简单的面试题（一）</title>
     <url>/2021/03/15/%E4%B8%80%E4%BA%9B%E7%AE%80%E5%8D%95%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
@@ -537,30 +564,35 @@
       </tags>
   </entry>
   <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/2021/03/16/%E5%85%B3%E4%BA%8E%E4%B8%80%E4%BA%9BMQ%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
+    <title>分布式事务 --  JTA</title>
+    <url>/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
 </blockquote>
-<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
 ]]></content>
       <categories>
-        <category>面试</category>
+        <category>分布式</category>
       </categories>
       <tags>
-        <tag>MQ</tag>
+        <tag>事务</tag>
       </tags>
   </entry>
   <entry>
@@ -640,38 +672,6 @@
 <p>总结</p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png" alt="image-20210310115019855"></p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png" alt="image-20210310115109923"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式事务 --  JTA</title>
-    <url>/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
-<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
-<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
-<li></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
 ]]></content>
       <categories>
         <category>分布式</category>
@@ -814,24 +814,6 @@
       </tags>
   </entry>
   <entry>
-    <title>设计模式（一）</title>
-    <url>/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多线程面试题</title>
     <url>/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -862,10 +844,70 @@
 <h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
 ]]></content>
       <categories>
-        <category>面试</category>
+        <category>线程</category>
       </categories>
       <tags>
-        <tag>多线程</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/03/27/%E7%90%86%E8%A7%A3ThreadLocal/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>相关文章： <a href="https://www.justdojava.com/2019/05/12/java-threadlocal/">文章1</a>  </p>
+</blockquote>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a></h4><h4 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal是什么</h4><p>官方解释：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616815633283-c9b7df4f-4278-4d34-b855-337a20803e62.png" alt="image.png"></p>
+<ul>
+<li>ThreadLocal是一个关于创建线程局部变量的类，主要作用是存储线程的局部变量，做到数据隔离。保存在ThreadLocal中的数据只属于当前线程，对其他线程是不可见的。在多线程环境下，可以防止自己的变量被其他线程修改而导致数据不一致性。</li>
+<li>ThreadLocal设计的目的就是为了能够使得当前线程拥有属于自己的变量，并不是为了解决并发或者共享变量的问题</li>
+<li>底层使用ThreadLocalMap实现，每个线程都拥有自己的ThreadLocalMap，内部是继承了WeakReference的Entry数组，包含的Key为ThreadLocal，值为Object。 </li>
+</ul>
+<h4 id="原理浅析"><a href="#原理浅析" class="headerlink" title="原理浅析"></a>原理浅析</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616815997129-aad7490b-f671-40d6-8879-bca2658e5aef.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826908408-53d45106-cf00-4626-9c81-4e8ad36b281b.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826928515-5ade4c61-6adf-4537-95dd-064749ec857b.png" alt="image.png"></p>
+<h4 id="ThreadLocalMap"><a href="#ThreadLocalMap" class="headerlink" title="ThreadLocalMap"></a>ThreadLocalMap</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826982637-30659013-3102-4326-b0d8-070f401cedf3.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616827030318-d21e91df-a93e-4776-95de-44ce3a9063db.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private void set(ThreadLocal&lt;?&gt; key, Object value) &#123;</span><br><span class="line"></span><br><span class="line">    Entry[] tab &#x3D; table;</span><br><span class="line">    int len &#x3D; tab.length;</span><br><span class="line">    &#x2F;&#x2F;获取 hash 值，用于数组中的下标</span><br><span class="line">    int i &#x3D; key.threadLocalHashCode &amp; (len-1);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果数组该位置有对象则进入</span><br><span class="line">    for (Entry e &#x3D; tab[i];</span><br><span class="line">         e !&#x3D; null;</span><br><span class="line">         e &#x3D; tab[i &#x3D; nextIndex(i, len)]) &#123;</span><br><span class="line">        ThreadLocal&lt;?&gt; k &#x3D; e.get();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;k 相等则覆盖旧值</span><br><span class="line">        if (k &#x3D;&#x3D; key) &#123;</span><br><span class="line">            e.value &#x3D; value;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;此时说明此处 Entry 的 k 中的对象实例已经被回收了，需要替换掉这个位置的 key 和 value</span><br><span class="line">        if (k &#x3D;&#x3D; null) &#123;</span><br><span class="line">            replaceStaleEntry(key, value, i);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;创建 Entry 对象</span><br><span class="line">    tab[i] &#x3D; new Entry(key, value);</span><br><span class="line">    int sz &#x3D; ++size;</span><br><span class="line">    if (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;&#x3D; threshold)</span><br><span class="line">        rehash();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;获取 Entry</span><br><span class="line">private Entry getEntry(ThreadLocal&lt;?&gt; key) &#123;</span><br><span class="line">    int i &#x3D; key.threadLocalHashCode &amp; (table.length - 1);</span><br><span class="line">    Entry e &#x3D; table[i];</span><br><span class="line">    if (e !&#x3D; null &amp;&amp; e.get() &#x3D;&#x3D; key)</span><br><span class="line">        return e;</span><br><span class="line">    else</span><br><span class="line">        return getEntryAfterMiss(key, i, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="ThreadLocalMap的内存泄露问题"><a href="#ThreadLocalMap的内存泄露问题" class="headerlink" title="ThreadLocalMap的内存泄露问题"></a>ThreadLocalMap的内存泄露问题</h4><p>我们知道ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用时，在GC的时候，这个ThreadLocal必然会被回收，但是对应的value不会被回收掉直到线程结束才会被回收。如果当前线程一直处于运行中，那么这些Entry对象中的value就可能一直无法回收，就会发生内存泄露。实际开发中，会使用线程池维护线程的创建和复用，线程为了复用是不会主动结束的，那么ThreadLocal设置的value值就一直被引用，就会发生内存泄露。</p>
+<h4 id="如何避免内存泄露"><a href="#如何避免内存泄露" class="headerlink" title="如何避免内存泄露"></a>如何避免内存泄露</h4><ol>
+<li><p>线程执行完毕调用remove方法</p>
+</li>
+<li><p>使用ThreadLocal，建议用static修饰 static ThreadLocal<HttpHeader> headerLocal = new ThreadLocal();</p>
+</li>
+<li><p>可以在使用ThreadLocal的类上实现AutoCloseable接口，把需要释放的资源（remove）写在close方法里面，把此类写在try后的()里</p>
+<p>代码示例：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class AppContext implements AutoCloseable &#123;</span><br><span class="line"></span><br><span class="line">    private static final ThreadLocal&lt;User&gt; USER &#x3D; new ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public AppContext(user) &#123;</span><br><span class="line">        if(user !&#x3D; null)&#123;</span><br><span class="line">            USER.set(user);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public  void close() &#123;</span><br><span class="line">        USER.remove();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static User getUserId() &#123;</span><br><span class="line">        return USER.get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;执行完线程自动释放资源</span><br><span class="line"> try (AppContext appContext &#x3D; new AppContext(user)) &#123;</span><br><span class="line">          filterChain.doFilter(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="AutoCloseable是什么"><a href="#AutoCloseable是什么" class="headerlink" title="AutoCloseable是什么"></a>AutoCloseable是什么</h4><p>此接口是在jdk1.7之后引入的，可实现自动关闭资源。</p>
+<p>值得注意的是，在使用AutoCloseable的时候，必须配合try使用才能自动释放资源，因为利用try(AppContext appContext = AppContext(user)))才能自动调用close()方法。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>设计模式（一）</title>
+    <url>/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>

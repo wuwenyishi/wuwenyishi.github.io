@@ -30,7 +30,7 @@
 <meta name="description" content="欢迎来到我的博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="meadel&#39;s blog">
-<meta property="og:url" content="https://xuemingde.com/index.html">
+<meta property="og:url" content="https://xuemingde.com/tags/%E9%9D%A2%E8%AF%95/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
 <meta property="og:description" content="欢迎来到我的博客">
 <meta property="og:locale" content="zh_CN">
@@ -39,19 +39,19 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://xuemingde.com/">
+<link rel="canonical" href="https://xuemingde.com/tags/%E9%9D%A2%E8%AF%95/">
 
 
 <script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
+    isHome : false,
     isPost : false,
     lang   : 'zh-CN'
   };
 </script>
-<title>meadel's blog - We need to change the world</title>
+<title>标签: 面试 | meadel's blog</title>
   
 
 
@@ -277,130 +277,70 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
-
-    
+    <div class="main-inner tag posts-collapse">
 
 
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/27/%E7%90%86%E8%A7%A3ThreadLocal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="meadel">
-      <meta itemprop="description" content="欢迎来到我的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meadel's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/27/%E7%90%86%E8%A7%A3ThreadLocal/" class="post-title-link" itemprop="url">未命名</a>
+  
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h2 class="collection-header">面试
+          <small>标签</small>
         </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-27 11:20:26 / 修改时间：14:39:07" itemprop="dateCreated datePublished" datetime="2021-03-27T11:20:26+08:00">2021-03-27</time>
-    </span>
-
-  
       </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>相关文章： <a target="_blank" rel="noopener" href="https://www.justdojava.com/2019/05/12/java-threadlocal/">文章1</a>  </p>
-</blockquote>
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a></h4><h4 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal是什么</h4><p>官方解释：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616815633283-c9b7df4f-4278-4d34-b855-337a20803e62.png" alt="image.png"></p>
-<ul>
-<li>ThreadLocal是一个关于创建线程局部变量的类，主要作用是存储线程的局部变量，做到数据隔离。保存在ThreadLocal中的数据只属于当前线程，对其他线程是不可见的。在多线程环境下，可以防止自己的变量被其他线程修改而导致数据不一致性。</li>
-<li>ThreadLocal设计的目的就是为了能够使得当前线程拥有属于自己的变量，并不是为了解决并发或者共享变量的问题</li>
-<li>底层使用ThreadLocalMap实现，每个线程都拥有自己的ThreadLocalMap，内部是继承了WeakReference的Entry数组，包含的Key为ThreadLocal，值为Object。 </li>
-</ul>
-<h4 id="原理浅析"><a href="#原理浅析" class="headerlink" title="原理浅析"></a>原理浅析</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616815997129-aad7490b-f671-40d6-8879-bca2658e5aef.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826908408-53d45106-cf00-4626-9c81-4e8ad36b281b.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826928515-5ade4c61-6adf-4537-95dd-064749ec857b.png" alt="image.png"></p>
-<h4 id="ThreadLocalMap"><a href="#ThreadLocalMap" class="headerlink" title="ThreadLocalMap"></a>ThreadLocalMap</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826982637-30659013-3102-4326-b0d8-070f401cedf3.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616827030318-d21e91df-a93e-4776-95de-44ce3a9063db.png" alt="image.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">private void set(ThreadLocal&lt;?&gt; key, Object value) &#123;</span><br><span class="line"></span><br><span class="line">    Entry[] tab &#x3D; table;</span><br><span class="line">    int len &#x3D; tab.length;</span><br><span class="line">    &#x2F;&#x2F;获取 hash 值，用于数组中的下标</span><br><span class="line">    int i &#x3D; key.threadLocalHashCode &amp; (len-1);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果数组该位置有对象则进入</span><br><span class="line">    for (Entry e &#x3D; tab[i];</span><br><span class="line">         e !&#x3D; null;</span><br><span class="line">         e &#x3D; tab[i &#x3D; nextIndex(i, len)]) &#123;</span><br><span class="line">        ThreadLocal&lt;?&gt; k &#x3D; e.get();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;k 相等则覆盖旧值</span><br><span class="line">        if (k &#x3D;&#x3D; key) &#123;</span><br><span class="line">            e.value &#x3D; value;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;此时说明此处 Entry 的 k 中的对象实例已经被回收了，需要替换掉这个位置的 key 和 value</span><br><span class="line">        if (k &#x3D;&#x3D; null) &#123;</span><br><span class="line">            replaceStaleEntry(key, value, i);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;创建 Entry 对象</span><br><span class="line">    tab[i] &#x3D; new Entry(key, value);</span><br><span class="line">    int sz &#x3D; ++size;</span><br><span class="line">    if (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;&#x3D; threshold)</span><br><span class="line">        rehash();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;获取 Entry</span><br><span class="line">private Entry getEntry(ThreadLocal&lt;?&gt; key) &#123;</span><br><span class="line">    int i &#x3D; key.threadLocalHashCode &amp; (table.length - 1);</span><br><span class="line">    Entry e &#x3D; table[i];</span><br><span class="line">    if (e !&#x3D; null &amp;&amp; e.get() &#x3D;&#x3D; key)</span><br><span class="line">        return e;</span><br><span class="line">    else</span><br><span class="line">        return getEntryAfterMiss(key, i, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="ThreadLocalMap的内存泄露问题"><a href="#ThreadLocalMap的内存泄露问题" class="headerlink" title="ThreadLocalMap的内存泄露问题"></a>ThreadLocalMap的内存泄露问题</h4><p>我们知道ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用时，在GC的时候，这个ThreadLocal必然会被回收，但是对应的value不会被回收掉直到线程结束才会被回收。如果当前线程一直处于运行中，那么这些Entry对象中的value就可能一直无法回收，就会发生内存泄露。实际开发中，会使用线程池维护线程的创建和复用，线程为了复用是不会主动结束的，那么ThreadLocal设置的value值就一直被引用，就会发生内存泄露。</p>
-<h4 id="如何避免内存泄露"><a href="#如何避免内存泄露" class="headerlink" title="如何避免内存泄露"></a>如何避免内存泄露</h4><ol>
-<li><p>线程执行完毕调用remove方法</p>
-</li>
-<li><p>使用ThreadLocal，建议用static修饰 static ThreadLocal<HttpHeader> headerLocal = new ThreadLocal();</p>
-</li>
-<li><p>可以在使用ThreadLocal的类上实现AutoCloseable接口，把需要释放的资源（remove）写在close方法里面，把此类写在try后的()里</p>
-<p>代码示例：</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class AppContext implements AutoCloseable &#123;</span><br><span class="line"></span><br><span class="line">    private static final ThreadLocal&lt;User&gt; USER &#x3D; new ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public AppContext(user) &#123;</span><br><span class="line">        if(user !&#x3D; null)&#123;</span><br><span class="line">            USER.set(user);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public  void close() &#123;</span><br><span class="line">        USER.remove();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static User getUserId() &#123;</span><br><span class="line">        return USER.get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;执行完线程自动释放资源</span><br><span class="line"> try (AppContext appContext &#x3D; new AppContext(user)) &#123;</span><br><span class="line">          filterChain.doFilter(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="AutoCloseable是什么"><a href="#AutoCloseable是什么" class="headerlink" title="AutoCloseable是什么"></a>AutoCloseable是什么</h4><p>此接口是在jdk1.7之后引入的，可实现自动关闭资源。</p>
-<p>值得注意的是，在使用AutoCloseable的时候，必须配合try使用才能自动释放资源，因为利用try(AppContext appContext = AppContext(user)))才能自动调用close()方法。</p>
 
       
+    <div class="collection-year">
+      <span class="collection-header">2021</span>
     </div>
 
-    
-    
-    
-      
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2021-03-26T00:00:00+08:00"
+              content="2021-03-26">
+          03-26
+        </time>
+      </div>
 
+      <div class="post-title">
+          <a class="post-title-link" href="/2021/03/26/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url">
+            <span itemprop="name">Redis面试题</span>
+          </a>
+      </div>
 
-    <footer class="post-footer">
-        <div class="post-eof"></div>
       
-    </footer>
+    </header>
   </article>
-</div>
 
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2021-03-26T00:00:00+08:00"
+              content="2021-03-26">
+          03-26
+        </time>
+      </div>
 
+      <div class="post-title">
+          <a class="post-title-link" href="/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url">
+            <span itemprop="name">多线程面试题</span>
+          </a>
+      </div>
 
+      
+    </header>
+  </article>
 
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+    </div>
+  </div>
+  
+  
+  
 
 
 <script>
@@ -437,11 +377,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/index.html" selected="">
+        <option value="zh-CN" data-href="/tags/%E9%9D%A2%E8%AF%95/index.html" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/index.html" selected="">
+        <option value="en" data-href="/en/tags/%E9%9D%A2%E8%AF%95/index.html" selected="">
           English
         </option>
       
@@ -546,7 +486,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/tags/%E9%9D%A2%E8%AF%95/',]
       });
       });
   </script>
