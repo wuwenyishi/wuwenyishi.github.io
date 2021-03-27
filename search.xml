@@ -97,6 +97,34 @@
       </tags>
   </entry>
   <entry>
+    <title>RabbitMQ防止数据丢失问题简单介绍</title>
+    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
+</blockquote>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redisson 分布式锁</title>
     <url>/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -163,31 +191,39 @@
       </tags>
   </entry>
   <entry>
-    <title>RabbitMQ防止数据丢失问题简单介绍</title>
-    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
+    <title>SQL优化和SQL注入问题</title>
+    <url>/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Mysq如何防止sql注入"><a href="#Mysq如何防止sql注入" class="headerlink" title="Mysq如何防止sql注入"></a>Mysq如何防止sql注入</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577043492-442c592a-804e-4088-b2c9-638a75b161e2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577087040-e9f6cd55-6e3e-4222-b765-0a92dba38d06.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577122583-79d2acfc-d7f7-4621-a111-377d794dc8ed.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577268648-ffe8d2d7-47a1-4950-a640-13536b8995a2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577373081-556a9755-06b5-468c-b408-6300bb732919.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577415889-ba502d4b-200a-4001-b248-74fb0a392ec4.png" alt="image.png"></p>
+<h2 id="sql优化"><a href="#sql优化" class="headerlink" title="sql优化"></a>sql优化</h2><blockquote>
+<p>参考文章：<a href="https://blog.csdn.net/qq_38789941/article/details/83744271">文章一</a>，<a href="http://www.360doc.com/content/19/0131/15/16619343_812364509.shtml">文章二</a>，<a href="https://database.51cto.com/art/202008/623584.htm">文章三</a></p>
 </blockquote>
-<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
-<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
-<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
-<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
-<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
-<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578389551-55a77709-b74e-4540-ae8f-04b5e4179322.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578441174-96b41421-3b20-40f0-9fd1-48eb450ea3df.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578463749-932b1d5a-0af6-4e0d-a631-821d61d0f2c1.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578525260-6a9732d6-9fa4-487a-bba3-988e62a88cc4.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578758297-eb44d2e5-a1d4-485d-8b2f-ad6f509113ab.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577654854-44419b96-5af4-44b2-b389-d00314469079.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577693679-2c2663b4-5efd-401f-aa98-57b5061806e1.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577751426-63b9766f-35d1-4687-bb88-c62324292220.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577825406-1ed6ee37-a0ed-43f8-9851-56531236c3ff.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577960384-46bfe1d5-528f-4431-8c29-960672e1511b.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578045790-15018eba-4314-482f-8eb7-a77058b40e82.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578168179-dbf58c50-3575-475f-a6d1-cef3fd469276.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578207948-033e7d81-2693-4b3e-8cd9-37203abf5a77.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210324175324481.png" alt="image-20210324175324481"></p>
 ]]></content>
       <categories>
         <category>面试</category>
       </categories>
       <tags>
-        <tag>MQ</tag>
+        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -233,42 +269,6 @@
       </categories>
       <tags>
         <tag>BUG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL优化和SQL注入问题</title>
-    <url>/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Mysq如何防止sql注入"><a href="#Mysq如何防止sql注入" class="headerlink" title="Mysq如何防止sql注入"></a>Mysq如何防止sql注入</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577043492-442c592a-804e-4088-b2c9-638a75b161e2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577087040-e9f6cd55-6e3e-4222-b765-0a92dba38d06.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577122583-79d2acfc-d7f7-4621-a111-377d794dc8ed.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577268648-ffe8d2d7-47a1-4950-a640-13536b8995a2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577373081-556a9755-06b5-468c-b408-6300bb732919.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577415889-ba502d4b-200a-4001-b248-74fb0a392ec4.png" alt="image.png"></p>
-<h2 id="sql优化"><a href="#sql优化" class="headerlink" title="sql优化"></a>sql优化</h2><blockquote>
-<p>参考文章：<a href="https://blog.csdn.net/qq_38789941/article/details/83744271">文章一</a>，<a href="http://www.360doc.com/content/19/0131/15/16619343_812364509.shtml">文章二</a>，<a href="https://database.51cto.com/art/202008/623584.htm">文章三</a></p>
-</blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578389551-55a77709-b74e-4540-ae8f-04b5e4179322.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578441174-96b41421-3b20-40f0-9fd1-48eb450ea3df.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578463749-932b1d5a-0af6-4e0d-a631-821d61d0f2c1.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578525260-6a9732d6-9fa4-487a-bba3-988e62a88cc4.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578758297-eb44d2e5-a1d4-485d-8b2f-ad6f509113ab.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577654854-44419b96-5af4-44b2-b389-d00314469079.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577693679-2c2663b4-5efd-401f-aa98-57b5061806e1.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577751426-63b9766f-35d1-4687-bb88-c62324292220.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577825406-1ed6ee37-a0ed-43f8-9851-56531236c3ff.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577960384-46bfe1d5-528f-4431-8c29-960672e1511b.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578045790-15018eba-4314-482f-8eb7-a77058b40e82.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578168179-dbf58c50-3575-475f-a6d1-cef3fd469276.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578207948-033e7d81-2693-4b3e-8cd9-37203abf5a77.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210324175324481.png" alt="image-20210324175324481"></p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -564,38 +564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务 --  JTA</title>
-    <url>/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
-<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
-<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
-<li></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式事务</title>
     <url>/2021/03/09/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
@@ -672,6 +640,38 @@
 <p>总结</p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115019855.png" alt="image-20210310115019855"></p>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310115109923.png" alt="image-20210310115109923"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式事务 --  JTA</title>
+    <url>/2021/03/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20--%20%20JTA/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><a href="http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/</a></li>
+<li><a href="https://juejin.cn/post/6844903666273484814">https://juejin.cn/post/6844903666273484814</a></li>
+<li><a href="https://blog.csdn.net/jiangyu1013/article/details/84397366">https://blog.csdn.net/jiangyu1013/article/details/84397366</a></li>
+<li></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/image-20210310133718647.png" alt="image-20210310133718647"></p>
 ]]></content>
       <categories>
         <category>分布式</category>
@@ -814,11 +814,32 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式（一）</title>
+    <url>/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>多线程面试题</title>
     <url>/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
 <p>相关文章：<a href="https://blog.51cto.com/14975073/2591029">文章1</a>  </p>
 </blockquote>
+<h3 id="为什么用多线程"><a href="#为什么用多线程" class="headerlink" title="为什么用多线程"></a>为什么用多线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753915503-beba6051-7a3c-4800-888b-1c0e30b0d075.png" alt="image.png"></p>
+<h3 id="多线程难在哪里"><a href="#多线程难在哪里" class="headerlink" title="多线程难在哪里"></a>多线程难在哪里</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753985651-23314499-41bb-4aee-8378-a93880a5b4ea.png" alt="image.png"></p>
+<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616754358431-3b693713-b77e-453e-a625-9fb19218cdb4.png" alt="image.png"></p>
 <h3 id="并发编程三要素-线程三大特性"><a href="#并发编程三要素-线程三大特性" class="headerlink" title="并发编程三要素(线程三大特性)"></a>并发编程三要素(<strong>线程三大特性)</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
 <h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
 <h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
@@ -835,7 +856,9 @@
 <h3 id="什么是守护线程"><a href="#什么是守护线程" class="headerlink" title="什么是守护线程"></a><strong>什么是守护线程</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
 <h3 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
 <h3 id="SynchronizedMap和ConcurrentHashMap有什么区别"><a href="#SynchronizedMap和ConcurrentHashMap有什么区别" class="headerlink" title="SynchronizedMap和ConcurrentHashMap有什么区别"></a>SynchronizedMap和ConcurrentHashMap有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
-<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
+<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756131905-064eeb18-999a-4591-92eb-1fa2ba9a552e.png" alt="image.png"></p>
+<p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
+<h3 id="线程安全的类一定所有的操作都线程安全吗"><a href="#线程安全的类一定所有的操作都线程安全吗" class="headerlink" title="线程安全的类一定所有的操作都线程安全吗"></a>线程安全的类一定所有的操作都线程安全吗</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756345550-319c055c-1e72-434e-ad0e-87338c82014d.png" alt="image.png"></p>
 <h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
 ]]></content>
       <categories>
@@ -843,24 +866,6 @@
       </categories>
       <tags>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式（一）</title>
-    <url>/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
