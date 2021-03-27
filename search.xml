@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>RabbitMQ防止数据丢失问题简单介绍</title>
+    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
+</blockquote>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Map集合详解</title>
     <url>/2021/03/12/Map%E9%9B%86%E5%90%88%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -97,34 +125,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RabbitMQ防止数据丢失问题简单介绍</title>
-    <url>/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
-</blockquote>
-<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
-<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
-<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
-<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
-<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
-<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redisson 分布式锁</title>
     <url>/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -143,6 +143,37 @@
       </categories>
       <tags>
         <tag>Redisson</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis的缓存一致性 问题</title>
+    <url>/2021/03/27/Redis%E7%9A%84%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%20%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>相关文章：<a href="https://developer.aliyun.com/article/712285">文章1</a>  <a href="https://www.cnblogs.com/rjzheng/p/9041659.html">文章2</a></p>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
+<h3 id="方式一：-先更新数据库，再更新缓存"><a href="#方式一：-先更新数据库，再更新缓存" class="headerlink" title="方式一： 先更新数据库，再更新缓存"></a>方式一： 先更新数据库，再更新缓存</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616831217400-3b84a864-5a2c-4bdf-9e74-3e56c066c30f.png" alt="image.png"></p>
+<h3 id="方式二：先删缓存，再更新数据库"><a href="#方式二：先删缓存，再更新数据库" class="headerlink" title="方式二：先删缓存，再更新数据库"></a>方式二：先删缓存，再更新数据库</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616831509175-c5f3169f-903d-4350-ba74-c2bd58286adc.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616831579262-008fbb7b-e557-4304-b68d-9a7116a6b68a.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616832118844-b6b49d56-7c2a-4ffe-90df-fec448cd9550.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616832224837-2684fac9-4305-4e31-a89b-2c6323be1929.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616832261751-69493367-cb6b-45d5-b39c-4e3cc3c0eaaf.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616832301163-15e5857b-acfb-459b-b2fc-5977f5eeb378.png" alt="image.png"></p>
+<h3 id="方式三：先更新数据库，再删缓存"><a href="#方式三：先更新数据库，再删缓存" class="headerlink" title="方式三：先更新数据库，再删缓存"></a>方式三：先更新数据库，再删缓存</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616832821538-ec765b59-1b06-4150-a804-4be074240641.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833138358-58b31377-e7ea-4496-ab02-8e1ca146e25d.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833205589-da05da22-7e3f-491c-834d-dd3b07770714.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833256057-3fc89667-0735-44b6-982d-3f917b245c13.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833278950-6d618e3f-dc05-494b-bd2d-36c36316ecc5.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833293111-53a6c67e-ce63-48bd-9e67-b40970b13e24.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833332680-af709752-31ec-4793-b293-2b98b1936329.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833344867-42c32b3e-ecee-4139-8df7-7f79aa40f928.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -466,6 +497,31 @@
       </tags>
   </entry>
   <entry>
+    <title>一些简单的面试题（一）</title>
+    <url>/2021/03/15/%E4%B8%80%E4%BA%9B%E7%AE%80%E5%8D%95%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114157472.png" alt="image-20210315114157472"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114401023.png" alt="image-20210315114401023"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315181140447.png" alt="image-20210315181140447"></p>
+<blockquote>
+<p>如果更深一些，会问一些Shiro的工作流程或者原理，需要对源码有一些了解了，SpringSecurity也是如此。所以在工作中多看一些源码，会对实现原理和工作流程有很大的帮助。</p>
+<p>推荐文章：<a href="https://www.cnblogs.com/yuluoxingkong/p/8385711.html">https://www.cnblogs.com/yuluoxingkong/p/8385711.html</a></p>
+</blockquote>
+<h4 id="shiro认证流程"><a href="#shiro认证流程" class="headerlink" title="shiro认证流程"></a>shiro认证流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315151223390.png" alt="image-20210315151223390"></p>
+<h4 id="shiro授权流程"><a href="#shiro授权流程" class="headerlink" title="shiro授权流程"></a>shiro授权流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315151208566.png" alt="image-20210315151208566"></p>
+<h4 id="Shiro的权限控制方式"><a href="#Shiro的权限控制方式" class="headerlink" title="Shiro的权限控制方式"></a>Shiro的权限控制方式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120723741.png" alt="image-20210315120723741"></p>
+<h4 id="Shiro-的三大核心组件"><a href="#Shiro-的三大核心组件" class="headerlink" title="Shiro 的三大核心组件"></a>Shiro 的三大核心组件</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120609581.png" alt="image-20210315120609581"></p>
+<h4 id="什么是粗颗粒和细颗粒权限"><a href="#什么是粗颗粒和细颗粒权限" class="headerlink" title="什么是粗颗粒和细颗粒权限"></a>什么是粗颗粒和细颗粒权限</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120812562.png" alt="image-20210315120812562"></p>
+<h4 id="粗颗粒和细颗粒如何授权"><a href="#粗颗粒和细颗粒如何授权" class="headerlink" title="粗颗粒和细颗粒如何授权"></a>粗颗粒和细颗粒如何授权</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120915946.png" alt="image-20210315120915946"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>java面试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springBoot整合Nacos</title>
     <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
@@ -509,31 +565,6 @@
       </categories>
       <tags>
         <tag>nacos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一些简单的面试题（一）</title>
-    <url>/2021/03/15/%E4%B8%80%E4%BA%9B%E7%AE%80%E5%8D%95%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114157472.png" alt="image-20210315114157472"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114401023.png" alt="image-20210315114401023"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315181140447.png" alt="image-20210315181140447"></p>
-<blockquote>
-<p>如果更深一些，会问一些Shiro的工作流程或者原理，需要对源码有一些了解了，SpringSecurity也是如此。所以在工作中多看一些源码，会对实现原理和工作流程有很大的帮助。</p>
-<p>推荐文章：<a href="https://www.cnblogs.com/yuluoxingkong/p/8385711.html">https://www.cnblogs.com/yuluoxingkong/p/8385711.html</a></p>
-</blockquote>
-<h4 id="shiro认证流程"><a href="#shiro认证流程" class="headerlink" title="shiro认证流程"></a>shiro认证流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315151223390.png" alt="image-20210315151223390"></p>
-<h4 id="shiro授权流程"><a href="#shiro授权流程" class="headerlink" title="shiro授权流程"></a>shiro授权流程</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315151208566.png" alt="image-20210315151208566"></p>
-<h4 id="Shiro的权限控制方式"><a href="#Shiro的权限控制方式" class="headerlink" title="Shiro的权限控制方式"></a>Shiro的权限控制方式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120723741.png" alt="image-20210315120723741"></p>
-<h4 id="Shiro-的三大核心组件"><a href="#Shiro-的三大核心组件" class="headerlink" title="Shiro 的三大核心组件"></a>Shiro 的三大核心组件</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120609581.png" alt="image-20210315120609581"></p>
-<h4 id="什么是粗颗粒和细颗粒权限"><a href="#什么是粗颗粒和细颗粒权限" class="headerlink" title="什么是粗颗粒和细颗粒权限"></a>什么是粗颗粒和细颗粒权限</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120812562.png" alt="image-20210315120812562"></p>
-<h4 id="粗颗粒和细颗粒如何授权"><a href="#粗颗粒和细颗粒如何授权" class="headerlink" title="粗颗粒和细颗粒如何授权"></a>粗颗粒和细颗粒如何授权</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315120915946.png" alt="image-20210315120915946"></p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>java面试</tag>
       </tags>
   </entry>
   <entry>
@@ -851,6 +882,24 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式（一）</title>
+    <url>/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
+<blockquote>
+<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>理解ThreadLocal</title>
     <url>/2021/03/27/%E7%90%86%E8%A7%A3ThreadLocal/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -896,24 +945,6 @@
       </categories>
       <tags>
         <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式（一）</title>
-    <url>/2021/03/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114626.png" alt="image-20210308114624316"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114701.png" alt="image-20210308114700698"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114722.png" alt="image-20210308114721158"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210308114920.png" alt="image-20210308114918947"></p>
-<blockquote>
-<p>关于设计模式，推荐一个网址：[undefined]: <a href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
