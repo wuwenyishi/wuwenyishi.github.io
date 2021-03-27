@@ -206,20 +206,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/16/%E5%85%B3%E4%BA%8E%E4%B8%80%E4%BA%9BMQ%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/16/%E5%85%B3%E4%BA%8E%E4%B8%80%E4%BA%9BMQ%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">关于一些MQ的面试题</a>
+          <a href="/2021/03/19/RabbitMQ%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">RabbitMQ防止数据丢失问题简单介绍</a>
         </h2>
 
         <div class="post-meta-container">
@@ -310,16 +310,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-03-16 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-16T00:00:00+08:00">2021-03-16</time>
+      <time title="创建时间：2021-03-19 00:00:00 / 修改时间：13:40:01" itemprop="dateCreated datePublished" datetime="2021-03-19T00:00:00+08:00">2021-03-19</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 13:38:04" itemprop="dateModified" datetime="2021-03-19T13:38:04+08:00">2021-03-19</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -338,7 +332,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>136</span>
+      <span>145</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -357,21 +351,22 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>推荐文章：<a target="_blank" rel="noopener" href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
+<p>推荐文章：<a target="_blank" rel="noopener" href="https://www.pianshen.com/article/5851218267/">消息Ack确认机制</a> ， <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019125512">RabbitMQ如何处理消息丢失</a> ， <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/769882">RabbitMQ防止数据丢失</a></p>
 </blockquote>
-<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
 
       
     </div>
@@ -393,7 +388,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -457,14 +452,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">35k</span>
+    <span title="站点总字数">37k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">34 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
