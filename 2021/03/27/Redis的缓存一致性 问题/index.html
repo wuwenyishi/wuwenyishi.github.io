@@ -27,12 +27,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="相关文章：文章1  文章2   方式一： 先更新数据库，再更新缓存  方式二：先删缓存，再更新数据库      方式三：先更新数据库，再删缓存">
+<meta name="description" content="相关文章：文章1  文章2  文章3   方式一： 先更新数据库，再更新缓存  方式二：先删缓存，再更新数据库      方式三：先更新数据库，再删缓存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis的缓存一致性 问题">
 <meta property="og:url" content="https://xuemingde.com/2021/03/27/Redis%E7%9A%84%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%20%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="相关文章：文章1  文章2   方式一： 先更新数据库，再更新缓存  方式二：先删缓存，再更新数据库      方式三：先更新数据库，再删缓存">
+<meta property="og:description" content="相关文章：文章1  文章2  文章3   方式一： 先更新数据库，再更新缓存  方式二：先删缓存，再更新数据库      方式三：先更新数据库，再删缓存">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png">
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png">
@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833332680-af709752-31ec-4793-b293-2b98b1936329.png">
 <meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1616833344867-42c32b3e-ecee-4139-8df7-7f79aa40f928.png">
 <meta property="article:published_time" content="2021-03-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-27T08:38:42.947Z">
+<meta property="article:modified_time" content="2021-03-31T01:48:08.812Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -332,10 +332,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-03-27 00:00:00 / 修改时间：16:38:42" itemprop="dateCreated datePublished" datetime="2021-03-27T00:00:00+08:00">2021-03-27</time>
+      <time title="创建时间：2021-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-27T00:00:00+08:00">2021-03-27</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-31 09:48:08" itemprop="dateModified" datetime="2021-03-31T09:48:08+08:00">2021-03-31</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -361,7 +367,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>57</span>
+      <span>60</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -380,7 +386,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>相关文章：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/712285">文章1</a>  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/rjzheng/p/9041659.html">文章2</a></p>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/712285">文章1</a>  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/rjzheng/p/9041659.html">文章2</a>  <a target="_blank" rel="noopener" href="https://note.dolyw.com/cache/00-DataBaseConsistency.html">文章3</a></p>
 </blockquote>
 <p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
 <h3 id="方式一：-先更新数据库，再更新缓存"><a href="#方式一：-先更新数据库，再更新缓存" class="headerlink" title="方式一： 先更新数据库，再更新缓存"></a>方式一： 先更新数据库，再更新缓存</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png" alt="image.png"></p>
@@ -451,6 +457,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/" rel="next" title="SpringBoot 使用线程池的方式之一">
+                  SpringBoot 使用线程池的方式之一 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

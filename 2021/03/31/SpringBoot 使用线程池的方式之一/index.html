@@ -27,19 +27,25 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="欢迎来到我的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="meadel&#39;s blog">
-<meta property="og:url" content="https://xuemingde.com/archives/2021/03/page/3/index.html">
+<meta name="description" content="线程池配置 @Async 注意事项：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot 使用线程池的方式之一">
+<meta property="og:url" content="https://xuemingde.com/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="欢迎来到我的博客">
+<meta property="og:description" content="线程池配置 @Async 注意事项：">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1617091122646-78d04495-37eb-42cf-a0a7-28974f23647b.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1617091219237-0779b4d5-3184-49fb-a2de-e9c6dc0be764.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1617090980456-5220d9d1-6b4e-4833-a138-f4be428fbcd2.png">
+<meta property="article:published_time" content="2021-03-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-31T01:52:23.347Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="meadel">
+<meta property="article:tag" content="线程池">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/1617091122646-78d04495-37eb-42cf-a0a7-28974f23647b.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/archives/2021/03/page/3/">
+<link rel="canonical" href="https://xuemingde.com/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/">
 
 
 <script class="page-configurations">
@@ -47,11 +53,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>归档 | meadel's blog</title>
+<title>SpringBoot 使用线程池的方式之一 | meadel's blog</title>
   
 
 
@@ -176,7 +182,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
 	
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
@@ -190,6 +196,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">线程池配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Async"><span class="nav-number">2.</span> <span class="nav-text">@Async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">注意事项：</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1468592465&auto=1&height=66"></iframe>
@@ -277,132 +284,149 @@
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 26 篇日志。 继续努力。</span>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot 使用线程池的方式之一
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2021-03-31 00:00:00 / 修改时间：09:52:23" itemprop="dateCreated datePublished" datetime="2021-03-31T00:00:00+08:00">2021-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">线程</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>16</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="线程池配置"><a href="#线程池配置" class="headerlink" title="线程池配置"></a>线程池配置</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1617091122646-78d04495-37eb-42cf-a0a7-28974f23647b.png" alt="image.png"></p>
+<h3 id="Async"><a href="#Async" class="headerlink" title="@Async"></a>@Async</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1617091219237-0779b4d5-3184-49fb-a2de-e9c6dc0be764.png" alt="image.png"></p>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1617090980456-5220d9d1-6b4e-4833-a138-f4be428fbcd2.png" alt="image.png"></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-05T00:00:00+08:00"
-              content="2021-03-05">
-          03-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/" itemprop="url">
-            <span itemprop="name">springBoot整合Nacos</span>
-          </a>
-      </div>
-
+    
+    
+    
       
-    </header>
+  <div class="popular-posts-header">相关帖子</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\03\31\Mybatis-plus自动生成主键策略\" rel="bookmark">Mybatis-plus自动生成主键策略</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://xuemingde.com/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/" title="SpringBoot 使用线程池的方式之一">https://xuemingde.com/2021/03/31/SpringBoot 使用线程池的方式之一/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/27/Redis%E7%9A%84%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%20%E9%97%AE%E9%A2%98/" rel="prev" title="Redis的缓存一致性 问题">
+                  <i class="fa fa-chevron-left"></i> Redis的缓存一致性 问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/31/Mybatis-plus%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%B8%BB%E9%94%AE%E7%AD%96%E7%95%A5/" rel="next" title="Mybatis-plus自动生成主键策略">
+                  Mybatis-plus自动生成主键策略 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-04T00:00:00+08:00"
-              content="2021-03-04">
-          03-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="url">
-            <span itemprop="name">设计模式（二）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-03T00:00:00+08:00"
-              content="2021-03-03">
-          03-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/03/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/" itemprop="url">
-            <span itemprop="name">设计模式（三）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-02T00:00:00+08:00"
-              content="2021-03-02">
-          03-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/02/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="url">
-            <span itemprop="name">java学习笔记（一）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-01T00:00:00+08:00"
-              content="2021-03-01">
-          03-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/01/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="url">
-            <span itemprop="name">java学习笔记（二）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2021/03/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2021/03/">1</a><a class="page-number" href="/archives/2021/03/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+
+
+
 
 
 <script>
@@ -439,11 +463,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/archives/2021/03/page/3/index.html" selected="">
+        <option value="zh-CN" data-href="/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/archives/2021/03/page/3/index.html" selected="">
+        <option value="en" data-href="/en/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/" selected="">
           English
         </option>
       
@@ -548,7 +572,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/archives/2021/03/page/3/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/03/31/SpringBoot%20%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80/',]
       });
       });
   </script>
