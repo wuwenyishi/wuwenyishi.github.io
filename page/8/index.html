@@ -206,20 +206,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/21/Redisson%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="post-title-link" itemprop="url">Redisson 分布式锁</a>
+          <a href="/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">多线程面试题</a>
         </h2>
 
         <div class="post-meta-container">
@@ -311,14 +311,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-03-21 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-21T00:00:00+08:00">2021-03-21</time>
+      <time title="创建时间：2021-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-26T00:00:00+08:00">2021-03-26</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-22 19:47:37" itemprop="dateModified" datetime="2021-03-22T19:47:37+08:00">2021-03-22</time>
+        <time title="修改时间：2021-03-27 11:22:02" itemprop="dateModified" datetime="2021-03-27T11:22:02+08:00">2021-03-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -326,7 +326,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+          <a href="/categories/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">线程</span></a>
         </span>
     </span>
 
@@ -338,7 +338,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>106</span>
+      <span>333</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -357,15 +357,31 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>推荐文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/tianyaleixiaowu/article/details/90036180">Springboot使用分布式锁（基于redisson）</a>， </p>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://blog.51cto.com/14975073/2591029">文章1</a>  </p>
 </blockquote>
-<h2 id="常见的分布式锁实现方案"><a href="#常见的分布式锁实现方案" class="headerlink" title="常见的分布式锁实现方案"></a><strong>常见的分布式锁实现方案</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt="image.png"></strong></p>
-<h2 id="Redisson原理分析图解"><a href="#Redisson原理分析图解" class="headerlink" title="Redisson原理分析图解"></a>Redisson原理分析图解</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt="image"></p>
-<h3 id="加锁机制"><a href="#加锁机制" class="headerlink" title="加锁机制"></a>加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt="image.png"></p>
-<h3 id="watch-dog自动延期机制"><a href="#watch-dog自动延期机制" class="headerlink" title="watch dog自动延期机制"></a>watch dog自动延期机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt="image.png"></p>
-<h3 id="为啥要用lua脚本呢"><a href="#为啥要用lua脚本呢" class="headerlink" title="为啥要用lua脚本呢"></a>为啥要用lua脚本呢</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt="image.png"></p>
-<h3 id="可重入加锁机制"><a href="#可重入加锁机制" class="headerlink" title="可重入加锁机制"></a>可重入加锁机制</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt="image.png"></p>
-<h2 id="Redis分布式锁的缺点"><a href="#Redis分布式锁的缺点" class="headerlink" title="Redis分布式锁的缺点"></a>Redis分布式锁的缺点</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt="image.png"></p>
+<h3 id="为什么用多线程"><a href="#为什么用多线程" class="headerlink" title="为什么用多线程"></a>为什么用多线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753915503-beba6051-7a3c-4800-888b-1c0e30b0d075.png" alt="image.png"></p>
+<h3 id="多线程难在哪里"><a href="#多线程难在哪里" class="headerlink" title="多线程难在哪里"></a>多线程难在哪里</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753985651-23314499-41bb-4aee-8378-a93880a5b4ea.png" alt="image.png"></p>
+<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616754358431-3b693713-b77e-453e-a625-9fb19218cdb4.png" alt="image.png"></p>
+<h3 id="并发编程三要素-线程三大特性"><a href="#并发编程三要素-线程三大特性" class="headerlink" title="并发编程三要素(线程三大特性)"></a>并发编程三要素(<strong>线程三大特性)</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
+<h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
+<h3 id="sleep-和-wait-有什么区别"><a href="#sleep-和-wait-有什么区别" class="headerlink" title="sleep() 和 wait() 有什么区别"></a>sleep() 和 wait() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt="image.png"></p>
+<h3 id="notify-和-notifyAll-有什么区别"><a href="#notify-和-notifyAll-有什么区别" class="headerlink" title="notify()和 notifyAll()有什么区别"></a>notify()和 notifyAll()有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt="image.png"></p>
+<h3 id="线程的-run-和-start-有什么区别"><a href="#线程的-run-和-start-有什么区别" class="headerlink" title="线程的 run() 和 start() 有什么区别"></a>线程的 run() 和 start() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt="image.png"></p>
+<h3 id="Runnable接口和Callable接口的区别"><a href="#Runnable接口和Callable接口的区别" class="headerlink" title="Runnable接口和Callable接口的区别"></a>Runnable接口和Callable接口的区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt="image.png"></p>
+<h3 id="是继承Thread类好还是实现Runnable接口好"><a href="#是继承Thread类好还是实现Runnable接口好" class="headerlink" title="是继承Thread类好还是实现Runnable接口好"></a><strong>是继承Thread类好还是实现Runnable接口好</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt="image.png"></p>
+<h3 id="你在哪里用到了多线程"><a href="#你在哪里用到了多线程" class="headerlink" title="你在哪里用到了多线程"></a><strong>你在哪里用到了多线程</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt="image.png"></p>
+<h3 id="什么是多线程安全"><a href="#什么是多线程安全" class="headerlink" title="什么是多线程安全"></a><strong>什么是多线程安全</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt="image.png"></p>
+<h3 id="如何解决多线程之间线程安全问题"><a href="#如何解决多线程之间线程安全问题" class="headerlink" title="如何解决多线程之间线程安全问题"></a><strong>如何解决多线程之间线程安全问题</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt="image.png"></p>
+<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><a href="#为什么使用线程同步或使用锁能解决线程安全问题呢" class="headerlink" title="为什么使用线程同步或使用锁能解决线程安全问题呢"></a><strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt="image.png"></strong></p>
+<h3 id="什么是多线程之间同步"><a href="#什么是多线程之间同步" class="headerlink" title="什么是多线程之间同步"></a><strong>什么是多线程之间同步</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt="image.png"></strong></p>
+<h3 id="什么是守护线程"><a href="#什么是守护线程" class="headerlink" title="什么是守护线程"></a><strong>什么是守护线程</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
+<h3 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
+<h3 id="SynchronizedMap和ConcurrentHashMap有什么区别"><a href="#SynchronizedMap和ConcurrentHashMap有什么区别" class="headerlink" title="SynchronizedMap和ConcurrentHashMap有什么区别"></a>SynchronizedMap和ConcurrentHashMap有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
+<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756131905-064eeb18-999a-4591-92eb-1fa2ba9a552e.png" alt="image.png"></p>
+<p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
+<h3 id="线程安全的类一定所有的操作都线程安全吗"><a href="#线程安全的类一定所有的操作都线程安全吗" class="headerlink" title="线程安全的类一定所有的操作都线程安全吗"></a>线程安全的类一定所有的操作都线程安全吗</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756345550-319c055c-1e72-434e-ad0e-87338c82014d.png" alt="image.png"></p>
+<h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
 
       
     </div>
@@ -387,7 +403,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
