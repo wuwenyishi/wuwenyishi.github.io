@@ -235,6 +235,34 @@
       </tags>
   </entry>
   <entry>
+    <title>ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly()</title>
+    <url>/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>相关文章：<a href="https://blog.csdn.net/michaelgo/article/details/81481068">https://blog.csdn.net/michaelgo/article/details/81481068</a> | </p>
+</blockquote>
+<h2 id="ReentrantLock简要介绍"><a href="#ReentrantLock简要介绍" class="headerlink" title="ReentrantLock简要介绍"></a>ReentrantLock简要介绍</h2><p>简单介绍一下ReentrantLock，可重入锁，互斥锁，提供了fair（公平）和unfair（非公平）两种模式的锁。默认构造函数是unfair的锁，如果初始化时传入true的参数则会返回fair锁。所谓不公平就是在锁可获取时，不用考虑该锁队列是否有其他waiter，直接获取；反之，对于公平锁来讲就是当等待的锁资源可获取时要看下等待队列中当前线程是不是head线程，如果不是则不获取。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415104930.png" alt="image-20210415104929426"></p>
+<h2 id="ReentrantLock提供的获取锁的方式"><a href="#ReentrantLock提供的获取锁的方式" class="headerlink" title="ReentrantLock提供的获取锁的方式"></a>ReentrantLock提供的获取锁的方式</h2><blockquote>
+<p>ReentrantLock提供了lock()、tryLock()、tryLock(long timeout, TimeUnit unit)、lock.lockInterruptibly()</p>
+</blockquote>
+<h3 id="lock"><a href="#lock" class="headerlink" title="lock()"></a>lock()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105206.png" alt="image-20210415105204508"></p>
+<h3 id="tryLock"><a href="#tryLock" class="headerlink" title="tryLock()"></a>tryLock()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105043.png" alt="image-20210415105042468"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105109.png" alt="image-20210415105108131"></p>
+<h3 id="tryLock-long-timeout-TimeUnit-unit"><a href="#tryLock-long-timeout-TimeUnit-unit" class="headerlink" title="tryLock(long timeout, TimeUnit unit)"></a>tryLock(long timeout, TimeUnit unit)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105236.png" alt="image-20210415105235392"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105248.png" alt="image-20210415105247558"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105516.png" alt="image-20210415105514564"></p>
+<h3 id="lockInterruptibly"><a href="#lockInterruptibly" class="headerlink" title="lockInterruptibly()"></a>lockInterruptibly()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105559.png" alt="image-20210415105558443"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105610.png" alt="image-20210415105609980"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105625.png" alt="image-20210415105624104"></p>
+]]></content>
+      <categories>
+        <category>分布式锁</category>
+      </categories>
+      <tags>
+        <tag>分布式锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL优化和SQL注入问题</title>
     <url>/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Mysq如何防止sql注入"><a href="#Mysq如何防止sql注入" class="headerlink" title="Mysq如何防止sql注入"></a>Mysq如何防止sql注入</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577043492-442c592a-804e-4088-b2c9-638a75b161e2.png" alt="image.png"></p>
@@ -455,49 +483,25 @@
       </tags>
   </entry>
   <entry>
-    <title>springBoot整合Nacos</title>
-    <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
-<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
-<p>账户密码默认：nacos/nacos </p>
-<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764"></p>
-<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
-<li><p>新建  命名空间</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721"></p>
-</li>
-</ol>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311"></p>
-<p>新建配置</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015"></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513"></p>
-<p>与服务端配置对比</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139"></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853"></p>
-<p>测试获取配置信息：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176"></p>
-<p>测试：</p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444"></p>
-]]></content>
+    <title>springBoot整合Redisson分布式锁</title>
+    <url>/2021/04/14/springBoot%E6%95%B4%E5%90%88Redisson%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       <categories>
-        <category>分布式</category>
+        <category>分布式锁</category>
       </categories>
       <tags>
-        <tag>nacos</tag>
+        <tag>分布式锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springBoot整合Redis分布式锁</title>
+    <url>/2021/04/14/springBoot%E6%95%B4%E5%90%88Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>分布式锁</category>
+      </categories>
+      <tags>
+        <tag>分布式锁</tag>
       </tags>
   </entry>
   <entry>
@@ -570,6 +574,52 @@
       </tags>
   </entry>
   <entry>
+    <title>springBoot整合Nacos</title>
+    <url>/2021/03/05/springboot%E6%95%B4%E5%90%88nacos/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <a href="https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA</a> 提取码: n9fk </p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163758.png" alt="image-20210304163751931"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304163845.png" alt="image-20210304163843821"></p>
+<p>访问：<a href="http://127.0.0.1:8848/nacos">http://127.0.0.1:8848/nacos</a>  </p>
+<p>账户密码默认：nacos/nacos </p>
+<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210304164000.png" alt="image-20210304163959764"></p>
+<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
+<li><p>新建  命名空间</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092814.png" alt="image-20210305092812721"></p>
+</li>
+</ol>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092920.png" alt="image-20210305092919689"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305092945.png" alt="image-20210305092944790"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093109.png" alt="image-20210305093108311"></p>
+<p>新建配置</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093324.png" alt="image-20210305093323554"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093506.png" alt="image-20210305093505015"></p>
+<p>代码配置</p>
+<p>maven引用</p>
+<!--nacos组件-->
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.1.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<p>新建 bootstrap.yml 文件，内容如下：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305093731.png" alt="image-20210305093729513"></p>
+<p>与服务端配置对比</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094240.png" alt="image-20210305094238911"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094354.png" alt="image-20210305094353139"></p>
+<p>新建获取配置信息文件，示例：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094646.png" alt="image-20210305094645537"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094636.png" alt="image-20210305094635853"></p>
+<p>测试获取配置信息：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305094745.png" alt="image-20210305094744176"></p>
+<p>测试：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/pictureBed/20210305095010.png" alt="image-20210305095009444"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>nacos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一些简单的面试题（一）</title>
     <url>/2021/03/15/%E4%B8%80%E4%BA%9B%E7%AE%80%E5%8D%95%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="安全框架Shiro和SpringSecurity的比较"><a href="#安全框架Shiro和SpringSecurity的比较" class="headerlink" title="安全框架Shiro和SpringSecurity的比较"></a>安全框架Shiro和SpringSecurity的比较</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210315114047330.png" alt="image-20210315114047330"></p>
@@ -592,33 +642,6 @@
       </categories>
       <tags>
         <tag>java面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/2021/03/16/%E5%85%B3%E4%BA%8E%E4%B8%80%E4%BA%9BMQ%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<a href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
-</blockquote>
-<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -651,6 +674,33 @@
       </categories>
       <tags>
         <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于一些MQ的面试题</title>
+    <url>/2021/03/16/%E5%85%B3%E4%BA%8E%E4%B8%80%E4%BA%9BMQ%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<a href="https://gitee.com/casonol/interview_notes/blob/master/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RabbitMQ%E9%9D%A2%E8%AF%952020.md">文章一</a> ， <a href="https://www.jianshu.com/p/02fdcb9e8784">如何保证消息按顺序执行</a></p>
+</blockquote>
+<h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></strong></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -782,76 +832,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式锁 - Redis实现</title>
-    <url>/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20-%20Redis%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>分布式锁</category>
-      </categories>
-      <tags>
-        <tag>分布式锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多线程面试题</title>
-    <url>/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>相关文章：<a href="https://blog.51cto.com/14975073/2591029">文章1</a>  </p>
-</blockquote>
-<h3 id="为什么用多线程"><a href="#为什么用多线程" class="headerlink" title="为什么用多线程"></a>为什么用多线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753915503-beba6051-7a3c-4800-888b-1c0e30b0d075.png" alt="image.png"></p>
-<h3 id="多线程难在哪里"><a href="#多线程难在哪里" class="headerlink" title="多线程难在哪里"></a>多线程难在哪里</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753985651-23314499-41bb-4aee-8378-a93880a5b4ea.png" alt="image.png"></p>
-<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616754358431-3b693713-b77e-453e-a625-9fb19218cdb4.png" alt="image.png"></p>
-<h3 id="并发编程三要素-线程三大特性"><a href="#并发编程三要素-线程三大特性" class="headerlink" title="并发编程三要素(线程三大特性)"></a>并发编程三要素(<strong>线程三大特性)</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
-<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
-<h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
-<h3 id="sleep-和-wait-有什么区别"><a href="#sleep-和-wait-有什么区别" class="headerlink" title="sleep() 和 wait() 有什么区别"></a>sleep() 和 wait() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt="image.png"></p>
-<h3 id="notify-和-notifyAll-有什么区别"><a href="#notify-和-notifyAll-有什么区别" class="headerlink" title="notify()和 notifyAll()有什么区别"></a>notify()和 notifyAll()有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt="image.png"></p>
-<h3 id="线程的-run-和-start-有什么区别"><a href="#线程的-run-和-start-有什么区别" class="headerlink" title="线程的 run() 和 start() 有什么区别"></a>线程的 run() 和 start() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt="image.png"></p>
-<h3 id="Runnable接口和Callable接口的区别"><a href="#Runnable接口和Callable接口的区别" class="headerlink" title="Runnable接口和Callable接口的区别"></a>Runnable接口和Callable接口的区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt="image.png"></p>
-<h3 id="是继承Thread类好还是实现Runnable接口好"><a href="#是继承Thread类好还是实现Runnable接口好" class="headerlink" title="是继承Thread类好还是实现Runnable接口好"></a><strong>是继承Thread类好还是实现Runnable接口好</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt="image.png"></p>
-<h3 id="你在哪里用到了多线程"><a href="#你在哪里用到了多线程" class="headerlink" title="你在哪里用到了多线程"></a><strong>你在哪里用到了多线程</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt="image.png"></p>
-<h3 id="什么是多线程安全"><a href="#什么是多线程安全" class="headerlink" title="什么是多线程安全"></a><strong>什么是多线程安全</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt="image.png"></p>
-<h3 id="如何解决多线程之间线程安全问题"><a href="#如何解决多线程之间线程安全问题" class="headerlink" title="如何解决多线程之间线程安全问题"></a><strong>如何解决多线程之间线程安全问题</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt="image.png"></p>
-<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><a href="#为什么使用线程同步或使用锁能解决线程安全问题呢" class="headerlink" title="为什么使用线程同步或使用锁能解决线程安全问题呢"></a><strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt="image.png"></strong></p>
-<h3 id="什么是多线程之间同步"><a href="#什么是多线程之间同步" class="headerlink" title="什么是多线程之间同步"></a><strong>什么是多线程之间同步</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt="image.png"></strong></p>
-<h3 id="什么是守护线程"><a href="#什么是守护线程" class="headerlink" title="什么是守护线程"></a><strong>什么是守护线程</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
-<h3 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
-<h3 id="SynchronizedMap和ConcurrentHashMap有什么区别"><a href="#SynchronizedMap和ConcurrentHashMap有什么区别" class="headerlink" title="SynchronizedMap和ConcurrentHashMap有什么区别"></a>SynchronizedMap和ConcurrentHashMap有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
-<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756131905-064eeb18-999a-4591-92eb-1fa2ba9a552e.png" alt="image.png"></p>
-<p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
-<h3 id="线程安全的类一定所有的操作都线程安全吗"><a href="#线程安全的类一定所有的操作都线程安全吗" class="headerlink" title="线程安全的类一定所有的操作都线程安全吗"></a>线程安全的类一定所有的操作都线程安全吗</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756345550-319c055c-1e72-434e-ad0e-87338c82014d.png" alt="image.png"></p>
-<h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>线程</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式锁 - 前言</title>
-    <url>/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81-%E5%89%8D%E8%A8%80/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>相关文章： <a href="https://juejin.cn/post/6844903863363829767">https://juejin.cn/post/6844903863363829767</a>  |   <a href="https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/">https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/</a>  |   </p>
-</blockquote>
-<h2 id="为什么要使用分布式锁"><a href="#为什么要使用分布式锁" class="headerlink" title="为什么要使用分布式锁"></a>为什么要使用分布式锁</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413141809.png" alt="image"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413141814.png" alt="image.png"></p>
-<h2 id="分布式锁有几种实现方式"><a href="#分布式锁有几种实现方式" class="headerlink" title="分布式锁有几种实现方式"></a>分布式锁有几种实现方式</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413141934.webp" alt="img"></p>
-<h2 id="你有遇到需要使用分布式锁的场景吗？"><a href="#你有遇到需要使用分布式锁的场景吗？" class="headerlink" title="你有遇到需要使用分布式锁的场景吗？"></a>你有遇到需要使用分布式锁的场景吗？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142251.png" alt="image-20210413142250213"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142305.png" alt="image-20210413142304574"></p>
-<h2 id="ZK和Reids的区别，各自有什么优缺点？"><a href="#ZK和Reids的区别，各自有什么优缺点？" class="headerlink" title="ZK和Reids的区别，各自有什么优缺点？"></a>ZK和Reids的区别，各自有什么优缺点？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142344.png" alt="image-20210413142343477"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142356.png" alt="image-20210413142355133"></p>
-<h2 id="你了解业界哪些大公司的分布式锁框架"><a href="#你了解业界哪些大公司的分布式锁框架" class="headerlink" title="你了解业界哪些大公司的分布式锁框架"></a>你了解业界哪些大公司的分布式锁框架</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142533.png" alt="image-20210413142531716"></p>
-]]></content>
-      <categories>
-        <category>分布式锁</category>
-      </categories>
-      <tags>
-        <tag>分布式锁</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式锁</title>
     <url>/2021/03/15/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
@@ -939,6 +919,144 @@
       </categories>
       <tags>
         <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式锁 - 前言</title>
+    <url>/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81-%E5%89%8D%E8%A8%80/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>相关文章： <a href="https://juejin.cn/post/6844903863363829767">https://juejin.cn/post/6844903863363829767</a>  |   <a href="https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/">https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/</a>  |   </p>
+</blockquote>
+<h2 id="分布式锁特点"><a href="#分布式锁特点" class="headerlink" title="分布式锁特点"></a>分布式锁特点</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145630.png" alt="image-20210414145628685"></p>
+<h2 id="为什么要使用分布式锁"><a href="#为什么要使用分布式锁" class="headerlink" title="为什么要使用分布式锁"></a>为什么要使用分布式锁</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413141809.png" alt="image"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413141814.png" alt="image.png"></p>
+<h2 id="分布式锁有几种实现方式"><a href="#分布式锁有几种实现方式" class="headerlink" title="分布式锁有几种实现方式"></a>分布式锁有几种实现方式</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413141934.webp" alt="img"></p>
+<h2 id="你有遇到需要使用分布式锁的场景吗？"><a href="#你有遇到需要使用分布式锁的场景吗？" class="headerlink" title="你有遇到需要使用分布式锁的场景吗？"></a>你有遇到需要使用分布式锁的场景吗？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142251.png" alt="image-20210413142250213"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142305.png" alt="image-20210413142304574"></p>
+<h2 id="ZK和Reids的区别，各自有什么优缺点？"><a href="#ZK和Reids的区别，各自有什么优缺点？" class="headerlink" title="ZK和Reids的区别，各自有什么优缺点？"></a>ZK和Reids的区别，各自有什么优缺点？</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142344.png" alt="image-20210413142343477"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142356.png" alt="image-20210413142355133"></p>
+<h2 id="你了解业界哪些大公司的分布式锁框架"><a href="#你了解业界哪些大公司的分布式锁框架" class="headerlink" title="你了解业界哪些大公司的分布式锁框架"></a>你了解业界哪些大公司的分布式锁框架</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210413142533.png" alt="image-20210413142531716"></p>
+]]></content>
+      <categories>
+        <category>分布式锁</category>
+      </categories>
+      <tags>
+        <tag>分布式锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式锁 - Redis实现</title>
+    <url>/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20-%20Redis%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>Redis 锁主要利用 Redis 的 setnx 命令。</p>
+<ul>
+<li>加锁命令：SETNX key value，当键不存在时，对键进行设置操作并返回成功，否则返回失败。KEY 是锁的唯一标识，一般按业务来决定命名。</li>
+<li>解锁命令：DEL key，通过删除键值对释放锁，以便其他线程可以通过 SETNX 命令来获取锁。</li>
+<li>锁超时：EXPIRE key timeout, 设置 key 的超时时间，以保证即使锁没有被显式释放，锁也可以在一定时间后自动释放，避免资源被永远锁住。</li>
+</ul>
+<blockquote>
+<p>在springboot的中，Redis 的 setnx 命令为 setIfAbsent 方法 </p>
+</blockquote>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145743.png"></p>
+<h3 id="上述锁实现方式存在一些问题"><a href="#上述锁实现方式存在一些问题" class="headerlink" title="上述锁实现方式存在一些问题"></a>上述锁实现方式存在一些问题</h3><h4 id="SETNX-和-EXPIRE-非原子性"><a href="#SETNX-和-EXPIRE-非原子性" class="headerlink" title="SETNX 和 EXPIRE 非原子性"></a>SETNX 和 EXPIRE 非原子性</h4><p>如果 SETNX 成功，在设置锁超时时间后，服务器挂掉、重启或网络问题等，导致 EXPIRE 命令没有执行，锁没有设置超时时间变成死锁。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145737.png"></p>
+<p>有很多开源代码来解决这个问题，比如使用 lua 脚本。示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (redis.call(&#39;setnx&#39;, KEYS[1], ARGV[1]) &lt; 1)</span><br><span class="line">then return 0;</span><br><span class="line">end;</span><br><span class="line">redis.call(&#39;expire&#39;, KEYS[1], tonumber(ARGV[2]));</span><br><span class="line">return 1;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 使用实例</span><br><span class="line">EVAL &quot;if (redis.call(&#39;setnx&#39;,KEYS[1],ARGV[1]) &lt; 1) then return 0; end; redis.call(&#39;expire&#39;,KEYS[1],tonumber(ARGV[2])); return 1;&quot; 1 key value 100</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="锁误解除"><a href="#锁误解除" class="headerlink" title="锁误解除"></a>锁误解除</h4><p>如果线程 A 成功获取到了锁，并且设置了过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁；随后 A 执行完成，线程 A 使用 DEL 命令来释放锁，但此时线程 B 加的锁还没有执行完成，线程 A 实际释放的线程 B 加的锁。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145756.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145759.png"></p>
+<h4 id="超时解锁导致并发"><a href="#超时解锁导致并发" class="headerlink" title="超时解锁导致并发"></a>超时解锁导致并发</h4><p>如果线程 A 成功获取锁并设置过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁，线程 A 和线程 B 并发执行。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145802.png"></p>
+<p>A、B 两个线程发生并发显然是不被允许的，一般有两种方式解决该问题：</p>
+<ul>
+<li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成。</li>
+<li>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间。</li>
+</ul>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145808.png"></p>
+<h4 id="不可重入"><a href="#不可重入" class="headerlink" title="不可重入"></a>不可重入</h4><p>当线程在持有锁的情况下再次请求加锁，如果一个锁支持一个线程多次加锁，那么这个锁就是可重入的。如果一个不可重入锁被再次加锁，由于该锁已经被持有，再次加锁会失败。Redis 可通过对锁进行重入计数，加锁时加 1，解锁时减 1，当计数归 0 时释放锁。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private static ThreadLocal&lt;Map&lt;String, Integer&gt;&gt; LOCKERS &#x3D; ThreadLocal.withInitial(HashMap::new);</span><br><span class="line">&#x2F;&#x2F; 加锁</span><br><span class="line">public boolean lock(String key) &#123;</span><br><span class="line">  Map&lt;String, Integer&gt; lockers &#x3D; LOCKERS.get();</span><br><span class="line">  if (lockers.containsKey(key)) &#123;</span><br><span class="line">    lockers.put(key, lockers.get(key) + 1);</span><br><span class="line">    return true;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    if (SET key uuid NX EX 30) &#123;</span><br><span class="line">      lockers.put(key, 1);</span><br><span class="line">      return true;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 解锁</span><br><span class="line">public void unlock(String key) &#123;</span><br><span class="line">  Map&lt;String, Integer&gt; lockers &#x3D; LOCKERS.get();</span><br><span class="line">  if (lockers.getOrDefault(key, 0) &lt;&#x3D; 1) &#123;</span><br><span class="line">    lockers.remove(key);</span><br><span class="line">    DEL key</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    lockers.put(key, lockers.get(key) - 1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本地记录重入次数虽然高效，但如果考虑到过期时间和本地、Redis 一致性的问题，就会增加代码的复杂性。另一种方式是 Redis Map 数据结构来实现分布式锁，既存锁的标识也对重入次数进行计数。</p>
+<h4 id="无法等待锁释放"><a href="#无法等待锁释放" class="headerlink" title="无法等待锁释放"></a>无法等待锁释放</h4><p>上述命令执行都是立即返回的，如果客户端可以等待锁释放就无法使用。</p>
+<ul>
+<li>可以通过客户端轮询的方式解决该问题，当未获取到锁时，等待一段时间重新获取锁，直到成功获取锁或等待超时。这种方式比较消耗服务器资源，当并发量比较大时，会影响服务器的效率。</li>
+<li>另一种方式是使用 Redis 的发布订阅功能，当获取锁失败时，订阅锁释放消息，获取锁成功后释放时，发送锁释放消息。</li>
+</ul>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145826.png"></p>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="主备切换"><a href="#主备切换" class="headerlink" title="主备切换"></a>主备切换</h3><p>为了保证 Redis 的可用性，一般采用主从方式部署。主从数据同步有异步和同步两种方式，Redis 将指令记录在本地内存 buffer 中，然后异步将 buffer 中的指令同步到从节点，从节点一边执行同步的指令流来达到和主节点一致的状态，一边向主节点反馈同步情况。</p>
+<p>在包含主从模式的集群部署方式中，当主节点挂掉时，从节点会取而代之，但客户端无明显感知。当客户端 A 成功加锁，指令还未同步，此时主节点挂掉，从节点提升为主节点，新的主节点没有锁的数据，当客户端 B 加锁时就会成功。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414145818.png"></p>
+<h3 id="集群脑裂"><a href="#集群脑裂" class="headerlink" title="集群脑裂"></a>集群脑裂</h3><p>集群脑裂指因为网络问题，导致 Redis master 节点跟 slave 节点和 sentinel 集群处于不同的网络分区，因为 sentinel 集群无法感知到 master 的存在，所以将 slave 节点提升为 master 节点，此时存在两个不同的 master 节点。Redis Cluster 集群部署方式同理。</p>
+<p>当不同的客户端连接不同的 master 节点时，两个客户端可以同时拥有同一把锁。</p>
+<h2 id="Redisson"><a href="#Redisson" class="headerlink" title="Redisson"></a>Redisson</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414154021.png" alt="image-20210414154020191"></p>
+<h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414154434.jpeg" alt="img"></p>
+<h4 id="加锁机制"><a href="#加锁机制" class="headerlink" title="加锁机制"></a>加锁机制</h4><p>线程去获取锁，获取成功: 执行lua脚本，保存数据到redis数据库。</p>
+<p>线程去获取锁，获取失败: 一直通过while循环尝试获取锁，获取成功后，执行lua脚本，保存数据到redis数据库。</p>
+<h4 id="watch-dog自动延期机制"><a href="#watch-dog自动延期机制" class="headerlink" title="watch dog自动延期机制"></a>watch dog自动延期机制</h4><p>这个比较难理解，找了些许资料感觉也并没有解释的很清楚。这里我自己的理解就是:</p>
+<p>在一个分布式环境下，假如一个线程获得锁后，突然服务器宕机了，那么这个时候在一定时间后这个锁会自动释放，你也可以设置锁的有效时间(不设置默认30秒），这样的目的主要是防止死锁的发生。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414154744.png" alt="image-20210414154742962"></p>
+<p>所以这个时候<code>看门狗</code>就出现了，它的作用就是 线程1 业务还没有执行完，时间就过了，线程1 还想持有锁的话，就会启动一个watch dog后台线程，不断的延长锁key的生存时间。(<strong>可以理解为守护线程</strong>)</p>
+<p><code>注意</code> 正常这个看门狗线程是不启动的，还有就是这个看门狗启动后对整体性能也会有一定影响，所以不建议开启看门狗。</p>
+<h4 id="可重入加锁机制"><a href="#可重入加锁机制" class="headerlink" title="可重入加锁机制"></a>可重入加锁机制</h4><p>Redisson可以实现可重入加锁机制的原因，我觉得跟两点有关：</p>
+<ol>
+<li><p>Redis存储锁的数据类型是 Hash类型 </p>
+</li>
+<li><p>Hash数据类型的key值包含了当前线程信息。</p>
+</li>
+</ol>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414155051.png" alt="image-20210414155035558"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210414155115.png" alt="img"></p>
+<p><strong>上面这图的意思就是可重入锁的机制，它最大的优点就是相同线程不需要在等待锁，而是可以直接进行相应操作。</strong></p>
+<h2 id="Redis分布式锁的缺点"><a href="#Redis分布式锁的缺点" class="headerlink" title="Redis分布式锁的缺点"></a>Redis分布式锁的缺点</h2><p>Redis分布式锁会有个缺陷，就是在Redis哨兵模式下:</p>
+<p><code>客户端1</code> 对某个<code>master节点</code>写入了redisson锁，此时会异步复制给对应的 slave节点。但是这个过程中一旦发生 master节点宕机，主备切换，slave节点从变为了 master节点。</p>
+<p>这时<code>客户端2</code> 来尝试加锁的时候，在新的master节点上也能加锁，此时就会导致多个客户端对同一个分布式锁完成了加锁。</p>
+<p>这时系统在业务语义上一定会出现问题，<strong>导致各种脏数据的产生</strong>。</p>
+<p><code>缺陷</code>在哨兵模式或者主从模式下，如果 master实例宕机的时候，可能导致多个客户端同时完成加锁。</p>
+]]></content>
+      <categories>
+        <category>分布式锁</category>
+      </categories>
+      <tags>
+        <tag>分布式锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多线程面试题</title>
+    <url>/2021/03/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>相关文章：<a href="https://blog.51cto.com/14975073/2591029">文章1</a>  </p>
+</blockquote>
+<h3 id="为什么用多线程"><a href="#为什么用多线程" class="headerlink" title="为什么用多线程"></a>为什么用多线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753915503-beba6051-7a3c-4800-888b-1c0e30b0d075.png" alt="image.png"></p>
+<h3 id="多线程难在哪里"><a href="#多线程难在哪里" class="headerlink" title="多线程难在哪里"></a>多线程难在哪里</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616753985651-23314499-41bb-4aee-8378-a93880a5b4ea.png" alt="image.png"></p>
+<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616754358431-3b693713-b77e-453e-a625-9fb19218cdb4.png" alt="image.png"></p>
+<h3 id="并发编程三要素-线程三大特性"><a href="#并发编程三要素-线程三大特性" class="headerlink" title="并发编程三要素(线程三大特性)"></a>并发编程三要素(<strong>线程三大特性)</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
+<h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
+<h3 id="sleep-和-wait-有什么区别"><a href="#sleep-和-wait-有什么区别" class="headerlink" title="sleep() 和 wait() 有什么区别"></a>sleep() 和 wait() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt="image.png"></p>
+<h3 id="notify-和-notifyAll-有什么区别"><a href="#notify-和-notifyAll-有什么区别" class="headerlink" title="notify()和 notifyAll()有什么区别"></a>notify()和 notifyAll()有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt="image.png"></p>
+<h3 id="线程的-run-和-start-有什么区别"><a href="#线程的-run-和-start-有什么区别" class="headerlink" title="线程的 run() 和 start() 有什么区别"></a>线程的 run() 和 start() 有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt="image.png"></p>
+<h3 id="Runnable接口和Callable接口的区别"><a href="#Runnable接口和Callable接口的区别" class="headerlink" title="Runnable接口和Callable接口的区别"></a>Runnable接口和Callable接口的区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt="image.png"></p>
+<h3 id="是继承Thread类好还是实现Runnable接口好"><a href="#是继承Thread类好还是实现Runnable接口好" class="headerlink" title="是继承Thread类好还是实现Runnable接口好"></a><strong>是继承Thread类好还是实现Runnable接口好</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt="image.png"></p>
+<h3 id="你在哪里用到了多线程"><a href="#你在哪里用到了多线程" class="headerlink" title="你在哪里用到了多线程"></a><strong>你在哪里用到了多线程</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt="image.png"></p>
+<h3 id="什么是多线程安全"><a href="#什么是多线程安全" class="headerlink" title="什么是多线程安全"></a><strong>什么是多线程安全</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt="image.png"></p>
+<h3 id="如何解决多线程之间线程安全问题"><a href="#如何解决多线程之间线程安全问题" class="headerlink" title="如何解决多线程之间线程安全问题"></a><strong>如何解决多线程之间线程安全问题</strong></h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt="image.png"></p>
+<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><a href="#为什么使用线程同步或使用锁能解决线程安全问题呢" class="headerlink" title="为什么使用线程同步或使用锁能解决线程安全问题呢"></a><strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt="image.png"></strong></p>
+<h3 id="什么是多线程之间同步"><a href="#什么是多线程之间同步" class="headerlink" title="什么是多线程之间同步"></a><strong>什么是多线程之间同步</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt="image.png"></strong></p>
+<h3 id="什么是守护线程"><a href="#什么是守护线程" class="headerlink" title="什么是守护线程"></a><strong>什么是守护线程</strong></h3><p><strong><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
+<h3 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
+<h3 id="SynchronizedMap和ConcurrentHashMap有什么区别"><a href="#SynchronizedMap和ConcurrentHashMap有什么区别" class="headerlink" title="SynchronizedMap和ConcurrentHashMap有什么区别"></a>SynchronizedMap和ConcurrentHashMap有什么区别</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
+<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756131905-064eeb18-999a-4591-92eb-1fa2ba9a552e.png" alt="image.png"></p>
+<p>  <img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
+<h3 id="线程安全的类一定所有的操作都线程安全吗"><a href="#线程安全的类一定所有的操作都线程安全吗" class="headerlink" title="线程安全的类一定所有的操作都线程安全吗"></a>线程安全的类一定所有的操作都线程安全吗</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616756345550-319c055c-1e72-434e-ad0e-87338c82014d.png" alt="image.png"></p>
+<h3 id="Thread类中的yield方法有什么作用"><a href="#Thread类中的yield方法有什么作用" class="headerlink" title="Thread类中的yield方法有什么作用"></a>Thread类中的yield方法有什么作用</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>线程</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>

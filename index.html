@@ -206,7 +206,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20-%20Redis%E5%AE%9E%E7%8E%B0/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20-%20Redis%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">分布式锁 - Redis实现</a>
+          <a href="/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/" class="post-title-link" itemprop="url">ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly()</a>
         </h2>
 
         <div class="post-meta-container">
@@ -312,7 +312,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-04-13 00:00:00 / 修改时间：14:31:51" itemprop="dateCreated datePublished" datetime="2021-04-13T00:00:00+08:00">2021-04-13</time>
+      <time title="创建时间：2021-04-15 00:00:00 / 修改时间：10:57:39" itemprop="dateCreated datePublished" datetime="2021-04-15T00:00:00+08:00">2021-04-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,7 +332,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
+      <span>452</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -350,7 +350,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <blockquote>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/michaelgo/article/details/81481068">https://blog.csdn.net/michaelgo/article/details/81481068</a> | </p>
+</blockquote>
+<h2 id="ReentrantLock简要介绍"><a href="#ReentrantLock简要介绍" class="headerlink" title="ReentrantLock简要介绍"></a>ReentrantLock简要介绍</h2><p>简单介绍一下ReentrantLock，可重入锁，互斥锁，提供了fair（公平）和unfair（非公平）两种模式的锁。默认构造函数是unfair的锁，如果初始化时传入true的参数则会返回fair锁。所谓不公平就是在锁可获取时，不用考虑该锁队列是否有其他waiter，直接获取；反之，对于公平锁来讲就是当等待的锁资源可获取时要看下等待队列中当前线程是不是head线程，如果不是则不获取。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415104930.png" alt="image-20210415104929426"></p>
+<h2 id="ReentrantLock提供的获取锁的方式"><a href="#ReentrantLock提供的获取锁的方式" class="headerlink" title="ReentrantLock提供的获取锁的方式"></a>ReentrantLock提供的获取锁的方式</h2><blockquote>
+<p>ReentrantLock提供了lock()、tryLock()、tryLock(long timeout, TimeUnit unit)、lock.lockInterruptibly()</p>
+</blockquote>
+<h3 id="lock"><a href="#lock" class="headerlink" title="lock()"></a>lock()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105206.png" alt="image-20210415105204508"></p>
+<h3 id="tryLock"><a href="#tryLock" class="headerlink" title="tryLock()"></a>tryLock()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105043.png" alt="image-20210415105042468"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105109.png" alt="image-20210415105108131"></p>
+<h3 id="tryLock-long-timeout-TimeUnit-unit"><a href="#tryLock-long-timeout-TimeUnit-unit" class="headerlink" title="tryLock(long timeout, TimeUnit unit)"></a>tryLock(long timeout, TimeUnit unit)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105236.png" alt="image-20210415105235392"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105248.png" alt="image-20210415105247558"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105516.png" alt="image-20210415105514564"></p>
+<h3 id="lockInterruptibly"><a href="#lockInterruptibly" class="headerlink" title="lockInterruptibly()"></a>lockInterruptibly()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105559.png" alt="image-20210415105558443"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105610.png" alt="image-20210415105609980"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105625.png" alt="image-20210415105624104"></p>
+
       
     </div>
 
@@ -371,7 +388,7 @@
 
 
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -435,14 +452,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">37k</span>
+    <span title="站点总字数">41k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">34 分钟</span>
+    <span title="站点阅读时长">37 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
