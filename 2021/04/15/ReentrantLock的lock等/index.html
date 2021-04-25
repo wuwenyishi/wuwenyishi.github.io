@@ -27,19 +27,32 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xuemingde.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="欢迎来到我的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="meadel&#39;s blog">
-<meta property="og:url" content="https://xuemingde.com/archives/2021/04/index.html">
+<meta name="description" content="相关文章：https:&#x2F;&#x2F;blog.csdn.net&#x2F;michaelgo&#x2F;article&#x2F;details&#x2F;81481068 |   ReentrantLock简要介绍简单介绍一下ReentrantLock，可重入锁，互斥锁，提供了fair（公平）和unfair（非公平）两种模式的锁。默认构造函数是unfair的锁，如果初始化时传入true的参数则会返回fair锁。所谓不公平就是在锁可获取时，不用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly()">
+<meta property="og:url" content="https://xuemingde.com/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="欢迎来到我的博客">
+<meta property="og:description" content="相关文章：https:&#x2F;&#x2F;blog.csdn.net&#x2F;michaelgo&#x2F;article&#x2F;details&#x2F;81481068 |   ReentrantLock简要介绍简单介绍一下ReentrantLock，可重入锁，互斥锁，提供了fair（公平）和unfair（非公平）两种模式的锁。默认构造函数是unfair的锁，如果初始化时传入true的参数则会返回fair锁。所谓不公平就是在锁可获取时，不用">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415104930.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105206.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105043.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105109.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105236.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105248.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105516.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105559.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105610.png">
+<meta property="og:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105625.png">
+<meta property="article:published_time" content="2021-04-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-15T02:57:39.561Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="meadel">
+<meta property="article:tag" content="分布式锁">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415104930.png">
 
 
-<link rel="canonical" href="https://xuemingde.com/archives/2021/04/">
+<link rel="canonical" href="https://xuemingde.com/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/">
 
 
 <script class="page-configurations">
@@ -47,11 +60,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>归档 | meadel's blog</title>
+<title>ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly() | meadel's blog</title>
   
 
 
@@ -176,7 +189,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
 	
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
@@ -190,6 +203,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ReentrantLock%E7%AE%80%E8%A6%81%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">ReentrantLock简要介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReentrantLock%E6%8F%90%E4%BE%9B%E7%9A%84%E8%8E%B7%E5%8F%96%E9%94%81%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">ReentrantLock提供的获取锁的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lock"><span class="nav-number">2.1.</span> <span class="nav-text">lock()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tryLock"><span class="nav-number">2.2.</span> <span class="nav-text">tryLock()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tryLock-long-timeout-TimeUnit-unit"><span class="nav-number">2.3.</span> <span class="nav-text">tryLock(long timeout, TimeUnit unit)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lockInterruptibly"><span class="nav-number">2.4.</span> <span class="nav-text">lockInterruptibly()</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1468592465&auto=1&height=66"></iframe>
@@ -277,130 +291,169 @@
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="欢迎来到我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly()
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-04-15 00:00:00 / 修改时间：10:57:39" itemprop="dateCreated datePublished" datetime="2021-04-15T00:00:00+08:00">2021-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" itemprop="url" rel="index"><span itemprop="name">分布式锁</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>452</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>相关文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/michaelgo/article/details/81481068">https://blog.csdn.net/michaelgo/article/details/81481068</a> | </p>
+</blockquote>
+<h2 id="ReentrantLock简要介绍"><a href="#ReentrantLock简要介绍" class="headerlink" title="ReentrantLock简要介绍"></a>ReentrantLock简要介绍</h2><p>简单介绍一下ReentrantLock，可重入锁，互斥锁，提供了fair（公平）和unfair（非公平）两种模式的锁。默认构造函数是unfair的锁，如果初始化时传入true的参数则会返回fair锁。所谓不公平就是在锁可获取时，不用考虑该锁队列是否有其他waiter，直接获取；反之，对于公平锁来讲就是当等待的锁资源可获取时要看下等待队列中当前线程是不是head线程，如果不是则不获取。</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415104930.png" alt="image-20210415104929426"></p>
+<h2 id="ReentrantLock提供的获取锁的方式"><a href="#ReentrantLock提供的获取锁的方式" class="headerlink" title="ReentrantLock提供的获取锁的方式"></a>ReentrantLock提供的获取锁的方式</h2><blockquote>
+<p>ReentrantLock提供了lock()、tryLock()、tryLock(long timeout, TimeUnit unit)、lock.lockInterruptibly()</p>
+</blockquote>
+<h3 id="lock"><a href="#lock" class="headerlink" title="lock()"></a>lock()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105206.png" alt="image-20210415105204508"></p>
+<h3 id="tryLock"><a href="#tryLock" class="headerlink" title="tryLock()"></a>tryLock()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105043.png" alt="image-20210415105042468"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105109.png" alt="image-20210415105108131"></p>
+<h3 id="tryLock-long-timeout-TimeUnit-unit"><a href="#tryLock-long-timeout-TimeUnit-unit" class="headerlink" title="tryLock(long timeout, TimeUnit unit)"></a>tryLock(long timeout, TimeUnit unit)</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105236.png" alt="image-20210415105235392"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105248.png" alt="image-20210415105247558"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105516.png" alt="image-20210415105514564"></p>
+<h3 id="lockInterruptibly"><a href="#lockInterruptibly" class="headerlink" title="lockInterruptibly()"></a>lockInterruptibly()</h3><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105559.png" alt="image-20210415105558443"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105610.png" alt="image-20210415105609980"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/20210415105625.png" alt="image-20210415105624104"></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关帖子</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\04\14\springBoot整合Redisson分布式锁\" rel="bookmark">springBoot整合Redisson分布式锁</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\04\14\springBoot整合Redis分布式锁\" rel="bookmark">springBoot整合Redis分布式锁</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\04\13\分布式锁-前言\" rel="bookmark">分布式锁 - 前言</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\04\13\分布式锁 - Redis实现\" rel="bookmark">分布式锁 - Redis实现</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://xuemingde.com/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/" title="ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly()">https://xuemingde.com/2021/04/15/ReentrantLock的lock等/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 分布式锁</a>
+          </div>
+
         
-        <span class="collection-header">还行! 目前共计 31 篇日志。 继续努力。</span>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-15T00:00:00+08:00"
-              content="2021-04-15">
-          04-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/" itemprop="url">
-            <span itemprop="name">ReentrantLock的lock(), tryLock(), tryLock(long timeout, TimeUnit unit), lockInterruptibly()</span>
-          </a>
-      </div>
-
-      
-    </header>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/14/springBoot%E6%95%B4%E5%90%88Redisson%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" rel="prev" title="springBoot整合Redisson分布式锁">
+                  <i class="fa fa-chevron-left"></i> springBoot整合Redisson分布式锁
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-14T00:00:00+08:00"
-              content="2021-04-14">
-          04-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/14/springBoot%E6%95%B4%E5%90%88Redisson%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" itemprop="url">
-            <span itemprop="name">springBoot整合Redisson分布式锁</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-14T00:00:00+08:00"
-              content="2021-04-14">
-          04-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/14/springBoot%E6%95%B4%E5%90%88Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" itemprop="url">
-            <span itemprop="name">springBoot整合Redis分布式锁</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-13T00:00:00+08:00"
-              content="2021-04-13">
-          04-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81-%E5%89%8D%E8%A8%80/" itemprop="url">
-            <span itemprop="name">分布式锁 - 前言</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-13T00:00:00+08:00"
-              content="2021-04-13">
-          04-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/13/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20-%20Redis%E5%AE%9E%E7%8E%B0/" itemprop="url">
-            <span itemprop="name">分布式锁 - Redis实现</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 
 <script>
@@ -437,11 +490,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/archives/2021/04/index.html" selected="">
+        <option value="zh-CN" data-href="/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/archives/2021/04/index.html" selected="">
+        <option value="en" data-href="/en/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/" selected="">
           English
         </option>
       
@@ -546,7 +599,7 @@
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/archives/2021/04/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xuemingde.com/2021/04/15/ReentrantLock%E7%9A%84lock%E7%AD%89/',]
       });
       });
   </script>
