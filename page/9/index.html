@@ -206,7 +206,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -287,7 +287,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/2021/03/27/%E7%90%86%E8%A7%A3ThreadLocal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://gitee.com/meader/sharefiles/raw/master/gallery/u=1148362637,3390518585&fm=26&gp=0.jpg">
@@ -300,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/24/SQL%E4%BC%98%E5%8C%96%E5%92%8CSQl%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">SQL优化和SQL注入问题</a>
+          <a href="/2021/03/27/%E7%90%86%E8%A7%A3ThreadLocal/" class="post-title-link" itemprop="url">理解ThreadLocal</a>
         </h2>
 
         <div class="post-meta-container">
@@ -310,23 +310,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-03-24 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-24T00:00:00+08:00">2021-03-24</time>
+      <time title="创建时间：2021-03-27 00:00:00 / 修改时间：14:44:25" itemprop="dateCreated datePublished" datetime="2021-03-27T00:00:00+08:00">2021-03-27</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-26 16:53:23" itemprop="dateModified" datetime="2021-03-26T16:53:23+08:00">2021-03-26</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+          <a href="/categories/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">线程</span></a>
         </span>
     </span>
 
@@ -338,14 +332,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>34</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -356,31 +350,43 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Mysq如何防止sql注入"><a href="#Mysq如何防止sql注入" class="headerlink" title="Mysq如何防止sql注入"></a>Mysq如何防止sql注入</h2><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577043492-442c592a-804e-4088-b2c9-638a75b161e2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577087040-e9f6cd55-6e3e-4222-b765-0a92dba38d06.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577122583-79d2acfc-d7f7-4621-a111-377d794dc8ed.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577268648-ffe8d2d7-47a1-4950-a640-13536b8995a2.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577373081-556a9755-06b5-468c-b408-6300bb732919.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577415889-ba502d4b-200a-4001-b248-74fb0a392ec4.png" alt="image.png"></p>
-<h2 id="sql优化"><a href="#sql优化" class="headerlink" title="sql优化"></a>sql优化</h2><blockquote>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38789941/article/details/83744271">文章一</a>，<a target="_blank" rel="noopener" href="http://www.360doc.com/content/19/0131/15/16619343_812364509.shtml">文章二</a>，<a target="_blank" rel="noopener" href="https://database.51cto.com/art/202008/623584.htm">文章三</a></p>
+          <blockquote>
+<p>相关文章： <a target="_blank" rel="noopener" href="https://www.justdojava.com/2019/05/12/java-threadlocal/">文章1</a>  </p>
 </blockquote>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578389551-55a77709-b74e-4540-ae8f-04b5e4179322.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578441174-96b41421-3b20-40f0-9fd1-48eb450ea3df.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578463749-932b1d5a-0af6-4e0d-a631-821d61d0f2c1.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578525260-6a9732d6-9fa4-487a-bba3-988e62a88cc4.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578758297-eb44d2e5-a1d4-485d-8b2f-ad6f509113ab.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577654854-44419b96-5af4-44b2-b389-d00314469079.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577693679-2c2663b4-5efd-401f-aa98-57b5061806e1.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577751426-63b9766f-35d1-4687-bb88-c62324292220.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577825406-1ed6ee37-a0ed-43f8-9851-56531236c3ff.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616577960384-46bfe1d5-528f-4431-8c29-960672e1511b.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578045790-15018eba-4314-482f-8eb7-a77058b40e82.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578168179-dbf58c50-3575-475f-a6d1-cef3fd469276.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578207948-033e7d81-2693-4b3e-8cd9-37203abf5a77.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
-<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/image-20210324175324481.png" alt="image-20210324175324481"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a></h4><h4 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal是什么</h4><p>官方解释：</p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616815633283-c9b7df4f-4278-4d34-b855-337a20803e62.png" alt="image.png"></p>
+<ul>
+<li>ThreadLocal是一个关于创建线程局部变量的类，主要作用是存储线程的局部变量，做到数据隔离。保存在ThreadLocal中的数据只属于当前线程，对其他线程是不可见的。在多线程环境下，可以防止自己的变量被其他线程修改而导致数据不一致性。</li>
+<li>ThreadLocal设计的目的就是为了能够使得当前线程拥有属于自己的变量，并不是为了解决并发或者共享变量的问题</li>
+<li>底层使用ThreadLocalMap实现，每个线程都拥有自己的ThreadLocalMap，内部是继承了WeakReference的Entry数组，包含的Key为ThreadLocal，值为Object。 </li>
+</ul>
+<h4 id="原理浅析"><a href="#原理浅析" class="headerlink" title="原理浅析"></a>原理浅析</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616815997129-aad7490b-f671-40d6-8879-bca2658e5aef.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826908408-53d45106-cf00-4626-9c81-4e8ad36b281b.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826928515-5ade4c61-6adf-4537-95dd-064749ec857b.png" alt="image.png"></p>
+<h4 id="ThreadLocalMap"><a href="#ThreadLocalMap" class="headerlink" title="ThreadLocalMap"></a>ThreadLocalMap</h4><p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616826982637-30659013-3102-4326-b0d8-070f401cedf3.png" alt="image.png"></p>
+<p><img data-src="https://gitee.com/meader/sharefiles/raw/master/gallery/1616827030318-d21e91df-a93e-4776-95de-44ce3a9063db.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">private void set(ThreadLocal&lt;?&gt; key, Object value) &#123;</span><br><span class="line"></span><br><span class="line">    Entry[] tab &#x3D; table;</span><br><span class="line">    int len &#x3D; tab.length;</span><br><span class="line">    &#x2F;&#x2F;获取 hash 值，用于数组中的下标</span><br><span class="line">    int i &#x3D; key.threadLocalHashCode &amp; (len-1);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果数组该位置有对象则进入</span><br><span class="line">    for (Entry e &#x3D; tab[i];</span><br><span class="line">         e !&#x3D; null;</span><br><span class="line">         e &#x3D; tab[i &#x3D; nextIndex(i, len)]) &#123;</span><br><span class="line">        ThreadLocal&lt;?&gt; k &#x3D; e.get();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;k 相等则覆盖旧值</span><br><span class="line">        if (k &#x3D;&#x3D; key) &#123;</span><br><span class="line">            e.value &#x3D; value;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;此时说明此处 Entry 的 k 中的对象实例已经被回收了，需要替换掉这个位置的 key 和 value</span><br><span class="line">        if (k &#x3D;&#x3D; null) &#123;</span><br><span class="line">            replaceStaleEntry(key, value, i);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;创建 Entry 对象</span><br><span class="line">    tab[i] &#x3D; new Entry(key, value);</span><br><span class="line">    int sz &#x3D; ++size;</span><br><span class="line">    if (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;&#x3D; threshold)</span><br><span class="line">        rehash();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;获取 Entry</span><br><span class="line">private Entry getEntry(ThreadLocal&lt;?&gt; key) &#123;</span><br><span class="line">    int i &#x3D; key.threadLocalHashCode &amp; (table.length - 1);</span><br><span class="line">    Entry e &#x3D; table[i];</span><br><span class="line">    if (e !&#x3D; null &amp;&amp; e.get() &#x3D;&#x3D; key)</span><br><span class="line">        return e;</span><br><span class="line">    else</span><br><span class="line">        return getEntryAfterMiss(key, i, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="ThreadLocalMap的内存泄露问题"><a href="#ThreadLocalMap的内存泄露问题" class="headerlink" title="ThreadLocalMap的内存泄露问题"></a>ThreadLocalMap的内存泄露问题</h4><p>我们知道ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用时，在GC的时候，这个ThreadLocal必然会被回收，但是对应的value不会被回收掉直到线程结束才会被回收。如果当前线程一直处于运行中，那么这些Entry对象中的value就可能一直无法回收，就会发生内存泄露。实际开发中，会使用线程池维护线程的创建和复用，线程为了复用是不会主动结束的，那么ThreadLocal设置的value值就一直被引用，就会发生内存泄露。</p>
+<h4 id="如何避免内存泄露"><a href="#如何避免内存泄露" class="headerlink" title="如何避免内存泄露"></a>如何避免内存泄露</h4><ol>
+<li><p>线程执行完毕调用remove方法</p>
+</li>
+<li><p>使用ThreadLocal，建议用static修饰 static ThreadLocal<HttpHeader> headerLocal = new ThreadLocal();</p>
+</li>
+<li><p>可以在使用ThreadLocal的类上实现AutoCloseable接口，把需要释放的资源（remove）写在close方法里面，把此类写在try后的()里</p>
+<p>代码示例：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class AppContext implements AutoCloseable &#123;</span><br><span class="line"></span><br><span class="line">    private static final ThreadLocal&lt;User&gt; USER &#x3D; new ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public AppContext(user) &#123;</span><br><span class="line">        if(user !&#x3D; null)&#123;</span><br><span class="line">            USER.set(user);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public  void close() &#123;</span><br><span class="line">        USER.remove();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static User getUserId() &#123;</span><br><span class="line">        return USER.get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;执行完线程自动释放资源</span><br><span class="line"> try (AppContext appContext &#x3D; new AppContext(user)) &#123;</span><br><span class="line">          filterChain.doFilter(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="AutoCloseable是什么"><a href="#AutoCloseable是什么" class="headerlink" title="AutoCloseable是什么"></a>AutoCloseable是什么</h4><p>此接口是在jdk1.7之后引入的，可实现自动关闭资源。</p>
+<p>值得注意的是，在使用AutoCloseable的时候，必须配合try使用才能自动释放资源，因为利用try(AppContext appContext = AppContext(user)))才能自动调用close()方法。</p>
 
       
     </div>
@@ -402,7 +408,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -466,14 +472,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">37k</span>
+    <span title="站点总字数">41k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">34 分钟</span>
+    <span title="站点阅读时长">37 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
