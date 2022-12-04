@@ -16,33 +16,6 @@
       </categories>
   </entry>
   <entry>
-    <title>springBoot项目打成的jar包无法获取resources下文件</title>
-    <url>/posts/3V4Q1GY.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220217-springBoot%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90%E7%9A%84jar%E5%8C%85%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96resources%E4%B8%8B%E6%96%87%E4%BB%B6.md) 
-</div><br><span id="more"></span><br>错误：</p>
-<blockquote>
-<p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U  </p>
-</blockquote>
-<p>spring boot项目打成的 jar包无法获取src/main/resources下文件  </p>
-<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>打成Jar后<br><img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7">  </p>
-<p>获取resources下的文件<br><img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k">  </p>
-<pre><code class="lang-java"> ClassPathResource classPathResource = new ClassPathResource(&quot;img/tofflon-logo.png&quot;);
- URL url = classPathResource.getURL();
- Image image = Image.getInstance(url);
-</code></pre>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Seata-server启动闪退问题</title>
     <url>/posts/39AKQ95.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>第一步：查看错误日志</p>
@@ -89,6 +62,56 @@
       </tags>
   </entry>
   <entry>
+    <title>springBoot项目打成的jar包无法获取resources下文件</title>
+    <url>/posts/3V4Q1GY.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220217-springBoot%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90%E7%9A%84jar%E5%8C%85%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96resources%E4%B8%8B%E6%96%87%E4%BB%B6.md) 
+</div><br><span id="more"></span><br>错误：</p>
+<blockquote>
+<p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U  </p>
+</blockquote>
+<p>spring boot项目打成的 jar包无法获取src/main/resources下文件  </p>
+<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>打成Jar后<br><img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7">  </p>
+<p>获取resources下的文件<br><img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k">  </p>
+<pre><code class="lang-java"> ClassPathResource classPathResource = new ClassPathResource(&quot;img/tofflon-logo.png&quot;);
+ URL url = classPathResource.getURL();
+ Image image = Image.getInstance(url);
+</code></pre>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>SpringBoot</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mapstruct使用报错</title>
+    <url>/posts/RQ90BT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220308-mapstruct%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.md) 
+</div><br><span id="more"></span></p>
+<p>使用mapstruct 请求报错</p>
+<p>Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: </p>
+<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/el10mD.png" alt=""></p>
+<p>解决：</p>
+<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/mwqlOu.png" alt=""></p>
+<p>Mapper 引用的包错误。</p>
+<p>错误的：import org.apache.ibatis.annotations.Mapper;</p>
+<p>正确的：import org.mapstruct.Mapper;</p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>easypoi导入Excel表格报错</title>
     <url>/posts/HAXCJE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
@@ -113,29 +136,6 @@
         <tag>bug</tag>
         <tag>sql</tag>
         <tag>集合</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mapstruct使用报错</title>
-    <url>/posts/RQ90BT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220308-mapstruct%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.md) 
-</div><br><span id="more"></span></p>
-<p>使用mapstruct 请求报错</p>
-<p>Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: </p>
-<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/el10mD.png" alt=""></p>
-<p>解决：</p>
-<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/mwqlOu.png" alt=""></p>
-<p>Mapper 引用的包错误。</p>
-<p>错误的：import org.apache.ibatis.annotations.Mapper;</p>
-<p>正确的：import org.mapstruct.Mapper;</p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -220,25 +220,6 @@
       </tags>
   </entry>
   <entry>
-    <title>moli-opcua向kepware写入值失败</title>
-    <url>/posts/303S4Q3.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>写入的代码为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">//节点</span></span><br><span class="line">        NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">        <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">        DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>));</span><br><span class="line">        <span class="comment">//写入节点数据</span></span><br><span class="line">        StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">        System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>报错信息：<br><code>StatusCode&#123;name=Bad_WriteNotSupported, value=0x80730000, quality=bad&#125;</code></p>
-<p>代码改为：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">       <span class="comment">//节点</span></span><br><span class="line">       NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">       <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">       DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>),<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br><span class="line">       <span class="comment">//写入节点数据</span></span><br><span class="line">       StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">       System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><br>报错信息为：<br><code>StatusCode&#123;name=Bad_TypeMismatch, value=0x80740000, quality=bad&#125;</code></p>
-<p>报错解答：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VjbGlwc2UvbWlsby9pc3N1ZXMvNDU5">bad_WriteNoSupported · 问题 #459 · eclipse/milo · GitHub<i class="fa fa-external-link-alt"></i></span></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/16/22511655388771.png" alt="22511655388771"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22181655388798.png" alt="22181655388798"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22361655388816.png" alt="22361655388816"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22541655388834.png" alt="22541655388834"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22101655388850.png" alt="22101655388850"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22431655388883.png" alt="22431655388883"> </p>
-<p>代码改为 ：<br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22481655389188.png" alt="22481655389188"> </p>
-<p>返回结果：<code>StatusCode&#123;name=Good, value=0x00000000, quality=good&#125;</code></p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>小数在计算机的存储形式</title>
     <url>/posts/3SE47KD.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="小数转二进制的过程"><a href="#小数转二进制的过程" class="headerlink" title="小数转二进制的过程"></a>小数转二进制的过程</h1><p><strong>示例一</strong></p>
@@ -320,6 +301,25 @@
       <categories>
         <category>C&amp;C++</category>
       </categories>
+  </entry>
+  <entry>
+    <title>moli-opcua向kepware写入值失败</title>
+    <url>/posts/303S4Q3.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>写入的代码为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">//节点</span></span><br><span class="line">        NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">        <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">        DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>));</span><br><span class="line">        <span class="comment">//写入节点数据</span></span><br><span class="line">        StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">        System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>报错信息：<br><code>StatusCode&#123;name=Bad_WriteNotSupported, value=0x80730000, quality=bad&#125;</code></p>
+<p>代码改为：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">       <span class="comment">//节点</span></span><br><span class="line">       NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">       <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">       DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>),<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br><span class="line">       <span class="comment">//写入节点数据</span></span><br><span class="line">       StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">       System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><br>报错信息为：<br><code>StatusCode&#123;name=Bad_TypeMismatch, value=0x80740000, quality=bad&#125;</code></p>
+<p>报错解答：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VjbGlwc2UvbWlsby9pc3N1ZXMvNDU5">bad_WriteNoSupported · 问题 #459 · eclipse/milo · GitHub<i class="fa fa-external-link-alt"></i></span></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/16/22511655388771.png" alt="22511655388771"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22181655388798.png" alt="22181655388798"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22361655388816.png" alt="22361655388816"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22541655388834.png" alt="22541655388834"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22101655388850.png" alt="22101655388850"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22431655388883.png" alt="22431655388883"> </p>
+<p>代码改为 ：<br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22481655389188.png" alt="22481655389188"> </p>
+<p>返回结果：<code>StatusCode&#123;name=Good, value=0x00000000, quality=good&#125;</code></p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
   <entry>
     <title>计算机中整数的加减运算</title>
@@ -840,43 +840,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java对象布局</title>
-    <url>/posts/28DG2WP.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>一个新 new 出来的对象，分为四部分：</p>
-<ul>
-<li>mark word  </li>
-<li>klass point </li>
-<li>Instance Data</li>
-<li>Padding</li>
-</ul>
-<p>可使用JOL类库查看</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
-<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
-<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
-<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
-<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
-<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
-<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
-<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
-<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
-<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
-<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
-<blockquote>
-<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Volatile的概念</title>
     <url>/posts/2TD7P25.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -921,6 +884,43 @@
       <tags>
         <tag>Java</tag>
         <tag>JVM</tag>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java对象布局</title>
+    <url>/posts/28DG2WP.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>一个新 new 出来的对象，分为四部分：</p>
+<ul>
+<li>mark word  </li>
+<li>klass point </li>
+<li>Instance Data</li>
+<li>Padding</li>
+</ul>
+<p>可使用JOL类库查看</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
+<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
+<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
+<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
+<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
+<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
+<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
+<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
+<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
+<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
+<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
+<blockquote>
+<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
         <tag>锁</tag>
       </tags>
   </entry>
@@ -1385,39 +1385,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务_JTA</title>
-    <url>/posts/12G3J8V.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>事务</tag>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式事务_seata</title>
     <url>/posts/2KNM24Z.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -1457,6 +1424,39 @@
         <category>分布式</category>
       </categories>
       <tags>
+        <tag>事务</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式事务_JTA</title>
+    <url>/posts/12G3J8V.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
         <tag>事务</tag>
         <tag>分布式</tag>
       </tags>
@@ -2805,6 +2805,17 @@
       </tags>
   </entry>
   <entry>
+    <title>图解Java中那18 把锁</title>
+    <url>/posts/33GA963.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MveHZ0SzRTQkV5bUM=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">https://mp.weixin.qq.com/s/2jxzNnyGWDFol4Q9R2a_Yg<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+  </entry>
+  <entry>
     <title>秒杀系统设计</title>
     <url>/posts/J71QTX.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -2924,17 +2935,6 @@
         <tag>并发</tag>
         <tag>Vue</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>图解Java中那18 把锁</title>
-    <url>/posts/33GA963.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MveHZ0SzRTQkV5bUM=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">https://mp.weixin.qq.com/s/2jxzNnyGWDFol4Q9R2a_Yg<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
   </entry>
   <entry>
     <title>java锁面试题</title>
@@ -3543,8 +3543,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>Spring</tag>
         <tag>JVM</tag>
+        <tag>Spring</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
         <tag>线程池</tag>
@@ -3600,6 +3600,21 @@
       <tags>
         <tag>Java</tag>
         <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java线程池实现原理及其在美团业务中的实践</title>
+    <url>/posts/GHVA1Q.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvdFJ6VGR4ejZpeW4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjAvMDQvMDIvamF2YS1wb29saW5nLXByYXRpY2UtaW4tbWVpdHVhbi5odG1s">Java线程池实现原理及其在美团业务中的实践<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>线程池</tag>
       </tags>
   </entry>
   <entry>
@@ -3725,21 +3740,6 @@
         <tag>面试</tag>
         <tag>线程池</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java线程池实现原理及其在美团业务中的实践</title>
-    <url>/posts/GHVA1Q.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvdFJ6VGR4ejZpeW4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjAvMDQvMDIvamF2YS1wb29saW5nLXByYXRpY2UtaW4tbWVpdHVhbi5odG1s">Java线程池实现原理及其在美团业务中的实践<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>线程池</tag>
       </tags>
   </entry>
   <entry>
@@ -7782,139 +7782,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>RocketMQ 消息积压了，增加消费者有用吗</title>
-    <url>/posts/12P0DCH.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>面试官</strong>：RocketMQ 消息积压了，增加消费者有用吗？</p>
-<p><strong>我</strong>：这个要看具体的场景，不同的场景下情况是不一样的。</p>
-<p><strong>面试官</strong>：可以详细说一下吗？</p>
-<p><strong>我</strong>：如果消费者的数量小于 MessageQueue 的数量，增加消费者可以加快消息消费速度，减少消息积压。比如一个 Topic 有 4 个 MessageQueue，2 个消费者进行消费，如果增加一个消费者，明细可以加快拉取消息的频率。如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-EAQoGV.png" alt="图片"></p>
-<p>如果消费者的数量大于等于 MessageQueue 的数量，增加消费者是没有用的。比如一个 Topic 有 4 个 MessageQueue，并且有 4 个消费者进行消费。如下图</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-Uu40Ny.png" alt="图片"></p>
-<p><strong>面试官</strong>：你说的第一种情况，增加消费者一定能加快消息消费的速度吗？</p>
-<p><strong>我</strong>：这…，一般情况下是可以的。</p>
-<p><strong>面试官</strong>：有特殊的情况吗？</p>
-<p><strong>我</strong>：当然有。消费者消息拉取的速度也取决于本地消息的消费速度，如果本地消息消费的慢，就会延迟一段时间后再去拉取。</p>
-<p><strong>面试官</strong>：在什么情况下消费者会延迟一段时间后后再去拉取呢？</p>
-<p><strong>我</strong>：消费者拉取的消息存在 ProcessQueue，消费者是有流量控制的，如果出现下面三种情况，就不会主动去拉取：</p>
-<ul>
-<li>ProcessQueue 保存的消息数量超过阈值（默认 1000，可以配置）；</li>
-<li>ProcessQueue 保存的消息大小超过阈值（默认 100M，可以配置）；</li>
-<li>对于非顺序消费的场景，ProcessQueue 中保存的最后一条和第一条消息偏移量之差超过阈值（默认 2000，可以配置）。</li>
-</ul>
-<blockquote>
-<p>这部分源码请参考类：<code>org.apache.rocketmq.client.impl.consumer.DefaultMQPushConsumerImpl</code>。</p>
-</blockquote>
-<p><strong>面试官</strong>：还有其他情况吗？</p>
-<p><strong>我</strong>：对于顺序消费的场景，ProcessQueue 加锁失败，也会延迟拉取，这个延迟时间是 3s。消费者消费慢，可是能下面的原因：</p>
-<ul>
-<li>消费者处理的业务逻辑复杂，耗时很长；</li>
-<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
-<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
-<li>调用外部服务接口响应慢。</li>
-</ul>
-<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
-<p><strong>我</strong>：这个要分情况讨论。</p>
-<p>如果调用外部系统<code>只是一个通知，或者调用外部接口的结果并不处理</code>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
-<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
-<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
-<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
-<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
-<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
-<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
-<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
-<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
-<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
-<p><strong>平均负载策略：</strong></p>
-<ol>
-<li>把消费者进行排序；</li>
-<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
-<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
-<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
-<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
-</ol>
-<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
-<p><strong>面试官</strong>：消费者延迟拉取消息，一般可能是什么原因导致的呢？</p>
-<p><strong>我</strong>：其实延迟拉取的<code>本质就是消费者消费慢</code>，导致下次去拉取的时候 ProcessQueue 中积压的消息超过阈值。以下面这张架构图为例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1059-yKOaQS.png" alt="图片"></p>
-<p>消费者消费慢，可是能下面的原因：</p>
-<ul>
-<li>消费者处理的业务逻辑复杂，耗时很长；</li>
-<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
-<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
-<li>调用外部服务接口响应慢。</li>
-</ul>
-<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
-<p><strong>我</strong>：这个要分情况讨论。</p>
-<p>如果调用外部系统<strong>只是一个通知，或者调用外部接口的结果并不处理</strong>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
-<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
-<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
-<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
-<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
-<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
-<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
-<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
-<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
-<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
-<p><strong>平均负载策略：</strong></p>
-<ol>
-<li>把消费者进行排序；</li>
-<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
-<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
-<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
-<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
-</ol>
-<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-dHKsfY.png" alt="图片"></p>
-<p>源代码的逻辑非常简单，如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// AllocateMessageQueueAveragely 这个类</span></span><br><span class="line"><span class="comment">// 4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="comment">// mod = 1</span></span><br><span class="line"><span class="keyword">int</span> mod = mqAll.size() % cidAll.size();</span><br><span class="line"><span class="comment">// averageSize = 2</span></span><br><span class="line"><span class="keyword">int</span> averageSize =</span><br><span class="line">    mqAll.size() &lt;= cidAll.size() ? <span class="number">1</span> : (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod ? mqAll.size() / cidAll.size()</span><br><span class="line">                                         + <span class="number">1</span> : mqAll.size() / cidAll.size());</span><br><span class="line"><span class="comment">// startIndex = 0</span></span><br><span class="line"><span class="keyword">int</span> startIndex = (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod) ? index * averageSize : index * averageSize + mod;</span><br><span class="line"><span class="comment">// range = 2,所以第一个消费者分配到了2个</span></span><br><span class="line"><span class="keyword">int</span> range = Math.min(averageSize, mqAll.size() - startIndex);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; range; i++) &#123;</span><br><span class="line">    result.add(mqAll.get((startIndex + i) % mqAll.size()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>循环分配策略:</strong></p>
-<p>这个很容易理解，遍历消费者，把 MessageQueue 分一个给遍历到的消费者，如果 MessageQueue 数量比消费者多，需要进行多次遍历，遍历次数等于  （MessageQueue 数量/消费者数量），还是以 4 个 MessageQueue 和 3 个消费者的情况，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-4fvcvc.png" alt="图片"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueAveragelyByCircle 这个类</span></span><br><span class="line"><span class="comment">//4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; mqAll.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i % cidAll.size() == index) &#123;</span><br><span class="line">        <span class="comment">//i == 0 或者 i == 3 都会走到这里</span></span><br><span class="line">        result.add(mqAll.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>自定义分配策略：</strong></p>
-<p>这种策略在消费者启动的时候可以指定消费哪些 MessageQueue。可以参考下面代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByConfig allocateMessageQueueByConfig = <span class="keyword">new</span> AllocateMessageQueueByConfig();</span><br><span class="line"><span class="comment">//绑定消费 messageQueue1</span></span><br><span class="line">allocateMessageQueueByConfig.setMessageQueueList(Arrays.asList(<span class="keyword">new</span> MessageQueue(<span class="string">&quot;messageQueue1&quot;</span>,<span class="string">&quot;broker1&quot;</span>,<span class="number">0</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByConfig);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
-<p><strong>按照机房分配策略：</strong></p>
-<p>这种方式 Consumer 只消费指定机房的 MessageQueue，如下图：Consumer0、Consumer1、Consumer2 绑定 room1 和 room2 这两个机房，而 room3 这个机房没有消费者。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1104-xQcBq5.png" alt="图片"></p>
-<p>Consumer 启动的时候需要绑定机房名称。可以参考下面代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByMachineRoom allocateMessageQueueByMachineRoom = <span class="keyword">new</span> AllocateMessageQueueByMachineRoom();</span><br><span class="line"><span class="comment">//绑定消费 room1 和 room2 这两个机房</span></span><br><span class="line">allocateMessageQueueByMachineRoom.setConsumeridcs(<span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(<span class="string">&quot;room1&quot;</span>,<span class="string">&quot;room2&quot;</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByMachineRoom);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
-<p>这种策略 broker 的命名必须按照格式：机房名@brokerName，因为消费者分配队列的时候，首先按照机房名称过滤出所有的 MessageQueue，然后<code>再按照平均分配策略进行分配</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueByMachineRoom 这个类</span></span><br><span class="line">List&lt;MessageQueue&gt; premqAll = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    String[] temp = mq.getBrokerName().split(<span class="string">&quot;@&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (temp.length == <span class="number">2</span> &amp;&amp; consumeridcs.contains(temp[<span class="number">0</span>])) &#123;</span><br><span class="line">        premqAll.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//上面按照机房名称过滤出所有的 MessageQueue 放入premqAll，后面就是平均分配策略</span></span><br></pre></td></tr></table></figure>
-<p><strong>按照机房就近分配：</strong></p>
-<p>跟按照机房分配原则相比，就近分配的好处是可以对没有消费者的机房进行分配。如下图，机房 3 的 MessageQueue 也分配到了消费者：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-GcF8UO.png" alt="图片"></p>
-<p>如果一个机房没有消费者，则会把这个机房的 MessageQueue 分配给集群中所有的消费者。</p>
-<blockquote>
-<p>源码所在类：<code>AllocateMachineRoomNearby</code>。</p>
-</blockquote>
-<p><strong>一致性 Hash 算法策略：</strong></p>
-<p>把所有的消费者经过 Hash 计算分布到 Hash 环上，对所有的 MessageQueue  进行 Hash  计算，找到顺时针方向最近的消费者节点进行绑定。如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-5VDzq8.png" alt="图片"></p>
-<p>源代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//所在类 AllocateMessageQueueConsistentHash</span></span><br><span class="line">Collection&lt;ClientNode&gt; cidNodes = <span class="keyword">new</span> ArrayList&lt;ClientNode&gt;();</span><br><span class="line"><span class="keyword">for</span> (String cid : cidAll) &#123;</span><br><span class="line">    cidNodes.add(<span class="keyword">new</span> ClientNode(cid));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用消费者构建 Hash 环，把消费者分布在 Hash 环节点上</span></span><br><span class="line"><span class="keyword">final</span> ConsistentHashRouter&lt;ClientNode&gt; router; <span class="comment">//for building hash ring</span></span><br><span class="line"><span class="keyword">if</span> (customHashFunction != <span class="keyword">null</span>) &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt, customHashFunction);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//对 MessageQueue 做 Hash 运算，找到环上距离最近的消费者</span></span><br><span class="line">List&lt;MessageQueue&gt; results = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    ClientNode clientNode = router.routeNode(mq.toString());</span><br><span class="line">    <span class="keyword">if</span> (clientNode != <span class="keyword">null</span> &amp;&amp; currentCID.equals(clientNode.getKey())) &#123;</span><br><span class="line">        results.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>面试官</strong>：恭喜你，通过了。</p>
-<hr>
-<blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVXF5MTNFOXFZQU9ONDNoM1hGVW4zZw==">RocketMQ 消息积压了，增加消费者有用吗？<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>数据库</tag>
-        <tag>面试</tag>
-        <tag>锁</tag>
-        <tag>算法</tag>
-        <tag>Redis</tag>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka面试连环炮-中</title>
     <url>/posts/1Z9HSDW.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="谈谈你对-kafka-的集群架构是如何理解的"><a href="#谈谈你对-kafka-的集群架构是如何理解的" class="headerlink" title="谈谈你对 kafka 的集群架构是如何理解的"></a>谈谈你对 kafka 的集群架构是如何理解的</h2><h3 id="Kafka-整体架构图"><a href="#Kafka-整体架构图" class="headerlink" title="Kafka 整体架构图"></a>Kafka 整体架构图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1102-jB6bMF.png" alt="图片"></p>
@@ -8249,6 +8116,139 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>MQ</tag>
         <tag>并发</tag>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RocketMQ 消息积压了，增加消费者有用吗</title>
+    <url>/posts/12P0DCH.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>面试官</strong>：RocketMQ 消息积压了，增加消费者有用吗？</p>
+<p><strong>我</strong>：这个要看具体的场景，不同的场景下情况是不一样的。</p>
+<p><strong>面试官</strong>：可以详细说一下吗？</p>
+<p><strong>我</strong>：如果消费者的数量小于 MessageQueue 的数量，增加消费者可以加快消息消费速度，减少消息积压。比如一个 Topic 有 4 个 MessageQueue，2 个消费者进行消费，如果增加一个消费者，明细可以加快拉取消息的频率。如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-EAQoGV.png" alt="图片"></p>
+<p>如果消费者的数量大于等于 MessageQueue 的数量，增加消费者是没有用的。比如一个 Topic 有 4 个 MessageQueue，并且有 4 个消费者进行消费。如下图</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-Uu40Ny.png" alt="图片"></p>
+<p><strong>面试官</strong>：你说的第一种情况，增加消费者一定能加快消息消费的速度吗？</p>
+<p><strong>我</strong>：这…，一般情况下是可以的。</p>
+<p><strong>面试官</strong>：有特殊的情况吗？</p>
+<p><strong>我</strong>：当然有。消费者消息拉取的速度也取决于本地消息的消费速度，如果本地消息消费的慢，就会延迟一段时间后再去拉取。</p>
+<p><strong>面试官</strong>：在什么情况下消费者会延迟一段时间后后再去拉取呢？</p>
+<p><strong>我</strong>：消费者拉取的消息存在 ProcessQueue，消费者是有流量控制的，如果出现下面三种情况，就不会主动去拉取：</p>
+<ul>
+<li>ProcessQueue 保存的消息数量超过阈值（默认 1000，可以配置）；</li>
+<li>ProcessQueue 保存的消息大小超过阈值（默认 100M，可以配置）；</li>
+<li>对于非顺序消费的场景，ProcessQueue 中保存的最后一条和第一条消息偏移量之差超过阈值（默认 2000，可以配置）。</li>
+</ul>
+<blockquote>
+<p>这部分源码请参考类：<code>org.apache.rocketmq.client.impl.consumer.DefaultMQPushConsumerImpl</code>。</p>
+</blockquote>
+<p><strong>面试官</strong>：还有其他情况吗？</p>
+<p><strong>我</strong>：对于顺序消费的场景，ProcessQueue 加锁失败，也会延迟拉取，这个延迟时间是 3s。消费者消费慢，可是能下面的原因：</p>
+<ul>
+<li>消费者处理的业务逻辑复杂，耗时很长；</li>
+<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
+<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
+<li>调用外部服务接口响应慢。</li>
+</ul>
+<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
+<p><strong>我</strong>：这个要分情况讨论。</p>
+<p>如果调用外部系统<code>只是一个通知，或者调用外部接口的结果并不处理</code>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
+<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
+<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
+<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
+<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
+<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
+<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
+<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
+<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
+<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
+<p><strong>平均负载策略：</strong></p>
+<ol>
+<li>把消费者进行排序；</li>
+<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
+<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
+<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
+<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
+</ol>
+<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
+<p><strong>面试官</strong>：消费者延迟拉取消息，一般可能是什么原因导致的呢？</p>
+<p><strong>我</strong>：其实延迟拉取的<code>本质就是消费者消费慢</code>，导致下次去拉取的时候 ProcessQueue 中积压的消息超过阈值。以下面这张架构图为例：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1059-yKOaQS.png" alt="图片"></p>
+<p>消费者消费慢，可是能下面的原因：</p>
+<ul>
+<li>消费者处理的业务逻辑复杂，耗时很长；</li>
+<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
+<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
+<li>调用外部服务接口响应慢。</li>
+</ul>
+<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
+<p><strong>我</strong>：这个要分情况讨论。</p>
+<p>如果调用外部系统<strong>只是一个通知，或者调用外部接口的结果并不处理</strong>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
+<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
+<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
+<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
+<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
+<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
+<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
+<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
+<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
+<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
+<p><strong>平均负载策略：</strong></p>
+<ol>
+<li>把消费者进行排序；</li>
+<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
+<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
+<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
+<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
+</ol>
+<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-dHKsfY.png" alt="图片"></p>
+<p>源代码的逻辑非常简单，如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// AllocateMessageQueueAveragely 这个类</span></span><br><span class="line"><span class="comment">// 4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="comment">// mod = 1</span></span><br><span class="line"><span class="keyword">int</span> mod = mqAll.size() % cidAll.size();</span><br><span class="line"><span class="comment">// averageSize = 2</span></span><br><span class="line"><span class="keyword">int</span> averageSize =</span><br><span class="line">    mqAll.size() &lt;= cidAll.size() ? <span class="number">1</span> : (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod ? mqAll.size() / cidAll.size()</span><br><span class="line">                                         + <span class="number">1</span> : mqAll.size() / cidAll.size());</span><br><span class="line"><span class="comment">// startIndex = 0</span></span><br><span class="line"><span class="keyword">int</span> startIndex = (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod) ? index * averageSize : index * averageSize + mod;</span><br><span class="line"><span class="comment">// range = 2,所以第一个消费者分配到了2个</span></span><br><span class="line"><span class="keyword">int</span> range = Math.min(averageSize, mqAll.size() - startIndex);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; range; i++) &#123;</span><br><span class="line">    result.add(mqAll.get((startIndex + i) % mqAll.size()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>循环分配策略:</strong></p>
+<p>这个很容易理解，遍历消费者，把 MessageQueue 分一个给遍历到的消费者，如果 MessageQueue 数量比消费者多，需要进行多次遍历，遍历次数等于  （MessageQueue 数量/消费者数量），还是以 4 个 MessageQueue 和 3 个消费者的情况，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-4fvcvc.png" alt="图片"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueAveragelyByCircle 这个类</span></span><br><span class="line"><span class="comment">//4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; mqAll.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i % cidAll.size() == index) &#123;</span><br><span class="line">        <span class="comment">//i == 0 或者 i == 3 都会走到这里</span></span><br><span class="line">        result.add(mqAll.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>自定义分配策略：</strong></p>
+<p>这种策略在消费者启动的时候可以指定消费哪些 MessageQueue。可以参考下面代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByConfig allocateMessageQueueByConfig = <span class="keyword">new</span> AllocateMessageQueueByConfig();</span><br><span class="line"><span class="comment">//绑定消费 messageQueue1</span></span><br><span class="line">allocateMessageQueueByConfig.setMessageQueueList(Arrays.asList(<span class="keyword">new</span> MessageQueue(<span class="string">&quot;messageQueue1&quot;</span>,<span class="string">&quot;broker1&quot;</span>,<span class="number">0</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByConfig);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
+<p><strong>按照机房分配策略：</strong></p>
+<p>这种方式 Consumer 只消费指定机房的 MessageQueue，如下图：Consumer0、Consumer1、Consumer2 绑定 room1 和 room2 这两个机房，而 room3 这个机房没有消费者。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1104-xQcBq5.png" alt="图片"></p>
+<p>Consumer 启动的时候需要绑定机房名称。可以参考下面代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByMachineRoom allocateMessageQueueByMachineRoom = <span class="keyword">new</span> AllocateMessageQueueByMachineRoom();</span><br><span class="line"><span class="comment">//绑定消费 room1 和 room2 这两个机房</span></span><br><span class="line">allocateMessageQueueByMachineRoom.setConsumeridcs(<span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(<span class="string">&quot;room1&quot;</span>,<span class="string">&quot;room2&quot;</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByMachineRoom);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
+<p>这种策略 broker 的命名必须按照格式：机房名@brokerName，因为消费者分配队列的时候，首先按照机房名称过滤出所有的 MessageQueue，然后<code>再按照平均分配策略进行分配</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueByMachineRoom 这个类</span></span><br><span class="line">List&lt;MessageQueue&gt; premqAll = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    String[] temp = mq.getBrokerName().split(<span class="string">&quot;@&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (temp.length == <span class="number">2</span> &amp;&amp; consumeridcs.contains(temp[<span class="number">0</span>])) &#123;</span><br><span class="line">        premqAll.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//上面按照机房名称过滤出所有的 MessageQueue 放入premqAll，后面就是平均分配策略</span></span><br></pre></td></tr></table></figure>
+<p><strong>按照机房就近分配：</strong></p>
+<p>跟按照机房分配原则相比，就近分配的好处是可以对没有消费者的机房进行分配。如下图，机房 3 的 MessageQueue 也分配到了消费者：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-GcF8UO.png" alt="图片"></p>
+<p>如果一个机房没有消费者，则会把这个机房的 MessageQueue 分配给集群中所有的消费者。</p>
+<blockquote>
+<p>源码所在类：<code>AllocateMachineRoomNearby</code>。</p>
+</blockquote>
+<p><strong>一致性 Hash 算法策略：</strong></p>
+<p>把所有的消费者经过 Hash 计算分布到 Hash 环上，对所有的 MessageQueue  进行 Hash  计算，找到顺时针方向最近的消费者节点进行绑定。如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-5VDzq8.png" alt="图片"></p>
+<p>源代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//所在类 AllocateMessageQueueConsistentHash</span></span><br><span class="line">Collection&lt;ClientNode&gt; cidNodes = <span class="keyword">new</span> ArrayList&lt;ClientNode&gt;();</span><br><span class="line"><span class="keyword">for</span> (String cid : cidAll) &#123;</span><br><span class="line">    cidNodes.add(<span class="keyword">new</span> ClientNode(cid));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用消费者构建 Hash 环，把消费者分布在 Hash 环节点上</span></span><br><span class="line"><span class="keyword">final</span> ConsistentHashRouter&lt;ClientNode&gt; router; <span class="comment">//for building hash ring</span></span><br><span class="line"><span class="keyword">if</span> (customHashFunction != <span class="keyword">null</span>) &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt, customHashFunction);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//对 MessageQueue 做 Hash 运算，找到环上距离最近的消费者</span></span><br><span class="line">List&lt;MessageQueue&gt; results = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    ClientNode clientNode = router.routeNode(mq.toString());</span><br><span class="line">    <span class="keyword">if</span> (clientNode != <span class="keyword">null</span> &amp;&amp; currentCID.equals(clientNode.getKey())) &#123;</span><br><span class="line">        results.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>面试官</strong>：恭喜你，通过了。</p>
+<hr>
+<blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVXF5MTNFOXFZQU9ONDNoM1hGVW4zZw==">RocketMQ 消息积压了，增加消费者有用吗？<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>数据库</tag>
+        <tag>面试</tag>
+        <tag>锁</tag>
+        <tag>算法</tag>
+        <tag>Redis</tag>
+        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -9030,6 +9030,26 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>spring boot 中Spring data jpa命名策略</title>
+    <url>/posts/2J0546C.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>数据库，表字段命名是驼峰命名法（UserID）,Spring data jpa 自动更新之后是 user_id, 表字段不对照</p>
+<p>Spring data jpa基于Hibernate5.0</p>
+<p>application.yml 写法</p>
+<p>1、无修改命名 </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="attr">hibernate:</span></span><br><span class="line">      <span class="attr">naming:</span>                     </span><br><span class="line">        <span class="attr">physical-strategy:</span> <span class="string">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</span></span><br></pre></td></tr></table></figure>
+<p>2、遇到大写字母 加”_”的命名</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="attr">hibernate:</span></span><br><span class="line">      <span class="attr">naming:</span>                     </span><br><span class="line">        <span class="attr">physical-strategy:</span> <span class="string">org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</span></span><br></pre></td></tr></table></figure>
+<p><img data-src="https://cdn.jsdelivr.net/gh/wuwenyishi/shared@image/2022/04/27/1253-eL250t.png" alt="image-20220427125309634"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于代价的慢查询优化建议</title>
     <url>/posts/2HNBAGV.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -9197,71 +9217,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>索引</tag>
         <tag>算法</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>spring boot 中Spring data jpa命名策略</title>
-    <url>/posts/2J0546C.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>数据库，表字段命名是驼峰命名法（UserID）,Spring data jpa 自动更新之后是 user_id, 表字段不对照</p>
-<p>Spring data jpa基于Hibernate5.0</p>
-<p>application.yml 写法</p>
-<p>1、无修改命名 </p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="attr">hibernate:</span></span><br><span class="line">      <span class="attr">naming:</span>                     </span><br><span class="line">        <span class="attr">physical-strategy:</span> <span class="string">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</span></span><br></pre></td></tr></table></figure>
-<p>2、遇到大写字母 加”_”的命名</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="attr">hibernate:</span></span><br><span class="line">      <span class="attr">naming:</span>                     </span><br><span class="line">        <span class="attr">physical-strategy:</span> <span class="string">org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</span></span><br></pre></td></tr></table></figure>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wuwenyishi/shared@image/2022/04/27/1253-eL250t.png" alt="image-20220427125309634"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>redis的删除过期key的策略</title>
-    <url>/posts/SFARPJ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在Redis内部，每当我们设置一个键的过期时间时，Redis就会将该键带上过期时间存放到一个<strong>过期字典</strong>中。当我们查询一个键时，Redis便首先检查该键是否存在过期字典中，如果存在，那就获取其过期时间。然后将过期时间和当前系统时间进行比对，比系统时间大，那就没有过期；反之判定该键过期。  </p>
-<h1 id="过期删除策略"><a href="#过期删除策略" class="headerlink" title="过期删除策略"></a>过期删除策略</h1><h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>在设置key的过期时间的同时，创建一个定时器，让定时器在key的过期时间来临时，立即执行对key的删除操作；  </p>
-<p>优点：定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。  </p>
-<p>缺点：对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。  </p>
-<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。  </p>
-<p>优点：对 CPU友好，我们只会在使用该键时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查。</p>
-<p>缺点：对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。  </p>
-<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。  </p>
-<p>优点：可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。  </p>
-<p>缺点：</p>
-<ul>
-<li>难以确定删除操作执行的时长和频率。</li>
-<li>如果执行的太频繁，定期删除策略变得和定时删除策略一样，对CPU不友好。</li>
-<li>如果执行的太少，那又和惰性删除一样了，过期键占用的内存不会及时得到释放。</li>
-<li>另外最重要的是，在获取某个键时，如果某个键的过期时间已经到了，但是还没执行定期删除，那么就会返回这个键的值，这是业务不能忍受的错误。</li>
-</ul>
-<h1 id="Redis过期删除策略"><a href="#Redis过期删除策略" class="headerlink" title="Redis过期删除策略"></a>Redis过期删除策略</h1><p>单一使用某一策略都不能满足实际需求，可组合使用。</p>
-<p>Redis的过期删除策略就是：惰性删除和定期删除两种策略配合使用。</p>
-<ul>
-<li><strong>惰性删除</strong>  </li>
-</ul>
-<p>Redis的惰性删除策略由 db.c/expireIfNeeded 函数实现，所有键读写命令执行之前都会调用 expireIfNeeded 函数对其进行检查，如果过期，则删除该键，然后执行键不存在的操作；未过期则不作操作，继续执行原有的命令。</p>
-<ul>
-<li><strong>定期删除</strong>  </li>
-</ul>
-<p>由redis.c/activeExpireCycle 函数实现，函数以一定的频率运行，每次运行时，都从一定数量的数据库中取出一定数量的随机键进行检查，并删除其中的过期键。</p>
-<blockquote>
-<p>注意：并不是一次运行就检查所有的库，所有的键，而是随机检查一定数量的键。  </p>
-</blockquote>
-<p>定期删除函数的运行频率，在Redis2.6版本中，规定每秒运行10次，大概100ms运行一次。在Redis2.8版本后，可以通过修改配置文件redis.conf 的 <strong>hz</strong> 选项来调整这个次数。  </p>
-<p><strong>建议不要将这个值设置超过 100，否则会对CPU造成比较大的压力。</strong> </p>
-<p>通过过期删除策略，对于某些永远使用不到的键，并且多次定期删除也没选定到并删除，那么这些键同样会一直驻留在内存中，又或者在Redis中存入了大量的键，这些操作可能会导致Redis内存不够用，这时候就需要<strong>Redis的内存淘汰策略</strong>了。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -9711,6 +9666,115 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>redis的删除过期key的策略</title>
+    <url>/posts/SFARPJ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在Redis内部，每当我们设置一个键的过期时间时，Redis就会将该键带上过期时间存放到一个<strong>过期字典</strong>中。当我们查询一个键时，Redis便首先检查该键是否存在过期字典中，如果存在，那就获取其过期时间。然后将过期时间和当前系统时间进行比对，比系统时间大，那就没有过期；反之判定该键过期。  </p>
+<h1 id="过期删除策略"><a href="#过期删除策略" class="headerlink" title="过期删除策略"></a>过期删除策略</h1><h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>在设置key的过期时间的同时，创建一个定时器，让定时器在key的过期时间来临时，立即执行对key的删除操作；  </p>
+<p>优点：定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。  </p>
+<p>缺点：对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。  </p>
+<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。  </p>
+<p>优点：对 CPU友好，我们只会在使用该键时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查。</p>
+<p>缺点：对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。  </p>
+<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。  </p>
+<p>优点：可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。  </p>
+<p>缺点：</p>
+<ul>
+<li>难以确定删除操作执行的时长和频率。</li>
+<li>如果执行的太频繁，定期删除策略变得和定时删除策略一样，对CPU不友好。</li>
+<li>如果执行的太少，那又和惰性删除一样了，过期键占用的内存不会及时得到释放。</li>
+<li>另外最重要的是，在获取某个键时，如果某个键的过期时间已经到了，但是还没执行定期删除，那么就会返回这个键的值，这是业务不能忍受的错误。</li>
+</ul>
+<h1 id="Redis过期删除策略"><a href="#Redis过期删除策略" class="headerlink" title="Redis过期删除策略"></a>Redis过期删除策略</h1><p>单一使用某一策略都不能满足实际需求，可组合使用。</p>
+<p>Redis的过期删除策略就是：惰性删除和定期删除两种策略配合使用。</p>
+<ul>
+<li><strong>惰性删除</strong>  </li>
+</ul>
+<p>Redis的惰性删除策略由 db.c/expireIfNeeded 函数实现，所有键读写命令执行之前都会调用 expireIfNeeded 函数对其进行检查，如果过期，则删除该键，然后执行键不存在的操作；未过期则不作操作，继续执行原有的命令。</p>
+<ul>
+<li><strong>定期删除</strong>  </li>
+</ul>
+<p>由redis.c/activeExpireCycle 函数实现，函数以一定的频率运行，每次运行时，都从一定数量的数据库中取出一定数量的随机键进行检查，并删除其中的过期键。</p>
+<blockquote>
+<p>注意：并不是一次运行就检查所有的库，所有的键，而是随机检查一定数量的键。  </p>
+</blockquote>
+<p>定期删除函数的运行频率，在Redis2.6版本中，规定每秒运行10次，大概100ms运行一次。在Redis2.8版本后，可以通过修改配置文件redis.conf 的 <strong>hz</strong> 选项来调整这个次数。  </p>
+<p><strong>建议不要将这个值设置超过 100，否则会对CPU造成比较大的压力。</strong> </p>
+<p>通过过期删除策略，对于某些永远使用不到的键，并且多次定期删除也没选定到并删除，那么这些键同样会一直驻留在内存中，又或者在Redis中存入了大量的键，这些操作可能会导致Redis内存不够用，这时候就需要<strong>Redis的内存淘汰策略</strong>了。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis的缓存一致性 问题</title>
+    <url>/posts/15KRDA4.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
+<h3 id="方式一：-先更新数据库，再更新缓存"><a href="#方式一：-先更新数据库，再更新缓存" class="headerlink" title="方式一： 先更新数据库，再更新缓存"></a>方式一： 先更新数据库，再更新缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616831217400-3b84a864-5a2c-4bdf-9e74-3e56c066c30f.png" alt="image.png"></p>
+<h3 id="方式二：先删缓存，再更新数据库"><a href="#方式二：先删缓存，再更新数据库" class="headerlink" title="方式二：先删缓存，再更新数据库"></a>方式二：先删缓存，再更新数据库</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831509175-c5f3169f-903d-4350-ba74-c2bd58286adc.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616831579262-008fbb7b-e557-4304-b68d-9a7116a6b68a.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832118844-b6b49d56-7c2a-4ffe-90df-fec448cd9550.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832224837-2684fac9-4305-4e31-a89b-2c6323be1929.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832261751-69493367-cb6b-45d5-b39c-4e3cc3c0eaaf.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832301163-15e5857b-acfb-459b-b2fc-5977f5eeb378.png" alt="image.png"></p>
+<h3 id="方式三：先更新数据库，再删缓存"><a href="#方式三：先更新数据库，再删缓存" class="headerlink" title="方式三：先更新数据库，再删缓存"></a>方式三：先更新数据库，再删缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616832821538-ec765b59-1b06-4150-a804-4be074240641.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833138358-58b31377-e7ea-4496-ab02-8e1ca146e25d.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833205589-da05da22-7e3f-491c-834d-dd3b07770714.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833256057-3fc89667-0735-44b6-982d-3f917b245c13.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833278950-6d618e3f-dc05-494b-bd2d-36c36316ecc5.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833293111-53a6c67e-ce63-48bd-9e67-b40970b13e24.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833332680-af709752-31ec-4793-b293-2b98b1936329.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833344867-42c32b3e-ecee-4139-8df7-7f79aa40f928.png" alt="image.png"></p>
+<blockquote>
+<p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzcxMjI4NQ==">文章1<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcmp6aGVuZy9wLzkwNDE2NTkuaHRtbA==">文章2<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly9ub3RlLmRvbHl3LmNvbS9jYWNoZS8wMC1EYXRhQmFzZUNvbnNpc3RlbmN5Lmh0bWw=">文章3<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis内存淘汰策略</title>
+    <url>/posts/2FA73PT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
+</blockquote>
+<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
+<li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
+<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
+<li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
+<li><strong>allkeys-random</strong>：从所有key中随机淘汰数据</li>
+<li><strong>volatile-random</strong>：从设置了过期时间的key中随机淘汰</li>
+<li><strong>volatile-ttl</strong>：在设置了过期时间的key中，根据key的过期时间进行淘汰，越早过期的越优先被淘汰</li>
+</ul>
+<blockquote>
+<p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
+</blockquote>
+<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
+<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
+<p><code>maxmemory-policy allkeys-lru</code></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis面试题</title>
     <url>/posts/2PVT91G.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="支持的数据结构"><a href="#支持的数据结构" class="headerlink" title="支持的数据结构"></a>支持的数据结构</h3><ol>
@@ -9755,70 +9819,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>集合</tag>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>redis内存淘汰策略</title>
-    <url>/posts/2FA73PT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
-</blockquote>
-<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
-<li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
-<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
-<li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
-<li><strong>allkeys-random</strong>：从所有key中随机淘汰数据</li>
-<li><strong>volatile-random</strong>：从设置了过期时间的key中随机淘汰</li>
-<li><strong>volatile-ttl</strong>：在设置了过期时间的key中，根据key的过期时间进行淘汰，越早过期的越优先被淘汰</li>
-</ul>
-<blockquote>
-<p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
-</blockquote>
-<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
-<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
-<p><code>maxmemory-policy allkeys-lru</code></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis的缓存一致性 问题</title>
-    <url>/posts/15KRDA4.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
-<h3 id="方式一：-先更新数据库，再更新缓存"><a href="#方式一：-先更新数据库，再更新缓存" class="headerlink" title="方式一： 先更新数据库，再更新缓存"></a>方式一： 先更新数据库，再更新缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616831217400-3b84a864-5a2c-4bdf-9e74-3e56c066c30f.png" alt="image.png"></p>
-<h3 id="方式二：先删缓存，再更新数据库"><a href="#方式二：先删缓存，再更新数据库" class="headerlink" title="方式二：先删缓存，再更新数据库"></a>方式二：先删缓存，再更新数据库</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831509175-c5f3169f-903d-4350-ba74-c2bd58286adc.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616831579262-008fbb7b-e557-4304-b68d-9a7116a6b68a.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832118844-b6b49d56-7c2a-4ffe-90df-fec448cd9550.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832224837-2684fac9-4305-4e31-a89b-2c6323be1929.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832261751-69493367-cb6b-45d5-b39c-4e3cc3c0eaaf.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832301163-15e5857b-acfb-459b-b2fc-5977f5eeb378.png" alt="image.png"></p>
-<h3 id="方式三：先更新数据库，再删缓存"><a href="#方式三：先更新数据库，再删缓存" class="headerlink" title="方式三：先更新数据库，再删缓存"></a>方式三：先更新数据库，再删缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616832821538-ec765b59-1b06-4150-a804-4be074240641.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833138358-58b31377-e7ea-4496-ab02-8e1ca146e25d.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833205589-da05da22-7e3f-491c-834d-dd3b07770714.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833256057-3fc89667-0735-44b6-982d-3f917b245c13.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833278950-6d618e3f-dc05-494b-bd2d-36c36316ecc5.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833293111-53a6c67e-ce63-48bd-9e67-b40970b13e24.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833332680-af709752-31ec-4793-b293-2b98b1936329.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833344867-42c32b3e-ecee-4139-8df7-7f79aa40f928.png" alt="image.png"></p>
-<blockquote>
-<p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzcxMjI4NQ==">文章1<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcmp6aGVuZy9wLzkwNDE2NTkuaHRtbA==">文章2<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly9ub3RlLmRvbHl3LmNvbS9jYWNoZS8wMC1EYXRhQmFzZUNvbnNpc3RlbmN5Lmh0bWw=">文章3<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
