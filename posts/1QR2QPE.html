@@ -71,8 +71,13 @@
 <meta property="og:image" content="https://files.catbox.moe/j6h3sk.png">
 <meta property="og:image" content="https://files.catbox.moe/3q8up5.png">
 <meta property="og:image" content="https://files.catbox.moe/ys8bps.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/165854ahJWW2.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/170057e4aLh4.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/170201islhNr.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/170239m5aLVn.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/1703151wctFZ.png">
 <meta property="article:published_time" content="2022-11-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-12-06T08:43:07.432Z">
+<meta property="article:modified_time" content="2022-12-06T09:03:34.562Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="bug">
 <meta name="twitter:card" content="summary">
@@ -281,7 +286,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-06 16:43:07" itemprop="dateModified" datetime="2022-12-06T16:43:07+08:00">2022-12-06</time>
+                <time title="修改时间：2022-12-06 17:03:34" itemprop="dateModified" datetime="2022-12-06T17:03:34+08:00">2022-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -327,7 +332,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.1k</span>
+              <span>6.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -441,6 +446,26 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入行</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_btnInsertRow_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> curRow = ui-&gt;tableInfo-&gt;currentRow();</span><br><span class="line">    ui-&gt;tableInfo-&gt;insertRow(curRow);</span><br><span class="line">    createItemsARow(curRow,<span class="string">&quot;新生&quot;</span>,<span class="string">&quot;男&quot;</span>,QDate::fromString(<span class="string">&quot;1992-2-2&quot;</span>,<span class="string">&quot;yyyy-M-d&quot;</span>),<span class="string">&quot;苗族&quot;</span>,<span class="literal">true</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加行</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_btnAppendRow_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> curRow = ui-&gt;tableInfo-&gt;rowCount();</span><br><span class="line">    ui-&gt;tableInfo-&gt;insertRow(curRow);</span><br><span class="line">    createItemsARow(curRow,<span class="string">&quot;新生&quot;</span>,<span class="string">&quot;女&quot;</span>,QDate::fromString(<span class="string">&quot;1994-2-3&quot;</span>,<span class="string">&quot;yyyy-M-d&quot;</span>),<span class="string">&quot;满族&quot;</span>,<span class="literal">true</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除当前行</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_btnDelCurRow_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> curRow = ui-&gt;tableInfo-&gt;currentRow();</span><br><span class="line">    ui-&gt;tableInfo-&gt;removeRow(curRow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>自动调整行高和列宽</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_autoAdRowH_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> row = ui-&gt;tableInfo-&gt;currentRow();</span><br><span class="line">    qDebug() &lt;&lt; row;</span><br><span class="line">    <span class="keyword">if</span>(row == <span class="number">-1</span>)&#123;</span><br><span class="line">        ui-&gt;tableInfo-&gt;resizeRowsToContents();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (row &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">        ui-&gt;tableInfo-&gt;resizeRowToContents(row);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_autoAdColH_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> row = ui-&gt;tableInfo-&gt;currentRow();</span><br><span class="line">    <span class="keyword">if</span>(row == <span class="number">-1</span>)&#123;</span><br><span class="line">        ui-&gt;tableInfo-&gt;resizeColumnsToContents();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (row &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">        ui-&gt;tableInfo-&gt;resizeColumnToContents(row);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/06/165854ahJWW2.png" alt=""></p>
+</li>
+<li><p>其他属性</p>
+<ul>
+<li><p>设置表格内容是否可编辑</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/06/170057e4aLh4.png" alt=""></p>
+</li>
+<li><p>设置行表头、列表头是否显示</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/06/170201islhNr.png" alt=""></p>
+</li>
+<li><p>间隔行底色</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/06/170239m5aLVn.png" alt=""></p>
+</li>
+<li><p>选择模式</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/06/1703151wctFZ.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>遍历表格读取数据</p>
 <p>​</p>
 </li>
 </ul>
@@ -465,10 +490,10 @@
       <div class="popular-posts-title"><a href="/posts/3V4Q1GY.html" rel="bookmark">springBoot项目打成的jar包无法获取resources下文件</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/HAXCJE.html" rel="bookmark">easypoi导入Excel表格报错</a></div>
+      <div class="popular-posts-title"><a href="/posts/RQ90BT.html" rel="bookmark">mapstruct使用报错</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/RQ90BT.html" rel="bookmark">mapstruct使用报错</a></div>
+      <div class="popular-posts-title"><a href="/posts/HAXCJE.html" rel="bookmark">easypoi导入Excel表格报错</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/12A6AMS.html" rel="bookmark">四种WebSocket 使用方式</a></div>
@@ -690,7 +715,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">795k</span>
+    <span title="站点总字数">796k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
