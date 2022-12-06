@@ -69,8 +69,10 @@
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/134124PDZAx7.png">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/06/155427Vlg29m.png">
 <meta property="og:image" content="https://files.catbox.moe/j6h3sk.png">
+<meta property="og:image" content="https://files.catbox.moe/3q8up5.png">
+<meta property="og:image" content="https://files.catbox.moe/ys8bps.png">
 <meta property="article:published_time" content="2022-11-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-12-06T08:14:53.170Z">
+<meta property="article:modified_time" content="2022-12-06T08:19:35.449Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="bug">
 <meta name="twitter:card" content="summary">
@@ -279,7 +281,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-06 16:14:53" itemprop="dateModified" datetime="2022-12-06T16:14:53+08:00">2022-12-06</time>
+                <time title="修改时间：2022-12-06 16:19:35" itemprop="dateModified" datetime="2022-12-06T16:19:35+08:00">2022-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,14 +327,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.7k</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -431,6 +433,14 @@
 <p><img data-src="https://files.catbox.moe/j6h3sk.png" alt=""></p>
 </li>
 </ul>
+<p><img data-src="https://files.catbox.moe/3q8up5.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_tableInfo_currentCellChanged</span><span class="params">(<span class="keyword">int</span> currentRow, <span class="keyword">int</span> currentColumn, <span class="keyword">int</span> previousRow, <span class="keyword">int</span> previousColumn)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   QTableWidgetItem *item = ui-&gt;tableInfo-&gt;item(currentRow,currentColumn);</span><br><span class="line">   <span class="keyword">if</span>(item == <span class="literal">NULL</span>)&#123;</span><br><span class="line">       <span class="keyword">return</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   labCellIndex-&gt;setText(QString::asprintf(<span class="string">&quot;当前单元格坐标：%d行，%d列&quot;</span>,currentRow,currentColumn));</span><br><span class="line">   <span class="keyword">int</span> cellType = item-&gt;type();</span><br><span class="line">   labCellType-&gt;setText(QString::asprintf(<span class="string">&quot;当前单元格类型：%d&quot;</span>,cellType));</span><br><span class="line">   item = ui-&gt;tableInfo-&gt;item(currentRow,MainWindow::colName);</span><br><span class="line">   <span class="keyword">int</span> ID = item-&gt;data(Qt::UserRole).toInt();</span><br><span class="line">   labStudID-&gt;setText(QString::asprintf(<span class="string">&quot;学生ID：%d&quot;</span>,ID));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://files.catbox.moe/ys8bps.png" alt=""></p>
+<ul>
+<li><p>插入、添加、删除行</p>
+<p>​</p>
+</li>
+</ul>
 
     </div>
    <div>
@@ -520,12 +530,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/3V8G3VM.html" rel="prev" title="Qt基础学习笔记01">
-      <i class="fa fa-chevron-left"></i> Qt基础学习笔记01
+    <a href="/posts/NHRPJF.html" rel="prev" title="计算机中整数的加减运算">
+      <i class="fa fa-chevron-left"></i> 计算机中整数的加减运算
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/F58MB7.html" rel="next" title="🔝日常分享">
-      🔝日常分享 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/3V8G3VM.html" rel="next" title="Qt基础学习笔记01">
+      Qt基础学习笔记01 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -682,7 +692,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:01</span>
+    <span title="站点阅读时长">12:02</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 
