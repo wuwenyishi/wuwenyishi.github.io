@@ -61,10 +61,10 @@
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/110953kGYwSa.png">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/163228hEV094.png">
 <meta property="article:published_time" content="2022-12-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-12-13T08:32:35.390Z">
+<meta property="article:modified_time" content="2022-12-13T08:39:24.054Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="sql">
 <meta property="article:tag" content="数据库">
+<meta property="article:tag" content="sql">
 <meta property="article:tag" content="数组">
 <meta property="article:tag" content="索引">
 <meta name="twitter:card" content="summary">
@@ -273,7 +273,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-13 16:32:35" itemprop="dateModified" datetime="2022-12-13T16:32:35+08:00">2022-12-13</time>
+                <time title="修改时间：2022-12-13 16:39:24" itemprop="dateModified" datetime="2022-12-13T16:39:24+08:00">2022-12-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,14 +319,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -439,6 +439,10 @@
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void MainWindow::on<span class="constructor">_actAppend_triggered()</span></span><br><span class="line">&#123;</span><br><span class="line">    QList&lt;QStandardItem*&gt; aItemList;</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; FixedColumuCount - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        aItem = <span class="keyword">new</span> <span class="constructor">QStandardItem(<span class="string">&quot;0&quot;</span>)</span>;</span><br><span class="line">        aItemList &lt;&lt; aItem;</span><br><span class="line">    &#125;</span><br><span class="line">    QString str = theModel-&gt;header<span class="constructor">Data(<span class="params">theModel</span>-&gt;<span class="params">columnCount</span>()</span> - <span class="number">1</span>,Qt::Horizontal,Qt::DisplayRole).<span class="keyword">to</span><span class="constructor">String()</span>;</span><br><span class="line">    aItem = <span class="keyword">new</span> <span class="constructor">QStandardItem(<span class="params">str</span>)</span>;</span><br><span class="line">    aItem-&gt;set<span class="constructor">Checkable(<span class="params">true</span>)</span>;</span><br><span class="line">    aItemList &lt;&lt; aItem;</span><br><span class="line"></span><br><span class="line">    theModel-&gt;insert<span class="constructor">Row(<span class="params">theModel</span>-&gt;<span class="params">rowCount</span>()</span>, aItemList);</span><br><span class="line"><span class="comment">//    QModelIndex curindex = theModel-&gt;index(theModel-&gt;rowCount() - 1,0);</span></span><br><span class="line"><span class="comment">//    theSelection-&gt;clearSelection();</span></span><br><span class="line"><span class="comment">//    theSelection-&gt;setCurrentIndex(curindex,QItemSelectionModel::Select);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/13/163228hEV094.png" alt=""></p>
 </li>
+<li><p>插入行</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">void MainWindow::on<span class="constructor">_actInsert_triggered()</span></span><br><span class="line">&#123;</span><br><span class="line">    QList&lt;QStandardItem*&gt; aItemList;</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; FixedColumuCount - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        aItem = <span class="keyword">new</span> <span class="constructor">QStandardItem(<span class="string">&quot;0&quot;</span>)</span>;</span><br><span class="line">        aItemList &lt;&lt; aItem;</span><br><span class="line">    &#125;</span><br><span class="line">    QString str = theModel-&gt;header<span class="constructor">Data(<span class="params">theModel</span>-&gt;<span class="params">columnCount</span>()</span> - <span class="number">1</span>,Qt::Horizontal,Qt::DisplayRole).<span class="keyword">to</span><span class="constructor">String()</span>;</span><br><span class="line">    aItem = <span class="keyword">new</span> <span class="constructor">QStandardItem(<span class="params">str</span>)</span>;</span><br><span class="line">    aItem-&gt;set<span class="constructor">Checkable(<span class="params">true</span>)</span>;</span><br><span class="line">    aItemList &lt;&lt; aItem;</span><br><span class="line"></span><br><span class="line">    QModelIndex index = ui-&gt;tableView-&gt;current<span class="constructor">Index()</span>;</span><br><span class="line">    theModel-&gt;insert<span class="constructor">Row(<span class="params">index</span>.<span class="params">row</span>()</span>, aItemList);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
 </ul>
 
     </div>
@@ -515,8 +519,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
               <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
               <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
           </div>
@@ -689,12 +693,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">803k</span>
+    <span title="站点总字数">804k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:10</span>
+    <span title="站点阅读时长">12:11</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 
