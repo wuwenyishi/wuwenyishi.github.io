@@ -61,7 +61,7 @@
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/110953kGYwSa.png">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/163228hEV094.png">
 <meta property="article:published_time" content="2022-12-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-12-14T01:58:56.426Z">
+<meta property="article:modified_time" content="2022-12-14T02:32:42.974Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="数据库">
@@ -273,7 +273,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-14 09:58:56" itemprop="dateModified" datetime="2022-12-14T09:58:56+08:00">2022-12-14</time>
+                <time title="修改时间：2022-12-14 10:32:42" itemprop="dateModified" datetime="2022-12-14T10:32:42+08:00">2022-12-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,14 +319,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.9k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -451,10 +451,10 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加粗</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actFontBold_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!theSelection-&gt;hasSelection())&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QModelIndexList selectIndex = theSelection-&gt;selectedIndexes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; selectIndex.count();i++) &#123;</span><br><span class="line">        QModelIndex aIndex = selectIndex.at(i);</span><br><span class="line">        QStandardItem *aItem = theModel-&gt;itemFromIndex(aIndex);</span><br><span class="line">        QFont font = aItem-&gt;font();</span><br><span class="line">        font.setBold(<span class="literal">true</span>);</span><br><span class="line">        aItem-&gt;setFont(font);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>数据另存为文件</p>
-<p>​</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void MainWindow::on_actSave_triggered()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//保存为文件</span></span><br><span class="line">    QString curPath = QCoreApplication::applicationDirPath();</span><br><span class="line">    QString aFileName = QFileDialog::getSaveFileName(this,<span class="string">&quot;选择一个文件&quot;</span>,curPath,<span class="string">&quot;冰鞋数据文件(*.txt);;所有文件(*.*)&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(aFileName.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    QFile aFile(aFileName);</span><br><span class="line">    <span class="keyword">if</span>(!(aFile.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)))&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    QTextStream aStream(&amp;aFile);</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    int i,j;</span><br><span class="line">    QString  <span class="built_in">str</span>;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;clear();</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; theModel-&gt;columnCount();i++) &#123;</span><br><span class="line">        aItem = theModel-&gt;horizontalHeaderItem(i);</span><br><span class="line">        <span class="built_in">str</span> = <span class="built_in">str</span> + aItem-&gt;text() + <span class="string">&quot;\t\t&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    aStream &lt;&lt; <span class="built_in">str</span> &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;appendPlainText(<span class="built_in">str</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; theModel-&gt;rowCount();i++) &#123;</span><br><span class="line">        <span class="built_in">str</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>;j &lt; theModel-&gt;columnCount() - <span class="number">1</span>;j++) &#123;</span><br><span class="line">            aItem = theModel-&gt;item(i,j);</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + aItem-&gt;text() + QString::asprintf(<span class="string">&quot;\t\t&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        aItem = theModel-&gt;item(i,j);</span><br><span class="line">        <span class="keyword">if</span>(aItem-&gt;checkState() == Qt::Checked)&#123;</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + <span class="string">&quot;1&quot;</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + <span class="string">&quot;0&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ui-&gt;plainTextEdit-&gt;appendPlainText(<span class="built_in">str</span>);</span><br><span class="line">        aStream &lt;&lt; <span class="built_in">str</span> &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-
+<h1 id="自定义代理"><a href="#自定义代理" class="headerlink" title="自定义代理"></a>自定义代理</h1>
     </div>
    <div>
         
@@ -546,8 +546,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/1QR2QPE.html" rel="prev" title="Qt基础学习笔记02">
-      <i class="fa fa-chevron-left"></i> Qt基础学习笔记02
+    <a href="/posts/3V8G3VM.html" rel="prev" title="Qt基础学习笔记01">
+      <i class="fa fa-chevron-left"></i> Qt基础学习笔记01
     </a></div>
       <div class="post-nav-item">
     <a href="/posts/F58MB7.html" rel="next" title="🔝日常分享">
@@ -627,7 +627,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-View%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Model&#x2F;View结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">视图组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-View%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.</span> <span class="nav-text">Model&#x2F;View结构的一些概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QFileSystemModel"><span class="nav-number">2.</span> <span class="nav-text">QFileSystemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#QFileSystemModel%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">QFileSystemModel类的基本功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QStringListModel"><span class="nav-number">3.</span> <span class="nav-text">QStringListModel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QStandardItemModel"><span class="nav-number">4.</span> <span class="nav-text">QStandardItemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">界面设计与主窗口类定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QStandardItemModel%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.</span> <span class="nav-text">QStandardItemModel的使用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-View%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Model&#x2F;View结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">视图组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-View%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.</span> <span class="nav-text">Model&#x2F;View结构的一些概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QFileSystemModel"><span class="nav-number">2.</span> <span class="nav-text">QFileSystemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#QFileSystemModel%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">QFileSystemModel类的基本功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QStringListModel"><span class="nav-number">3.</span> <span class="nav-text">QStringListModel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QStandardItemModel"><span class="nav-number">4.</span> <span class="nav-text">QStandardItemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">界面设计与主窗口类定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QStandardItemModel%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.</span> <span class="nav-text">QStandardItemModel的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">自定义代理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -703,12 +703,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">805k</span>
+    <span title="站点总字数">806k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:12</span>
+    <span title="站点阅读时长">12:13</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 
