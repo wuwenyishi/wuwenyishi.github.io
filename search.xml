@@ -89,6 +89,29 @@
       </tags>
   </entry>
   <entry>
+    <title>mapstruct使用报错</title>
+    <url>/posts/RQ90BT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220308-mapstruct%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.md) 
+</div><br><span id="more"></span></p>
+<p>使用mapstruct 请求报错</p>
+<p>Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: </p>
+<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/el10mD.png" alt=""></p>
+<p>解决：</p>
+<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/mwqlOu.png" alt=""></p>
+<p>Mapper 引用的包错误。</p>
+<p>错误的：import org.apache.ibatis.annotations.Mapper;</p>
+<p>正确的：import org.mapstruct.Mapper;</p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>easypoi导入Excel表格报错</title>
     <url>/posts/HAXCJE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
@@ -113,29 +136,6 @@
         <tag>bug</tag>
         <tag>sql</tag>
         <tag>集合</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mapstruct使用报错</title>
-    <url>/posts/RQ90BT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220308-mapstruct%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.md) 
-</div><br><span id="more"></span></p>
-<p>使用mapstruct 请求报错</p>
-<p>Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: </p>
-<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/el10mD.png" alt=""></p>
-<p>解决：</p>
-<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/mwqlOu.png" alt=""></p>
-<p>Mapper 引用的包错误。</p>
-<p>错误的：import org.apache.ibatis.annotations.Mapper;</p>
-<p>正确的：import org.mapstruct.Mapper;</p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -3559,6 +3559,21 @@
       </tags>
   </entry>
   <entry>
+    <title>Java线程池实现原理及其在美团业务中的实践</title>
+    <url>/posts/GHVA1Q.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvdFJ6VGR4ejZpeW4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjAvMDQvMDIvamF2YS1wb29saW5nLXByYXRpY2UtaW4tbWVpdHVhbi5odG1s">Java线程池实现原理及其在美团业务中的实践<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>线程池</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java并发常见知识点&amp;面试题总结_进阶篇</title>
     <url>/posts/WTSYSE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="synchronized-关键字"><a href="#synchronized-关键字" class="headerlink" title="synchronized 关键字"></a>synchronized 关键字</h2><h3 id="说一说自己对于-synchronized-关键字的了解"><a href="#说一说自己对于-synchronized-关键字的了解" class="headerlink" title="说一说自己对于 synchronized 关键字的了解"></a>说一说自己对于 synchronized 关键字的了解</h3><p><strong><code>synchronized</code> 关键字解决的是多个线程之间访问资源的同步性，<code>synchronized</code>关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。</strong></p>
@@ -3928,21 +3943,6 @@
         <tag>并发</tag>
         <tag>多线程</tag>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java线程池实现原理及其在美团业务中的实践</title>
-    <url>/posts/GHVA1Q.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvdFJ6VGR4ejZpeW4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjAvMDQvMDIvamF2YS1wb29saW5nLXByYXRpY2UtaW4tbWVpdHVhbi5odG1s">Java线程池实现原理及其在美团业务中的实践<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>线程池</tag>
       </tags>
   </entry>
   <entry>
@@ -5007,6 +5007,35 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
   </entry>
   <entry>
+    <title>算法基础16：图</title>
+    <url>/posts/15KJ31K.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="图的基本介绍"><a href="#图的基本介绍" class="headerlink" title="图的基本介绍"></a>图的基本介绍</h1><p><strong>为什么要有图</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/1414506sNQMH.png" alt=""></p>
+<p><strong>图的举例说明</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141527E8jUYT.png" alt=""></p>
+<h1 id="图的常用概念"><a href="#图的常用概念" class="headerlink" title="图的常用概念"></a>图的常用概念</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141723LQQY8y.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141754tviCu3.png" alt=""></p>
+<h1 id="图的表示方式"><a href="#图的表示方式" class="headerlink" title="图的表示方式"></a>图的表示方式</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141918IYcm2m.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142209DGc0Mc.png" alt=""></p>
+<h1 id="图的快速入门案例"><a href="#图的快速入门案例" class="headerlink" title="图的快速入门案例"></a>图的快速入门案例</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142500Z38tsY.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结点个数</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(n);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">4</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line">        graph.showGraph();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="图的深度优先遍历"><a href="#图的深度优先遍历" class="headerlink" title="图的深度优先遍历"></a>图的深度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/153916N6Efvo.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/155015t6vgIK.png" alt=""></p>
+<h1 id="图的广度优先遍历"><a href="#图的广度优先遍历" class="headerlink" title="图的广度优先遍历"></a>图的广度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/090950GajbCf.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/17/091259tagB5U.png" alt=""></p>
+<h1 id="广度优先与深度优先遍历的代码实现"><a href="#广度优先与深度优先遍历的代码实现" class="headerlink" title="广度优先与深度优先遍历的代码实现"></a>广度优先与深度优先遍历的代码实现</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line">    <span class="comment">//记录某个结点是否被访问</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] isVisited;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(vertexs.length);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line"><span class="comment">//        graph.showGraph();</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println(&quot;测试DFS&quot;);</span></span><br><span class="line"><span class="comment">//        graph.dfs();</span></span><br><span class="line">        System.out.println(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;测试BFS&quot;</span>);</span><br><span class="line">        graph.bfs();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[n];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 得到第一个邻接结点的下标</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> index</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 如果存在就返回对应的下标，否则返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFirstNeighbor</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[index][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据前一个邻接结点的下标来获取下一个邻接结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNextNeighbor</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = v2 + <span class="number">1</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[v1][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 深度优先遍历算法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//首先我们访问该结点，输出</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        <span class="comment">//将结点设置为已经访问</span></span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">//查找结点i的第一个邻接结点w</span></span><br><span class="line">        <span class="keyword">int</span> w = getFirstNeighbor(i);</span><br><span class="line">        <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                <span class="comment">//没有被访问过</span></span><br><span class="line">                dfs(isVisited, w);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果w结点已经被访问过</span></span><br><span class="line">            w = getNextNeighbor(i, w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对dfs进行重载，遍历所有的节点，进行dfs</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行dfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                dfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对一个结点进行广度优先遍历的方法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> u; <span class="comment">// 表示队列的头节点对应的下标</span></span><br><span class="line">        <span class="keyword">int</span> w; <span class="comment">//邻接结点W</span></span><br><span class="line">        LinkedList&lt;Object&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">//访问结点，输出结点的信息</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        queue.addLast(i);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="comment">//取出队列的头结点下标</span></span><br><span class="line">            u = (Integer) queue.removeFirst();</span><br><span class="line">            <span class="comment">//得到第一个邻接结点的下标W</span></span><br><span class="line">            w = getFirstNeighbor(u);</span><br><span class="line">            <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="comment">//是否访问过</span></span><br><span class="line">                <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                    System.out.print(getValueByIndex(w) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">                    isVisited[w] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">//入队列</span></span><br><span class="line">                    queue.addLast(w);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//以u为前驱点，找w后面的下一个邻结点</span></span><br><span class="line">                w = getNextNeighbor(u, w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历所有的结点，都进行广度优先搜索</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行bfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                bfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="DFS与BFS-比较"><a href="#DFS与BFS-比较" class="headerlink" title="DFS与BFS 比较"></a>DFS与BFS 比较</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/09380119ieBJ.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>集合</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>算法基础13：数结构</title>
     <url>/posts/6ZR6PR.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="基础部分"><a href="#基础部分" class="headerlink" title="基础部分"></a>基础部分</h1><p><strong>为什么要学习树结构</strong></p>
@@ -5087,35 +5116,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>Java</tag>
         <tag>数组</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法基础16：图</title>
-    <url>/posts/15KJ31K.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="图的基本介绍"><a href="#图的基本介绍" class="headerlink" title="图的基本介绍"></a>图的基本介绍</h1><p><strong>为什么要有图</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/1414506sNQMH.png" alt=""></p>
-<p><strong>图的举例说明</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141527E8jUYT.png" alt=""></p>
-<h1 id="图的常用概念"><a href="#图的常用概念" class="headerlink" title="图的常用概念"></a>图的常用概念</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141723LQQY8y.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141754tviCu3.png" alt=""></p>
-<h1 id="图的表示方式"><a href="#图的表示方式" class="headerlink" title="图的表示方式"></a>图的表示方式</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141918IYcm2m.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142209DGc0Mc.png" alt=""></p>
-<h1 id="图的快速入门案例"><a href="#图的快速入门案例" class="headerlink" title="图的快速入门案例"></a>图的快速入门案例</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142500Z38tsY.png" alt=""></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结点个数</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(n);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">4</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line">        graph.showGraph();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="图的深度优先遍历"><a href="#图的深度优先遍历" class="headerlink" title="图的深度优先遍历"></a>图的深度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/153916N6Efvo.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/155015t6vgIK.png" alt=""></p>
-<h1 id="图的广度优先遍历"><a href="#图的广度优先遍历" class="headerlink" title="图的广度优先遍历"></a>图的广度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/090950GajbCf.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/17/091259tagB5U.png" alt=""></p>
-<h1 id="广度优先与深度优先遍历的代码实现"><a href="#广度优先与深度优先遍历的代码实现" class="headerlink" title="广度优先与深度优先遍历的代码实现"></a>广度优先与深度优先遍历的代码实现</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line">    <span class="comment">//记录某个结点是否被访问</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] isVisited;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(vertexs.length);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line"><span class="comment">//        graph.showGraph();</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println(&quot;测试DFS&quot;);</span></span><br><span class="line"><span class="comment">//        graph.dfs();</span></span><br><span class="line">        System.out.println(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;测试BFS&quot;</span>);</span><br><span class="line">        graph.bfs();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[n];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 得到第一个邻接结点的下标</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> index</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 如果存在就返回对应的下标，否则返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFirstNeighbor</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[index][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据前一个邻接结点的下标来获取下一个邻接结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNextNeighbor</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = v2 + <span class="number">1</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[v1][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 深度优先遍历算法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//首先我们访问该结点，输出</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        <span class="comment">//将结点设置为已经访问</span></span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">//查找结点i的第一个邻接结点w</span></span><br><span class="line">        <span class="keyword">int</span> w = getFirstNeighbor(i);</span><br><span class="line">        <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                <span class="comment">//没有被访问过</span></span><br><span class="line">                dfs(isVisited, w);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果w结点已经被访问过</span></span><br><span class="line">            w = getNextNeighbor(i, w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对dfs进行重载，遍历所有的节点，进行dfs</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行dfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                dfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对一个结点进行广度优先遍历的方法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> u; <span class="comment">// 表示队列的头节点对应的下标</span></span><br><span class="line">        <span class="keyword">int</span> w; <span class="comment">//邻接结点W</span></span><br><span class="line">        LinkedList&lt;Object&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">//访问结点，输出结点的信息</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        queue.addLast(i);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="comment">//取出队列的头结点下标</span></span><br><span class="line">            u = (Integer) queue.removeFirst();</span><br><span class="line">            <span class="comment">//得到第一个邻接结点的下标W</span></span><br><span class="line">            w = getFirstNeighbor(u);</span><br><span class="line">            <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="comment">//是否访问过</span></span><br><span class="line">                <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                    System.out.print(getValueByIndex(w) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">                    isVisited[w] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">//入队列</span></span><br><span class="line">                    queue.addLast(w);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//以u为前驱点，找w后面的下一个邻结点</span></span><br><span class="line">                w = getNextNeighbor(u, w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历所有的结点，都进行广度优先搜索</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行bfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                bfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="DFS与BFS-比较"><a href="#DFS与BFS-比较" class="headerlink" title="DFS与BFS 比较"></a>DFS与BFS 比较</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/09380119ieBJ.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>算法和数据结构</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>集合</tag>
         <tag>算法</tag>
       </tags>
   </entry>
@@ -7589,133 +7589,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Kafka面试连环炮-下</title>
-    <url>/posts/2P9AR21.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvSGtzUXRsaFlHMmhSSE1LRDg1a3Rudw==">【建议收藏】Kafka 面试连环炮, 看看你能撑到哪一步?（下）<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>我们知道 Kafka 网络通信架构使用到了 Java NIO 以及 Reactor 设计模式。我们先从整体上看一下完整的网络通信层架构，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0957-7aENgd.png" alt="图片"></p>
-<blockquote>
-<p>1）从上图中我们可以看出，Kafka 网络通信架构中用到的组件主要由两大部分构成：<code>SocketServer 和 RequestHandlerPool</code>。</p>
-<p>2）<code>SocketServer 组件是 Kafka 超高并发网络通信层中最重要的子模块</code>。它包含 Acceptor 线程、Processor 线程和 RequestChannel 等对象，都是网络通信的重要组成部分。</p>
-<p>3）<strong>RequestHandlerPool 组件</strong>就是我们常说的 I/O 工作线程池，里面定义了若干个 I/O 线程，<code>主要用来执行真实的请求处理逻辑</code>。</p>
-</blockquote>
-<h3 id="Accept-线程"><a href="#Accept-线程" class="headerlink" title="Accept 线程"></a>Accept 线程</h3><p>在经典的 Reactor 设计模式有个「<strong>Dispatcher</strong>」的角色，<code>主要用来接收外部请求并分发给下面的实际处理线程</code>。在 Kafka 网络架构设计中，这个 Dispatcher 就是「<strong>Acceptor 线程</strong>」, 用来接收和创建外部 TCP 连接的线程。在 Broker 端每个 SocketServer 实例只会创建一个 Acceptor 线程。<code>它的主要功能就是创建连接，并将接收到的 Request 请求传递给下游的 Processor 线程处理</code>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0958-SHDgkB.png" alt="图片"></p>
-<blockquote>
-<p>1）我们可以看出 Acceptor 线程主要使用了 Java NIO 的 Selector 以及 SocketChannel 的方式循环的轮询准备就绪的 I/O 事件。</p>
-<p>2）将 ServerSocketChannel 通道注册到nioSelector 上，并关注网络连接创事件：SelectionKey.OP_ACCEPT。</p>
-<p>3）事件注册好后，一旦后续接收到连接请求后，Acceptor 线程就会指定一个 Processor 线程，并将该请求交给它并创建网络连接用于后续处理。</p>
-</blockquote>
-<h3 id="Processor-线程"><a href="#Processor-线程" class="headerlink" title="Processor 线程"></a>Processor 线程</h3><p>Acceptor 只是做了请求入口连接处理的，那么，<code>真正创建网络连接以及分发网络请求是由 Processor 线程来完成的</code>。而每个 Processor 线程在创建时都会创建 3 个队列。</p>
-<blockquote>
-<p>1）<strong>newConnections 队列:</strong> 它主要是用来保存要创建的新连接信息，也就是SocketChannel 对象，<strong>目前是硬编码队列长度大小为20</strong>。每当 Processor 线程接收到新的连接请求时，都会将对应的 SocketChannel 对象放入队列，等到后面创建连接时，从该队列中获取 SocketChannel，然后注册新的连接。</p>
-<p>2）<strong>inflightResponse 队列：</strong>它是一个临时的 Response 队列，当 Processor 线程将 Repsonse 返回给 Client 之后，要将 Response 放入该队列。它存在的意义：<code>由于有些 Response 回调逻辑要在 Response 被发送回 Request 发送方后，才能执行，因此需要暂存到临时队列</code>。</p>
-<p>3）<strong>ResponseQueue 队列：</strong>它主要是存放需要返回给Request 发送方的所有 Response 对象。每个 Processor 线程都会维护自己的 Response 队列。</p>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-Vza3z2.png" alt="图片"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-x5A3wg.png" alt="图片"></p>
-<h3 id="RequestHandlerPool-线程池"><a href="#RequestHandlerPool-线程池" class="headerlink" title="RequestHandlerPool 线程池"></a>RequestHandlerPool 线程池</h3><p>Acceptor 线程和 Processor 线程只是请求和响应的「<strong>搬运工</strong>」，而「<strong>真正处理 Kafka 请求</strong>」是 <code>KafkaRequestHandlerPool</code> 线程池，在上面网络超高并发通信架构图，有两个参数跟整个流程有关系，分别是「<code>num.network.threads</code>」、「<code>num.io.threads</code>」。其中 num.io.threads 就是 I/O 工作线程池的大小配置。</p>
-<p>​        <img data-src="https://xuemingde.com/pages/image/2022/04/10/1001-NqZsqB.png" alt="图片"></p>
-<p>下面我们结合 Kafka 超高并发网络架构图来讲解下一个完整请求处理核心流程：</p>
-<blockquote>
-<p>1）Clients 发送请求给 Acceptor 线程。</p>
-<p>2）Acceptor 线程会创建 NIO Selector 对象，并创建 ServerSocketChannel 通道实例，然后将 Channel 和 OP_ACCEPT 事件绑定到 Selector 多路复用器上。</p>
-<p>3）Acceptor 线程默认创建3个Processor 线程参数：num.network.threads, 并轮询的将请求对象 SocketChannel 放入到连接队列中。</p>
-<p>4）这时候连接队列就源源不断有请求数据了，然后不停地执行 NIO Poll, 获取对应 SocketChannel 上已经准备就绪的 I/O 事件。</p>
-<p>5）Processor 线程向 SocketChannel 注册了 OP_READ/OP_WRITE 事件，这样 客户端发过来的请求就会被该 SocketChannel 对象获取到，具体就是 processCompleteReceives 方法。</p>
-<p>6）这个时候客户端就可以源源不断进行请求发送了，服务端通过 Selector NIO Poll 不停的获取准备就绪的 I/O 事件。</p>
-<p>7）然后根据Channel中获取已经完成的 Receive 对象，构建 Request 对象，并将其存入到 Requestchannel 的 RequestQueue 请求队列中 。</p>
-<p>8）这个时候就该 I/O 线程池上场了，KafkaRequestHandler 线程循环地从请求队列RequestQueue 中获取 Request 实例，然后交由KafkaApis 的 handle 方法，执行真正的请求处理逻辑，并最终将数据存储到磁盘中。</p>
-<p>9）待处理完请求后，KafkaRequestHandler 线程会将 Response 对象放入 Processor 线程的 Response 队列。</p>
-<p>10）然后 Processor 线程通过 Request 中的 ProcessorID 不停地从 Response 队列中来定位并取出 Response 对象，返还给 Request 发送方。</p>
-</blockquote>
-<h2 id="了解Kafka高吞吐日志存储架构是如何设计吗"><a href="#了解Kafka高吞吐日志存储架构是如何设计吗" class="headerlink" title="了解Kafka高吞吐日志存储架构是如何设计吗"></a>了解Kafka高吞吐日志存储架构是如何设计吗</h2><p>对于 Kafka 来说， 它主要用来处理海量数据流，这个场景的特点主要包括：</p>
-<blockquote>
-<p>1) <strong>写操作：</strong>写并发要求非常高，基本得达到百万级 TPS，顺序追加写日志即可，无需考虑更新操作。</p>
-<ol>
-<li><strong>读操作：</strong>相对写操作来说，比较简单，只要能按照一定规则高效查询即可,支持（offset或者时间戳）读取。</li>
-</ol>
-</blockquote>
-<p>根据上面两点分析，对于写操作来说，直接采用「<strong>顺序追加写日志</strong>」的方式就可以满足 Kafka 对于百万TPS写入效率要求。</p>
-<p>如何解决高效查询这些日志呢？我们可以设想把消息的 Offset 设计成一个有序的字段，这样消息在日志文件中也就有序存放了，也不需要<strong>额外引入哈希表结构</strong>，可以直接将消息划分成若干个块，<code>对于每个块我们只需要索引当前块的第一条消息的 Offset ，这个是不是有点二分查找算法的意思</code>。即先根据 Offset 大小找到对应的块， 然后再从块中顺序查找。如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1003-2UplC7.png" alt="图片"></p>
-<p>这样就可以快速定位到要查找的消息的位置了，在 Kafka 中，我们将这种索引结构叫做「<strong>稀疏哈希索引</strong>」。</p>
-<p>上面得出了 Kafka 最终的存储实现方案， 即<code>基于顺序追加写日志 + 稀疏哈希索引</code>。</p>
-<p>接下来我们来看看 Kafka 日志存储结构：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-DqnnDS.png" alt="图片"></p>
-<p>从上图看出来，Kafka 是基于「<code>主题 + 分区 + 副本 + 分段 + 索引</code>」的结构进行日志存储的。</p>
-<p>了解了整体的日志存储架构，我们来看下 Kafka 日志格式，Kafka 日志格式也经历了多个版本迭代，这里我们主要看下V2版本的日志格式：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-2KZQhv.png" alt="图片"></p>
-<p>通过上图可以得出：<code>V2 版本日志格式主要是通过可变长度提高了消息格式的空间使用率</code>，并将某些字段抽取到消息批次（RecordBatch）中，同时消息批次可以存放多条消息，从而在批量发送消息时，可以大幅度地节省了磁盘空间。</p>
-<p>接下来我们来看看日志消息写入磁盘的整体过程如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-Tad6Ll.png" alt="图片"></p>
-<h2 id="针对-Kafka-线上集群部署方案-你是怎么做的"><a href="#针对-Kafka-线上集群部署方案-你是怎么做的" class="headerlink" title="针对 Kafka 线上集群部署方案, 你是怎么做的"></a>针对 Kafka 线上集群部署方案, 你是怎么做的</h2><p>这里我们从架构师必备能力出发， 以电商平台为例讲述了 Kafka 生产级容量评估方案该如何做？如何让公司领导以及运维部门得到认可， 获准你的方案。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-ikMfte.png" alt="图片"></p>
-<p>详细可以深读：<a href="http://mp.weixin.qq.com/s?__biz=Mzg3MTcxMDgxNA==&amp;mid=2247488846&amp;idx=1&amp;sn=1d77a05c7e94abd8044502c433d9aeee&amp;chksm=cefb3c7ff98cb569910c99de953ecce956a454a3d8e63be9e3a2b7639f633848ba4bb989bb87&amp;scene=21#wechat_redirect"><strong>八大步骤带你深度剖析Kafka生产级容量评估方案</strong></a></p>
-<h2 id="针对-Kafka-线上系统-你是如何进行监控的"><a href="#针对-Kafka-线上系统-你是如何进行监控的" class="headerlink" title="针对 Kafka 线上系统, 你是如何进行监控的"></a>针对 Kafka 线上系统, 你是如何进行监控的</h2><p>Kafka 作为大型系统架构中重要的一环，有着举足轻重的作用，因此 Kafka 集群的稳定性尤为重要，我们要对生产的 Kafka 集群进行全方位的监控， 一般线上系统可以从以下五个维度进行监控：</p>
-<h3 id="主机节点监控"><a href="#主机节点监控" class="headerlink" title="主机节点监控"></a>主机节点监控</h3><p>所谓主机节点监控就是监控 Kafka 集群 Broker 所在节点机器的性能。主机节点监控对于 Kafka 来说是最重要的，因为很多线上环境问题首先就是由于主机的某些性能出现了问题。</p>
-<p>因此对于 Kafka 来说，主机监控通常是发现问题的第一步，主要性能指标如下：</p>
-<p>「<strong>机器负载（Load）</strong>」、「<strong>CPU 使用率</strong>」、「<strong>内存使用率</strong>」、「<strong>磁盘 I/O 使用率</strong>」、「<strong>网络 I/O 使用率</strong>」、「<strong>TCP 连接数</strong>」、「<strong>打开文件数</strong>」、「<strong>inode 使用情况</strong>」。</p>
-<p>如果想要更好的监控主机性能的话，有以下两个教程可以学习和参考：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-p36iiv.png" alt="图片"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-X46ebB.png" alt="图片"></p>
-<h3 id="JVM-监控"><a href="#JVM-监控" class="headerlink" title="JVM 监控"></a>JVM 监控</h3><p>另一个重要的监控维度就是 JVM 监控。<code>监控 JVM 进程主要是为了让你全面地了解Kafka Broker 进程</code>。</p>
-<p>要监控 JVM 进程，需要关注 3 个指标：</p>
-<p>「<code>监控 Full GC 发生频率和时长</code>」、「<code>监控堆上活跃对象大小</code>」、「<code>监控应用线程总数</code>」</p>
-<h3 id="Kafka-集群监控"><a href="#Kafka-集群监控" class="headerlink" title="Kafka 集群监控"></a>Kafka 集群监控</h3><p>另外一个重要监控维度就是 Kafka Broker 集群和各类客户端的监控，主要有3个方法：</p>
-<blockquote>
-<p>1）<strong>查看 Broker 端重要日志：</strong>主要包括 Broker 端服务器日志 server.log，控制器日志 controller.log 以及主题分区状态变更日志  state-change.log。其中，server.log 是最重要的，如果你的 Kafka 集群出现了故障，你要第一时间查看  server.log，定位故障原因。</p>
-<p>2）<strong>查看 Broker 端关键线程运行状态，例如:</strong> </p>
-<p>Log Compaction 线程：日志压缩清理。一旦它挂掉了，所有 Compaction 操作都会中断，但用户对此通常是无感知的。</p>
-<p>副本拉取消息的线程：主要执行 Follower 副本向 Leader 副本拉取消息的逻辑。如果它们挂掉了，系统会表现为 Follower 副本延迟 Leader 副本越来越大 。</p>
-<p>3）<strong>查看 Broker 端关键的 JMX 性能指标:</strong> 主要有BytesIn/BytesOut、NetworkProcessorAvgIdlePercent、RequestHandlerAvgIdlePercent、UnderReplicatedPartitions、ISRShrink/ISRExpand、ActiveControllerCount 这几个指标 。</p>
-</blockquote>
-<h3 id="Kafka-客户端监控"><a href="#Kafka-客户端监控" class="headerlink" title="Kafka 客户端监控"></a>Kafka 客户端监控</h3><p>客户端监控主要是生产者和消费者的监控，生产者往 Kafka 发送消息，此时我们要了解客户端机器与 Broker 机器之间的往返时延 RTT 是多少，对于跨数据中心或者异地集群来说，RTT 会更大，很难支撑很大的 TPS。</p>
-<p><strong>Producer角度:</strong> request-latency 是需要重点关注的JMX指标，即消息生产请求的延时；另外 Sender 线程的运行状态也是非常重要的， 如果 Sender 线程挂了，对于用户是无感知的，表象只是 Producer 端消息发送失败。</p>
-<p><strong>Consumer角度:</strong> 对于 Consumer Group，需要重点关注 join rate 和 sync rate 指标，它表示 Rebalance 的频繁程度。另外还包括消息消费偏移量、消息堆积数量等。</p>
-<h3 id="Broker-之间的监控"><a href="#Broker-之间的监控" class="headerlink" title="Broker 之间的监控"></a>Broker 之间的监控</h3><p>最后一个监控维度就是 Broker 之间的监控，主要指副本拉取的性能。Follower 副本实时拉取 Leader 副本的数据，此时我们希望拉取过程越快越好。Kafka 提供了一个特别重要的 JMX 指标，叫做「<code>under replicated partitions</code>」，意思就是比如我们规定这条消息，应该在两个 Broker 上面保存，假设只有一个 Broker 上保存该消息，那么这条消息所在的分区就叫 under replicated partitions，这种情况是特别关注的，因为有可能造成数据的丢失。</p>
-<p>另外还有一个比较重要的指标是「<code>active controllor count</code>」。在整个 Kafka  集群中应该确保只能有一台机器的指标是1，其他全应该是0，如果发现有一台机器大于1，一定是出现脑裂了，此时应该去检查下是否出现了网络分区。Kafka本身是不能对抗脑裂的，完全依靠 Zookeeper 来做，但是如果真正出现网络分区的话，也是没有办法处理的，应该让其快速失败重启。</p>
-<h2 id="针对-Kafka-线上系统-你是如何进行调优的"><a href="#针对-Kafka-线上系统-你是如何进行调优的" class="headerlink" title="针对 Kafka 线上系统, 你是如何进行调优的"></a>针对 Kafka 线上系统, 你是如何进行调优的</h2><p>对 Kafka 来说，「<strong>吞吐量</strong>」和「<strong>延时</strong>」是非常重要的优化指标。</p>
-<p><strong>吞吐量 TPS：</strong>是指 Broker 端或 Client 端每秒能处理的消息数，越大越好。</p>
-<p><strong>延时：</strong>表示从 Producer 端发送消息到 Broker 端持久化完成到 Consumer 端成功消费之间的时间间隔。与吞吐量 TPS 相反，延时越短越好。</p>
-<p>总之，<code>高吞吐量、低延时是我们调优 Kafka 集群的主要目标</code>。</p>
-<h3 id="提升吞吐量"><a href="#提升吞吐量" class="headerlink" title="提升吞吐量"></a>提升吞吐量</h3><p>首先是提升吞吐量参数和措施：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1011-xiyY76.png" alt="image-20220410101150338"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-TlxxM5.png" alt="image-20220410101218929"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-nCB2xr.png" alt="image-20220410101239687"></p>
-<h3 id="降低延时"><a href="#降低延时" class="headerlink" title="降低延时"></a>降低延时</h3><p>降低延时的目的就是尽量减少端到端的延时。</p>
-<p>对比上面提升吞吐量的参数，我们只能调整 Producer 端和 Consumer 端的参数配置。</p>
-<p>对于 Producer 端，此时我们希望可以快速的将消息发送出去，必须设置 linger.ms=0，同时关闭压缩，另外设置 acks = 1，减少副本同步时间。</p>
-<p>而对于 Consumer 端我们只保持 fetch.min.bytes=1 ，即 Broker 端只要有能返回的数据，就立即返回给 Consumer，减少延时。</p>
-<h3 id="合理设置分区数"><a href="#合理设置分区数" class="headerlink" title="合理设置分区数"></a>合理设置分区数</h3><p>分区数不是越多越好，也不是越少越好，需要搭建完集群，进行压测，再灵活调整分区个数。 </p>
-<p>这里可以用 Kafka 官方自带的脚本，对 Kafka 进行压测。</p>
-<blockquote>
-<p><strong>1）生产者压测：</strong>kafka-producer-perf-test.sh</p>
-<p><strong>2）消费者压测：</strong>kafka-consumer-perf-test.sh </p>
-</blockquote>
-<hr>
-<blockquote>
-<p>备份链接：<a href="https://xuemingde.com/JavaNotes/消息队列/20220410-Kafka面试连环炮-下">20220410-Kafka面试连环炮-下</a>   </p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>面试</tag>
-        <tag>线程池</tag>
-        <tag>索引</tag>
-        <tag>算法</tag>
-        <tag>并发</tag>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka面试连环炮-上</title>
     <url>/posts/3DS4M6Q.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Kafka-是什么-适应场景有哪些"><a href="#Kafka-是什么-适应场景有哪些" class="headerlink" title="Kafka 是什么, 适应场景有哪些"></a>Kafka 是什么, 适应场景有哪些</h2><p>Kafka 是一个分布式的流式处理平台，用于实时构建流处理应用。主要应用在大数据实时处理领域。Kafka 凭借「<strong>高性能</strong>」、「<strong>高吞吐</strong>」、「<strong>高可用</strong>」、「<strong>低延迟</strong>」、「<strong>可伸缩</strong>」几大特性，成为「<strong>消息队列」</strong>的首选。</p>
@@ -7982,6 +7855,133 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kafka面试连环炮-下</title>
+    <url>/posts/2P9AR21.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvSGtzUXRsaFlHMmhSSE1LRDg1a3Rudw==">【建议收藏】Kafka 面试连环炮, 看看你能撑到哪一步?（下）<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>我们知道 Kafka 网络通信架构使用到了 Java NIO 以及 Reactor 设计模式。我们先从整体上看一下完整的网络通信层架构，如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0957-7aENgd.png" alt="图片"></p>
+<blockquote>
+<p>1）从上图中我们可以看出，Kafka 网络通信架构中用到的组件主要由两大部分构成：<code>SocketServer 和 RequestHandlerPool</code>。</p>
+<p>2）<code>SocketServer 组件是 Kafka 超高并发网络通信层中最重要的子模块</code>。它包含 Acceptor 线程、Processor 线程和 RequestChannel 等对象，都是网络通信的重要组成部分。</p>
+<p>3）<strong>RequestHandlerPool 组件</strong>就是我们常说的 I/O 工作线程池，里面定义了若干个 I/O 线程，<code>主要用来执行真实的请求处理逻辑</code>。</p>
+</blockquote>
+<h3 id="Accept-线程"><a href="#Accept-线程" class="headerlink" title="Accept 线程"></a>Accept 线程</h3><p>在经典的 Reactor 设计模式有个「<strong>Dispatcher</strong>」的角色，<code>主要用来接收外部请求并分发给下面的实际处理线程</code>。在 Kafka 网络架构设计中，这个 Dispatcher 就是「<strong>Acceptor 线程</strong>」, 用来接收和创建外部 TCP 连接的线程。在 Broker 端每个 SocketServer 实例只会创建一个 Acceptor 线程。<code>它的主要功能就是创建连接，并将接收到的 Request 请求传递给下游的 Processor 线程处理</code>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0958-SHDgkB.png" alt="图片"></p>
+<blockquote>
+<p>1）我们可以看出 Acceptor 线程主要使用了 Java NIO 的 Selector 以及 SocketChannel 的方式循环的轮询准备就绪的 I/O 事件。</p>
+<p>2）将 ServerSocketChannel 通道注册到nioSelector 上，并关注网络连接创事件：SelectionKey.OP_ACCEPT。</p>
+<p>3）事件注册好后，一旦后续接收到连接请求后，Acceptor 线程就会指定一个 Processor 线程，并将该请求交给它并创建网络连接用于后续处理。</p>
+</blockquote>
+<h3 id="Processor-线程"><a href="#Processor-线程" class="headerlink" title="Processor 线程"></a>Processor 线程</h3><p>Acceptor 只是做了请求入口连接处理的，那么，<code>真正创建网络连接以及分发网络请求是由 Processor 线程来完成的</code>。而每个 Processor 线程在创建时都会创建 3 个队列。</p>
+<blockquote>
+<p>1）<strong>newConnections 队列:</strong> 它主要是用来保存要创建的新连接信息，也就是SocketChannel 对象，<strong>目前是硬编码队列长度大小为20</strong>。每当 Processor 线程接收到新的连接请求时，都会将对应的 SocketChannel 对象放入队列，等到后面创建连接时，从该队列中获取 SocketChannel，然后注册新的连接。</p>
+<p>2）<strong>inflightResponse 队列：</strong>它是一个临时的 Response 队列，当 Processor 线程将 Repsonse 返回给 Client 之后，要将 Response 放入该队列。它存在的意义：<code>由于有些 Response 回调逻辑要在 Response 被发送回 Request 发送方后，才能执行，因此需要暂存到临时队列</code>。</p>
+<p>3）<strong>ResponseQueue 队列：</strong>它主要是存放需要返回给Request 发送方的所有 Response 对象。每个 Processor 线程都会维护自己的 Response 队列。</p>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-Vza3z2.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-x5A3wg.png" alt="图片"></p>
+<h3 id="RequestHandlerPool-线程池"><a href="#RequestHandlerPool-线程池" class="headerlink" title="RequestHandlerPool 线程池"></a>RequestHandlerPool 线程池</h3><p>Acceptor 线程和 Processor 线程只是请求和响应的「<strong>搬运工</strong>」，而「<strong>真正处理 Kafka 请求</strong>」是 <code>KafkaRequestHandlerPool</code> 线程池，在上面网络超高并发通信架构图，有两个参数跟整个流程有关系，分别是「<code>num.network.threads</code>」、「<code>num.io.threads</code>」。其中 num.io.threads 就是 I/O 工作线程池的大小配置。</p>
+<p>​        <img data-src="https://xuemingde.com/pages/image/2022/04/10/1001-NqZsqB.png" alt="图片"></p>
+<p>下面我们结合 Kafka 超高并发网络架构图来讲解下一个完整请求处理核心流程：</p>
+<blockquote>
+<p>1）Clients 发送请求给 Acceptor 线程。</p>
+<p>2）Acceptor 线程会创建 NIO Selector 对象，并创建 ServerSocketChannel 通道实例，然后将 Channel 和 OP_ACCEPT 事件绑定到 Selector 多路复用器上。</p>
+<p>3）Acceptor 线程默认创建3个Processor 线程参数：num.network.threads, 并轮询的将请求对象 SocketChannel 放入到连接队列中。</p>
+<p>4）这时候连接队列就源源不断有请求数据了，然后不停地执行 NIO Poll, 获取对应 SocketChannel 上已经准备就绪的 I/O 事件。</p>
+<p>5）Processor 线程向 SocketChannel 注册了 OP_READ/OP_WRITE 事件，这样 客户端发过来的请求就会被该 SocketChannel 对象获取到，具体就是 processCompleteReceives 方法。</p>
+<p>6）这个时候客户端就可以源源不断进行请求发送了，服务端通过 Selector NIO Poll 不停的获取准备就绪的 I/O 事件。</p>
+<p>7）然后根据Channel中获取已经完成的 Receive 对象，构建 Request 对象，并将其存入到 Requestchannel 的 RequestQueue 请求队列中 。</p>
+<p>8）这个时候就该 I/O 线程池上场了，KafkaRequestHandler 线程循环地从请求队列RequestQueue 中获取 Request 实例，然后交由KafkaApis 的 handle 方法，执行真正的请求处理逻辑，并最终将数据存储到磁盘中。</p>
+<p>9）待处理完请求后，KafkaRequestHandler 线程会将 Response 对象放入 Processor 线程的 Response 队列。</p>
+<p>10）然后 Processor 线程通过 Request 中的 ProcessorID 不停地从 Response 队列中来定位并取出 Response 对象，返还给 Request 发送方。</p>
+</blockquote>
+<h2 id="了解Kafka高吞吐日志存储架构是如何设计吗"><a href="#了解Kafka高吞吐日志存储架构是如何设计吗" class="headerlink" title="了解Kafka高吞吐日志存储架构是如何设计吗"></a>了解Kafka高吞吐日志存储架构是如何设计吗</h2><p>对于 Kafka 来说， 它主要用来处理海量数据流，这个场景的特点主要包括：</p>
+<blockquote>
+<p>1) <strong>写操作：</strong>写并发要求非常高，基本得达到百万级 TPS，顺序追加写日志即可，无需考虑更新操作。</p>
+<ol>
+<li><strong>读操作：</strong>相对写操作来说，比较简单，只要能按照一定规则高效查询即可,支持（offset或者时间戳）读取。</li>
+</ol>
+</blockquote>
+<p>根据上面两点分析，对于写操作来说，直接采用「<strong>顺序追加写日志</strong>」的方式就可以满足 Kafka 对于百万TPS写入效率要求。</p>
+<p>如何解决高效查询这些日志呢？我们可以设想把消息的 Offset 设计成一个有序的字段，这样消息在日志文件中也就有序存放了，也不需要<strong>额外引入哈希表结构</strong>，可以直接将消息划分成若干个块，<code>对于每个块我们只需要索引当前块的第一条消息的 Offset ，这个是不是有点二分查找算法的意思</code>。即先根据 Offset 大小找到对应的块， 然后再从块中顺序查找。如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1003-2UplC7.png" alt="图片"></p>
+<p>这样就可以快速定位到要查找的消息的位置了，在 Kafka 中，我们将这种索引结构叫做「<strong>稀疏哈希索引</strong>」。</p>
+<p>上面得出了 Kafka 最终的存储实现方案， 即<code>基于顺序追加写日志 + 稀疏哈希索引</code>。</p>
+<p>接下来我们来看看 Kafka 日志存储结构：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-DqnnDS.png" alt="图片"></p>
+<p>从上图看出来，Kafka 是基于「<code>主题 + 分区 + 副本 + 分段 + 索引</code>」的结构进行日志存储的。</p>
+<p>了解了整体的日志存储架构，我们来看下 Kafka 日志格式，Kafka 日志格式也经历了多个版本迭代，这里我们主要看下V2版本的日志格式：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-2KZQhv.png" alt="图片"></p>
+<p>通过上图可以得出：<code>V2 版本日志格式主要是通过可变长度提高了消息格式的空间使用率</code>，并将某些字段抽取到消息批次（RecordBatch）中，同时消息批次可以存放多条消息，从而在批量发送消息时，可以大幅度地节省了磁盘空间。</p>
+<p>接下来我们来看看日志消息写入磁盘的整体过程如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-Tad6Ll.png" alt="图片"></p>
+<h2 id="针对-Kafka-线上集群部署方案-你是怎么做的"><a href="#针对-Kafka-线上集群部署方案-你是怎么做的" class="headerlink" title="针对 Kafka 线上集群部署方案, 你是怎么做的"></a>针对 Kafka 线上集群部署方案, 你是怎么做的</h2><p>这里我们从架构师必备能力出发， 以电商平台为例讲述了 Kafka 生产级容量评估方案该如何做？如何让公司领导以及运维部门得到认可， 获准你的方案。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-ikMfte.png" alt="图片"></p>
+<p>详细可以深读：<a href="http://mp.weixin.qq.com/s?__biz=Mzg3MTcxMDgxNA==&amp;mid=2247488846&amp;idx=1&amp;sn=1d77a05c7e94abd8044502c433d9aeee&amp;chksm=cefb3c7ff98cb569910c99de953ecce956a454a3d8e63be9e3a2b7639f633848ba4bb989bb87&amp;scene=21#wechat_redirect"><strong>八大步骤带你深度剖析Kafka生产级容量评估方案</strong></a></p>
+<h2 id="针对-Kafka-线上系统-你是如何进行监控的"><a href="#针对-Kafka-线上系统-你是如何进行监控的" class="headerlink" title="针对 Kafka 线上系统, 你是如何进行监控的"></a>针对 Kafka 线上系统, 你是如何进行监控的</h2><p>Kafka 作为大型系统架构中重要的一环，有着举足轻重的作用，因此 Kafka 集群的稳定性尤为重要，我们要对生产的 Kafka 集群进行全方位的监控， 一般线上系统可以从以下五个维度进行监控：</p>
+<h3 id="主机节点监控"><a href="#主机节点监控" class="headerlink" title="主机节点监控"></a>主机节点监控</h3><p>所谓主机节点监控就是监控 Kafka 集群 Broker 所在节点机器的性能。主机节点监控对于 Kafka 来说是最重要的，因为很多线上环境问题首先就是由于主机的某些性能出现了问题。</p>
+<p>因此对于 Kafka 来说，主机监控通常是发现问题的第一步，主要性能指标如下：</p>
+<p>「<strong>机器负载（Load）</strong>」、「<strong>CPU 使用率</strong>」、「<strong>内存使用率</strong>」、「<strong>磁盘 I/O 使用率</strong>」、「<strong>网络 I/O 使用率</strong>」、「<strong>TCP 连接数</strong>」、「<strong>打开文件数</strong>」、「<strong>inode 使用情况</strong>」。</p>
+<p>如果想要更好的监控主机性能的话，有以下两个教程可以学习和参考：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-p36iiv.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-X46ebB.png" alt="图片"></p>
+<h3 id="JVM-监控"><a href="#JVM-监控" class="headerlink" title="JVM 监控"></a>JVM 监控</h3><p>另一个重要的监控维度就是 JVM 监控。<code>监控 JVM 进程主要是为了让你全面地了解Kafka Broker 进程</code>。</p>
+<p>要监控 JVM 进程，需要关注 3 个指标：</p>
+<p>「<code>监控 Full GC 发生频率和时长</code>」、「<code>监控堆上活跃对象大小</code>」、「<code>监控应用线程总数</code>」</p>
+<h3 id="Kafka-集群监控"><a href="#Kafka-集群监控" class="headerlink" title="Kafka 集群监控"></a>Kafka 集群监控</h3><p>另外一个重要监控维度就是 Kafka Broker 集群和各类客户端的监控，主要有3个方法：</p>
+<blockquote>
+<p>1）<strong>查看 Broker 端重要日志：</strong>主要包括 Broker 端服务器日志 server.log，控制器日志 controller.log 以及主题分区状态变更日志  state-change.log。其中，server.log 是最重要的，如果你的 Kafka 集群出现了故障，你要第一时间查看  server.log，定位故障原因。</p>
+<p>2）<strong>查看 Broker 端关键线程运行状态，例如:</strong> </p>
+<p>Log Compaction 线程：日志压缩清理。一旦它挂掉了，所有 Compaction 操作都会中断，但用户对此通常是无感知的。</p>
+<p>副本拉取消息的线程：主要执行 Follower 副本向 Leader 副本拉取消息的逻辑。如果它们挂掉了，系统会表现为 Follower 副本延迟 Leader 副本越来越大 。</p>
+<p>3）<strong>查看 Broker 端关键的 JMX 性能指标:</strong> 主要有BytesIn/BytesOut、NetworkProcessorAvgIdlePercent、RequestHandlerAvgIdlePercent、UnderReplicatedPartitions、ISRShrink/ISRExpand、ActiveControllerCount 这几个指标 。</p>
+</blockquote>
+<h3 id="Kafka-客户端监控"><a href="#Kafka-客户端监控" class="headerlink" title="Kafka 客户端监控"></a>Kafka 客户端监控</h3><p>客户端监控主要是生产者和消费者的监控，生产者往 Kafka 发送消息，此时我们要了解客户端机器与 Broker 机器之间的往返时延 RTT 是多少，对于跨数据中心或者异地集群来说，RTT 会更大，很难支撑很大的 TPS。</p>
+<p><strong>Producer角度:</strong> request-latency 是需要重点关注的JMX指标，即消息生产请求的延时；另外 Sender 线程的运行状态也是非常重要的， 如果 Sender 线程挂了，对于用户是无感知的，表象只是 Producer 端消息发送失败。</p>
+<p><strong>Consumer角度:</strong> 对于 Consumer Group，需要重点关注 join rate 和 sync rate 指标，它表示 Rebalance 的频繁程度。另外还包括消息消费偏移量、消息堆积数量等。</p>
+<h3 id="Broker-之间的监控"><a href="#Broker-之间的监控" class="headerlink" title="Broker 之间的监控"></a>Broker 之间的监控</h3><p>最后一个监控维度就是 Broker 之间的监控，主要指副本拉取的性能。Follower 副本实时拉取 Leader 副本的数据，此时我们希望拉取过程越快越好。Kafka 提供了一个特别重要的 JMX 指标，叫做「<code>under replicated partitions</code>」，意思就是比如我们规定这条消息，应该在两个 Broker 上面保存，假设只有一个 Broker 上保存该消息，那么这条消息所在的分区就叫 under replicated partitions，这种情况是特别关注的，因为有可能造成数据的丢失。</p>
+<p>另外还有一个比较重要的指标是「<code>active controllor count</code>」。在整个 Kafka  集群中应该确保只能有一台机器的指标是1，其他全应该是0，如果发现有一台机器大于1，一定是出现脑裂了，此时应该去检查下是否出现了网络分区。Kafka本身是不能对抗脑裂的，完全依靠 Zookeeper 来做，但是如果真正出现网络分区的话，也是没有办法处理的，应该让其快速失败重启。</p>
+<h2 id="针对-Kafka-线上系统-你是如何进行调优的"><a href="#针对-Kafka-线上系统-你是如何进行调优的" class="headerlink" title="针对 Kafka 线上系统, 你是如何进行调优的"></a>针对 Kafka 线上系统, 你是如何进行调优的</h2><p>对 Kafka 来说，「<strong>吞吐量</strong>」和「<strong>延时</strong>」是非常重要的优化指标。</p>
+<p><strong>吞吐量 TPS：</strong>是指 Broker 端或 Client 端每秒能处理的消息数，越大越好。</p>
+<p><strong>延时：</strong>表示从 Producer 端发送消息到 Broker 端持久化完成到 Consumer 端成功消费之间的时间间隔。与吞吐量 TPS 相反，延时越短越好。</p>
+<p>总之，<code>高吞吐量、低延时是我们调优 Kafka 集群的主要目标</code>。</p>
+<h3 id="提升吞吐量"><a href="#提升吞吐量" class="headerlink" title="提升吞吐量"></a>提升吞吐量</h3><p>首先是提升吞吐量参数和措施：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1011-xiyY76.png" alt="image-20220410101150338"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-TlxxM5.png" alt="image-20220410101218929"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-nCB2xr.png" alt="image-20220410101239687"></p>
+<h3 id="降低延时"><a href="#降低延时" class="headerlink" title="降低延时"></a>降低延时</h3><p>降低延时的目的就是尽量减少端到端的延时。</p>
+<p>对比上面提升吞吐量的参数，我们只能调整 Producer 端和 Consumer 端的参数配置。</p>
+<p>对于 Producer 端，此时我们希望可以快速的将消息发送出去，必须设置 linger.ms=0，同时关闭压缩，另外设置 acks = 1，减少副本同步时间。</p>
+<p>而对于 Consumer 端我们只保持 fetch.min.bytes=1 ，即 Broker 端只要有能返回的数据，就立即返回给 Consumer，减少延时。</p>
+<h3 id="合理设置分区数"><a href="#合理设置分区数" class="headerlink" title="合理设置分区数"></a>合理设置分区数</h3><p>分区数不是越多越好，也不是越少越好，需要搭建完集群，进行压测，再灵活调整分区个数。 </p>
+<p>这里可以用 Kafka 官方自带的脚本，对 Kafka 进行压测。</p>
+<blockquote>
+<p><strong>1）生产者压测：</strong>kafka-producer-perf-test.sh</p>
+<p><strong>2）消费者压测：</strong>kafka-consumer-perf-test.sh </p>
+</blockquote>
+<hr>
+<blockquote>
+<p>备份链接：<a href="https://xuemingde.com/JavaNotes/消息队列/20220410-Kafka面试连环炮-下">20220410-Kafka面试连环炮-下</a>   </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>面试</tag>
+        <tag>线程池</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
+        <tag>并发</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -10241,6 +10241,30 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>OR与AND一起的用法</title>
+    <url>/posts/1BED9D0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
+<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
+<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
+<p>查询  </p>
+<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
+SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
+</code></pre>
+<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
+<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文搞懂redis</title>
     <url>/posts/1F4JVMQ.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -10734,30 +10758,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>OR与AND一起的用法</title>
-    <url>/posts/1BED9D0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
-<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
-<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
-<p>查询  </p>
-<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
-SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
-</code></pre>
-<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
-<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文详解SQL关联子查询</title>
     <url>/posts/33P1FY8.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -10974,6 +10974,16 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </categories>
   </entry>
   <entry>
+    <title>Spring系列(下)</title>
+    <url>/posts/1ZM62F.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>框架</category>
+        <category>Spring</category>
+      </categories>
+  </entry>
+  <entry>
     <title>spring是如何解决循环依赖的</title>
     <url>/posts/2SH00H4.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -11104,16 +11114,6 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
         <tag>Spring</tag>
         <tag>多线程</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Spring系列(下)</title>
-    <url>/posts/1ZM62F.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>框架</category>
-        <category>Spring</category>
-      </categories>
   </entry>
   <entry>
     <title>SpringBoot 内置工具类</title>
