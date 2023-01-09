@@ -318,6 +318,25 @@
       </tags>
   </entry>
   <entry>
+    <title>moli-opcua向kepware写入值失败</title>
+    <url>/posts/303S4Q3.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>写入的代码为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">//节点</span></span><br><span class="line">        NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">        <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">        DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>));</span><br><span class="line">        <span class="comment">//写入节点数据</span></span><br><span class="line">        StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">        System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>报错信息：<br><code>StatusCode&#123;name=Bad_WriteNotSupported, value=0x80730000, quality=bad&#125;</code></p>
+<p>代码改为：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">       <span class="comment">//节点</span></span><br><span class="line">       NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">       <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">       DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>),<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br><span class="line">       <span class="comment">//写入节点数据</span></span><br><span class="line">       StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">       System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><br>报错信息为：<br><code>StatusCode&#123;name=Bad_TypeMismatch, value=0x80740000, quality=bad&#125;</code></p>
+<p>报错解答：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VjbGlwc2UvbWlsby9pc3N1ZXMvNDU5">bad_WriteNoSupported · 问题 #459 · eclipse/milo · GitHub<i class="fa fa-external-link-alt"></i></span></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/16/22511655388771.png" alt="22511655388771"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22181655388798.png" alt="22181655388798"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22361655388816.png" alt="22361655388816"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22541655388834.png" alt="22541655388834"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22101655388850.png" alt="22101655388850"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22431655388883.png" alt="22431655388883"> </p>
+<p>代码改为 ：<br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22481655389188.png" alt="22481655389188"> </p>
+<p>返回结果：<code>StatusCode&#123;name=Good, value=0x00000000, quality=good&#125;</code></p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Transactional 注解失效的3种原因及解决办法 </title>
     <url>/posts/HRQWG9.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -396,403 +415,6 @@
         <tag>SpringBoot</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>moli-opcua向kepware写入值失败</title>
-    <url>/posts/303S4Q3.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>写入的代码为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">//节点</span></span><br><span class="line">        NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">        <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">        DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>));</span><br><span class="line">        <span class="comment">//写入节点数据</span></span><br><span class="line">        StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">        System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>报错信息：<br><code>StatusCode&#123;name=Bad_WriteNotSupported, value=0x80730000, quality=bad&#125;</code></p>
-<p>代码改为：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeNodeValue</span><span class="params">(OpcUaClient client)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">       <span class="comment">//节点</span></span><br><span class="line">       NodeId nodeId = <span class="keyword">new</span> NodeId(<span class="number">2</span>, <span class="string">&quot;PBS.PBS1.g1.a.a_air_control&quot;</span>);</span><br><span class="line">       <span class="comment">//创建数据对象,此处的数据对象一定要定义类型，不然会出现类型错误，导致无法写入</span></span><br><span class="line">       DataValue nowValue = <span class="keyword">new</span> DataValue(<span class="keyword">new</span> Variant(<span class="number">12</span>),<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br><span class="line">       <span class="comment">//写入节点数据</span></span><br><span class="line">       StatusCode statusCode = client.writeValue(nodeId, nowValue).get();</span><br><span class="line">       System.out.println(<span class="string">&quot;结果：&quot;</span> + statusCode);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><br>报错信息为：<br><code>StatusCode&#123;name=Bad_TypeMismatch, value=0x80740000, quality=bad&#125;</code></p>
-<p>报错解答：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VjbGlwc2UvbWlsby9pc3N1ZXMvNDU5">bad_WriteNoSupported · 问题 #459 · eclipse/milo · GitHub<i class="fa fa-external-link-alt"></i></span></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/16/22511655388771.png" alt="22511655388771"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22181655388798.png" alt="22181655388798"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22361655388816.png" alt="22361655388816"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22541655388834.png" alt="22541655388834"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22101655388850.png" alt="22101655388850"><br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22431655388883.png" alt="22431655388883"> </p>
-<p>代码改为 ：<br><img data-src="https://xuemingde.com/pages/image/2022/06/16/22481655389188.png" alt="22481655389188"> </p>
-<p>返回结果：<code>StatusCode&#123;name=Good, value=0x00000000, quality=good&#125;</code></p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java对象布局</title>
-    <url>/posts/28DG2WP.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>一个新 new 出来的对象，分为四部分：</p>
-<ul>
-<li>mark word  </li>
-<li>klass point </li>
-<li>Instance Data</li>
-<li>Padding</li>
-</ul>
-<p>可使用JOL类库查看</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
-<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
-<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
-<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
-<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
-<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
-<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
-<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
-<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
-<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
-<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
-<blockquote>
-<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内存泄漏和内存溢出</title>
-    <url>/posts/266A6Z5.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<h1 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h1><p>是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 </p>
-<h2 id="内存泄漏产生的原因"><a href="#内存泄漏产生的原因" class="headerlink" title="内存泄漏产生的原因"></a>内存泄漏产生的原因</h2><ol>
-<li>单例造成的内存泄漏 </li>
-</ol>
-<p>由于单例的静态特性使得其生命周期和应用的生命周期一样长，如果一个对象已经不再需要使用了，而单例对象还持有该对象的引用，就会使得该对象不能被正常回收，从而导致了内存泄漏。 </p>
-<ol>
-<li>​非静态内部类创建静态实例造成的内存泄漏 </li>
-<li><p>​资源未关闭造成的内存泄漏 </p>
-<h2 id="如何避免内存泄漏"><a href="#如何避免内存泄漏" class="headerlink" title="如何避免内存泄漏"></a>如何避免内存泄漏</h2></li>
-<li><p>​尽量减少使用静态变量，或者使用完及时 赋值为 null。 </p>
-</li>
-<li>​各种连接（数据库连接，网络连接，IO连接）操作，务必显示调用close关闭 </li>
-<li>​减少长生命周期的对象持有短生命周期的引用； </li>
-<li>养成良好的编码习惯。<h2 id="遇到的内存泄漏"><a href="#遇到的内存泄漏" class="headerlink" title="遇到的内存泄漏"></a>遇到的内存泄漏</h2>在使用ThreadLocal时最后没有调用remove，使ThreadLocal对象没有被垃圾回收器回收，造成了内存泄漏。<h1 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h1></li>
-</ol>
-<p>指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出。OutOfMemoryError </p>
-<h2 id="内存溢出产生的原因"><a href="#内存溢出产生的原因" class="headerlink" title="内存溢出产生的原因"></a>内存溢出产生的原因</h2><h3 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h3><blockquote>
-<p>java.lang.OutOfMemoryError: Java heap space  </p>
-</blockquote>
-<p><strong>原因</strong></p>
-<ol>
-<li>代码中可能存在大对象分配。</li>
-<li>可能存在内存泄露，导致在多次GC之后，还是无法找到一块足够大的内存容纳当前对象。</li>
-</ol>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>检查是否存在大对象的分配，最有可能的是大数组分配。</li>
-<li>通过jmap命令，把堆内存dump下来，使用mat工具分析一下，检查是否存在内存泄露的问题。</li>
-<li>如果没有找到明显的内存泄露，使用 -Xmx 加大堆内存.</li>
-<li>还有一点容易被忽略，检查是否有大量的自定义的 Finalizable 对象，也有可能是框架内部提供的，考虑其存在的必要性  </li>
-</ol>
-<h3 id="永久代-元空间溢出"><a href="#永久代-元空间溢出" class="headerlink" title="永久代/元空间溢出"></a>永久代/元空间溢出</h3><p>报错信息：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: PermGen spacejava.lang.OutOfMemoryError: Metaspace</p>
-</blockquote>
-<p><strong>原因</strong><br>永久代是 HotSot 虚拟机对方法区的具体实现，存放了被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等。<br>JDK8后，元空间替换了永久代，元空间使用的是本地内存，还有其它细节变化: </p>
-<ul>
-<li>字符串常量由永久代转移到堆中</li>
-<li>和永久代相关的JVM参数已移除</li>
-<li>​</li>
-</ul>
-<p>可能原因有如下几种：</p>
-<ol>
-<li>在Java7之前，频繁的错误使用String.intern()方法</li>
-<li>运行期间生成了大量的代理类，导致方法区被撑爆，无法卸载</li>
-<li>应用长时间运行，没有重启</li>
-</ol>
-<p>没有重启 JVM 进程一般发生在调试时，如下面 tomcat 官网的一个 FAQ：</p>
-<blockquote>
-<p>Why does the memory usage increase when I redeploy a web application? That is because your web application has a memory leak. A common issue are “PermGen” memory leaks. They happen because the Classloader (and the Class objects it loaded) cannot be recycled unless some requirements are met (). They are stored in the permanent heap generation by the JVM, and when you redeploy a new class loader is created, which loads another copy of all these classes. This can cause OufOfMemoryErrors eventually. (*) The requirement is that all classes loaded by this classloader should be able to be gc’ed at the same time.</p>
-</blockquote>
-<p><strong>解决方法</strong><br>因为该OOM原因比较简单，解决方法有如下几种：</p>
-<ol>
-<li>检查是否永久代空间或者元空间设置的过小</li>
-<li>检查代码中是否存在大量的反射操作</li>
-<li>dump之后通过mat检查是否存在大量由于反射生成的代理类</li>
-<li>放大招，重启JVM</li>
-</ol>
-<h3 id="GC-overhead-limit-exceeded"><a href="#GC-overhead-limit-exceeded" class="headerlink" title="GC overhead limit exceeded"></a>GC overhead limit exceeded</h3><p>这个异常比较的罕见，报错信息：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError：GC overhead limit exceeded</p>
-</blockquote>
-<p><strong>原因</strong><br>这个是JDK6新加的错误类型，一般都是堆太小导致的。Sun 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。</p>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>检查项目中是否有大量的死循环或有使用大内存的代码，优化代码。</li>
-<li>添加参数 -XX:-UseGCOverheadLimit  禁用这个检查，其实这个参数解决不了内存问题，只是把错误的信息延后，最终出现 java.lang.OutOfMemoryError: Java heap space。</li>
-<li>dump内存，检查是否存在内存泄露，如果没有，加大内存。</li>
-</ol>
-<h3 id="方法栈溢出"><a href="#方法栈溢出" class="headerlink" title="方法栈溢出"></a>方法栈溢出</h3><p>报错信息：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError : unable to create new native Thread</p>
-</blockquote>
-<p><strong>原因</strong><br>出现这种异常，基本上都是创建的了大量的线程导致的，以前碰到过一次，通过jstack出来一共8000多个线程。</p>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>通过 -Xss 降低的每个线程栈大小的容量</li>
-<li>线程总数也受到系统空闲内存和操作系统的限制，检查是否该系统下有此限制：</li>
-</ol>
-<ul>
-<li>/proc/sys/kernel/pid_max</li>
-<li>/proc/sys/kernel/thread-max</li>
-<li>maxuserprocess（ulimit -u）</li>
-<li>/proc/sys/vm/maxmapcount</li>
-</ul>
-<h3 id="非常规溢出"><a href="#非常规溢出" class="headerlink" title="非常规溢出"></a>非常规溢出</h3><p>下面这些OOM异常，可能大部分的同学都没有碰到过，但还是需要了解一下</p>
-<h3 id="分配超大数组"><a href="#分配超大数组" class="headerlink" title="分配超大数组"></a>分配超大数组</h3><p>报错信息 ：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: Requested array size exceeds VM limit</p>
-</blockquote>
-<p>这种情况一般是由于不合理的数组分配请求导致的，在为数组分配内存之前，JVM 会执行一项检查。要分配的数组在该平台是否可以寻址(addressable)，如果不能寻址(addressable)就会抛出这个错误<br>解决方法就是检查你的代码中是否有创建超大数组的地方。</p>
-<h3 id="swap溢出"><a href="#swap溢出" class="headerlink" title="swap溢出"></a>swap溢出</h3><p>报错信息 ：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: Out of swap space</p>
-</blockquote>
-<p>这种情况一般是操作系统导致的，可能的原因有：</p>
-<ol>
-<li>swap 分区大小分配不足；</li>
-<li>其他进程消耗了所有的内存。</li>
-</ol>
-<p>解决方案：<br>1、其它服务进程可以选择性的拆分出去 2、加大swap分区大小，或者加大机器内存大小</p>
-<h3 id="本地方法溢出"><a href="#本地方法溢出" class="headerlink" title="本地方法溢出"></a>本地方法溢出</h3><p>报错信息 ：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: stack_trace_with_native_method</p>
-</blockquote>
-<p>本地方法在运行时出现了内存分配失败，和之前的方法栈溢出不同，方法栈溢出发生在 JVM 代码层面，而本地方法溢出发生在JNI代码或本地方法处。<br>这个异常出现的概率极低，只能通过操作系统本地工具进行诊断，难度有点大，还是放弃为妙。</p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">相关文章<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h1 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h1><ul>
-<li>内存泄漏的堆积最终会导致内存溢出 </li>
-<li>内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。 </li>
-<li>内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。 </li>
-<li>内存溢出：一个盘子用尽各种方法只能装4个果子，你装了5个，结果掉倒地上不能吃了。这就是溢出。比方说栈，栈满时再做进栈必定产生空间溢出，叫上溢，栈空时再做退栈也产生空间溢出，称为下溢。就是分配的内存不足以放下数据项序列,称为内存溢出。说白了就是我承受不了那么多，那我就报错。</li>
-</ul>
-<blockquote>
-<p>内存溢出参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">https://blog.51cto.com/u_14442094/2449151<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>数据库</tag>
-        <tag>锁</tag>
-        <tag>数组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>谈谈你对 JVM 方法区的理解</title>
-    <url>/posts/2GN96QM.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdS03T2pfQk5tdlFzdWwtZEVkeFJvZw==">面试官：谈谈你对 JVM 方法区的理解<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>运行时数据区”包括程序计数器、虚拟机栈、本地方法栈和堆空间，今天我们就来了解一下方法区。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0811nMChKa.png" alt=""></p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>创建对象时内存分配简图</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08128OLLNU.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08139cSMvE.png" alt=""></p>
-<p>《Java虚拟机规范》中明确说明：“尽管所有的方法区在逻辑上属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集或者进行压缩。</p>
-<p>虽然 Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。所以，方法区可以看作是一块<strong>独立</strong>于 Java 堆的内存空间。</p>
-<p>方法区与 Java 堆一样，是各个线程共享的内存区域。方法区在 JVM 启动时就会被创建，并且它的实际的物理内存空间是可以<strong>不连续</strong>的，关闭 JVM 就会释放这个区域的内存。</p>
-<h2 id="永久代、元空间"><a href="#永久代、元空间" class="headerlink" title="永久代、元空间"></a>永久代、元空间</h2><p>《java虚拟机规范》对如何实现方法区，不做统一要求。例如：BEA JRockit/IBM J9 中不存在永久代的概念。而对于 HotSpot 来说，在 jdk7 及以前，习惯上把方法区的实现称为<strong>永久代</strong>，而从 jdk8 开始，使用<strong>元空间</strong>取代了永久代。</p>
-<blockquote>
-<p>方法区是 Java 虚拟机规范中的概念，而永久代和元空间是 HotSpot 虚拟机对方法区的一种实现。通俗点讲：如果把方法区比作接口的话，那永久代和元空间可以比作实现该接口的实现类。</p>
-</blockquote>
-<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>永久代、元空间并不只是名字变了，内部结构也进行了调整。永久代使用的是 JVM 的内存，而元空间使用的是本地的直接内存。</p>
-<p>直接内存并不是 JVM 运行时数据区的一部分，因此不会受到 Java 堆的限制。但是它会受到本机总内存大小以及处理器寻址空间的限制，所以如果这部分内存也被频繁的使用，依然会导致 OOM 错误的出现。</p>
-<h3 id="方法区的大小"><a href="#方法区的大小" class="headerlink" title="方法区的大小"></a>方法区的大小</h3><p>方法区的大小是可以进行设置的，可以选择固定大小也可以进行扩展。</p>
-<h4 id="jdk7-及以前"><a href="#jdk7-及以前" class="headerlink" title="jdk7 及以前"></a>jdk7 及以前</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:PermSize=N //方法区 (永久代) 初始分配空间，默认值为 20.75M</span><br><span class="line">-XX:MaxPermSize=N //方法区 (永久代) 最大可分配空间。32位机器默认是64M，64位机器默认是82M</span><br></pre></td></tr></table></figure>
-<h4 id="jdk8及以后"><a href="#jdk8及以后" class="headerlink" title="jdk8及以后"></a>jdk8及以后</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:MetaspaceSize=N //方法区 (元空间) 初始分配空间，如果未指定此标志，则元空间将根据运行时的应用程序需求动态地重新调整大小。</span><br><span class="line">-XX:MaxMetaspaceSize=N //方法区 (元空间) 最大可分配空间，默认值为 -1，即没有限制</span><br></pre></td></tr></table></figure>
-<p>与永久代很大的不同就是，如果不指定大小的话，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</p>
-<p>方法区的大小决定了系统可以保存多少个类，如果系统定义了太多的类，比如：加载大量的第三方 jar 包、Tomcat 部署的工程过多、大量动态生成反射类等都会导致方法区溢出，抛出内存溢出错误。</p>
-<ul>
-<li>永久代：OutOfMemoryError:PermGen space</li>
-<li>元空间：OutOfMemoryError:Metaspace</li>
-</ul>
-<p><strong>至于如何解决 OOM 异常，将在以后的文章中讲解！</strong></p>
-<h3 id="jvisualvm"><a href="#jvisualvm" class="headerlink" title="jvisualvm"></a>jvisualvm</h3><p>我们可以通过 JDK 自带的 <strong>jvisualvm</strong> 工具来查看程序加载的类文件：</p>
-<p><strong>例</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;start...&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;end...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行程序，可以看到一个简单的程序就需要加载这么多的类文件。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08172fHLHQ.png" alt=""></p>
-<h3 id="高水位线"><a href="#高水位线" class="headerlink" title="高水位线"></a>高水位线</h3><p>对于一个64位的服务器端 JVM 来说，<code>XX：MetaspaceSize=21</code> 就是初始的高水位线，一旦触及这个水位线，Full GC 将会被触发并卸载没用的类（即这些类对应的类加载器不再存活），然后这个高水位线将会重置。</p>
-<p>新的高水位线的值取决于 GC 后释放了多少元空间：</p>
-<ul>
-<li>如果释放的空间不足，那么在不超过 MaxMetaspaceSize 时，适当提高该值；</li>
-<li>如果释放空间过多，则适当降低该值。</li>
-</ul>
-<blockquote>
-<p>如果初始化的高水位线设置过低，高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到 Full GC 多次调用。为了避免频繁地GC，建议将 <code>-XX ：MetaspaceSize</code> 设置为一个相对较高的值。</p>
-</blockquote>
-<h2 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h2><p>《深入理解Java虚拟机》书中对方法区存储内容描述如下：它用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。接下来我们就一起来看一下它的内部结构。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0818BTvM7A.png" alt=""></p>
-<h3 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h3><p>对每个加载的类型（ 类 class、接口 interface、枚举 enum、注解 annotation），JVM 必须在方法区中存储以下类型信息：</p>
-<ol>
-<li>这个类型的完整有效名称（全名=包名.类名）</li>
-<li>这个类型直接父类的完整有效名（对于 interface 或是 java. lang.Object ，都没有父类）</li>
-<li>这个类型的修饰符（ public ， abstract， final 的某个子集）</li>
-<li>这个类型直接接口的一个有序列表</li>
-</ol>
-<h3 id="域（Field）信息"><a href="#域（Field）信息" class="headerlink" title="域（Field）信息"></a>域（Field）信息</h3><ul>
-<li>JVM必须在方法区中保存类型的所有域（field，也称为属性）的相关信息以及域的声明顺序；</li>
-<li>域的相关信息包括：域名称、 域类型、域修饰符（public， private，protected， static， final， volatile， transient 的某个子集）</li>
-</ul>
-<h3 id="方法（Method）信息"><a href="#方法（Method）信息" class="headerlink" title="方法（Method）信息"></a>方法（Method）信息</h3><p>JVM 必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
-<ul>
-<li>方法名称</li>
-<li>方法的返回类型（或void）</li>
-<li>方法参数的数量和类型（按顺序）</li>
-<li>方法的修饰符（public， private， protected， static， final，synchronized， native ， abstract 的一个子集）</li>
-<li>方法的字节码（bytecodes）、操作数栈、局部变量表及大小（ abstract 和 native 方法除外）</li>
-<li>异常表（ abstract 和 native 方法除外）每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</li>
-</ul>
-<h3 id="non-final-的类变量"><a href="#non-final-的类变量" class="headerlink" title="non-final 的类变量"></a>non-final 的类变量</h3><ul>
-<li>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分</li>
-<li>类变量被类的所有实例所共享，即使没有类实例你也可以访问它。</li>
-</ul>
-<p>我们可以通过例子来查看：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Order order = <span class="keyword">null</span>;</span><br><span class="line">        order.hello();</span><br><span class="line">        System.out.println(order.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> number = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果为：</p>
-<figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">hello!</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>可以打开 IDEA 的 Terminal 窗口，在 MethodAreaDemo2.class 所在的路径下，输入 <code>javap -v -p MethodAreaDemo2.class</code> 命令</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0820D8dllV.png" alt=""></p>
-<p>通过图片我们可以看出被声明为 final 的类变量的处理方法是不一样的，全局常量在编译的时候就被分配了。</p>
-<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>说到运行时常量池，我们先来了解一下什么是常量池表。</p>
-<h4 id="常量池表"><a href="#常量池表" class="headerlink" title="常量池表"></a>常量池表</h4><p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息那就是常量池表（Constant Pool Table），里边存储着<strong>数量值</strong>、<strong>字符串值</strong>、<strong>类引用</strong>、<strong>字段引用</strong>和<strong>方法引用</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0821NLzPMe.png" alt="图片"></p>
-<h4 id="为什么字节码文件需要常量池？"><a href="#为什么字节码文件需要常量池？" class="headerlink" title="为什么字节码文件需要常量池？"></a>为什么字节码文件需要常量池？</h4><p>java 源文件中的类、接口，编译后会产生一个字节码文件。而字节码文件需要数据支持，通常这种数据会很大，以至于不能直接存放到字节码中。换一种方式，可以将指向这些数据的<strong>符号引用</strong>存到字节码文件的常量池中，这样字节码只需使用常量池就可以在运行时通过<strong>动态链接</strong>找到相应的数据并使用。</p>
-<h4 id="运行时常量池-1"><a href="#运行时常量池-1" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池（ <code>Runtime Constant Pool</code>）是方法区的一部分，类加载器加载字节码文件时，将常量池表加载进方法区的运行时常量池。运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。此时不再是常量池中的符号地址了，这里换为<strong>真实</strong>地址。</p>
-<blockquote>
-<p>运行时常量池，相对于 Class 文件常量池的另一重要特征是：具备动态性，比如 <code>String.intern()</code>。</p>
-</blockquote>
-<h2 id="演进细节"><a href="#演进细节" class="headerlink" title="演进细节"></a>演进细节</h2><p>针对的是 <strong>Hotspot</strong> 的虚拟机：</p>
-<ul>
-<li>jdk1.6 及之前：有<strong>永久代</strong> ，静态变量存放在永久代上；</li>
-<li>jdk1.7：有<strong>永久代</strong>，但已经逐步“去永久代”，字符串常量池、静态变量移除，保存在堆中；</li>
-<li>jdk1.8及之后：无永久代，类型信息、字段、方法、常量保存在本地内存的<strong>元空间</strong>，但字符串常量池、静态变量仍在堆中；</li>
-</ul>
-<h3 id="演变示例图"><a href="#演变示例图" class="headerlink" title="演变示例图"></a>演变示例图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822Hj7z0e.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822u3jIxG.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0823bbxVIm.png" alt=""></p>
-<h3 id="为什么要将永久代替换为元空间呢"><a href="#为什么要将永久代替换为元空间呢" class="headerlink" title="为什么要将永久代替换为元空间呢?"></a>为什么要将永久代替换为元空间呢?</h3><ol>
-<li>永久代使用的是 JVM 的内存，受 JVM 设置的内存大小限制；元空间使用的是本地直接内存，它的最大可分配空间是系统可用内存的空间。因为元空间里存放的是类的<strong>元数据</strong>，所以随着内存空间的增大，能加载的类就更多了，相应的溢出的机率会大大减小。</li>
-<li>在 JDK8，合并 HotSpot 和 JRockit 的代码时，JRockit 从来没有一个叫永久代的东西，合并之后就没有必要额外的设置这么一个永久代的地方了。</li>
-<li>对永久代进行调优是很困难的。</li>
-</ol>
-<h3 id="StringTable-为什么要调整"><a href="#StringTable-为什么要调整" class="headerlink" title="StringTable 为什么要调整"></a>StringTable 为什么要调整</h3><p>因为永久代的回收效率很低，在 full gc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了<code>StringTable</code> 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存。</p>
-<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。方法区的垃圾收集主要回收两部分内容：常量池中废奔的<strong>常量</strong>和不再使用的<strong>类型</strong>。</p>
-<p>方法区内常量池中主要存放字面量和符号引用两大类常量：</p>
-<ul>
-<li>字面量比较接近 Java 语言层次的常量概念，如文本字符串、被声明为 final 的常量值等。</li>
-<li>符号引用则属于编译原理方面的概念，包括类和接口的全限定名、字段的名称和描述符、方法的名称和描述符。</li>
-</ul>
-<p>HotSpot 虚拟机对常量池的回收策略是很明确的，只要常量池中的常量没有被任何地方引用，就可以被回收。</p>
-<h3 id="类型判定"><a href="#类型判定" class="headerlink" title="类型判定"></a>类型判定</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。需要同时满足下面三个条件：</p>
-<ul>
-<li>该类所有的<strong>实例</strong>都已经被回收，也就是 Java 堆中不存在该类及其任何派生子类的实例；</li>
-<li>加载该类的<strong>类加载器</strong>已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如OSGi、JSP的重加载等，否则通常是很难达成的；</li>
-<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ul>
-<p>Java 虛拟机被允许对满足上述三个条件的无用类进行回收，这里说的仅仅是“被允许”，而并不是和对象一样，没有引用了就必然会回收。</p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>面试</tag>
-        <tag>索引</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JVM视频学习笔记-A</title>
-    <url>/posts/C0YKJ4.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>视频地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVBKNDExbjd4Wg==">尚硅谷宋红康JVM全套教程（详解java虚拟机）_哔哩哔哩_bilibili<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>好好学习，天天向上。</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMDgmYW1wO2lkeD0xJmFtcDtzbj0zYWE1MjQ1YmMxYjllYTNiNzgzN2ZkZjAxMjZjOWUzOCZhbXA7Y2hrc209YzFmNDkzMGFmNjgzMWExYzFjYzEwNmY2NjZhOTkzMmIyZDkwY2EzMTE5MGFiNjZhMmZmMzY2NmViZjc0NDBlZDY4MjFlNDlkN2E2ZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjQyNzgwMTgzMTE3MjIxMDY5MyNyZA==">01-JVM与java体系结构<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMTQmYW1wO2lkeD0xJmFtcDtzbj1iODkwNTNhM2QwNjFjYTIzY2U2YjI4ODkyMjVlMmRlMCZhbXA7Y2hrc209YzFmNDkzZjRmNjgzMWFlMjQ3MmMxMjg5YTkwYTU5Y2QwZjlhYjgyYmNlYzBmOGE2Y2I4ZjMxYjUzNDQ4Yzk2NDk5MzQ4NzlmMWRiNSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">02-Java代码执行流程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMjQmYW1wO2lkeD0xJmFtcDtzbj1jZDRmNzc2NDY3ZDAxYmYxOGE0NWRhYTdmNjU3OTYwZCZhbXA7Y2hrc209YzFmNDkzZmFmNjgzMWFlY2Y3NzYzNTI4YzRiMDI3ZDFiODgwNjMwYzBjOTM5OGJjZWRjYzIzMWQ0NDI5NzkzMzcxMTllMGUxOGU5NSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">03-JVM的结构模型<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMzEmYW1wO2lkeD0xJmFtcDtzbj00MWYwNTI0NmUxMDU5MDAwMzA2MzkwNTZmNDQ2ODFhNSZhbXA7Y2hrc209YzFmNDkzZTVmNjgzMWFmMzg1NzJiZTliMDk0ZGVhNjU5ODg5NWM3MGRlMGMxNjNhNWY5ODYzYzFiYjVlODcyMjlmNjczNTViMGVmNiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">04-JVM的生命周期<i class="fa fa-external-link-alt"></i></span>  </li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNTMmYW1wO2lkeD0xJmFtcDtzbj03MzFhMzlhM2M5NWM1MTdmZWFlNzgzNjNjNzVkMjEzMiZhbXA7Y2hrc209YzFmNDkzZGZmNjgzMWFjOTc2MDcwY2Y2M2FkZTg0MDMxNWVlZGZhMjVmZTkwYjhmNzg0ODdjYThmMzliY2M3YzU5ZjIxODdmZTE4MSNyZA==">05-概述类的加载器及类加载过程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNjQmYW1wO2lkeD0xJmFtcDtzbj0zM2YwZTM3OTc0MDFmOTk2MTk4MzE0NGRlYzI3YjViZCZhbXA7Y2hrc209YzFmNDkzYzJmNjgzMWFkNGU3M2RjMjdiODJhMzU0ODI4MmU1OTQ5ZTRjYjYyYmRjMTQ1MmEzNGE3ZTU4MjgyOTJlN2FmYjg4MmM5NiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">06-几种类加载器的使用体会<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNzYmYW1wO2lkeD0xJmFtcDtzbj0zOWI2ZmYzMzYxMzZlOGNiMmI4NDkzOGI5MmE4Njg5YyZhbXA7Y2hrc209YzFmNDkzYjZmNjgzMWFhMDUzMzNlNmZjYmQzY2U1NjI5ZmE3NDlhYTYzYTFiYzY5ZjcyY2VmZTMzOGE1MzhlMTQwOGE5NWE4NjYzMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">07-引导类、扩展类、系统类加载器的使用及演示<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzODYmYW1wO2lkeD0xJmFtcDtzbj1lMjE3Mjg0NGFmYTQ0NzMwY2IyOWE0NTgzODY3NmZlMiZhbXA7Y2hrc209YzFmNDkzYmNmNjgzMWFhYTgxNjZiZmVjMWY0MDcxYjBlOWQzNzQ0MTNlODhiNjVkZWFkZDkwOWM2ZDgwYzZjZjk1NTgzZGFmMDFlNyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">为什么需要用户自定义类加载器及具体实现<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzOTMmYW1wO2lkeD0xJmFtcDtzbj05MGUyMDcyZTE4ZTY1Yzc0MjEwYjBjMjZlMDFjM2Y1NSZhbXA7Y2hrc209YzFmNDkzYTdmNjgzMWFiMTQ2ZGVkYTNlZjEzYjEzNTI0MDZlODQ2ZDI0ZGU0YzY1ZDM4YWZhYzg0YTM3NDE5NmRhYzMyMjA5NDNhOSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">08-ClassLoader的常用方法及获取方法<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0MzUmYW1wO2lkeD0xJmFtcDtzbj1mNjkxYWY1NGQxNmIyMGQwOWMzMmJkMDEwMzYwMTQzMCZhbXA7Y2hrc209YzFmNDkzOGRmNjgzMWE5Yjg5NzgxZmI3ODZmM2FlOTA5N2Y2ZjUzODVhMTk0ODI3OTFmMTYzOGU5ZTNlNzFjM2IyNGI4YmUzMjA2OSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">09-双亲委派机制的工作原理及演示<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NDUmYW1wO2lkeD0xJmFtcDtzbj1hYzk3ZjBlMGMxMTEyMDM1NWEyY2FmMTEwNmI3OGM4MyZhbXA7Y2hrc209YzFmNDljNzNmNjgzMTU2NTQ2ZmRhZTI3NmI0M2E2ZjVjOGUxZWRiZDJlMGQzMjc1MDFlZjJjZDk2NWYxYjcwNDg2YzJkNmNiMGU4NCZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">10-沙箱安全机制<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NTcmYW1wO2lkeD0xJmFtcDtzbj1mNzRjM2Q1YzAyYjE0ZTk5MGM1N2Q4Y2I1ZjkyNzQ3ZSZhbXA7Y2hrc209YzFmNDljNjdmNjgzMTU3MWM5YzcyMDVlMjFiNmIwNThiMmQxYzM3OGQ4N2IwZDYxMzU2MjFiMjg5NWEyM2VmYjcwNzFiMWMyNDkwMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">11 - 运行时数据区内部结构<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NzUmYW1wO2lkeD0xJmFtcDtzbj0zZDM3ODM3MDFhNzFmYjg2NDNjODEwN2FlYmE2YmE2MSZhbXA7Y2hrc209YzFmNDljNTVmNjgzMTU0MzAwMmI5NTc5ZmIxYThkOWYwZTM3ZDZiMWY3YmFiMGVlMTBjOTAxNWU3ODhiYzQ5NWY0MmQyZjI1MDY3MSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">12-PC寄存器（程序计数器）<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1MTQmYW1wO2lkeD0xJmFtcDtzbj01ZGNlM2U3ZjkxYTg5YzY3MGVjYTBiNzdhYmVjODM4MSZhbXA7Y2hrc209YzFmNDljM2NmNjgzMTUyYTFhMjMxMDNkM2I2NTcwM2YyZmQ0NzFkNzMxMTRiYWQ1NDZkNmRiMzk3ZTBmZWIwOTBkYjcxYTFiNDYyZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjMxOTY1NTc5NTU4NTcxMjEzMyNyZA==">13-虚拟机栈-概述<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NTQmYW1wO2lkeD0xJmFtcDtzbj1mNmMzNDgxNmEyYmQ5YzMxZTJhZjE3NDk5N2UzYjg1YSZhbXA7Y2hrc209YzFmNDljMDRmNjgzMTUxMjViMTc1NzcyZDZiZWY1ZDcyODA2MWE2NzU1ZTRlYjJlNDA1NmYxZmIyYzIyNWJjNTEwNTZhZDA4ZGI0YyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">14-虚拟机栈-栈的存储单位及运行原理<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NjAmYW1wO2lkeD0xJmFtcDtzbj0zMDJlNDY2NjJiMDE4YjNlMTQ3NzY5MzQxMDhiNzA0OSZhbXA7Y2hrc209YzFmNDljMGVmNjgzMTUxODQ4NTkxZjAxNjgyZmRhYTkxMDIyY2E1MzZlZGEzNDE2MDVmOGRjOGJjZjcyM2M5MmU3MDA3ZWJlMDk2MyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">15-虚拟机栈-栈祯的内部结构<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Volatile的概念</title>
-    <url>/posts/2TD7P25.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>Volatile有两大作用</p>
-<ol>
-<li>保证线程间可见性</li>
-<li>禁止指令重排序</li>
-</ol>
-<h2 id="CPU的乱序执行"><a href="#CPU的乱序执行" class="headerlink" title="CPU的乱序执行"></a>CPU的乱序执行</h2><p><img data-src="https://xuemingde.com/pages/image/others/S8d07j.png" alt=""></p>
-<p>CPU为什么支持乱序执行？是为了提高效率。</p>
-<blockquote>
-<p>CPU的速度要比内存的速度快100倍</p>
-</blockquote>
-<p>如果按顺序执行，有两条指令，第一次指令去内存中读取数据，第二个指令要等99%的时间让第一个指令执行完再去执行，浪费CPU的时间，执行效率就很低。</p>
-<p>在CPU的优化时候，有可能是这样执行的，在第一个指令执行的时候，会把第二个指令拿出来执行，但是有个前提条件，两个指令不能存在前后的依赖关系。</p>
-<h2 id="解释一下对象的创建过程"><a href="#解释一下对象的创建过程" class="headerlink" title="解释一下对象的创建过程"></a>解释一下对象的创建过程</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Object o = <span class="keyword">new</span> Object();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img data-src="https://xuemingde.com/pages/image/others/hcd0hK.png" alt=""></p>
-<p>new 出一个对象至少需要三步：</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/xYGO2T.png" alt=""></p>
-<p>第一步：new ，申请一块内存空间，用来装我new出来的对象。如上图所示，申请的内存空间里肯定有一个成员变量m，这个m的值是他的默认值，根据数据类型来定，所以这个m的默认值是0； <img data-src="https://xuemingde.com/pages/image/others/mY2ArO.png" alt=""></p>
-<p>第二步：给成员变量赋值，所以此时的m值变为了8。<strong>这个过程就是对象的半初始化状态。</strong> <img data-src="https://xuemingde.com/pages/image/others/zdwTUK.png" alt=""></p>
-<p>第三步：建立关联，局部变量 t ，t里面存储一个指针，这个指针就指向一个对象。 <img data-src="https://xuemingde.com/pages/image/others/6rJ0tu.png" alt=""></p>
-<h2 id="双重检锁（DCL）单例要不要加Volatile"><a href="#双重检锁（DCL）单例要不要加Volatile" class="headerlink" title="双重检锁（DCL）单例要不要加Volatile"></a>双重检锁（DCL）单例要不要加Volatile</h2><p>双重检锁（DCL）单例</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//2.要不要加 volatile</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> TestDemo INST;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">TestDemo</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TestDemo <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.这个地方为什么要为空判断？</span></span><br><span class="line">        <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (TestDemo.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">1</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    INST = <span class="keyword">new</span> TestDemo();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INST;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>为什么要进来就为空判断？</strong></p>
-<p>假如去掉这个判断，现在有1000个线程都来抢这把锁，上来就开始锁竞争，最终只有一个线程能够持有锁，去new对象，剩下的所有线程都参与了锁竞争过程，这样会降低效率。如果加上了判断，只要一个线程new出了对象，就不用去参与锁竞争过程了。</p>
-<p><strong>要不要加Volatile ？？？</strong></p>
-<p>答案是<strong>必须要加</strong>的。</p>
-<p>为什么呢？</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/UF3vK1.png" alt=""></p>
-<p>前面讲了，new一个对象至少有三步，在线程1创建对象时，在申请内存空间的时候，发生了指令重排序（我们前面也讲了，CPU会有乱序执行），第二步和第三步发生了执行顺序的颠倒，线程1在执行完第一步去执行了第三步，这时候局部变量INST指向了创建的对象，此时线程2判断INST不再为null，而线程1还没有执行完第三步，此时线程2拿到的对象是一个半成品，而成员变量的值还是他的默认值。</p>
-<p>Volatile的一个作用就是禁止指令重排序，用Volatile修饰的任何内存空间（对象），在他上面执行的指令不可以乱序。</p>
-<h2 id="Volatile为什么会禁止重排的？"><a href="#Volatile为什么会禁止重排的？" class="headerlink" title="Volatile为什么会禁止重排的？"></a>Volatile为什么会禁止重排的？</h2><p>内存屏障！！</p>
-<h3 id="内存屏障-（JVM级别）"><a href="#内存屏障-（JVM级别）" class="headerlink" title="内存屏障 （JVM级别）"></a>内存屏障 （JVM级别）</h3><p>JVM级别的内存屏障分为四种</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/yGGBJz.png" alt=""></p>
-<p>JVM是一种规范，这个规范要求被Volatile修饰的东西要实现内存屏障。但是硬件级别或者hostpot级别或者操作系统级别如何实现的，实际上与JVM的规定没有直接的关系。</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/vSRQKY.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>锁</tag>
       </tags>
   </entry>
   <entry>
@@ -1084,6 +706,384 @@
       </tags>
   </entry>
   <entry>
+    <title>Java对象布局</title>
+    <url>/posts/28DG2WP.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>一个新 new 出来的对象，分为四部分：</p>
+<ul>
+<li>mark word  </li>
+<li>klass point </li>
+<li>Instance Data</li>
+<li>Padding</li>
+</ul>
+<p>可使用JOL类库查看</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
+<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
+<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
+<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
+<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
+<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
+<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
+<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
+<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
+<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
+<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
+<blockquote>
+<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内存泄漏和内存溢出</title>
+    <url>/posts/266A6Z5.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<h1 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h1><p>是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 </p>
+<h2 id="内存泄漏产生的原因"><a href="#内存泄漏产生的原因" class="headerlink" title="内存泄漏产生的原因"></a>内存泄漏产生的原因</h2><ol>
+<li>单例造成的内存泄漏 </li>
+</ol>
+<p>由于单例的静态特性使得其生命周期和应用的生命周期一样长，如果一个对象已经不再需要使用了，而单例对象还持有该对象的引用，就会使得该对象不能被正常回收，从而导致了内存泄漏。 </p>
+<ol>
+<li>​非静态内部类创建静态实例造成的内存泄漏 </li>
+<li><p>​资源未关闭造成的内存泄漏 </p>
+<h2 id="如何避免内存泄漏"><a href="#如何避免内存泄漏" class="headerlink" title="如何避免内存泄漏"></a>如何避免内存泄漏</h2></li>
+<li><p>​尽量减少使用静态变量，或者使用完及时 赋值为 null。 </p>
+</li>
+<li>​各种连接（数据库连接，网络连接，IO连接）操作，务必显示调用close关闭 </li>
+<li>​减少长生命周期的对象持有短生命周期的引用； </li>
+<li>养成良好的编码习惯。<h2 id="遇到的内存泄漏"><a href="#遇到的内存泄漏" class="headerlink" title="遇到的内存泄漏"></a>遇到的内存泄漏</h2>在使用ThreadLocal时最后没有调用remove，使ThreadLocal对象没有被垃圾回收器回收，造成了内存泄漏。<h1 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h1></li>
+</ol>
+<p>指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出。OutOfMemoryError </p>
+<h2 id="内存溢出产生的原因"><a href="#内存溢出产生的原因" class="headerlink" title="内存溢出产生的原因"></a>内存溢出产生的原因</h2><h3 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h3><blockquote>
+<p>java.lang.OutOfMemoryError: Java heap space  </p>
+</blockquote>
+<p><strong>原因</strong></p>
+<ol>
+<li>代码中可能存在大对象分配。</li>
+<li>可能存在内存泄露，导致在多次GC之后，还是无法找到一块足够大的内存容纳当前对象。</li>
+</ol>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>检查是否存在大对象的分配，最有可能的是大数组分配。</li>
+<li>通过jmap命令，把堆内存dump下来，使用mat工具分析一下，检查是否存在内存泄露的问题。</li>
+<li>如果没有找到明显的内存泄露，使用 -Xmx 加大堆内存.</li>
+<li>还有一点容易被忽略，检查是否有大量的自定义的 Finalizable 对象，也有可能是框架内部提供的，考虑其存在的必要性  </li>
+</ol>
+<h3 id="永久代-元空间溢出"><a href="#永久代-元空间溢出" class="headerlink" title="永久代/元空间溢出"></a>永久代/元空间溢出</h3><p>报错信息：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: PermGen spacejava.lang.OutOfMemoryError: Metaspace</p>
+</blockquote>
+<p><strong>原因</strong><br>永久代是 HotSot 虚拟机对方法区的具体实现，存放了被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等。<br>JDK8后，元空间替换了永久代，元空间使用的是本地内存，还有其它细节变化: </p>
+<ul>
+<li>字符串常量由永久代转移到堆中</li>
+<li>和永久代相关的JVM参数已移除</li>
+<li>​</li>
+</ul>
+<p>可能原因有如下几种：</p>
+<ol>
+<li>在Java7之前，频繁的错误使用String.intern()方法</li>
+<li>运行期间生成了大量的代理类，导致方法区被撑爆，无法卸载</li>
+<li>应用长时间运行，没有重启</li>
+</ol>
+<p>没有重启 JVM 进程一般发生在调试时，如下面 tomcat 官网的一个 FAQ：</p>
+<blockquote>
+<p>Why does the memory usage increase when I redeploy a web application? That is because your web application has a memory leak. A common issue are “PermGen” memory leaks. They happen because the Classloader (and the Class objects it loaded) cannot be recycled unless some requirements are met (). They are stored in the permanent heap generation by the JVM, and when you redeploy a new class loader is created, which loads another copy of all these classes. This can cause OufOfMemoryErrors eventually. (*) The requirement is that all classes loaded by this classloader should be able to be gc’ed at the same time.</p>
+</blockquote>
+<p><strong>解决方法</strong><br>因为该OOM原因比较简单，解决方法有如下几种：</p>
+<ol>
+<li>检查是否永久代空间或者元空间设置的过小</li>
+<li>检查代码中是否存在大量的反射操作</li>
+<li>dump之后通过mat检查是否存在大量由于反射生成的代理类</li>
+<li>放大招，重启JVM</li>
+</ol>
+<h3 id="GC-overhead-limit-exceeded"><a href="#GC-overhead-limit-exceeded" class="headerlink" title="GC overhead limit exceeded"></a>GC overhead limit exceeded</h3><p>这个异常比较的罕见，报错信息：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError：GC overhead limit exceeded</p>
+</blockquote>
+<p><strong>原因</strong><br>这个是JDK6新加的错误类型，一般都是堆太小导致的。Sun 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。</p>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>检查项目中是否有大量的死循环或有使用大内存的代码，优化代码。</li>
+<li>添加参数 -XX:-UseGCOverheadLimit  禁用这个检查，其实这个参数解决不了内存问题，只是把错误的信息延后，最终出现 java.lang.OutOfMemoryError: Java heap space。</li>
+<li>dump内存，检查是否存在内存泄露，如果没有，加大内存。</li>
+</ol>
+<h3 id="方法栈溢出"><a href="#方法栈溢出" class="headerlink" title="方法栈溢出"></a>方法栈溢出</h3><p>报错信息：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError : unable to create new native Thread</p>
+</blockquote>
+<p><strong>原因</strong><br>出现这种异常，基本上都是创建的了大量的线程导致的，以前碰到过一次，通过jstack出来一共8000多个线程。</p>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>通过 -Xss 降低的每个线程栈大小的容量</li>
+<li>线程总数也受到系统空闲内存和操作系统的限制，检查是否该系统下有此限制：</li>
+</ol>
+<ul>
+<li>/proc/sys/kernel/pid_max</li>
+<li>/proc/sys/kernel/thread-max</li>
+<li>maxuserprocess（ulimit -u）</li>
+<li>/proc/sys/vm/maxmapcount</li>
+</ul>
+<h3 id="非常规溢出"><a href="#非常规溢出" class="headerlink" title="非常规溢出"></a>非常规溢出</h3><p>下面这些OOM异常，可能大部分的同学都没有碰到过，但还是需要了解一下</p>
+<h3 id="分配超大数组"><a href="#分配超大数组" class="headerlink" title="分配超大数组"></a>分配超大数组</h3><p>报错信息 ：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: Requested array size exceeds VM limit</p>
+</blockquote>
+<p>这种情况一般是由于不合理的数组分配请求导致的，在为数组分配内存之前，JVM 会执行一项检查。要分配的数组在该平台是否可以寻址(addressable)，如果不能寻址(addressable)就会抛出这个错误<br>解决方法就是检查你的代码中是否有创建超大数组的地方。</p>
+<h3 id="swap溢出"><a href="#swap溢出" class="headerlink" title="swap溢出"></a>swap溢出</h3><p>报错信息 ：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: Out of swap space</p>
+</blockquote>
+<p>这种情况一般是操作系统导致的，可能的原因有：</p>
+<ol>
+<li>swap 分区大小分配不足；</li>
+<li>其他进程消耗了所有的内存。</li>
+</ol>
+<p>解决方案：<br>1、其它服务进程可以选择性的拆分出去 2、加大swap分区大小，或者加大机器内存大小</p>
+<h3 id="本地方法溢出"><a href="#本地方法溢出" class="headerlink" title="本地方法溢出"></a>本地方法溢出</h3><p>报错信息 ：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: stack_trace_with_native_method</p>
+</blockquote>
+<p>本地方法在运行时出现了内存分配失败，和之前的方法栈溢出不同，方法栈溢出发生在 JVM 代码层面，而本地方法溢出发生在JNI代码或本地方法处。<br>这个异常出现的概率极低，只能通过操作系统本地工具进行诊断，难度有点大，还是放弃为妙。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">相关文章<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h1 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h1><ul>
+<li>内存泄漏的堆积最终会导致内存溢出 </li>
+<li>内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。 </li>
+<li>内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。 </li>
+<li>内存溢出：一个盘子用尽各种方法只能装4个果子，你装了5个，结果掉倒地上不能吃了。这就是溢出。比方说栈，栈满时再做进栈必定产生空间溢出，叫上溢，栈空时再做退栈也产生空间溢出，称为下溢。就是分配的内存不足以放下数据项序列,称为内存溢出。说白了就是我承受不了那么多，那我就报错。</li>
+</ul>
+<blockquote>
+<p>内存溢出参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">https://blog.51cto.com/u_14442094/2449151<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>数据库</tag>
+        <tag>锁</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Volatile的概念</title>
+    <url>/posts/2TD7P25.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>Volatile有两大作用</p>
+<ol>
+<li>保证线程间可见性</li>
+<li>禁止指令重排序</li>
+</ol>
+<h2 id="CPU的乱序执行"><a href="#CPU的乱序执行" class="headerlink" title="CPU的乱序执行"></a>CPU的乱序执行</h2><p><img data-src="https://xuemingde.com/pages/image/others/S8d07j.png" alt=""></p>
+<p>CPU为什么支持乱序执行？是为了提高效率。</p>
+<blockquote>
+<p>CPU的速度要比内存的速度快100倍</p>
+</blockquote>
+<p>如果按顺序执行，有两条指令，第一次指令去内存中读取数据，第二个指令要等99%的时间让第一个指令执行完再去执行，浪费CPU的时间，执行效率就很低。</p>
+<p>在CPU的优化时候，有可能是这样执行的，在第一个指令执行的时候，会把第二个指令拿出来执行，但是有个前提条件，两个指令不能存在前后的依赖关系。</p>
+<h2 id="解释一下对象的创建过程"><a href="#解释一下对象的创建过程" class="headerlink" title="解释一下对象的创建过程"></a>解释一下对象的创建过程</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Object o = <span class="keyword">new</span> Object();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/others/hcd0hK.png" alt=""></p>
+<p>new 出一个对象至少需要三步：</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/xYGO2T.png" alt=""></p>
+<p>第一步：new ，申请一块内存空间，用来装我new出来的对象。如上图所示，申请的内存空间里肯定有一个成员变量m，这个m的值是他的默认值，根据数据类型来定，所以这个m的默认值是0； <img data-src="https://xuemingde.com/pages/image/others/mY2ArO.png" alt=""></p>
+<p>第二步：给成员变量赋值，所以此时的m值变为了8。<strong>这个过程就是对象的半初始化状态。</strong> <img data-src="https://xuemingde.com/pages/image/others/zdwTUK.png" alt=""></p>
+<p>第三步：建立关联，局部变量 t ，t里面存储一个指针，这个指针就指向一个对象。 <img data-src="https://xuemingde.com/pages/image/others/6rJ0tu.png" alt=""></p>
+<h2 id="双重检锁（DCL）单例要不要加Volatile"><a href="#双重检锁（DCL）单例要不要加Volatile" class="headerlink" title="双重检锁（DCL）单例要不要加Volatile"></a>双重检锁（DCL）单例要不要加Volatile</h2><p>双重检锁（DCL）单例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//2.要不要加 volatile</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> TestDemo INST;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">TestDemo</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TestDemo <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.这个地方为什么要为空判断？</span></span><br><span class="line">        <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (TestDemo.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">1</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    INST = <span class="keyword">new</span> TestDemo();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INST;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>为什么要进来就为空判断？</strong></p>
+<p>假如去掉这个判断，现在有1000个线程都来抢这把锁，上来就开始锁竞争，最终只有一个线程能够持有锁，去new对象，剩下的所有线程都参与了锁竞争过程，这样会降低效率。如果加上了判断，只要一个线程new出了对象，就不用去参与锁竞争过程了。</p>
+<p><strong>要不要加Volatile ？？？</strong></p>
+<p>答案是<strong>必须要加</strong>的。</p>
+<p>为什么呢？</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/UF3vK1.png" alt=""></p>
+<p>前面讲了，new一个对象至少有三步，在线程1创建对象时，在申请内存空间的时候，发生了指令重排序（我们前面也讲了，CPU会有乱序执行），第二步和第三步发生了执行顺序的颠倒，线程1在执行完第一步去执行了第三步，这时候局部变量INST指向了创建的对象，此时线程2判断INST不再为null，而线程1还没有执行完第三步，此时线程2拿到的对象是一个半成品，而成员变量的值还是他的默认值。</p>
+<p>Volatile的一个作用就是禁止指令重排序，用Volatile修饰的任何内存空间（对象），在他上面执行的指令不可以乱序。</p>
+<h2 id="Volatile为什么会禁止重排的？"><a href="#Volatile为什么会禁止重排的？" class="headerlink" title="Volatile为什么会禁止重排的？"></a>Volatile为什么会禁止重排的？</h2><p>内存屏障！！</p>
+<h3 id="内存屏障-（JVM级别）"><a href="#内存屏障-（JVM级别）" class="headerlink" title="内存屏障 （JVM级别）"></a>内存屏障 （JVM级别）</h3><p>JVM级别的内存屏障分为四种</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yGGBJz.png" alt=""></p>
+<p>JVM是一种规范，这个规范要求被Volatile修饰的东西要实现内存屏障。但是硬件级别或者hostpot级别或者操作系统级别如何实现的，实际上与JVM的规定没有直接的关系。</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/vSRQKY.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM视频学习笔记-A</title>
+    <url>/posts/C0YKJ4.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>视频地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVBKNDExbjd4Wg==">尚硅谷宋红康JVM全套教程（详解java虚拟机）_哔哩哔哩_bilibili<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>好好学习，天天向上。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMDgmYW1wO2lkeD0xJmFtcDtzbj0zYWE1MjQ1YmMxYjllYTNiNzgzN2ZkZjAxMjZjOWUzOCZhbXA7Y2hrc209YzFmNDkzMGFmNjgzMWExYzFjYzEwNmY2NjZhOTkzMmIyZDkwY2EzMTE5MGFiNjZhMmZmMzY2NmViZjc0NDBlZDY4MjFlNDlkN2E2ZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjQyNzgwMTgzMTE3MjIxMDY5MyNyZA==">01-JVM与java体系结构<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMTQmYW1wO2lkeD0xJmFtcDtzbj1iODkwNTNhM2QwNjFjYTIzY2U2YjI4ODkyMjVlMmRlMCZhbXA7Y2hrc209YzFmNDkzZjRmNjgzMWFlMjQ3MmMxMjg5YTkwYTU5Y2QwZjlhYjgyYmNlYzBmOGE2Y2I4ZjMxYjUzNDQ4Yzk2NDk5MzQ4NzlmMWRiNSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">02-Java代码执行流程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMjQmYW1wO2lkeD0xJmFtcDtzbj1jZDRmNzc2NDY3ZDAxYmYxOGE0NWRhYTdmNjU3OTYwZCZhbXA7Y2hrc209YzFmNDkzZmFmNjgzMWFlY2Y3NzYzNTI4YzRiMDI3ZDFiODgwNjMwYzBjOTM5OGJjZWRjYzIzMWQ0NDI5NzkzMzcxMTllMGUxOGU5NSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">03-JVM的结构模型<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMzEmYW1wO2lkeD0xJmFtcDtzbj00MWYwNTI0NmUxMDU5MDAwMzA2MzkwNTZmNDQ2ODFhNSZhbXA7Y2hrc209YzFmNDkzZTVmNjgzMWFmMzg1NzJiZTliMDk0ZGVhNjU5ODg5NWM3MGRlMGMxNjNhNWY5ODYzYzFiYjVlODcyMjlmNjczNTViMGVmNiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">04-JVM的生命周期<i class="fa fa-external-link-alt"></i></span>  </li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNTMmYW1wO2lkeD0xJmFtcDtzbj03MzFhMzlhM2M5NWM1MTdmZWFlNzgzNjNjNzVkMjEzMiZhbXA7Y2hrc209YzFmNDkzZGZmNjgzMWFjOTc2MDcwY2Y2M2FkZTg0MDMxNWVlZGZhMjVmZTkwYjhmNzg0ODdjYThmMzliY2M3YzU5ZjIxODdmZTE4MSNyZA==">05-概述类的加载器及类加载过程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNjQmYW1wO2lkeD0xJmFtcDtzbj0zM2YwZTM3OTc0MDFmOTk2MTk4MzE0NGRlYzI3YjViZCZhbXA7Y2hrc209YzFmNDkzYzJmNjgzMWFkNGU3M2RjMjdiODJhMzU0ODI4MmU1OTQ5ZTRjYjYyYmRjMTQ1MmEzNGE3ZTU4MjgyOTJlN2FmYjg4MmM5NiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">06-几种类加载器的使用体会<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNzYmYW1wO2lkeD0xJmFtcDtzbj0zOWI2ZmYzMzYxMzZlOGNiMmI4NDkzOGI5MmE4Njg5YyZhbXA7Y2hrc209YzFmNDkzYjZmNjgzMWFhMDUzMzNlNmZjYmQzY2U1NjI5ZmE3NDlhYTYzYTFiYzY5ZjcyY2VmZTMzOGE1MzhlMTQwOGE5NWE4NjYzMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">07-引导类、扩展类、系统类加载器的使用及演示<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzODYmYW1wO2lkeD0xJmFtcDtzbj1lMjE3Mjg0NGFmYTQ0NzMwY2IyOWE0NTgzODY3NmZlMiZhbXA7Y2hrc209YzFmNDkzYmNmNjgzMWFhYTgxNjZiZmVjMWY0MDcxYjBlOWQzNzQ0MTNlODhiNjVkZWFkZDkwOWM2ZDgwYzZjZjk1NTgzZGFmMDFlNyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">为什么需要用户自定义类加载器及具体实现<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzOTMmYW1wO2lkeD0xJmFtcDtzbj05MGUyMDcyZTE4ZTY1Yzc0MjEwYjBjMjZlMDFjM2Y1NSZhbXA7Y2hrc209YzFmNDkzYTdmNjgzMWFiMTQ2ZGVkYTNlZjEzYjEzNTI0MDZlODQ2ZDI0ZGU0YzY1ZDM4YWZhYzg0YTM3NDE5NmRhYzMyMjA5NDNhOSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">08-ClassLoader的常用方法及获取方法<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0MzUmYW1wO2lkeD0xJmFtcDtzbj1mNjkxYWY1NGQxNmIyMGQwOWMzMmJkMDEwMzYwMTQzMCZhbXA7Y2hrc209YzFmNDkzOGRmNjgzMWE5Yjg5NzgxZmI3ODZmM2FlOTA5N2Y2ZjUzODVhMTk0ODI3OTFmMTYzOGU5ZTNlNzFjM2IyNGI4YmUzMjA2OSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">09-双亲委派机制的工作原理及演示<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NDUmYW1wO2lkeD0xJmFtcDtzbj1hYzk3ZjBlMGMxMTEyMDM1NWEyY2FmMTEwNmI3OGM4MyZhbXA7Y2hrc209YzFmNDljNzNmNjgzMTU2NTQ2ZmRhZTI3NmI0M2E2ZjVjOGUxZWRiZDJlMGQzMjc1MDFlZjJjZDk2NWYxYjcwNDg2YzJkNmNiMGU4NCZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">10-沙箱安全机制<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NTcmYW1wO2lkeD0xJmFtcDtzbj1mNzRjM2Q1YzAyYjE0ZTk5MGM1N2Q4Y2I1ZjkyNzQ3ZSZhbXA7Y2hrc209YzFmNDljNjdmNjgzMTU3MWM5YzcyMDVlMjFiNmIwNThiMmQxYzM3OGQ4N2IwZDYxMzU2MjFiMjg5NWEyM2VmYjcwNzFiMWMyNDkwMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">11 - 运行时数据区内部结构<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NzUmYW1wO2lkeD0xJmFtcDtzbj0zZDM3ODM3MDFhNzFmYjg2NDNjODEwN2FlYmE2YmE2MSZhbXA7Y2hrc209YzFmNDljNTVmNjgzMTU0MzAwMmI5NTc5ZmIxYThkOWYwZTM3ZDZiMWY3YmFiMGVlMTBjOTAxNWU3ODhiYzQ5NWY0MmQyZjI1MDY3MSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">12-PC寄存器（程序计数器）<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1MTQmYW1wO2lkeD0xJmFtcDtzbj01ZGNlM2U3ZjkxYTg5YzY3MGVjYTBiNzdhYmVjODM4MSZhbXA7Y2hrc209YzFmNDljM2NmNjgzMTUyYTFhMjMxMDNkM2I2NTcwM2YyZmQ0NzFkNzMxMTRiYWQ1NDZkNmRiMzk3ZTBmZWIwOTBkYjcxYTFiNDYyZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjMxOTY1NTc5NTU4NTcxMjEzMyNyZA==">13-虚拟机栈-概述<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NTQmYW1wO2lkeD0xJmFtcDtzbj1mNmMzNDgxNmEyYmQ5YzMxZTJhZjE3NDk5N2UzYjg1YSZhbXA7Y2hrc209YzFmNDljMDRmNjgzMTUxMjViMTc1NzcyZDZiZWY1ZDcyODA2MWE2NzU1ZTRlYjJlNDA1NmYxZmIyYzIyNWJjNTEwNTZhZDA4ZGI0YyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">14-虚拟机栈-栈的存储单位及运行原理<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NjAmYW1wO2lkeD0xJmFtcDtzbj0zMDJlNDY2NjJiMDE4YjNlMTQ3NzY5MzQxMDhiNzA0OSZhbXA7Y2hrc209YzFmNDljMGVmNjgzMTUxODQ4NTkxZjAxNjgyZmRhYTkxMDIyY2E1MzZlZGEzNDE2MDVmOGRjOGJjZjcyM2M5MmU3MDA3ZWJlMDk2MyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">15-虚拟机栈-栈祯的内部结构<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>谈谈你对 JVM 方法区的理解</title>
+    <url>/posts/2GN96QM.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdS03T2pfQk5tdlFzdWwtZEVkeFJvZw==">面试官：谈谈你对 JVM 方法区的理解<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>运行时数据区”包括程序计数器、虚拟机栈、本地方法栈和堆空间，今天我们就来了解一下方法区。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0811nMChKa.png" alt=""></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>创建对象时内存分配简图</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08128OLLNU.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08139cSMvE.png" alt=""></p>
+<p>《Java虚拟机规范》中明确说明：“尽管所有的方法区在逻辑上属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集或者进行压缩。</p>
+<p>虽然 Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。所以，方法区可以看作是一块<strong>独立</strong>于 Java 堆的内存空间。</p>
+<p>方法区与 Java 堆一样，是各个线程共享的内存区域。方法区在 JVM 启动时就会被创建，并且它的实际的物理内存空间是可以<strong>不连续</strong>的，关闭 JVM 就会释放这个区域的内存。</p>
+<h2 id="永久代、元空间"><a href="#永久代、元空间" class="headerlink" title="永久代、元空间"></a>永久代、元空间</h2><p>《java虚拟机规范》对如何实现方法区，不做统一要求。例如：BEA JRockit/IBM J9 中不存在永久代的概念。而对于 HotSpot 来说，在 jdk7 及以前，习惯上把方法区的实现称为<strong>永久代</strong>，而从 jdk8 开始，使用<strong>元空间</strong>取代了永久代。</p>
+<blockquote>
+<p>方法区是 Java 虚拟机规范中的概念，而永久代和元空间是 HotSpot 虚拟机对方法区的一种实现。通俗点讲：如果把方法区比作接口的话，那永久代和元空间可以比作实现该接口的实现类。</p>
+</blockquote>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>永久代、元空间并不只是名字变了，内部结构也进行了调整。永久代使用的是 JVM 的内存，而元空间使用的是本地的直接内存。</p>
+<p>直接内存并不是 JVM 运行时数据区的一部分，因此不会受到 Java 堆的限制。但是它会受到本机总内存大小以及处理器寻址空间的限制，所以如果这部分内存也被频繁的使用，依然会导致 OOM 错误的出现。</p>
+<h3 id="方法区的大小"><a href="#方法区的大小" class="headerlink" title="方法区的大小"></a>方法区的大小</h3><p>方法区的大小是可以进行设置的，可以选择固定大小也可以进行扩展。</p>
+<h4 id="jdk7-及以前"><a href="#jdk7-及以前" class="headerlink" title="jdk7 及以前"></a>jdk7 及以前</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:PermSize=N //方法区 (永久代) 初始分配空间，默认值为 20.75M</span><br><span class="line">-XX:MaxPermSize=N //方法区 (永久代) 最大可分配空间。32位机器默认是64M，64位机器默认是82M</span><br></pre></td></tr></table></figure>
+<h4 id="jdk8及以后"><a href="#jdk8及以后" class="headerlink" title="jdk8及以后"></a>jdk8及以后</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:MetaspaceSize=N //方法区 (元空间) 初始分配空间，如果未指定此标志，则元空间将根据运行时的应用程序需求动态地重新调整大小。</span><br><span class="line">-XX:MaxMetaspaceSize=N //方法区 (元空间) 最大可分配空间，默认值为 -1，即没有限制</span><br></pre></td></tr></table></figure>
+<p>与永久代很大的不同就是，如果不指定大小的话，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</p>
+<p>方法区的大小决定了系统可以保存多少个类，如果系统定义了太多的类，比如：加载大量的第三方 jar 包、Tomcat 部署的工程过多、大量动态生成反射类等都会导致方法区溢出，抛出内存溢出错误。</p>
+<ul>
+<li>永久代：OutOfMemoryError:PermGen space</li>
+<li>元空间：OutOfMemoryError:Metaspace</li>
+</ul>
+<p><strong>至于如何解决 OOM 异常，将在以后的文章中讲解！</strong></p>
+<h3 id="jvisualvm"><a href="#jvisualvm" class="headerlink" title="jvisualvm"></a>jvisualvm</h3><p>我们可以通过 JDK 自带的 <strong>jvisualvm</strong> 工具来查看程序加载的类文件：</p>
+<p><strong>例</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;start...&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;end...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序，可以看到一个简单的程序就需要加载这么多的类文件。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08172fHLHQ.png" alt=""></p>
+<h3 id="高水位线"><a href="#高水位线" class="headerlink" title="高水位线"></a>高水位线</h3><p>对于一个64位的服务器端 JVM 来说，<code>XX：MetaspaceSize=21</code> 就是初始的高水位线，一旦触及这个水位线，Full GC 将会被触发并卸载没用的类（即这些类对应的类加载器不再存活），然后这个高水位线将会重置。</p>
+<p>新的高水位线的值取决于 GC 后释放了多少元空间：</p>
+<ul>
+<li>如果释放的空间不足，那么在不超过 MaxMetaspaceSize 时，适当提高该值；</li>
+<li>如果释放空间过多，则适当降低该值。</li>
+</ul>
+<blockquote>
+<p>如果初始化的高水位线设置过低，高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到 Full GC 多次调用。为了避免频繁地GC，建议将 <code>-XX ：MetaspaceSize</code> 设置为一个相对较高的值。</p>
+</blockquote>
+<h2 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h2><p>《深入理解Java虚拟机》书中对方法区存储内容描述如下：它用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。接下来我们就一起来看一下它的内部结构。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0818BTvM7A.png" alt=""></p>
+<h3 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h3><p>对每个加载的类型（ 类 class、接口 interface、枚举 enum、注解 annotation），JVM 必须在方法区中存储以下类型信息：</p>
+<ol>
+<li>这个类型的完整有效名称（全名=包名.类名）</li>
+<li>这个类型直接父类的完整有效名（对于 interface 或是 java. lang.Object ，都没有父类）</li>
+<li>这个类型的修饰符（ public ， abstract， final 的某个子集）</li>
+<li>这个类型直接接口的一个有序列表</li>
+</ol>
+<h3 id="域（Field）信息"><a href="#域（Field）信息" class="headerlink" title="域（Field）信息"></a>域（Field）信息</h3><ul>
+<li>JVM必须在方法区中保存类型的所有域（field，也称为属性）的相关信息以及域的声明顺序；</li>
+<li>域的相关信息包括：域名称、 域类型、域修饰符（public， private，protected， static， final， volatile， transient 的某个子集）</li>
+</ul>
+<h3 id="方法（Method）信息"><a href="#方法（Method）信息" class="headerlink" title="方法（Method）信息"></a>方法（Method）信息</h3><p>JVM 必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
+<ul>
+<li>方法名称</li>
+<li>方法的返回类型（或void）</li>
+<li>方法参数的数量和类型（按顺序）</li>
+<li>方法的修饰符（public， private， protected， static， final，synchronized， native ， abstract 的一个子集）</li>
+<li>方法的字节码（bytecodes）、操作数栈、局部变量表及大小（ abstract 和 native 方法除外）</li>
+<li>异常表（ abstract 和 native 方法除外）每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</li>
+</ul>
+<h3 id="non-final-的类变量"><a href="#non-final-的类变量" class="headerlink" title="non-final 的类变量"></a>non-final 的类变量</h3><ul>
+<li>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分</li>
+<li>类变量被类的所有实例所共享，即使没有类实例你也可以访问它。</li>
+</ul>
+<p>我们可以通过例子来查看：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Order order = <span class="keyword">null</span>;</span><br><span class="line">        order.hello();</span><br><span class="line">        System.out.println(order.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> number = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果为：</p>
+<figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">hello!</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>可以打开 IDEA 的 Terminal 窗口，在 MethodAreaDemo2.class 所在的路径下，输入 <code>javap -v -p MethodAreaDemo2.class</code> 命令</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0820D8dllV.png" alt=""></p>
+<p>通过图片我们可以看出被声明为 final 的类变量的处理方法是不一样的，全局常量在编译的时候就被分配了。</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>说到运行时常量池，我们先来了解一下什么是常量池表。</p>
+<h4 id="常量池表"><a href="#常量池表" class="headerlink" title="常量池表"></a>常量池表</h4><p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息那就是常量池表（Constant Pool Table），里边存储着<strong>数量值</strong>、<strong>字符串值</strong>、<strong>类引用</strong>、<strong>字段引用</strong>和<strong>方法引用</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0821NLzPMe.png" alt="图片"></p>
+<h4 id="为什么字节码文件需要常量池？"><a href="#为什么字节码文件需要常量池？" class="headerlink" title="为什么字节码文件需要常量池？"></a>为什么字节码文件需要常量池？</h4><p>java 源文件中的类、接口，编译后会产生一个字节码文件。而字节码文件需要数据支持，通常这种数据会很大，以至于不能直接存放到字节码中。换一种方式，可以将指向这些数据的<strong>符号引用</strong>存到字节码文件的常量池中，这样字节码只需使用常量池就可以在运行时通过<strong>动态链接</strong>找到相应的数据并使用。</p>
+<h4 id="运行时常量池-1"><a href="#运行时常量池-1" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池（ <code>Runtime Constant Pool</code>）是方法区的一部分，类加载器加载字节码文件时，将常量池表加载进方法区的运行时常量池。运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。此时不再是常量池中的符号地址了，这里换为<strong>真实</strong>地址。</p>
+<blockquote>
+<p>运行时常量池，相对于 Class 文件常量池的另一重要特征是：具备动态性，比如 <code>String.intern()</code>。</p>
+</blockquote>
+<h2 id="演进细节"><a href="#演进细节" class="headerlink" title="演进细节"></a>演进细节</h2><p>针对的是 <strong>Hotspot</strong> 的虚拟机：</p>
+<ul>
+<li>jdk1.6 及之前：有<strong>永久代</strong> ，静态变量存放在永久代上；</li>
+<li>jdk1.7：有<strong>永久代</strong>，但已经逐步“去永久代”，字符串常量池、静态变量移除，保存在堆中；</li>
+<li>jdk1.8及之后：无永久代，类型信息、字段、方法、常量保存在本地内存的<strong>元空间</strong>，但字符串常量池、静态变量仍在堆中；</li>
+</ul>
+<h3 id="演变示例图"><a href="#演变示例图" class="headerlink" title="演变示例图"></a>演变示例图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822Hj7z0e.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822u3jIxG.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0823bbxVIm.png" alt=""></p>
+<h3 id="为什么要将永久代替换为元空间呢"><a href="#为什么要将永久代替换为元空间呢" class="headerlink" title="为什么要将永久代替换为元空间呢?"></a>为什么要将永久代替换为元空间呢?</h3><ol>
+<li>永久代使用的是 JVM 的内存，受 JVM 设置的内存大小限制；元空间使用的是本地直接内存，它的最大可分配空间是系统可用内存的空间。因为元空间里存放的是类的<strong>元数据</strong>，所以随着内存空间的增大，能加载的类就更多了，相应的溢出的机率会大大减小。</li>
+<li>在 JDK8，合并 HotSpot 和 JRockit 的代码时，JRockit 从来没有一个叫永久代的东西，合并之后就没有必要额外的设置这么一个永久代的地方了。</li>
+<li>对永久代进行调优是很困难的。</li>
+</ol>
+<h3 id="StringTable-为什么要调整"><a href="#StringTable-为什么要调整" class="headerlink" title="StringTable 为什么要调整"></a>StringTable 为什么要调整</h3><p>因为永久代的回收效率很低，在 full gc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了<code>StringTable</code> 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。方法区的垃圾收集主要回收两部分内容：常量池中废奔的<strong>常量</strong>和不再使用的<strong>类型</strong>。</p>
+<p>方法区内常量池中主要存放字面量和符号引用两大类常量：</p>
+<ul>
+<li>字面量比较接近 Java 语言层次的常量概念，如文本字符串、被声明为 final 的常量值等。</li>
+<li>符号引用则属于编译原理方面的概念，包括类和接口的全限定名、字段的名称和描述符、方法的名称和描述符。</li>
+</ul>
+<p>HotSpot 虚拟机对常量池的回收策略是很明确的，只要常量池中的常量没有被任何地方引用，就可以被回收。</p>
+<h3 id="类型判定"><a href="#类型判定" class="headerlink" title="类型判定"></a>类型判定</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。需要同时满足下面三个条件：</p>
+<ul>
+<li>该类所有的<strong>实例</strong>都已经被回收，也就是 Java 堆中不存在该类及其任何派生子类的实例；</li>
+<li>加载该类的<strong>类加载器</strong>已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如OSGi、JSP的重加载等，否则通常是很难达成的；</li>
+<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>Java 虛拟机被允许对满足上述三个条件的无用类进行回收，这里说的仅仅是“被允许”，而并不是和对象一样，没有引用了就必然会回收。</p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>面试</tag>
+        <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt基础学习笔记01</title>
     <url>/posts/3V8G3VM.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><QtGlobal>头文件包含了Qt类库的一些全局定义，包括基本数据类型、函数和宏，一般的Qt类的头文件都会包含该文件，所以不用显式包含这个头文件也可以使用其中的定义。</p>
@@ -1270,6 +1270,25 @@
       </tags>
   </entry>
   <entry>
+    <title>Qt基础学习笔记04</title>
+    <url>/posts/23E5YZV.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li><p>qt中将Frame框设置成有颜色的边框</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QFrame&#123;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">10px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">1px</span> solid <span class="built_in">rgb</span>(<span class="number">100</span>, <span class="number">100</span>,<span class="number">189</span>)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>Qt的LineEdit设置无边框</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QLineEdit&#123;<span class="attribute">border</span>: none &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>​</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Qt基础学习笔记03</title>
     <url>/posts/C8CVJR.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -1406,25 +1425,6 @@
         <tag>数组</tag>
         <tag>索引</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Qt基础学习笔记04</title>
-    <url>/posts/23E5YZV.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li><p>qt中将Frame框设置成有颜色的边框</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QFrame&#123;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">10px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">1px</span> solid <span class="built_in">rgb</span>(<span class="number">100</span>, <span class="number">100</span>,<span class="number">189</span>)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-<li><p>Qt的LineEdit设置无边框</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QLineEdit&#123;<span class="attribute">border</span>: none &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>​</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Qt</category>
-      </categories>
   </entry>
   <entry>
     <title>不可言说</title>
@@ -1686,69 +1686,6 @@
       </tags>
   </entry>
   <entry>
-    <title>springBoot整合seata</title>
-    <url>/posts/QWTBG7.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>参考文章</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vaXRDamIvc3ByaW5nLWNsb3VkLWFsaWJhYmEtc2VhdGEtZGVtbw==">https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly90aGlua2luZ2Nhby5ibG9nLmNzZG4ubmV0L2FydGljbGUvZGV0YWlscy8xMDkzMjAyMjE=">https://thinkingcao.blog.csdn.net/article/details/109320221<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</blockquote>
-<h2 id="安装seata"><a href="#安装seata" class="headerlink" title="安装seata"></a>安装seata</h2><blockquote>
-<p>在安装了nacos的前提下</p>
-</blockquote>
-<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>下载seata-1.3.0</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlbG9hZC5naXRodWIuY29tL3NlYXRhL3NlYXRhL3ppcC92MS4zLjA=">https://codeload.github.com/seata/seata/zip/v1.3.0<i class="fa fa-external-link-alt"></i></span></p>
-<p>下载seata-server-1.4.1</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9waG9lbml4bmFwLmRsLnNvdXJjZWZvcmdlLm5ldC9wcm9qZWN0L3NlYXRhLm1pcnJvci92MS40LjEvc2VhdGEtc2VydmVyLTEuNC4xLnppcA==">https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>在你的参与全局事务的数据库中加入undo_log这张表</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;undo_log&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;     BIGINT(20)   NOT NULL COMMENT &#39;branch transaction id&#39;,</span><br><span class="line">    &#96;xid&#96;           VARCHAR(100) NOT NULL COMMENT &#39;global transaction id&#39;,</span><br><span class="line">    &#96;context&#96;       VARCHAR(128) NOT NULL COMMENT &#39;undo_log context,such as serialization&#39;,</span><br><span class="line">    &#96;rollback_info&#96; LONGBLOB     NOT NULL COMMENT &#39;rollback info&#39;,</span><br><span class="line">    &#96;log_status&#96;    INT(11)      NOT NULL COMMENT &#39;0:normal status,1:defense status&#39;,</span><br><span class="line">    &#96;log_created&#96;   DATETIME(6)  NOT NULL COMMENT &#39;create datetime&#39;,</span><br><span class="line">    &#96;log_modified&#96;  DATETIME(6)  NOT NULL COMMENT &#39;modify datetime&#39;,</span><br><span class="line">    UNIQUE KEY &#96;ux_undo_log&#96; (&#96;xid&#96;, &#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  AUTO_INCREMENT &#x3D; 1</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8 COMMENT &#x3D;&#39;AT transaction mode undo table&#39;;</span><br></pre></td></tr></table></figure>
-<p>在你的mysql数据库中创建名为seata的库,并使用以下下sql</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;global_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;xid&#96;                       VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;            BIGINT,</span><br><span class="line">    &#96;status&#96;                    TINYINT      NOT NULL,</span><br><span class="line">    &#96;application_id&#96;            VARCHAR(32),</span><br><span class="line">    &#96;transaction_service_group&#96; VARCHAR(32),</span><br><span class="line">    &#96;transaction_name&#96;          VARCHAR(128),</span><br><span class="line">    &#96;timeout&#96;                   INT,</span><br><span class="line">    &#96;begin_time&#96;                BIGINT,</span><br><span class="line">    &#96;application_data&#96;          VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;                DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;              DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;xid&#96;),</span><br><span class="line">    KEY &#96;idx_gmt_modified_status&#96; (&#96;gmt_modified&#96;, &#96;status&#96;),</span><br><span class="line">    KEY &#96;idx_transaction_id&#96; (&#96;transaction_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;branch_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;         BIGINT       NOT NULL,</span><br><span class="line">    &#96;xid&#96;               VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;    BIGINT,</span><br><span class="line">    &#96;resource_group_id&#96; VARCHAR(32),</span><br><span class="line">    &#96;resource_id&#96;       VARCHAR(256),</span><br><span class="line">    &#96;branch_type&#96;       VARCHAR(8),</span><br><span class="line">    &#96;status&#96;            TINYINT,</span><br><span class="line">    &#96;client_id&#96;         VARCHAR(64),</span><br><span class="line">    &#96;application_data&#96;  VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;        DATETIME(6),</span><br><span class="line">    &#96;gmt_modified&#96;      DATETIME(6),</span><br><span class="line">    PRIMARY KEY (&#96;branch_id&#96;),</span><br><span class="line">    KEY &#96;idx_xid&#96; (&#96;xid&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;lock_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;row_key&#96;        VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;xid&#96;            VARCHAR(96),</span><br><span class="line">    &#96;transaction_id&#96; BIGINT,</span><br><span class="line">    &#96;branch_id&#96;      BIGINT       NOT NULL,</span><br><span class="line">    &#96;resource_id&#96;    VARCHAR(256),</span><br><span class="line">    &#96;table_name&#96;     VARCHAR(32),</span><br><span class="line">    &#96;pk&#96;             VARCHAR(36),</span><br><span class="line">    &#96;gmt_create&#96;     DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;   DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;row_key&#96;),</span><br><span class="line">    KEY &#96;idx_branch_id&#96; (&#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
-<h3 id="第三部"><a href="#第三部" class="headerlink" title="第三部"></a>第三部</h3><p>在你的项目中引入seata依赖</p>
-<p>如果你的微服务是dubbo:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果你是springcloud</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>从官方github仓库拿到参考配置做修改:<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NlYXRhL3NlYXRhL3RyZWUvZGV2ZWxvcC9zY3JpcHQvY2xpZW50">https://github.com/seata/seata/tree/develop/script/client<i class="fa fa-external-link-alt"></i></span></p>
-<p>加到你项目的application.yml中.</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">application-id:</span> <span class="string">applicationName</span></span><br><span class="line">  <span class="attr">tx-service-group:</span> <span class="string">my_test_tx_group</span></span><br><span class="line">  <span class="attr">enable-auto-data-source-proxy:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">serverAddr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">registry:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">application:</span> <span class="string">seata-server</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><p>运行你下载的nacos,并参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NlYXRhL3NlYXRhL3RyZWUvZGV2ZWxvcC9zY3JpcHQvY29uZmlnLWNlbnRlcg==">https://github.com/seata/seata/tree/develop/script/config-center<i class="fa fa-external-link-alt"></i></span> 的config.txt并修改</p>
-<p>文件在</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312170639465.png" alt="image-20210312170639465"></p>
-<p>修改config.txt</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">service.vgroupMapping.my_test_tx_group</span>=<span class="string">default</span></span><br><span class="line"><span class="meta">store.mode</span>=<span class="string">db</span></span><br><span class="line"><span class="meta">store.db.datasource</span>=<span class="string">druid</span></span><br><span class="line"><span class="meta">store.db.dbType</span>=<span class="string">mysql</span></span><br><span class="line"><span class="meta">store.db.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">store.db.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="meta">store.db.user</span>=<span class="string">username</span></span><br><span class="line"><span class="meta">store.db.password</span>=<span class="string">password</span></span><br><span class="line"><span class="meta">store.db.minConn</span>=<span class="string">5</span></span><br><span class="line"><span class="meta">store.db.maxConn</span>=<span class="string">30</span></span><br><span class="line"><span class="meta">store.db.globalTable</span>=<span class="string">global_table</span></span><br><span class="line"><span class="meta">store.db.branchTable</span>=<span class="string">branch_table</span></span><br><span class="line"><span class="meta">store.db.queryLimit</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">store.db.lockTable</span>=<span class="string">lock_table</span></span><br><span class="line"><span class="meta">store.db.maxWait</span>=<span class="string">5000</span></span><br></pre></td></tr></table></figure>
-<p>运行仓库中提供的nacos脚本,将以上信息提交到nacos控制台,如果有需要更改,可直接通过控制台更改</p>
-<p>进入文件夹下</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171029260.png" alt="image-20210312171029260"></p>
-<p>右键</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171131042.png" alt="image-20210312171131042"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171216907.png" alt="image-20210312171216907"></p>
-<p> 进入nacos查看</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171537526.png" alt="image-20210312171537526"></p>
-<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><p>更改server中的registry.conf</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171654248.png" alt="image-20210312171654248"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171805716.png" alt="image-20210312171805716"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171822584.png" alt="image-20210312171822584"></p>
-<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>运行seata-server</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171941551.png" alt="image-20210312171941551"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312172018047.png" alt="image-20210312172018047"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>sql</tag>
-        <tag>事务</tag>
-        <tag>数据库</tag>
-        <tag>Mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式锁</title>
     <url>/posts/17B6E0W.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
@@ -1830,6 +1767,69 @@
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springBoot整合seata</title>
+    <url>/posts/QWTBG7.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>参考文章</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vaXRDamIvc3ByaW5nLWNsb3VkLWFsaWJhYmEtc2VhdGEtZGVtbw==">https://gitee.com/itCjb/spring-cloud-alibaba-seata-demo<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly90aGlua2luZ2Nhby5ibG9nLmNzZG4ubmV0L2FydGljbGUvZGV0YWlscy8xMDkzMjAyMjE=">https://thinkingcao.blog.csdn.net/article/details/109320221<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</blockquote>
+<h2 id="安装seata"><a href="#安装seata" class="headerlink" title="安装seata"></a>安装seata</h2><blockquote>
+<p>在安装了nacos的前提下</p>
+</blockquote>
+<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>下载seata-1.3.0</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlbG9hZC5naXRodWIuY29tL3NlYXRhL3NlYXRhL3ppcC92MS4zLjA=">https://codeload.github.com/seata/seata/zip/v1.3.0<i class="fa fa-external-link-alt"></i></span></p>
+<p>下载seata-server-1.4.1</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9waG9lbml4bmFwLmRsLnNvdXJjZWZvcmdlLm5ldC9wcm9qZWN0L3NlYXRhLm1pcnJvci92MS40LjEvc2VhdGEtc2VydmVyLTEuNC4xLnppcA==">https://phoenixnap.dl.sourceforge.net/project/seata.mirror/v1.4.1/seata-server-1.4.1.zip<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>在你的参与全局事务的数据库中加入undo_log这张表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;undo_log&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;     BIGINT(20)   NOT NULL COMMENT &#39;branch transaction id&#39;,</span><br><span class="line">    &#96;xid&#96;           VARCHAR(100) NOT NULL COMMENT &#39;global transaction id&#39;,</span><br><span class="line">    &#96;context&#96;       VARCHAR(128) NOT NULL COMMENT &#39;undo_log context,such as serialization&#39;,</span><br><span class="line">    &#96;rollback_info&#96; LONGBLOB     NOT NULL COMMENT &#39;rollback info&#39;,</span><br><span class="line">    &#96;log_status&#96;    INT(11)      NOT NULL COMMENT &#39;0:normal status,1:defense status&#39;,</span><br><span class="line">    &#96;log_created&#96;   DATETIME(6)  NOT NULL COMMENT &#39;create datetime&#39;,</span><br><span class="line">    &#96;log_modified&#96;  DATETIME(6)  NOT NULL COMMENT &#39;modify datetime&#39;,</span><br><span class="line">    UNIQUE KEY &#96;ux_undo_log&#96; (&#96;xid&#96;, &#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  AUTO_INCREMENT &#x3D; 1</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8 COMMENT &#x3D;&#39;AT transaction mode undo table&#39;;</span><br></pre></td></tr></table></figure>
+<p>在你的mysql数据库中创建名为seata的库,并使用以下下sql</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;global_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;xid&#96;                       VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;            BIGINT,</span><br><span class="line">    &#96;status&#96;                    TINYINT      NOT NULL,</span><br><span class="line">    &#96;application_id&#96;            VARCHAR(32),</span><br><span class="line">    &#96;transaction_service_group&#96; VARCHAR(32),</span><br><span class="line">    &#96;transaction_name&#96;          VARCHAR(128),</span><br><span class="line">    &#96;timeout&#96;                   INT,</span><br><span class="line">    &#96;begin_time&#96;                BIGINT,</span><br><span class="line">    &#96;application_data&#96;          VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;                DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;              DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;xid&#96;),</span><br><span class="line">    KEY &#96;idx_gmt_modified_status&#96; (&#96;gmt_modified&#96;, &#96;status&#96;),</span><br><span class="line">    KEY &#96;idx_transaction_id&#96; (&#96;transaction_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;branch_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;branch_id&#96;         BIGINT       NOT NULL,</span><br><span class="line">    &#96;xid&#96;               VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;transaction_id&#96;    BIGINT,</span><br><span class="line">    &#96;resource_group_id&#96; VARCHAR(32),</span><br><span class="line">    &#96;resource_id&#96;       VARCHAR(256),</span><br><span class="line">    &#96;branch_type&#96;       VARCHAR(8),</span><br><span class="line">    &#96;status&#96;            TINYINT,</span><br><span class="line">    &#96;client_id&#96;         VARCHAR(64),</span><br><span class="line">    &#96;application_data&#96;  VARCHAR(2000),</span><br><span class="line">    &#96;gmt_create&#96;        DATETIME(6),</span><br><span class="line">    &#96;gmt_modified&#96;      DATETIME(6),</span><br><span class="line">    PRIMARY KEY (&#96;branch_id&#96;),</span><br><span class="line">    KEY &#96;idx_xid&#96; (&#96;xid&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS &#96;lock_table&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;row_key&#96;        VARCHAR(128) NOT NULL,</span><br><span class="line">    &#96;xid&#96;            VARCHAR(96),</span><br><span class="line">    &#96;transaction_id&#96; BIGINT,</span><br><span class="line">    &#96;branch_id&#96;      BIGINT       NOT NULL,</span><br><span class="line">    &#96;resource_id&#96;    VARCHAR(256),</span><br><span class="line">    &#96;table_name&#96;     VARCHAR(32),</span><br><span class="line">    &#96;pk&#96;             VARCHAR(36),</span><br><span class="line">    &#96;gmt_create&#96;     DATETIME,</span><br><span class="line">    &#96;gmt_modified&#96;   DATETIME,</span><br><span class="line">    PRIMARY KEY (&#96;row_key&#96;),</span><br><span class="line">    KEY &#96;idx_branch_id&#96; (&#96;branch_id&#96;)</span><br><span class="line">) ENGINE &#x3D; InnoDB</span><br><span class="line">  DEFAULT CHARSET &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+<h3 id="第三部"><a href="#第三部" class="headerlink" title="第三部"></a>第三部</h3><p>在你的项目中引入seata依赖</p>
+<p>如果你的微服务是dubbo:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果你是springcloud</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.seata<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>seata-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>从官方github仓库拿到参考配置做修改:<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NlYXRhL3NlYXRhL3RyZWUvZGV2ZWxvcC9zY3JpcHQvY2xpZW50">https://github.com/seata/seata/tree/develop/script/client<i class="fa fa-external-link-alt"></i></span></p>
+<p>加到你项目的application.yml中.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">application-id:</span> <span class="string">applicationName</span></span><br><span class="line">  <span class="attr">tx-service-group:</span> <span class="string">my_test_tx_group</span></span><br><span class="line">  <span class="attr">enable-auto-data-source-proxy:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">serverAddr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">registry:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">application:</span> <span class="string">seata-server</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">SEATA_GROUP</span></span><br><span class="line">      <span class="attr">namespace:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">&quot;nacos&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h3><p>运行你下载的nacos,并参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NlYXRhL3NlYXRhL3RyZWUvZGV2ZWxvcC9zY3JpcHQvY29uZmlnLWNlbnRlcg==">https://github.com/seata/seata/tree/develop/script/config-center<i class="fa fa-external-link-alt"></i></span> 的config.txt并修改</p>
+<p>文件在</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312170639465.png" alt="image-20210312170639465"></p>
+<p>修改config.txt</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">service.vgroupMapping.my_test_tx_group</span>=<span class="string">default</span></span><br><span class="line"><span class="meta">store.mode</span>=<span class="string">db</span></span><br><span class="line"><span class="meta">store.db.datasource</span>=<span class="string">druid</span></span><br><span class="line"><span class="meta">store.db.dbType</span>=<span class="string">mysql</span></span><br><span class="line"><span class="meta">store.db.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">store.db.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="meta">store.db.user</span>=<span class="string">username</span></span><br><span class="line"><span class="meta">store.db.password</span>=<span class="string">password</span></span><br><span class="line"><span class="meta">store.db.minConn</span>=<span class="string">5</span></span><br><span class="line"><span class="meta">store.db.maxConn</span>=<span class="string">30</span></span><br><span class="line"><span class="meta">store.db.globalTable</span>=<span class="string">global_table</span></span><br><span class="line"><span class="meta">store.db.branchTable</span>=<span class="string">branch_table</span></span><br><span class="line"><span class="meta">store.db.queryLimit</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">store.db.lockTable</span>=<span class="string">lock_table</span></span><br><span class="line"><span class="meta">store.db.maxWait</span>=<span class="string">5000</span></span><br></pre></td></tr></table></figure>
+<p>运行仓库中提供的nacos脚本,将以上信息提交到nacos控制台,如果有需要更改,可直接通过控制台更改</p>
+<p>进入文件夹下</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171029260.png" alt="image-20210312171029260"></p>
+<p>右键</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171131042.png" alt="image-20210312171131042"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171216907.png" alt="image-20210312171216907"></p>
+<p> 进入nacos查看</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171537526.png" alt="image-20210312171537526"></p>
+<h3 id="第六步"><a href="#第六步" class="headerlink" title="第六步"></a>第六步</h3><p>更改server中的registry.conf</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171654248.png" alt="image-20210312171654248"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171805716.png" alt="image-20210312171805716"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171822584.png" alt="image-20210312171822584"></p>
+<h3 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h3><p>运行seata-server</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312171941551.png" alt="image-20210312171941551"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210312172018047.png" alt="image-20210312172018047"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>sql</tag>
+        <tag>事务</tag>
+        <tag>数据库</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -3020,9 +3020,9 @@
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
-        <tag>锁</tag>
         <tag>Mysql</tag>
         <tag>线程池</tag>
+        <tag>锁</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
@@ -3138,9 +3138,9 @@
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>算法</tag>
         <tag>MQ</tag>
         <tag>Redis</tag>
@@ -3384,6 +3384,28 @@
       </categories>
       <tags>
         <tag>线程池</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中的CAS</title>
+    <url>/posts/364DCDS.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="CAS的执行过程"><a href="#CAS的执行过程" class="headerlink" title="CAS的执行过程"></a>CAS的执行过程</h1><p>​    <img data-src="https://xuemingde.com/pages/image/others/Foqp87.png" alt=""></p>
+<h1 id="CAS中存在的问题"><a href="#CAS中存在的问题" class="headerlink" title="CAS中存在的问题"></a>CAS中存在的问题</h1><h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>ABA问题是指在CAS操作时，其他线程将变量值A改为了B，但是又被改回了A，等到本线程使用期望值A与当前变量进行比较时，发现变量A没有变，于是CAS就将A值进行了交换操作，但是实际上该值已经被其他线程改变过。</p>
+<p><strong>解决方式</strong>：加版本号 </p>
+<p>在JDK的 <em>java.util.concurrent.atomic</em> 包中提供了 <code>AtomicStampedReference</code> 来解决ABA问题，该类的compareAndSet是该类的核心方法，实现如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(V   expectedReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 V   newReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> expectedStamp,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> newStamp)</span> </span>&#123;</span><br><span class="line">        Pair&lt;V&gt; current = pair;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">            expectedReference == current.reference &amp;&amp;</span><br><span class="line">            expectedStamp == current.stamp &amp;&amp;</span><br><span class="line">            ((newReference == current.reference &amp;&amp;</span><br><span class="line">              newStamp == current.stamp) ||</span><br><span class="line">             casPair(current, Pair.of(newReference, newStamp)));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/others/bkYcDR.png" alt="bkYcDR"></p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9lbHNlZi5jb20vMjAyMC8wMy8wOC8lRTUlQTYlODIlRTQlQkQlOTUlRTclOTAlODYlRTglQTclQTNBQkElRTklOTclQUUlRTklQTIlOTgv">参考文章<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h2 id="修改值时的原子性问题"><a href="#修改值时的原子性问题" class="headerlink" title="修改值时的原子性问题"></a>修改值时的原子性问题</h2><p>底层的最终实现是使用了lock cmpxchg 指令来保证的。</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/VV5fET.png" alt="VV5fET"></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3749,35 +3771,13 @@
         <tag>Spring</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
+        <tag>线程池</tag>
         <tag>锁</tag>
         <tag>数组</tag>
-        <tag>线程池</tag>
         <tag>Redis</tag>
         <tag>并发</tag>
         <tag>多线程</tag>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中的CAS</title>
-    <url>/posts/364DCDS.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="CAS的执行过程"><a href="#CAS的执行过程" class="headerlink" title="CAS的执行过程"></a>CAS的执行过程</h1><p>​    <img data-src="https://xuemingde.com/pages/image/others/Foqp87.png" alt=""></p>
-<h1 id="CAS中存在的问题"><a href="#CAS中存在的问题" class="headerlink" title="CAS中存在的问题"></a>CAS中存在的问题</h1><h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>ABA问题是指在CAS操作时，其他线程将变量值A改为了B，但是又被改回了A，等到本线程使用期望值A与当前变量进行比较时，发现变量A没有变，于是CAS就将A值进行了交换操作，但是实际上该值已经被其他线程改变过。</p>
-<p><strong>解决方式</strong>：加版本号 </p>
-<p>在JDK的 <em>java.util.concurrent.atomic</em> 包中提供了 <code>AtomicStampedReference</code> 来解决ABA问题，该类的compareAndSet是该类的核心方法，实现如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(V   expectedReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 V   newReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> expectedStamp,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> newStamp)</span> </span>&#123;</span><br><span class="line">        Pair&lt;V&gt; current = pair;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">            expectedReference == current.reference &amp;&amp;</span><br><span class="line">            expectedStamp == current.stamp &amp;&amp;</span><br><span class="line">            ((newReference == current.reference &amp;&amp;</span><br><span class="line">              newStamp == current.stamp) ||</span><br><span class="line">             casPair(current, Pair.of(newReference, newStamp)));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><img data-src="https://xuemingde.com/pages/image/others/bkYcDR.png" alt="bkYcDR"></p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9lbHNlZi5jb20vMjAyMC8wMy8wOC8lRTUlQTYlODIlRTQlQkQlOTUlRTclOTAlODYlRTglQTclQTNBQkElRTklOTclQUUlRTklQTIlOTgv">参考文章<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h2 id="修改值时的原子性问题"><a href="#修改值时的原子性问题" class="headerlink" title="修改值时的原子性问题"></a>修改值时的原子性问题</h2><p>底层的最终实现是使用了lock cmpxchg 指令来保证的。</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/VV5fET.png" alt="VV5fET"></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3824,21 +3824,6 @@
       <tags>
         <tag>Java</tag>
         <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java线程池实现原理及其在美团业务中的实践</title>
-    <url>/posts/GHVA1Q.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvdFJ6VGR4ejZpeW4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjAvMDQvMDIvamF2YS1wb29saW5nLXByYXRpY2UtaW4tbWVpdHVhbi5odG1s">Java线程池实现原理及其在美团业务中的实践<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>线程池</tag>
       </tags>
   </entry>
   <entry>
@@ -3964,6 +3949,21 @@
         <tag>面试</tag>
         <tag>线程池</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java线程池实现原理及其在美团业务中的实践</title>
+    <url>/posts/GHVA1Q.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvdFJ6VGR4ejZpeW4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjAvMDQvMDIvamF2YS1wb29saW5nLXByYXRpY2UtaW4tbWVpdHVhbi5odG1s">Java线程池实现原理及其在美团业务中的实践<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>线程池</tag>
       </tags>
   </entry>
   <entry>
@@ -4228,9 +4228,9 @@
       <tags>
         <tag>sql</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>算法</tag>
       </tags>
   </entry>
@@ -6011,8 +6011,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>数组</tag>
         <tag>线程池</tag>
+        <tag>数组</tag>
         <tag>并发</tag>
         <tag>多线程</tag>
       </tags>
@@ -6293,8 +6293,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>sql</tag>
         <tag>集合</tag>
-        <tag>数组</tag>
         <tag>Mysql</tag>
+        <tag>数组</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -6770,8 +6770,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Spring</tag>
         <tag>SpringBoot</tag>
         <tag>sql</tag>
-        <tag>索引</tag>
         <tag>Mysql</tag>
+        <tag>索引</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -6911,23 +6911,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>从实际案例聊聊Java应用的GC优化</title>
-    <url>/posts/1B1Q39D.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvN05maW5qRUJqVmk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TWpNNU5qUTVNVEk1T0E9PSZhbXA7bWlkPTI2NTE3NDcyNzMmYW1wO2lkeD0xJmFtcDtzbj03Zjk0NzA2NGE0MWVlZWNiNjgxNmE1ZDA4Mzg1ODFhZSZhbXA7Y2hrc209YmQxMmFhODQ4YTY1MjM5Mjg5ZDVjMzkyNjRlODliZDE3NWYzNzdmNjU1NGJmZTkzYjM3YWQ2NDk4Y2YxM2RlZmYzNTYzMzNjNTM5OCZhbXA7c2NlbmU9MjEjd2VjaGF0X3JlZGlyZWN0">从实际案例聊聊Java应用的GC优化<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-        <category>GC</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么确定是垃圾及垃圾回收算法</title>
     <url>/posts/45THTG.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="怎么确定是垃圾"><a href="#怎么确定是垃圾" class="headerlink" title="怎么确定是垃圾"></a>怎么确定是垃圾</h1><h2 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h2><p>给每个对象添加一个引用计数器，每当有一个地方引用它时，引用计数值就+1，当引用失效时，引用计数值就-1，任何时刻引用计数值为0的对象就可以被回收，当一个对象被垃圾收集器收集时，被它引用的对象引用计数值就-1，所以在这种方法中一个对象被垃圾收集会导致后续其他对象的垃圾收集行动。</p>
@@ -6952,6 +6935,23 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>JVM</tag>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从实际案例聊聊Java应用的GC优化</title>
+    <url>/posts/1B1Q39D.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvN05maW5qRUJqVmk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TWpNNU5qUTVNVEk1T0E9PSZhbXA7bWlkPTI2NTE3NDcyNzMmYW1wO2lkeD0xJmFtcDtzbj03Zjk0NzA2NGE0MWVlZWNiNjgxNmE1ZDA4Mzg1ODFhZSZhbXA7Y2hrc209YmQxMmFhODQ4YTY1MjM5Mjg5ZDVjMzkyNjRlODliZDE3NWYzNzdmNjU1NGJmZTkzYjM3YWQ2NDk4Y2YxM2RlZmYzNTYzMzNjNTM5OCZhbXA7c2NlbmU9MjEjd2VjaGF0X3JlZGlyZWN0">从实际案例聊聊Java应用的GC优化<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+        <category>GC</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -7098,6 +7098,39 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RabbitMQ防止数据丢失问题简单介绍</title>
+    <url>/posts/12VZ51X.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
+</blockquote>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+<blockquote>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -7500,35 +7533,31 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>集合</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
       </tags>
   </entry>
   <entry>
-    <title>RabbitMQ防止数据丢失问题简单介绍</title>
-    <url>/posts/12VZ51X.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
-</blockquote>
-<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
-<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
-<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
-<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
-<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
-<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
-<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
+    <title>关于一些MQ的面试题</title>
+    <url>/posts/11RZTJV.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
 <blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 ]]></content>
       <categories>
@@ -7536,7 +7565,7 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <category>消息队列</category>
       </categories>
       <tags>
-        <tag>事务</tag>
+        <tag>面试</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -7840,42 +7869,13 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>集合</tag>
         <tag>面试</tag>
-        <tag>索引</tag>
         <tag>Mysql</tag>
+        <tag>索引</tag>
         <tag>算法</tag>
         <tag>MQ</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/posts/11RZTJV.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-<blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -8335,8 +8335,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>JVM</tag>
         <tag>面试</tag>
-        <tag>索引</tag>
         <tag>线程池</tag>
+        <tag>索引</tag>
         <tag>算法</tag>
         <tag>并发</tag>
         <tag>设计模式</tag>
@@ -8745,8 +8745,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>sql</tag>
         <tag>事务</tag>
-        <tag>锁</tag>
         <tag>Mysql</tag>
+        <tag>锁</tag>
         <tag>算法</tag>
         <tag>并发</tag>
       </tags>
@@ -8799,9 +8799,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -8825,8 +8825,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>sql</tag>
-        <tag>索引</tag>
         <tag>Mysql</tag>
+        <tag>索引</tag>
       </tags>
   </entry>
   <entry>
@@ -8920,8 +8920,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
-        <tag>锁</tag>
         <tag>Mysql</tag>
+        <tag>锁</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -9003,9 +9003,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>算法</tag>
         <tag>并发</tag>
       </tags>
@@ -9139,53 +9139,10 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>集合</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务持久性与原子性的保障</title>
-    <url>/posts/2DEMJ1C.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>持久性的意义</strong></p>
-<p>所谓持久性就是说在事务成功提交了之后，数据的最终变更操作都会持久化到磁盘上去,不会因为故障导致数据丢失。而在计算机系统里，只有数据保存到了磁盘才能保证数据不会丢失，持久化的问题是所有数据库系统都需要面临的，无法保证持久性的数据库就意味着在数据库、系统、服务器发生故障时无法进行数据恢复。</p>
-<p><strong>持久性的难题</strong></p>
-<p>保证持久性的意义在于，就算遇到数据库、系统、服务器崩溃，我们依然能对已经损坏的数据进行恢复，用习惯了ACID的数据库，我们潜意识里就以为持久化是自然而然的事情，然而并非这样，我们经典的MyIsam 就不支持这个特性，至于为什么，因为保证持久化的操作本身是有难题需要攻克的，这个难题在于把数据写入磁盘的操作过程并不是原子性的。</p>
-<p>因为一次事务会牵扯到多次调用磁盘写数据的操作，而多次磁盘操作相互是独立的，所以一个事务是无法保障多次磁盘读写的原子操作的。这也就意味着，如果事务提交的时候如果发生故障、崩溃，就有可能部分写磁盘操作调用成功，部分写操作调用失败的情况，从而导致产生了脏数据。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1114-VY1lSA.jpg" alt="img"></p>
-<p>除了原子性问题之外，为了提升IO的效率， 数据库是允许异步写入数据到磁盘的，数据写入通常会先写内存、再写磁盘。 为了优化写入数据的性能，通常应用也会在内存中加入各种缓冲区，  所以数据最终什么时候写入到磁盘   这个时间是根据具体的策略来决定，简单来说就是应用程序写入数据成功了，但是并不一定代表数据已经持久化到磁盘了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-jg7jSN.jpg" alt="img"></p>
-<p><strong>所以综合来看持久化的关键问题在于两方面，：</strong></p>
-<p>一方面，应用程序的一次业务操作会牵扯到多次调用磁盘写，而多次写入磁盘的操作并不具备原子性，所以就也会存在部分数据写入成功，部分数据写入失败的情况。</p>
-<p>另一方面，数据从内存写入到磁盘的整个过程可以异步进行的，所以导致从程序上来看数据写入成功了，但是数据并不一定已经持久化到磁盘了。 </p>
-<h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a><strong>redo log</strong></h3><p>上面我们已经了解到 如果提交事务的过程中发生崩溃、宕机，就有可能会导致数据丢失和损坏，那么如何解决这个问题就在于，在数据丢失和损坏之后我们能通过什么方式对数据进行恢复。</p>
-<p>回想到现实世界里，有时候我们在做某件事情的时候，偶尔会遇到脑子突然断片或失忆的情况（好比应用崩溃、服务器宕机），然后断片了之后，回想不起来断片之前自己在做什么，也不知道事情做到了哪一步，而这个时候我们往往会想着要是在做事情之前把这些记录在笔记本里面就好了，按着记事本里面的记录就知道自己应该做什么事情，还有哪些事情没有做了，然后把没做的事情继续做完就行了。</p>
-<p>在现实世界我们用记事本的方式解决脑子失忆、断片的问题，在计算机里我们用记日志的方式来解决数据崩溃恢复问题，而Mysql里这个日志就是redo log。 redo  log的功能就是事务提交之前首先会把本次事务需要变更的数据，包括修改磁盘那块扇区、修改哪些数据等，通通都记录下来。所以只要保证成功记录了redo log  ，那么就算事务提交之后发生了崩溃、宕机，此时内存的数据即便没有即时写入磁盘，又或则只写入了一部分数据到磁盘，我们只需要通过找到事务对应的redo log，再对数据进行对比恢复即可。</p>
-<p><strong>加入redo log后，事务执行过程如下：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-40zR4M.jpg" alt="img"></p>
-<h3 id="原子性保障"><a href="#原子性保障" class="headerlink" title="原子性保障"></a><strong>原子性保障</strong></h3><p>所谓原子性就是说，在事务中进行的一系列操作，要么全部执行成功，要么全部执行失败，不存在部分执行部分不执行的情况。</p>
-<p>首先事务的操作<strong>“要么全部成功”</strong>，这个是指事务提交后必须保证数据全部修改成功，在正常情况下事务提交后数据是肯定能修改成功的，所以这里需要考虑的是异常情况下能否保证数据全部修改成功 (比如在数据库崩溃、宕机等故障的情况)，所以保证原子性操作全部成功的前提就得必须保证持久性，这这部分的功能在上面我们已经知道是通过redo  log 来解决了。</p>
-<p>然后原子性中还有一个特性<strong>“要么全部失败”，</strong>，这个是指事务可以在任何阶段进行回滚了，并且在执行回滚操作后，必须保证事务所变更的数据恢复到修改之前的样子。  比如上面的流程中，在修改数据后业务不具备事务提交的条件，那么此时就需要对事务进行回滚，可是需要注意的是，此时已经变更的数据有可能已经写入到磁盘了，所以如果需要进行事务回滚，那么就必然需要对已经修改的数据进行还原，所以此时我们就需要有一个记录的历史数据快照的日志，这个日志的作用在于如果事务需要进行回滚，那么通过该日志考记录的历史快照可以还原已经变更的数据信息，在Mysql 里这个快照日志就是undo log。</p>
-<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a><strong>undo log</strong></h3><p>在Mysql里每次修改数据前，首先会把修改之前的数据作为历史保存一份到undo log里面的，数据里面会记录操作该数据的事务ID，在事务需要进行回滚的时候，通过对比undo log日志把已经修改的数据进行还原。</p>
-<p><strong>加入redo log后，事务执行过程如下：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-BoH8vP.jpg" alt="img"></p>
-<p><strong>总结：</strong></p>
-<p>事务持久性的难题在于，一个事务会牵扯到多次磁盘IO操作，多次IO之间操作相互独立，所以在发生故障和意外情况会出现部分数据写入成功，部分数据写入失败的情况，为了保障数据最终都能成功写入到磁盘，所以在修改数据之前，通过redo log提前记录一份最终需要完成修改的数据记录，如果在事务提交的的过程中发生故障、宕机的意外导致数据写入不成功，从而在意外发生后通过redo  log来将未成功写入的数据重新写入，最终把需要修改的数据全部写入磁盘，从而保障了事务的持久性。</p>
-<p>原子性的难题在于，当修改数据后如果需要对事务进行回滚，这个过程中内存中修改的数据可能持久化到磁盘，导致脏数据，所以必须通过undo  log提前记录一份历史数据的快照，在事务需要进行回滚的时候，通过历史数据的快照来将已经变更的数据恢复如初，从而保障事务回滚后就像什么都没发生过一样，配合redo log 保障了事务原子性要么全部成功，要么全部失败的原子特性。</p>
-<blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MjA2MjI0NzI=">数据库基础（五）事务持久性与原子性的保障 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-        <tag>事务</tag>
-        <tag>数据库</tag>
-        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -9247,10 +9204,53 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>sql</tag>
         <tag>数据库</tag>
+        <tag>Mysql</tag>
         <tag>数组</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务持久性与原子性的保障</title>
+    <url>/posts/2DEMJ1C.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>持久性的意义</strong></p>
+<p>所谓持久性就是说在事务成功提交了之后，数据的最终变更操作都会持久化到磁盘上去,不会因为故障导致数据丢失。而在计算机系统里，只有数据保存到了磁盘才能保证数据不会丢失，持久化的问题是所有数据库系统都需要面临的，无法保证持久性的数据库就意味着在数据库、系统、服务器发生故障时无法进行数据恢复。</p>
+<p><strong>持久性的难题</strong></p>
+<p>保证持久性的意义在于，就算遇到数据库、系统、服务器崩溃，我们依然能对已经损坏的数据进行恢复，用习惯了ACID的数据库，我们潜意识里就以为持久化是自然而然的事情，然而并非这样，我们经典的MyIsam 就不支持这个特性，至于为什么，因为保证持久化的操作本身是有难题需要攻克的，这个难题在于把数据写入磁盘的操作过程并不是原子性的。</p>
+<p>因为一次事务会牵扯到多次调用磁盘写数据的操作，而多次磁盘操作相互是独立的，所以一个事务是无法保障多次磁盘读写的原子操作的。这也就意味着，如果事务提交的时候如果发生故障、崩溃，就有可能部分写磁盘操作调用成功，部分写操作调用失败的情况，从而导致产生了脏数据。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1114-VY1lSA.jpg" alt="img"></p>
+<p>除了原子性问题之外，为了提升IO的效率， 数据库是允许异步写入数据到磁盘的，数据写入通常会先写内存、再写磁盘。 为了优化写入数据的性能，通常应用也会在内存中加入各种缓冲区，  所以数据最终什么时候写入到磁盘   这个时间是根据具体的策略来决定，简单来说就是应用程序写入数据成功了，但是并不一定代表数据已经持久化到磁盘了。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-jg7jSN.jpg" alt="img"></p>
+<p><strong>所以综合来看持久化的关键问题在于两方面，：</strong></p>
+<p>一方面，应用程序的一次业务操作会牵扯到多次调用磁盘写，而多次写入磁盘的操作并不具备原子性，所以就也会存在部分数据写入成功，部分数据写入失败的情况。</p>
+<p>另一方面，数据从内存写入到磁盘的整个过程可以异步进行的，所以导致从程序上来看数据写入成功了，但是数据并不一定已经持久化到磁盘了。 </p>
+<h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a><strong>redo log</strong></h3><p>上面我们已经了解到 如果提交事务的过程中发生崩溃、宕机，就有可能会导致数据丢失和损坏，那么如何解决这个问题就在于，在数据丢失和损坏之后我们能通过什么方式对数据进行恢复。</p>
+<p>回想到现实世界里，有时候我们在做某件事情的时候，偶尔会遇到脑子突然断片或失忆的情况（好比应用崩溃、服务器宕机），然后断片了之后，回想不起来断片之前自己在做什么，也不知道事情做到了哪一步，而这个时候我们往往会想着要是在做事情之前把这些记录在笔记本里面就好了，按着记事本里面的记录就知道自己应该做什么事情，还有哪些事情没有做了，然后把没做的事情继续做完就行了。</p>
+<p>在现实世界我们用记事本的方式解决脑子失忆、断片的问题，在计算机里我们用记日志的方式来解决数据崩溃恢复问题，而Mysql里这个日志就是redo log。 redo  log的功能就是事务提交之前首先会把本次事务需要变更的数据，包括修改磁盘那块扇区、修改哪些数据等，通通都记录下来。所以只要保证成功记录了redo log  ，那么就算事务提交之后发生了崩溃、宕机，此时内存的数据即便没有即时写入磁盘，又或则只写入了一部分数据到磁盘，我们只需要通过找到事务对应的redo log，再对数据进行对比恢复即可。</p>
+<p><strong>加入redo log后，事务执行过程如下：</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-40zR4M.jpg" alt="img"></p>
+<h3 id="原子性保障"><a href="#原子性保障" class="headerlink" title="原子性保障"></a><strong>原子性保障</strong></h3><p>所谓原子性就是说，在事务中进行的一系列操作，要么全部执行成功，要么全部执行失败，不存在部分执行部分不执行的情况。</p>
+<p>首先事务的操作<strong>“要么全部成功”</strong>，这个是指事务提交后必须保证数据全部修改成功，在正常情况下事务提交后数据是肯定能修改成功的，所以这里需要考虑的是异常情况下能否保证数据全部修改成功 (比如在数据库崩溃、宕机等故障的情况)，所以保证原子性操作全部成功的前提就得必须保证持久性，这这部分的功能在上面我们已经知道是通过redo  log 来解决了。</p>
+<p>然后原子性中还有一个特性<strong>“要么全部失败”，</strong>，这个是指事务可以在任何阶段进行回滚了，并且在执行回滚操作后，必须保证事务所变更的数据恢复到修改之前的样子。  比如上面的流程中，在修改数据后业务不具备事务提交的条件，那么此时就需要对事务进行回滚，可是需要注意的是，此时已经变更的数据有可能已经写入到磁盘了，所以如果需要进行事务回滚，那么就必然需要对已经修改的数据进行还原，所以此时我们就需要有一个记录的历史数据快照的日志，这个日志的作用在于如果事务需要进行回滚，那么通过该日志考记录的历史快照可以还原已经变更的数据信息，在Mysql 里这个快照日志就是undo log。</p>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a><strong>undo log</strong></h3><p>在Mysql里每次修改数据前，首先会把修改之前的数据作为历史保存一份到undo log里面的，数据里面会记录操作该数据的事务ID，在事务需要进行回滚的时候，通过对比undo log日志把已经修改的数据进行还原。</p>
+<p><strong>加入redo log后，事务执行过程如下：</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-BoH8vP.jpg" alt="img"></p>
+<p><strong>总结：</strong></p>
+<p>事务持久性的难题在于，一个事务会牵扯到多次磁盘IO操作，多次IO之间操作相互独立，所以在发生故障和意外情况会出现部分数据写入成功，部分数据写入失败的情况，为了保障数据最终都能成功写入到磁盘，所以在修改数据之前，通过redo log提前记录一份最终需要完成修改的数据记录，如果在事务提交的的过程中发生故障、宕机的意外导致数据写入不成功，从而在意外发生后通过redo  log来将未成功写入的数据重新写入，最终把需要修改的数据全部写入磁盘，从而保障了事务的持久性。</p>
+<p>原子性的难题在于，当修改数据后如果需要对事务进行回滚，这个过程中内存中修改的数据可能持久化到磁盘，导致脏数据，所以必须通过undo  log提前记录一份历史数据的快照，在事务需要进行回滚的时候，通过历史数据的快照来将已经变更的数据恢复如初，从而保障事务回滚后就像什么都没发生过一样，配合redo log 保障了事务原子性要么全部成功，要么全部失败的原子特性。</p>
+<blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MjA2MjI0NzI=">数据库基础（五）事务持久性与原子性的保障 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>事务</tag>
+        <tag>数据库</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -9417,8 +9417,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>bug</tag>
         <tag>sql</tag>
         <tag>数据库</tag>
-        <tag>索引</tag>
         <tag>Mysql</tag>
+        <tag>索引</tag>
         <tag>算法</tag>
         <tag>并发</tag>
       </tags>
@@ -9441,6 +9441,51 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis的删除过期key的策略</title>
+    <url>/posts/SFARPJ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在Redis内部，每当我们设置一个键的过期时间时，Redis就会将该键带上过期时间存放到一个<strong>过期字典</strong>中。当我们查询一个键时，Redis便首先检查该键是否存在过期字典中，如果存在，那就获取其过期时间。然后将过期时间和当前系统时间进行比对，比系统时间大，那就没有过期；反之判定该键过期。  </p>
+<h1 id="过期删除策略"><a href="#过期删除策略" class="headerlink" title="过期删除策略"></a>过期删除策略</h1><h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>在设置key的过期时间的同时，创建一个定时器，让定时器在key的过期时间来临时，立即执行对key的删除操作；  </p>
+<p>优点：定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。  </p>
+<p>缺点：对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。  </p>
+<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。  </p>
+<p>优点：对 CPU友好，我们只会在使用该键时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查。</p>
+<p>缺点：对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。  </p>
+<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。  </p>
+<p>优点：可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。  </p>
+<p>缺点：</p>
+<ul>
+<li>难以确定删除操作执行的时长和频率。</li>
+<li>如果执行的太频繁，定期删除策略变得和定时删除策略一样，对CPU不友好。</li>
+<li>如果执行的太少，那又和惰性删除一样了，过期键占用的内存不会及时得到释放。</li>
+<li>另外最重要的是，在获取某个键时，如果某个键的过期时间已经到了，但是还没执行定期删除，那么就会返回这个键的值，这是业务不能忍受的错误。</li>
+</ul>
+<h1 id="Redis过期删除策略"><a href="#Redis过期删除策略" class="headerlink" title="Redis过期删除策略"></a>Redis过期删除策略</h1><p>单一使用某一策略都不能满足实际需求，可组合使用。</p>
+<p>Redis的过期删除策略就是：惰性删除和定期删除两种策略配合使用。</p>
+<ul>
+<li><strong>惰性删除</strong>  </li>
+</ul>
+<p>Redis的惰性删除策略由 db.c/expireIfNeeded 函数实现，所有键读写命令执行之前都会调用 expireIfNeeded 函数对其进行检查，如果过期，则删除该键，然后执行键不存在的操作；未过期则不作操作，继续执行原有的命令。</p>
+<ul>
+<li><strong>定期删除</strong>  </li>
+</ul>
+<p>由redis.c/activeExpireCycle 函数实现，函数以一定的频率运行，每次运行时，都从一定数量的数据库中取出一定数量的随机键进行检查，并删除其中的过期键。</p>
+<blockquote>
+<p>注意：并不是一次运行就检查所有的库，所有的键，而是随机检查一定数量的键。  </p>
+</blockquote>
+<p>定期删除函数的运行频率，在Redis2.6版本中，规定每秒运行10次，大概100ms运行一次。在Redis2.8版本后，可以通过修改配置文件redis.conf 的 <strong>hz</strong> 选项来调整这个次数。  </p>
+<p><strong>建议不要将这个值设置超过 100，否则会对CPU造成比较大的压力。</strong> </p>
+<p>通过过期删除策略，对于某些永远使用不到的键，并且多次定期删除也没选定到并删除，那么这些键同样会一直驻留在内存中，又或者在Redis中存入了大量的键，这些操作可能会导致Redis内存不够用，这时候就需要<strong>Redis的内存淘汰策略</strong>了。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -9883,9 +9928,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
+        <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-        <tag>Mysql</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -9937,51 +9982,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>redis的删除过期key的策略</title>
-    <url>/posts/SFARPJ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在Redis内部，每当我们设置一个键的过期时间时，Redis就会将该键带上过期时间存放到一个<strong>过期字典</strong>中。当我们查询一个键时，Redis便首先检查该键是否存在过期字典中，如果存在，那就获取其过期时间。然后将过期时间和当前系统时间进行比对，比系统时间大，那就没有过期；反之判定该键过期。  </p>
-<h1 id="过期删除策略"><a href="#过期删除策略" class="headerlink" title="过期删除策略"></a>过期删除策略</h1><h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>在设置key的过期时间的同时，创建一个定时器，让定时器在key的过期时间来临时，立即执行对key的删除操作；  </p>
-<p>优点：定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。  </p>
-<p>缺点：对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。  </p>
-<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。  </p>
-<p>优点：对 CPU友好，我们只会在使用该键时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查。</p>
-<p>缺点：对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。  </p>
-<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。  </p>
-<p>优点：可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。  </p>
-<p>缺点：</p>
-<ul>
-<li>难以确定删除操作执行的时长和频率。</li>
-<li>如果执行的太频繁，定期删除策略变得和定时删除策略一样，对CPU不友好。</li>
-<li>如果执行的太少，那又和惰性删除一样了，过期键占用的内存不会及时得到释放。</li>
-<li>另外最重要的是，在获取某个键时，如果某个键的过期时间已经到了，但是还没执行定期删除，那么就会返回这个键的值，这是业务不能忍受的错误。</li>
-</ul>
-<h1 id="Redis过期删除策略"><a href="#Redis过期删除策略" class="headerlink" title="Redis过期删除策略"></a>Redis过期删除策略</h1><p>单一使用某一策略都不能满足实际需求，可组合使用。</p>
-<p>Redis的过期删除策略就是：惰性删除和定期删除两种策略配合使用。</p>
-<ul>
-<li><strong>惰性删除</strong>  </li>
-</ul>
-<p>Redis的惰性删除策略由 db.c/expireIfNeeded 函数实现，所有键读写命令执行之前都会调用 expireIfNeeded 函数对其进行检查，如果过期，则删除该键，然后执行键不存在的操作；未过期则不作操作，继续执行原有的命令。</p>
-<ul>
-<li><strong>定期删除</strong>  </li>
-</ul>
-<p>由redis.c/activeExpireCycle 函数实现，函数以一定的频率运行，每次运行时，都从一定数量的数据库中取出一定数量的随机键进行检查，并删除其中的过期键。</p>
-<blockquote>
-<p>注意：并不是一次运行就检查所有的库，所有的键，而是随机检查一定数量的键。  </p>
-</blockquote>
-<p>定期删除函数的运行频率，在Redis2.6版本中，规定每秒运行10次，大概100ms运行一次。在Redis2.8版本后，可以通过修改配置文件redis.conf 的 <strong>hz</strong> 选项来调整这个次数。  </p>
-<p><strong>建议不要将这个值设置超过 100，否则会对CPU造成比较大的压力。</strong> </p>
-<p>通过过期删除策略，对于某些永远使用不到的键，并且多次定期删除也没选定到并删除，那么这些键同样会一直驻留在内存中，又或者在Redis中存入了大量的键，这些操作可能会导致Redis内存不够用，这时候就需要<strong>Redis的内存淘汰策略</strong>了。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis的缓存一致性 问题</title>
     <url>/posts/15KRDA4.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
@@ -10011,6 +10011,38 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis内存淘汰策略</title>
+    <url>/posts/2FA73PT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
+</blockquote>
+<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
+<li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
+<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
+<li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
+<li><strong>allkeys-random</strong>：从所有key中随机淘汰数据</li>
+<li><strong>volatile-random</strong>：从设置了过期时间的key中随机淘汰</li>
+<li><strong>volatile-ttl</strong>：在设置了过期时间的key中，根据key的过期时间进行淘汰，越早过期的越优先被淘汰</li>
+</ul>
+<blockquote>
+<p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
+</blockquote>
+<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
+<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
+<p><code>maxmemory-policy allkeys-lru</code></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -10684,38 +10716,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>redis内存淘汰策略</title>
-    <url>/posts/2FA73PT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
-</blockquote>
-<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
-<li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
-<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
-<li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
-<li><strong>allkeys-random</strong>：从所有key中随机淘汰数据</li>
-<li><strong>volatile-random</strong>：从设置了过期时间的key中随机淘汰</li>
-<li><strong>volatile-ttl</strong>：在设置了过期时间的key中，根据key的过期时间进行淘汰，越早过期的越优先被淘汰</li>
-</ul>
-<blockquote>
-<p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
-</blockquote>
-<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
-<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
-<p><code>maxmemory-policy allkeys-lru</code></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL优化和SQl注入问题</title>
     <url>/posts/1NTK6KJ.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vbWVhZGVyL2hleG8tYmxvZy9ibG9iL2Jsb2cvc291cmNlL19wb3N0cy8lRTYlOTUlQjAlRTYlOEQlQUUlRTUlQkElOTMvU1FMLzIwMjEwMzI0LVNRTCVFNCVCQyU5OCVFNSU4QyU5NiVFNSU5MiU4Q1NRbCVFNiVCMyVBOCVFNSU4NSVBNSVFOSU5NyVBRSVFOSVBMiU5OC5tZA==">Gitee原文<i class="fa fa-external-link-alt"></i></span></p>
@@ -10745,6 +10745,30 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
 <p><img data-src="https://xuemingde.com/pages/image/others/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/image-20210324175324481.png" alt="image-20210324175324481"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OR与AND一起的用法</title>
+    <url>/posts/1BED9D0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
+<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
+<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
+<p>查询  </p>
+<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
+SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
+</code></pre>
+<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
+<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -10947,30 +10971,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>数据库</tag>
         <tag>Mysql</tag>
         <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OR与AND一起的用法</title>
-    <url>/posts/1BED9D0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
-<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
-<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
-<p>查询  </p>
-<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
-SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
-</code></pre>
-<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
-<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -11201,35 +11201,6 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </tags>
   </entry>
   <entry>
-    <title>BeanFactory和ApplicationContext有什么区别</title>
-    <url>/posts/11TFME1.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="相同"><a href="#相同" class="headerlink" title="相同"></a>相同</h2><ul>
-<li><p>spring提供了两种不同的IOC容器，一个是BeanFactory，另外一个就是ApplocationContext，他们都是java 接口,ApplicationContext 继承于BeanFactory。</p>
-</li>
-<li><p>他们都可以用来配置XML属性，也支持属性的自动注入。</p>
-</li>
-<li><p>而 ListableBeanFactory 继承于BeanFactory。BeanFactory和ApplocationContext都是提供了一种方式，使用getBean(“bean name”)获取bean。</p>
-</li>
-</ul>
-<h2 id="不同"><a href="#不同" class="headerlink" title="不同"></a>不同</h2><ul>
-<li>当你调用getBean()方法时，BeanFactory仅实例化bean，而ApplocationContext在启动容器的时候实例化单例bean，不会等调用getBean时才实例化。</li>
-<li>BeanFactory不支持国际化，即i18n，但ApplocationContext提供了支持。</li>
-<li>BeanFactory于ApplocationContext之间的另一个区别是能够将事件发布到注册为监听的bean。</li>
-<li>BeanFactory的一个核心实现是XMLBeanFactory，而ApplocationContext的一个核心实现是classPathXmlApplocationContext，Web容器的环境我们使用WebApplocationContext并且添加了getServietContext方法。</li>
-<li>如果使用自动注入并使用BeanFactory，则需要使用API注册AutoWiredBeanPostProcessor，如果使用ApplocationContext则可以使用XML进行配置。</li>
-<li>简而言之，BeanFactory提供了基本的IOC和DI功能，而ApplocationContext提供了高级的功能，BeanFactory可以用于测试和非生产，单ApplocationContext是功能更丰富的容器实现，应该优先于BeanFactory。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>框架</category>
-        <category>SpringBoot</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>springboot的启动原理</title>
     <url>/posts/318CB48.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="总流程图"><a href="#总流程图" class="headerlink" title="总流程图"></a>总流程图</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/09/ufeQLe.jpg" alt=""></p>
@@ -11283,6 +11254,35 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
         <tag>集合</tag>
         <tag>面试</tag>
         <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BeanFactory和ApplicationContext有什么区别</title>
+    <url>/posts/11TFME1.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="相同"><a href="#相同" class="headerlink" title="相同"></a>相同</h2><ul>
+<li><p>spring提供了两种不同的IOC容器，一个是BeanFactory，另外一个就是ApplocationContext，他们都是java 接口,ApplicationContext 继承于BeanFactory。</p>
+</li>
+<li><p>他们都可以用来配置XML属性，也支持属性的自动注入。</p>
+</li>
+<li><p>而 ListableBeanFactory 继承于BeanFactory。BeanFactory和ApplocationContext都是提供了一种方式，使用getBean(“bean name”)获取bean。</p>
+</li>
+</ul>
+<h2 id="不同"><a href="#不同" class="headerlink" title="不同"></a>不同</h2><ul>
+<li>当你调用getBean()方法时，BeanFactory仅实例化bean，而ApplocationContext在启动容器的时候实例化单例bean，不会等调用getBean时才实例化。</li>
+<li>BeanFactory不支持国际化，即i18n，但ApplocationContext提供了支持。</li>
+<li>BeanFactory于ApplocationContext之间的另一个区别是能够将事件发布到注册为监听的bean。</li>
+<li>BeanFactory的一个核心实现是XMLBeanFactory，而ApplocationContext的一个核心实现是classPathXmlApplocationContext，Web容器的环境我们使用WebApplocationContext并且添加了getServietContext方法。</li>
+<li>如果使用自动注入并使用BeanFactory，则需要使用API注册AutoWiredBeanPostProcessor，如果使用ApplocationContext则可以使用XML进行配置。</li>
+<li>简而言之，BeanFactory提供了基本的IOC和DI功能，而ApplocationContext提供了高级的功能，BeanFactory可以用于测试和非生产，单ApplocationContext是功能更丰富的容器实现，应该优先于BeanFactory。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>框架</category>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
       </tags>
   </entry>
 </search>
