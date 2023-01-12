@@ -418,35 +418,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Java中有几种引用</title>
-    <url>/posts/APJKVT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-</div><br><span id="more"></span><br>Gitee原文 : <span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vbWVhZGVyL2hleG8tYmxvZy9ibG9iL2Jsb2cvc291cmNlL19wb3N0cy9KQVZBJUU1JTlGJUJBJUU3JUExJTgwLzIwMjIwMjE0LUphdmElRTQlQjglQUQlRTYlOUMlODklRTUlODclQTAlRTclQTclOEQlRTUlQkMlOTUlRTclOTQlQTgubWQ=">https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/JAVA%E5%9F%BA%E7%A1%80/20220214-Java%E4%B8%AD%E6%9C%89%E5%87%A0%E7%A7%8D%E5%BC%95%E7%94%A8.md<i class="fa fa-external-link-alt"></i></span></p>
-<p>四种：强、软、弱、虚。</p>
-<ul>
-<li>强引用：<br>有引用变量指向时永远不会被垃圾回收，哪怕内存不足时，JVM宁愿抛出OutOfMemory错误也不会回收这种对象。如果想中断强引用与对象之间的联系，可以显示的将强引用赋值为null，这样一来，JVM就可以适时的回收对象了<br>例子：<code>M m = new M();</code><br><code>m = null;</code> 此时垃圾回收器才会回收。<br>​</li>
-</ul>
-<ul>
-<li>软引用<br>在内存足够的时候，软引用对象不会被回收，只有在内存不足时，系统则会回收软引用对象，如果回收了软引用对象之后仍然没有足够的内存，才会抛出内存溢出异常。<br>例子：<code>SoftReference&lt;Byte[]&gt; m = new SoftReference&lt;&gt;(new Byte[1024]);</code><br>​</li>
-</ul>
-<ul>
-<li>弱引用 (面试重点）<br>弱引用的引用强度比软引用要更弱一些，<strong>无论内存是否足够，只要 JVM 开始进行垃圾回收，那些被弱引用关联的对象都会被回收。</strong><br>例子：<code>WeakReference&lt;M&gt; m = new WeakReference&lt;&gt;(new M());</code><br>​</li>
-</ul>
-<ul>
-<li>虚引用<br>虚引用是最弱的一种引用关系，如果一个对象仅持有虚引用，那么它就和没有任何引用一样，它随时可能会被回收。<br>例子：<code>PhantomReference phantomReference = new PhantomReference&lt;Object&gt;(new CanisterInfo(), new ReferenceQueue&lt;&gt;());</code><br><code>phantomReference.get();</code> 什么时候都无法get到。<br>当垃圾回收器准备回收一个对象时，如果发现它与虚引用关联，就会在回收它之前，将这个虚引用加入到引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被回收，如果确实要被回收，就可以做一些回收之前的收尾工作。  </li>
-</ul>
-<p><strong>弱引用重点示例（结合ThreadLocal）</strong><br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadLocal&lt;CanisterInfo&gt; tl = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line">        tl.set(<span class="keyword">new</span> CanisterInfo());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        Thread t = Thread.currentThread();</span><br><span class="line">        ThreadLocalMap map = getMap(t);</span><br><span class="line">        <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">            <span class="comment">//此处的this 是ThreadLocal对象</span></span><br><span class="line">            map.set(<span class="keyword">this</span>, value);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            createMap(t, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(ThreadLocal&lt;?&gt; key, Object value)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// We don&#x27;t use a fast path as with get() because it is at</span></span><br><span class="line">            <span class="comment">// least as common to use set() to create new entries as</span></span><br><span class="line">            <span class="comment">// it is to replace existing ones, in which case, a fast</span></span><br><span class="line">            <span class="comment">// path would fail more often than not.</span></span><br><span class="line"></span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line">            <span class="keyword">int</span> i = key.threadLocalHashCode &amp; (len-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (Entry e = tab[i];</span><br><span class="line">                 e != <span class="keyword">null</span>;</span><br><span class="line">                 e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">                ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (k == key) &#123;</span><br><span class="line">                    e.value = value;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (k == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    replaceStaleEntry(key, value, i);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            tab[i] = <span class="keyword">new</span> Entry(key, value);</span><br><span class="line">            <span class="keyword">int</span> sz = ++size;</span><br><span class="line">            <span class="keyword">if</span> (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)</span><br><span class="line">                rehash();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Entry对象继承了WeakReference，一个弱引用对象</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">            <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">            Object value;</span><br><span class="line"></span><br><span class="line">            Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">                <span class="keyword">super</span>(k);</span><br><span class="line">                value = v;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><br><img data-src="https://xuemingde.com/pages/image/others/WvXOry.png" alt=""><br>此图说明了，在 <code>ThreadLocal&lt;CanisterInfo&gt; tl = new ThreadLocal&lt;&gt;();</code> 并且 <code>tl.set(new CanisterInfo());</code>后有一个强引用tl指向了ThreadLocal对象，也有一个弱引用（ThreadLocalMap的key）也指向了ThreadLocal。<br>为什么Entry会使用弱引用，图中也说明了。</p>
-]]></content>
-      <categories>
-        <category>JAVA基础</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Guava中这些Map的骚操作</title>
     <url>/posts/4ENXFE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -688,6 +659,35 @@
         <tag>数据库</tag>
         <tag>Mysql</tag>
         <tag>线程池</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中有几种引用</title>
+    <url>/posts/APJKVT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+</div><br><span id="more"></span><br>Gitee原文 : <span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vbWVhZGVyL2hleG8tYmxvZy9ibG9iL2Jsb2cvc291cmNlL19wb3N0cy9KQVZBJUU1JTlGJUJBJUU3JUExJTgwLzIwMjIwMjE0LUphdmElRTQlQjglQUQlRTYlOUMlODklRTUlODclQTAlRTclQTclOEQlRTUlQkMlOTUlRTclOTQlQTgubWQ=">https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/JAVA%E5%9F%BA%E7%A1%80/20220214-Java%E4%B8%AD%E6%9C%89%E5%87%A0%E7%A7%8D%E5%BC%95%E7%94%A8.md<i class="fa fa-external-link-alt"></i></span></p>
+<p>四种：强、软、弱、虚。</p>
+<ul>
+<li>强引用：<br>有引用变量指向时永远不会被垃圾回收，哪怕内存不足时，JVM宁愿抛出OutOfMemory错误也不会回收这种对象。如果想中断强引用与对象之间的联系，可以显示的将强引用赋值为null，这样一来，JVM就可以适时的回收对象了<br>例子：<code>M m = new M();</code><br><code>m = null;</code> 此时垃圾回收器才会回收。<br>​</li>
+</ul>
+<ul>
+<li>软引用<br>在内存足够的时候，软引用对象不会被回收，只有在内存不足时，系统则会回收软引用对象，如果回收了软引用对象之后仍然没有足够的内存，才会抛出内存溢出异常。<br>例子：<code>SoftReference&lt;Byte[]&gt; m = new SoftReference&lt;&gt;(new Byte[1024]);</code><br>​</li>
+</ul>
+<ul>
+<li>弱引用 (面试重点）<br>弱引用的引用强度比软引用要更弱一些，<strong>无论内存是否足够，只要 JVM 开始进行垃圾回收，那些被弱引用关联的对象都会被回收。</strong><br>例子：<code>WeakReference&lt;M&gt; m = new WeakReference&lt;&gt;(new M());</code><br>​</li>
+</ul>
+<ul>
+<li>虚引用<br>虚引用是最弱的一种引用关系，如果一个对象仅持有虚引用，那么它就和没有任何引用一样，它随时可能会被回收。<br>例子：<code>PhantomReference phantomReference = new PhantomReference&lt;Object&gt;(new CanisterInfo(), new ReferenceQueue&lt;&gt;());</code><br><code>phantomReference.get();</code> 什么时候都无法get到。<br>当垃圾回收器准备回收一个对象时，如果发现它与虚引用关联，就会在回收它之前，将这个虚引用加入到引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被回收，如果确实要被回收，就可以做一些回收之前的收尾工作。  </li>
+</ul>
+<p><strong>弱引用重点示例（结合ThreadLocal）</strong><br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadLocal&lt;CanisterInfo&gt; tl = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line">        tl.set(<span class="keyword">new</span> CanisterInfo());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        Thread t = Thread.currentThread();</span><br><span class="line">        ThreadLocalMap map = getMap(t);</span><br><span class="line">        <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">            <span class="comment">//此处的this 是ThreadLocal对象</span></span><br><span class="line">            map.set(<span class="keyword">this</span>, value);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            createMap(t, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(ThreadLocal&lt;?&gt; key, Object value)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// We don&#x27;t use a fast path as with get() because it is at</span></span><br><span class="line">            <span class="comment">// least as common to use set() to create new entries as</span></span><br><span class="line">            <span class="comment">// it is to replace existing ones, in which case, a fast</span></span><br><span class="line">            <span class="comment">// path would fail more often than not.</span></span><br><span class="line"></span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line">            <span class="keyword">int</span> i = key.threadLocalHashCode &amp; (len-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (Entry e = tab[i];</span><br><span class="line">                 e != <span class="keyword">null</span>;</span><br><span class="line">                 e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">                ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (k == key) &#123;</span><br><span class="line">                    e.value = value;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (k == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    replaceStaleEntry(key, value, i);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            tab[i] = <span class="keyword">new</span> Entry(key, value);</span><br><span class="line">            <span class="keyword">int</span> sz = ++size;</span><br><span class="line">            <span class="keyword">if</span> (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)</span><br><span class="line">                rehash();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Entry对象继承了WeakReference，一个弱引用对象</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">            <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">            Object value;</span><br><span class="line"></span><br><span class="line">            Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">                <span class="keyword">super</span>(k);</span><br><span class="line">                value = v;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><br><img data-src="https://xuemingde.com/pages/image/others/WvXOry.png" alt=""><br>此图说明了，在 <code>ThreadLocal&lt;CanisterInfo&gt; tl = new ThreadLocal&lt;&gt;();</code> 并且 <code>tl.set(new CanisterInfo());</code>后有一个强引用tl指向了ThreadLocal对象，也有一个弱引用（ThreadLocalMap的key）也指向了ThreadLocal。<br>为什么Entry会使用弱引用，图中也说明了。</p>
+]]></content>
+      <categories>
+        <category>JAVA基础</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -1561,6 +1561,39 @@
       </tags>
   </entry>
   <entry>
+    <title>分布式事务_JTA</title>
+    <url>/posts/12G3J8V.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>事务</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式事务_seata</title>
     <url>/posts/2KNM24Z.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -1600,39 +1633,6 @@
         <category>分布式</category>
       </categories>
       <tags>
-        <tag>事务</tag>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式事务_JTA</title>
-    <url>/posts/12G3J8V.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
         <tag>事务</tag>
         <tag>分布式</tag>
       </tags>
@@ -2971,9 +2971,9 @@
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
-        <tag>面试</tag>
         <tag>Mysql</tag>
         <tag>线程池</tag>
+        <tag>面试</tag>
         <tag>锁</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
@@ -3526,8 +3526,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>面试</tag>
         <tag>线程池</tag>
+        <tag>面试</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -3893,8 +3893,8 @@
         <tag>JVM</tag>
         <tag>Spring</tag>
         <tag>数据库</tag>
-        <tag>面试</tag>
         <tag>线程池</tag>
+        <tag>面试</tag>
         <tag>数组</tag>
         <tag>锁</tag>
         <tag>Redis</tag>
@@ -5877,29 +5877,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Hutool返回树结构工具类TreeUtil</title>
-    <url>/posts/3DM6SJ9.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>考虑到菜单等需求的普遍性，有用户提交了一个扩展性极好的树状结构实现。这种树状结构可以根据配置文件灵活的定义节点之间的关系，也能很好的兼容关系数据库中数据</p>
-<p>数据的实体类如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MenuInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">8839460886585312600L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;菜单名称&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String menuName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;允许操作编码&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String permission;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;菜单地址&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String path;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;父级ID&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer parentId;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;菜单图标&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String icon;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;排序&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer sort;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;路由缓冲&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer keepAlive;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;菜单类型,0:菜单 1:按钮&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer type;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>数据库数据如下：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/29/1021-c2LkKr.png" alt=""></p>
-<p>查询出来的数据源：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;MenuInfo&gt; menuInfos = <span class="keyword">this</span>.menuService.list();</span><br></pre></td></tr></table></figure>
-<p>将<code>List&lt;MenuInfo&gt;</code>转化为树结构：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> List&lt;Tree&lt;Integer&gt;&gt; menuTreeConvert(List&lt;MenuInfo&gt; menuInfos,Integer parentId)&#123;</span><br><span class="line">    List&lt;TreeNode&lt;Integer&gt;&gt; nodeList = menuInfos.stream().map(menuInfo -&gt; &#123;</span><br><span class="line">        </span><br><span class="line">       <span class="comment">//扩展字段</span></span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;type&quot;</span>, menuInfo.getType());</span><br><span class="line">        map.put(<span class="string">&quot;keepAlive&quot;</span>, menuInfo.getKeepAlive());</span><br><span class="line">        map.put(<span class="string">&quot;icon&quot;</span>, menuInfo.getIcon());</span><br><span class="line">        map.put(<span class="string">&quot;path&quot;</span>, menuInfo.getPath());</span><br><span class="line">        map.put(<span class="string">&quot;sort&quot;</span>, menuInfo.getSort());</span><br><span class="line">        map.put(<span class="string">&quot;permission&quot;</span>, menuInfo.getPermission());</span><br><span class="line">      </span><br><span class="line">        TreeNode&lt;Integer&gt; treeNode = <span class="keyword">new</span> TreeNode&lt;Integer&gt;()</span><br><span class="line">                 <span class="comment">//ID</span></span><br><span class="line">                .setId(menuInfo.getId())</span><br><span class="line">                .setName(menuInfo.getMenuName())</span><br><span class="line">                .setParentId(menuInfo.getParentId())</span><br><span class="line">                .setWeight(menuInfo.getSort())</span><br><span class="line">                .setExtra(map);</span><br><span class="line">        <span class="keyword">return</span> treeNode;</span><br><span class="line">    &#125;).collect(Collectors.toList());</span><br><span class="line">    <span class="comment">//配置</span></span><br><span class="line">    TreeNodeConfig treeNodeConfig = <span class="keyword">new</span> TreeNodeConfig();</span><br><span class="line">    treeNodeConfig.setChildrenKey(<span class="string">&quot;children&quot;</span>);</span><br><span class="line">    treeNodeConfig.setParentIdKey(<span class="string">&quot;parentId&quot;</span>);</span><br><span class="line">    treeNodeConfig.setNameKey(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    treeNodeConfig.setWeightKey(<span class="string">&quot;sort&quot;</span>);</span><br><span class="line">    <span class="comment">// 最大递归深度</span></span><br><span class="line">    treeNodeConfig.setDeep(<span class="number">3</span>);</span><br><span class="line">    <span class="comment">//转换器</span></span><br><span class="line">   <span class="keyword">return</span> TreeUtil.build(nodeList,parentId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>返回实例：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">1</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;容器管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/container&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-mokuai&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">1</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;样本源管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/sample_source&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-zaixianyonghu&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;样本管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/sample_manage&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-yangbenzu&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">4</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">4</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;随访管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/followup&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-gongyingshang2&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">4</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">5</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">5</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;数据采集&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/plc&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-wodeyingyong&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">5</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">6</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">6</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;权限管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/user&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-renwu&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">6</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;children&quot;</span>: [</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="attr">&quot;id&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                   <span class="attr">&quot;parentId&quot;</span>: <span class="number">6</span>,</span><br><span class="line">                   <span class="attr">&quot;weight&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                   <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单管理&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/admin/menu/index&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                   <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-caidan&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;sort&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                   <span class="attr">&quot;type&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                   <span class="attr">&quot;children&quot;</span>: [</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">8</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单查阅&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_view&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;,</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">9</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单新增&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_add&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;,</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">10</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">3</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单修改&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_edit&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">3</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;,</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">11</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">4</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单删除&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_del&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">4</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;</span><br><span class="line">                   ]</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="attr">&quot;id&quot;</span>: <span class="number">12</span>,</span><br><span class="line">                   <span class="attr">&quot;parentId&quot;</span>: <span class="number">6</span>,</span><br><span class="line">                   <span class="attr">&quot;weight&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                   <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;用户管理&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/admin/user/index&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                   <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-wodezhanghu&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;sort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                   <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">               &#125;</span><br><span class="line">           ]</span><br><span class="line">       &#125;</span><br><span class="line">   ]</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>造轮子</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HashMap集合详解</title>
     <url>/posts/ZNDDGW.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误！！" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -6464,6 +6441,29 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>Hutool返回树结构工具类TreeUtil</title>
+    <url>/posts/3DM6SJ9.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>考虑到菜单等需求的普遍性，有用户提交了一个扩展性极好的树状结构实现。这种树状结构可以根据配置文件灵活的定义节点之间的关系，也能很好的兼容关系数据库中数据</p>
+<p>数据的实体类如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MenuInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">8839460886585312600L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;菜单名称&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String menuName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;允许操作编码&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String permission;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;菜单地址&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String path;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;父级ID&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer parentId;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;varchar(50)  comment &#x27;菜单图标&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String icon;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;排序&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer sort;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;路由缓冲&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer keepAlive;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(columnDefinition = &quot;int(1)  comment &#x27;菜单类型,0:菜单 1:按钮&#x27;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer type;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据库数据如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/29/1021-c2LkKr.png" alt=""></p>
+<p>查询出来的数据源：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;MenuInfo&gt; menuInfos = <span class="keyword">this</span>.menuService.list();</span><br></pre></td></tr></table></figure>
+<p>将<code>List&lt;MenuInfo&gt;</code>转化为树结构：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> List&lt;Tree&lt;Integer&gt;&gt; menuTreeConvert(List&lt;MenuInfo&gt; menuInfos,Integer parentId)&#123;</span><br><span class="line">    List&lt;TreeNode&lt;Integer&gt;&gt; nodeList = menuInfos.stream().map(menuInfo -&gt; &#123;</span><br><span class="line">        </span><br><span class="line">       <span class="comment">//扩展字段</span></span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;type&quot;</span>, menuInfo.getType());</span><br><span class="line">        map.put(<span class="string">&quot;keepAlive&quot;</span>, menuInfo.getKeepAlive());</span><br><span class="line">        map.put(<span class="string">&quot;icon&quot;</span>, menuInfo.getIcon());</span><br><span class="line">        map.put(<span class="string">&quot;path&quot;</span>, menuInfo.getPath());</span><br><span class="line">        map.put(<span class="string">&quot;sort&quot;</span>, menuInfo.getSort());</span><br><span class="line">        map.put(<span class="string">&quot;permission&quot;</span>, menuInfo.getPermission());</span><br><span class="line">      </span><br><span class="line">        TreeNode&lt;Integer&gt; treeNode = <span class="keyword">new</span> TreeNode&lt;Integer&gt;()</span><br><span class="line">                 <span class="comment">//ID</span></span><br><span class="line">                .setId(menuInfo.getId())</span><br><span class="line">                .setName(menuInfo.getMenuName())</span><br><span class="line">                .setParentId(menuInfo.getParentId())</span><br><span class="line">                .setWeight(menuInfo.getSort())</span><br><span class="line">                .setExtra(map);</span><br><span class="line">        <span class="keyword">return</span> treeNode;</span><br><span class="line">    &#125;).collect(Collectors.toList());</span><br><span class="line">    <span class="comment">//配置</span></span><br><span class="line">    TreeNodeConfig treeNodeConfig = <span class="keyword">new</span> TreeNodeConfig();</span><br><span class="line">    treeNodeConfig.setChildrenKey(<span class="string">&quot;children&quot;</span>);</span><br><span class="line">    treeNodeConfig.setParentIdKey(<span class="string">&quot;parentId&quot;</span>);</span><br><span class="line">    treeNodeConfig.setNameKey(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    treeNodeConfig.setWeightKey(<span class="string">&quot;sort&quot;</span>);</span><br><span class="line">    <span class="comment">// 最大递归深度</span></span><br><span class="line">    treeNodeConfig.setDeep(<span class="number">3</span>);</span><br><span class="line">    <span class="comment">//转换器</span></span><br><span class="line">   <span class="keyword">return</span> TreeUtil.build(nodeList,parentId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回实例：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">1</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;容器管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/container&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-mokuai&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">1</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;样本源管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/sample_source&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-zaixianyonghu&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;样本管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/sample_manage&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-yangbenzu&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">3</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">4</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">4</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;随访管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/followup&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-gongyingshang2&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">4</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">5</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">5</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;数据采集&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/plc&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-wodeyingyong&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">5</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="attr">&quot;id&quot;</span>: <span class="number">6</span>,</span><br><span class="line">           <span class="attr">&quot;parentId&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>: <span class="number">6</span>,</span><br><span class="line">           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;权限管理&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/user&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-renwu&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">           <span class="attr">&quot;sort&quot;</span>: <span class="number">6</span>,</span><br><span class="line">           <span class="attr">&quot;type&quot;</span>: <span class="number">0</span>,</span><br><span class="line">           <span class="attr">&quot;children&quot;</span>: [</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="attr">&quot;id&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                   <span class="attr">&quot;parentId&quot;</span>: <span class="number">6</span>,</span><br><span class="line">                   <span class="attr">&quot;weight&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                   <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单管理&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/admin/menu/index&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                   <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-caidan&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;sort&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                   <span class="attr">&quot;type&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                   <span class="attr">&quot;children&quot;</span>: [</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">8</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单查阅&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_view&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;,</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">9</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单新增&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_add&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;,</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">10</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">3</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单修改&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_edit&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">3</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;,</span><br><span class="line">                       &#123;</span><br><span class="line">                           <span class="attr">&quot;id&quot;</span>: <span class="number">11</span>,</span><br><span class="line">                           <span class="attr">&quot;parentId&quot;</span>: <span class="number">7</span>,</span><br><span class="line">                           <span class="attr">&quot;weight&quot;</span>: <span class="number">4</span>,</span><br><span class="line">                           <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;菜单删除&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                           <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;sys_menu_del&quot;</span>,</span><br><span class="line">                           <span class="attr">&quot;sort&quot;</span>: <span class="number">4</span>,</span><br><span class="line">                           <span class="attr">&quot;type&quot;</span>: <span class="number">1</span></span><br><span class="line">                       &#125;</span><br><span class="line">                   ]</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="attr">&quot;id&quot;</span>: <span class="number">12</span>,</span><br><span class="line">                   <span class="attr">&quot;parentId&quot;</span>: <span class="number">6</span>,</span><br><span class="line">                   <span class="attr">&quot;weight&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                   <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;用户管理&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;/admin/user/index&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;keepAlive&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                   <span class="attr">&quot;icon&quot;</span>: <span class="string">&quot;icon-wodezhanghu&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;permission&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                   <span class="attr">&quot;sort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">                   <span class="attr">&quot;type&quot;</span>: <span class="number">0</span></span><br><span class="line">               &#125;</span><br><span class="line">           ]</span><br><span class="line">       &#125;</span><br><span class="line">   ]</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>造轮子</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>面试题集合一</title>
     <url>/posts/38V3ZT.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div style="text-align: center;"></div>
@@ -6897,23 +6897,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>从实际案例聊聊Java应用的GC优化</title>
-    <url>/posts/1B1Q39D.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvN05maW5qRUJqVmk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TWpNNU5qUTVNVEk1T0E9PSZhbXA7bWlkPTI2NTE3NDcyNzMmYW1wO2lkeD0xJmFtcDtzbj03Zjk0NzA2NGE0MWVlZWNiNjgxNmE1ZDA4Mzg1ODFhZSZhbXA7Y2hrc209YmQxMmFhODQ4YTY1MjM5Mjg5ZDVjMzkyNjRlODliZDE3NWYzNzdmNjU1NGJmZTkzYjM3YWQ2NDk4Y2YxM2RlZmYzNTYzMzNjNTM5OCZhbXA7c2NlbmU9MjEjd2VjaGF0X3JlZGlyZWN0">从实际案例聊聊Java应用的GC优化<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-        <category>GC</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么确定是垃圾及垃圾回收算法</title>
     <url>/posts/45THTG.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="怎么确定是垃圾"><a href="#怎么确定是垃圾" class="headerlink" title="怎么确定是垃圾"></a>怎么确定是垃圾</h1><h2 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h2><p>给每个对象添加一个引用计数器，每当有一个地方引用它时，引用计数值就+1，当引用失效时，引用计数值就-1，任何时刻引用计数值为0的对象就可以被回收，当一个对象被垃圾收集器收集时，被它引用的对象引用计数值就-1，所以在这种方法中一个对象被垃圾收集会导致后续其他对象的垃圾收集行动。</p>
@@ -6938,6 +6921,23 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>JVM</tag>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从实际案例聊聊Java应用的GC优化</title>
+    <url>/posts/1B1Q39D.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvN05maW5qRUJqVmk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TWpNNU5qUTVNVEk1T0E9PSZhbXA7bWlkPTI2NTE3NDcyNzMmYW1wO2lkeD0xJmFtcDtzbj03Zjk0NzA2NGE0MWVlZWNiNjgxNmE1ZDA4Mzg1ODFhZSZhbXA7Y2hrc209YmQxMmFhODQ4YTY1MjM5Mjg5ZDVjMzkyNjRlODliZDE3NWYzNzdmNjU1NGJmZTkzYjM3YWQ2NDk4Y2YxM2RlZmYzNTYzMzNjNTM5OCZhbXA7c2NlbmU9MjEjd2VjaGF0X3JlZGlyZWN0">从实际案例聊聊Java应用的GC优化<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+        <category>GC</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -7116,35 +7116,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>事务</tag>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/posts/11RZTJV.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-<blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -7556,6 +7527,35 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>关于一些MQ的面试题</title>
+    <url>/posts/11RZTJV.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+<blockquote>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot-Rabbitmq实现延迟队列</title>
     <url>/posts/R5RB64.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="MAC-系统"><a href="#MAC-系统" class="headerlink" title="MAC 系统"></a>MAC 系统</h2><p>安装命令：brew install rabbitmq<br>​</p>
@@ -7592,6 +7592,139 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>Java</tag>
         <tag>Spring</tag>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RocketMQ 消息积压了，增加消费者有用吗</title>
+    <url>/posts/12P0DCH.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>面试官</strong>：RocketMQ 消息积压了，增加消费者有用吗？</p>
+<p><strong>我</strong>：这个要看具体的场景，不同的场景下情况是不一样的。</p>
+<p><strong>面试官</strong>：可以详细说一下吗？</p>
+<p><strong>我</strong>：如果消费者的数量小于 MessageQueue 的数量，增加消费者可以加快消息消费速度，减少消息积压。比如一个 Topic 有 4 个 MessageQueue，2 个消费者进行消费，如果增加一个消费者，明细可以加快拉取消息的频率。如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-EAQoGV.png" alt="图片"></p>
+<p>如果消费者的数量大于等于 MessageQueue 的数量，增加消费者是没有用的。比如一个 Topic 有 4 个 MessageQueue，并且有 4 个消费者进行消费。如下图</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-Uu40Ny.png" alt="图片"></p>
+<p><strong>面试官</strong>：你说的第一种情况，增加消费者一定能加快消息消费的速度吗？</p>
+<p><strong>我</strong>：这…，一般情况下是可以的。</p>
+<p><strong>面试官</strong>：有特殊的情况吗？</p>
+<p><strong>我</strong>：当然有。消费者消息拉取的速度也取决于本地消息的消费速度，如果本地消息消费的慢，就会延迟一段时间后再去拉取。</p>
+<p><strong>面试官</strong>：在什么情况下消费者会延迟一段时间后后再去拉取呢？</p>
+<p><strong>我</strong>：消费者拉取的消息存在 ProcessQueue，消费者是有流量控制的，如果出现下面三种情况，就不会主动去拉取：</p>
+<ul>
+<li>ProcessQueue 保存的消息数量超过阈值（默认 1000，可以配置）；</li>
+<li>ProcessQueue 保存的消息大小超过阈值（默认 100M，可以配置）；</li>
+<li>对于非顺序消费的场景，ProcessQueue 中保存的最后一条和第一条消息偏移量之差超过阈值（默认 2000，可以配置）。</li>
+</ul>
+<blockquote>
+<p>这部分源码请参考类：<code>org.apache.rocketmq.client.impl.consumer.DefaultMQPushConsumerImpl</code>。</p>
+</blockquote>
+<p><strong>面试官</strong>：还有其他情况吗？</p>
+<p><strong>我</strong>：对于顺序消费的场景，ProcessQueue 加锁失败，也会延迟拉取，这个延迟时间是 3s。消费者消费慢，可是能下面的原因：</p>
+<ul>
+<li>消费者处理的业务逻辑复杂，耗时很长；</li>
+<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
+<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
+<li>调用外部服务接口响应慢。</li>
+</ul>
+<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
+<p><strong>我</strong>：这个要分情况讨论。</p>
+<p>如果调用外部系统<code>只是一个通知，或者调用外部接口的结果并不处理</code>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
+<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
+<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
+<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
+<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
+<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
+<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
+<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
+<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
+<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
+<p><strong>平均负载策略：</strong></p>
+<ol>
+<li>把消费者进行排序；</li>
+<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
+<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
+<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
+<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
+</ol>
+<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
+<p><strong>面试官</strong>：消费者延迟拉取消息，一般可能是什么原因导致的呢？</p>
+<p><strong>我</strong>：其实延迟拉取的<code>本质就是消费者消费慢</code>，导致下次去拉取的时候 ProcessQueue 中积压的消息超过阈值。以下面这张架构图为例：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1059-yKOaQS.png" alt="图片"></p>
+<p>消费者消费慢，可是能下面的原因：</p>
+<ul>
+<li>消费者处理的业务逻辑复杂，耗时很长；</li>
+<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
+<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
+<li>调用外部服务接口响应慢。</li>
+</ul>
+<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
+<p><strong>我</strong>：这个要分情况讨论。</p>
+<p>如果调用外部系统<strong>只是一个通知，或者调用外部接口的结果并不处理</strong>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
+<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
+<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
+<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
+<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
+<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
+<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
+<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
+<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
+<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
+<p><strong>平均负载策略：</strong></p>
+<ol>
+<li>把消费者进行排序；</li>
+<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
+<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
+<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
+<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
+</ol>
+<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-dHKsfY.png" alt="图片"></p>
+<p>源代码的逻辑非常简单，如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// AllocateMessageQueueAveragely 这个类</span></span><br><span class="line"><span class="comment">// 4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="comment">// mod = 1</span></span><br><span class="line"><span class="keyword">int</span> mod = mqAll.size() % cidAll.size();</span><br><span class="line"><span class="comment">// averageSize = 2</span></span><br><span class="line"><span class="keyword">int</span> averageSize =</span><br><span class="line">    mqAll.size() &lt;= cidAll.size() ? <span class="number">1</span> : (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod ? mqAll.size() / cidAll.size()</span><br><span class="line">                                         + <span class="number">1</span> : mqAll.size() / cidAll.size());</span><br><span class="line"><span class="comment">// startIndex = 0</span></span><br><span class="line"><span class="keyword">int</span> startIndex = (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod) ? index * averageSize : index * averageSize + mod;</span><br><span class="line"><span class="comment">// range = 2,所以第一个消费者分配到了2个</span></span><br><span class="line"><span class="keyword">int</span> range = Math.min(averageSize, mqAll.size() - startIndex);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; range; i++) &#123;</span><br><span class="line">    result.add(mqAll.get((startIndex + i) % mqAll.size()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>循环分配策略:</strong></p>
+<p>这个很容易理解，遍历消费者，把 MessageQueue 分一个给遍历到的消费者，如果 MessageQueue 数量比消费者多，需要进行多次遍历，遍历次数等于  （MessageQueue 数量/消费者数量），还是以 4 个 MessageQueue 和 3 个消费者的情况，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-4fvcvc.png" alt="图片"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueAveragelyByCircle 这个类</span></span><br><span class="line"><span class="comment">//4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; mqAll.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i % cidAll.size() == index) &#123;</span><br><span class="line">        <span class="comment">//i == 0 或者 i == 3 都会走到这里</span></span><br><span class="line">        result.add(mqAll.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>自定义分配策略：</strong></p>
+<p>这种策略在消费者启动的时候可以指定消费哪些 MessageQueue。可以参考下面代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByConfig allocateMessageQueueByConfig = <span class="keyword">new</span> AllocateMessageQueueByConfig();</span><br><span class="line"><span class="comment">//绑定消费 messageQueue1</span></span><br><span class="line">allocateMessageQueueByConfig.setMessageQueueList(Arrays.asList(<span class="keyword">new</span> MessageQueue(<span class="string">&quot;messageQueue1&quot;</span>,<span class="string">&quot;broker1&quot;</span>,<span class="number">0</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByConfig);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
+<p><strong>按照机房分配策略：</strong></p>
+<p>这种方式 Consumer 只消费指定机房的 MessageQueue，如下图：Consumer0、Consumer1、Consumer2 绑定 room1 和 room2 这两个机房，而 room3 这个机房没有消费者。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1104-xQcBq5.png" alt="图片"></p>
+<p>Consumer 启动的时候需要绑定机房名称。可以参考下面代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByMachineRoom allocateMessageQueueByMachineRoom = <span class="keyword">new</span> AllocateMessageQueueByMachineRoom();</span><br><span class="line"><span class="comment">//绑定消费 room1 和 room2 这两个机房</span></span><br><span class="line">allocateMessageQueueByMachineRoom.setConsumeridcs(<span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(<span class="string">&quot;room1&quot;</span>,<span class="string">&quot;room2&quot;</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByMachineRoom);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
+<p>这种策略 broker 的命名必须按照格式：机房名@brokerName，因为消费者分配队列的时候，首先按照机房名称过滤出所有的 MessageQueue，然后<code>再按照平均分配策略进行分配</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueByMachineRoom 这个类</span></span><br><span class="line">List&lt;MessageQueue&gt; premqAll = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    String[] temp = mq.getBrokerName().split(<span class="string">&quot;@&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (temp.length == <span class="number">2</span> &amp;&amp; consumeridcs.contains(temp[<span class="number">0</span>])) &#123;</span><br><span class="line">        premqAll.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//上面按照机房名称过滤出所有的 MessageQueue 放入premqAll，后面就是平均分配策略</span></span><br></pre></td></tr></table></figure>
+<p><strong>按照机房就近分配：</strong></p>
+<p>跟按照机房分配原则相比，就近分配的好处是可以对没有消费者的机房进行分配。如下图，机房 3 的 MessageQueue 也分配到了消费者：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-GcF8UO.png" alt="图片"></p>
+<p>如果一个机房没有消费者，则会把这个机房的 MessageQueue 分配给集群中所有的消费者。</p>
+<blockquote>
+<p>源码所在类：<code>AllocateMachineRoomNearby</code>。</p>
+</blockquote>
+<p><strong>一致性 Hash 算法策略：</strong></p>
+<p>把所有的消费者经过 Hash 计算分布到 Hash 环上，对所有的 MessageQueue  进行 Hash  计算，找到顺时针方向最近的消费者节点进行绑定。如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-5VDzq8.png" alt="图片"></p>
+<p>源代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//所在类 AllocateMessageQueueConsistentHash</span></span><br><span class="line">Collection&lt;ClientNode&gt; cidNodes = <span class="keyword">new</span> ArrayList&lt;ClientNode&gt;();</span><br><span class="line"><span class="keyword">for</span> (String cid : cidAll) &#123;</span><br><span class="line">    cidNodes.add(<span class="keyword">new</span> ClientNode(cid));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用消费者构建 Hash 环，把消费者分布在 Hash 环节点上</span></span><br><span class="line"><span class="keyword">final</span> ConsistentHashRouter&lt;ClientNode&gt; router; <span class="comment">//for building hash ring</span></span><br><span class="line"><span class="keyword">if</span> (customHashFunction != <span class="keyword">null</span>) &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt, customHashFunction);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//对 MessageQueue 做 Hash 运算，找到环上距离最近的消费者</span></span><br><span class="line">List&lt;MessageQueue&gt; results = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    ClientNode clientNode = router.routeNode(mq.toString());</span><br><span class="line">    <span class="keyword">if</span> (clientNode != <span class="keyword">null</span> &amp;&amp; currentCID.equals(clientNode.getKey())) &#123;</span><br><span class="line">        results.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>面试官</strong>：恭喜你，通过了。</p>
+<hr>
+<blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVXF5MTNFOXFZQU9ONDNoM1hGVW4zZw==">RocketMQ 消息积压了，增加消费者有用吗？<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>数据库</tag>
+        <tag>面试</tag>
+        <tag>锁</tag>
+        <tag>算法</tag>
+        <tag>Redis</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -7854,8 +7987,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>sql</tag>
         <tag>集合</tag>
-        <tag>面试</tag>
         <tag>Mysql</tag>
+        <tag>面试</tag>
         <tag>索引</tag>
         <tag>算法</tag>
         <tag>Redis</tag>
@@ -7983,145 +8116,12 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>Java</tag>
         <tag>JVM</tag>
-        <tag>面试</tag>
         <tag>线程池</tag>
+        <tag>面试</tag>
         <tag>索引</tag>
         <tag>算法</tag>
         <tag>并发</tag>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RocketMQ 消息积压了，增加消费者有用吗</title>
-    <url>/posts/12P0DCH.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>面试官</strong>：RocketMQ 消息积压了，增加消费者有用吗？</p>
-<p><strong>我</strong>：这个要看具体的场景，不同的场景下情况是不一样的。</p>
-<p><strong>面试官</strong>：可以详细说一下吗？</p>
-<p><strong>我</strong>：如果消费者的数量小于 MessageQueue 的数量，增加消费者可以加快消息消费速度，减少消息积压。比如一个 Topic 有 4 个 MessageQueue，2 个消费者进行消费，如果增加一个消费者，明细可以加快拉取消息的频率。如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-EAQoGV.png" alt="图片"></p>
-<p>如果消费者的数量大于等于 MessageQueue 的数量，增加消费者是没有用的。比如一个 Topic 有 4 个 MessageQueue，并且有 4 个消费者进行消费。如下图</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-Uu40Ny.png" alt="图片"></p>
-<p><strong>面试官</strong>：你说的第一种情况，增加消费者一定能加快消息消费的速度吗？</p>
-<p><strong>我</strong>：这…，一般情况下是可以的。</p>
-<p><strong>面试官</strong>：有特殊的情况吗？</p>
-<p><strong>我</strong>：当然有。消费者消息拉取的速度也取决于本地消息的消费速度，如果本地消息消费的慢，就会延迟一段时间后再去拉取。</p>
-<p><strong>面试官</strong>：在什么情况下消费者会延迟一段时间后后再去拉取呢？</p>
-<p><strong>我</strong>：消费者拉取的消息存在 ProcessQueue，消费者是有流量控制的，如果出现下面三种情况，就不会主动去拉取：</p>
-<ul>
-<li>ProcessQueue 保存的消息数量超过阈值（默认 1000，可以配置）；</li>
-<li>ProcessQueue 保存的消息大小超过阈值（默认 100M，可以配置）；</li>
-<li>对于非顺序消费的场景，ProcessQueue 中保存的最后一条和第一条消息偏移量之差超过阈值（默认 2000，可以配置）。</li>
-</ul>
-<blockquote>
-<p>这部分源码请参考类：<code>org.apache.rocketmq.client.impl.consumer.DefaultMQPushConsumerImpl</code>。</p>
-</blockquote>
-<p><strong>面试官</strong>：还有其他情况吗？</p>
-<p><strong>我</strong>：对于顺序消费的场景，ProcessQueue 加锁失败，也会延迟拉取，这个延迟时间是 3s。消费者消费慢，可是能下面的原因：</p>
-<ul>
-<li>消费者处理的业务逻辑复杂，耗时很长；</li>
-<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
-<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
-<li>调用外部服务接口响应慢。</li>
-</ul>
-<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
-<p><strong>我</strong>：这个要分情况讨论。</p>
-<p>如果调用外部系统<code>只是一个通知，或者调用外部接口的结果并不处理</code>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
-<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
-<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
-<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
-<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
-<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
-<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
-<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
-<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
-<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
-<p><strong>平均负载策略：</strong></p>
-<ol>
-<li>把消费者进行排序；</li>
-<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
-<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
-<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
-<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
-</ol>
-<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
-<p><strong>面试官</strong>：消费者延迟拉取消息，一般可能是什么原因导致的呢？</p>
-<p><strong>我</strong>：其实延迟拉取的<code>本质就是消费者消费慢</code>，导致下次去拉取的时候 ProcessQueue 中积压的消息超过阈值。以下面这张架构图为例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1059-yKOaQS.png" alt="图片"></p>
-<p>消费者消费慢，可是能下面的原因：</p>
-<ul>
-<li>消费者处理的业务逻辑复杂，耗时很长；</li>
-<li>消费者有慢查询，或者数据库负载高导致响应慢；</li>
-<li>缓存等中间件响应慢，比如 Redis 响应慢；</li>
-<li>调用外部服务接口响应慢。</li>
-</ul>
-<p><strong>面试官</strong>：对于外部接口响应慢的情况，有什么应对措施吗？</p>
-<p><strong>我</strong>：这个要分情况讨论。</p>
-<p>如果调用外部系统<strong>只是一个通知，或者调用外部接口的结果并不处理</strong>，可以采用异步的方式，异步逻辑里采用重试的方式保证接口调成功。</p>
-<p>如果外部接口返回结果必须要处理，可以考虑接口返回的结果是否可以缓存默认值（要考虑业务可行），在调用失败后采用快速降级的方式，使用默认值替代返回接口返回值。</p>
-<p>如果这个接口返回结果必须要处理，并且不能缓存，可以把拉取到的消息存入本地然后给 Broker 直接返回 CONSUME_SUCCESS。等外部系统恢复正常后再从本地取出来进行处理。</p>
-<p><strong>面试官</strong>：如果消费者数小于 MessageQueue 数量，并且外部系统响应正常，为了快速消费积压消息而增加消费者，有什么需要考虑的吗？</p>
-<p><strong>我</strong>：外部系统虽然响应正常，但是增加多个消费者后，外部系统的接口调用量会突增，如果达到吞吐量上限，外部系统会响应变慢，甚至被打挂。</p>
-<p>同时也要考虑本地数据库、缓存的压力，如果数据库响应变慢，处理消息的速度就会变慢，起不到缓解消息积压的作用。</p>
-<p><strong>面试官</strong>：新增加了消费者后，怎么给它分配 MessageQueue 呢？</p>
-<p><strong>我</strong>：Consumer 在拉取消息之前，需要对 MessageQueue 进行负载操作。RocketMQ 使用一个定时器来完成负载操作，默认每间隔 20s 重新负载一次。</p>
-<p><strong>面试官</strong>：能详细说一下都有哪些负载策略吗？</p>
-<p><strong>我</strong>：RocketMQ 提供了 6 种负载策略，依次来看一下。</p>
-<p><strong>平均负载策略：</strong></p>
-<ol>
-<li>把消费者进行排序；</li>
-<li>计算每个消费者可以平均分配的 MessageQueue 数量；</li>
-<li>如果消费者数量大于 MessageQueue 数量，多出的消费者就分不到；</li>
-<li>如果不可以平分，就使用 MessageQueue 总数量对消费者数量求余数 mod；</li>
-<li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
-</ol>
-<p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-dHKsfY.png" alt="图片"></p>
-<p>源代码的逻辑非常简单，如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// AllocateMessageQueueAveragely 这个类</span></span><br><span class="line"><span class="comment">// 4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="comment">// mod = 1</span></span><br><span class="line"><span class="keyword">int</span> mod = mqAll.size() % cidAll.size();</span><br><span class="line"><span class="comment">// averageSize = 2</span></span><br><span class="line"><span class="keyword">int</span> averageSize =</span><br><span class="line">    mqAll.size() &lt;= cidAll.size() ? <span class="number">1</span> : (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod ? mqAll.size() / cidAll.size()</span><br><span class="line">                                         + <span class="number">1</span> : mqAll.size() / cidAll.size());</span><br><span class="line"><span class="comment">// startIndex = 0</span></span><br><span class="line"><span class="keyword">int</span> startIndex = (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod) ? index * averageSize : index * averageSize + mod;</span><br><span class="line"><span class="comment">// range = 2,所以第一个消费者分配到了2个</span></span><br><span class="line"><span class="keyword">int</span> range = Math.min(averageSize, mqAll.size() - startIndex);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; range; i++) &#123;</span><br><span class="line">    result.add(mqAll.get((startIndex + i) % mqAll.size()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>循环分配策略:</strong></p>
-<p>这个很容易理解，遍历消费者，把 MessageQueue 分一个给遍历到的消费者，如果 MessageQueue 数量比消费者多，需要进行多次遍历，遍历次数等于  （MessageQueue 数量/消费者数量），还是以 4 个 MessageQueue 和 3 个消费者的情况，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-4fvcvc.png" alt="图片"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueAveragelyByCircle 这个类</span></span><br><span class="line"><span class="comment">//4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; mqAll.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i % cidAll.size() == index) &#123;</span><br><span class="line">        <span class="comment">//i == 0 或者 i == 3 都会走到这里</span></span><br><span class="line">        result.add(mqAll.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>自定义分配策略：</strong></p>
-<p>这种策略在消费者启动的时候可以指定消费哪些 MessageQueue。可以参考下面代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByConfig allocateMessageQueueByConfig = <span class="keyword">new</span> AllocateMessageQueueByConfig();</span><br><span class="line"><span class="comment">//绑定消费 messageQueue1</span></span><br><span class="line">allocateMessageQueueByConfig.setMessageQueueList(Arrays.asList(<span class="keyword">new</span> MessageQueue(<span class="string">&quot;messageQueue1&quot;</span>,<span class="string">&quot;broker1&quot;</span>,<span class="number">0</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByConfig);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
-<p><strong>按照机房分配策略：</strong></p>
-<p>这种方式 Consumer 只消费指定机房的 MessageQueue，如下图：Consumer0、Consumer1、Consumer2 绑定 room1 和 room2 这两个机房，而 room3 这个机房没有消费者。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1104-xQcBq5.png" alt="图片"></p>
-<p>Consumer 启动的时候需要绑定机房名称。可以参考下面代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AllocateMessageQueueByMachineRoom allocateMessageQueueByMachineRoom = <span class="keyword">new</span> AllocateMessageQueueByMachineRoom();</span><br><span class="line"><span class="comment">//绑定消费 room1 和 room2 这两个机房</span></span><br><span class="line">allocateMessageQueueByMachineRoom.setConsumeridcs(<span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(<span class="string">&quot;room1&quot;</span>,<span class="string">&quot;room2&quot;</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByMachineRoom);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></table></figure>
-<p>这种策略 broker 的命名必须按照格式：机房名@brokerName，因为消费者分配队列的时候，首先按照机房名称过滤出所有的 MessageQueue，然后<code>再按照平均分配策略进行分配</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueByMachineRoom 这个类</span></span><br><span class="line">List&lt;MessageQueue&gt; premqAll = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    String[] temp = mq.getBrokerName().split(<span class="string">&quot;@&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (temp.length == <span class="number">2</span> &amp;&amp; consumeridcs.contains(temp[<span class="number">0</span>])) &#123;</span><br><span class="line">        premqAll.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//上面按照机房名称过滤出所有的 MessageQueue 放入premqAll，后面就是平均分配策略</span></span><br></pre></td></tr></table></figure>
-<p><strong>按照机房就近分配：</strong></p>
-<p>跟按照机房分配原则相比，就近分配的好处是可以对没有消费者的机房进行分配。如下图，机房 3 的 MessageQueue 也分配到了消费者：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-GcF8UO.png" alt="图片"></p>
-<p>如果一个机房没有消费者，则会把这个机房的 MessageQueue 分配给集群中所有的消费者。</p>
-<blockquote>
-<p>源码所在类：<code>AllocateMachineRoomNearby</code>。</p>
-</blockquote>
-<p><strong>一致性 Hash 算法策略：</strong></p>
-<p>把所有的消费者经过 Hash 计算分布到 Hash 环上，对所有的 MessageQueue  进行 Hash  计算，找到顺时针方向最近的消费者节点进行绑定。如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-5VDzq8.png" alt="图片"></p>
-<p>源代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//所在类 AllocateMessageQueueConsistentHash</span></span><br><span class="line">Collection&lt;ClientNode&gt; cidNodes = <span class="keyword">new</span> ArrayList&lt;ClientNode&gt;();</span><br><span class="line"><span class="keyword">for</span> (String cid : cidAll) &#123;</span><br><span class="line">    cidNodes.add(<span class="keyword">new</span> ClientNode(cid));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用消费者构建 Hash 环，把消费者分布在 Hash 环节点上</span></span><br><span class="line"><span class="keyword">final</span> ConsistentHashRouter&lt;ClientNode&gt; router; <span class="comment">//for building hash ring</span></span><br><span class="line"><span class="keyword">if</span> (customHashFunction != <span class="keyword">null</span>) &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt, customHashFunction);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//对 MessageQueue 做 Hash 运算，找到环上距离最近的消费者</span></span><br><span class="line">List&lt;MessageQueue&gt; results = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) &#123;</span><br><span class="line">    ClientNode clientNode = router.routeNode(mq.toString());</span><br><span class="line">    <span class="keyword">if</span> (clientNode != <span class="keyword">null</span> &amp;&amp; currentCID.equals(clientNode.getKey())) &#123;</span><br><span class="line">        results.add(mq);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>面试官</strong>：恭喜你，通过了。</p>
-<hr>
-<blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVXF5MTNFOXFZQU9ONDNoM1hGVW4zZw==">RocketMQ 消息积压了，增加消费者有用吗？<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>数据库</tag>
-        <tag>面试</tag>
-        <tag>锁</tag>
-        <tag>算法</tag>
-        <tag>Redis</tag>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -8738,31 +8738,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Mysql复制插入数据</title>
-    <url>/posts/1H0J6ZZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>主键设为自增</p>
-<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
-<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
-<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
-<p>将ID中的a替换成b  </p>
-<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
-<p>create_time 为返回值，在原来的时间上加一个月。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>InnoDB与MYISAM的区别</title>
     <url>/posts/3R3HSKP.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误！！" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -8788,6 +8763,31 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql复制插入数据</title>
+    <url>/posts/1H0J6ZZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主键设为自增</p>
+<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
+<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
+<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
+<p>将ID中的a替换成b  </p>
+<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
+<p>create_time 为返回值，在原来的时间上加一个月。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -8997,71 +8997,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Mysql索引原理</title>
-    <url>/posts/VB6XWR.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是索引<br>索引是一种利用某种规则的数据结构与实际数据的关系加快数据查找的功能；索引数据节点中有着实际文件的位置，因为索引是根据特定的规则和算法构建的,在查找的时候遵循索引的规则可以快速查找到对应数据的节点，从而达到快速查找数据的效果；其实宏观来说索引其实是一种概念而不是具体的某项技术，只是我们在某个技术中运用得比较广泛和鲜明（比如说数据库）渐渐的有了特定领域的标签，其实在生活中索引的使用无处不在，比如说：书本里的目录；读书时的座位号，考试编号都有类似索引的功能;</p>
-<p>总结来所有通过某规则数据结构和实际目标关联，根据特定规则算法快速寻址的功能都可以称之为索引；</p>
-<h2 id="二、为什么要用索引"><a href="#二、为什么要用索引" class="headerlink" title="二、为什么要用索引"></a>二、为什么要用索引</h2><p>首先我们看下在没有索引的情况下是怎么查找数据的：</p>
-<p>我们用一个例子来解释比较直观</p>
-<p>（1）没有索引的情况下访问数据：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-vn2lXu.jpg" alt="1300-9A9kOW"></p>
-<p>（2）使用平衡二叉树结构作为索引的情况下访问数据：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-0sjTWg.jpg" alt="1300-EQ6HD3">  </p>
-<p>第一张图没有使用索引我们会进行顺序查找，依照数据顺序逐个进行匹配，进行了5次寻址才查询出所需数据，第二张图用了一个简单的平衡二叉树索引之后我们只用了3次，这还是数据量小的情况下，数据量大了效果更明显，所以总结来说创建索引就是为了加快数据查找速度；</p>
-<h2 id="三、Innodb-的索引选择"><a href="#三、Innodb-的索引选择" class="headerlink" title="三、Innodb 的索引选择"></a>三、Innodb 的索引选择</h2><p>Mysql 的默认存储引擎innodb使用B+树作为索引的存储结构，为了让我们能更深入理解B+树，所以我们会对B+树的衍生过程做一些了解。</p>
-<h3 id="1、数组和链表的选择"><a href="#1、数组和链表的选择" class="headerlink" title="1、数组和链表的选择"></a><strong>1、数组和链表的选择</strong></h3><p>作为最基础的数据存储结构数组和链表，是选用数组还是选择链表来作为索引存储的基本结构呢？首先我们需要从索引和两种数据结构的特性来分析。</p>
-<p><strong>数组的特性：</strong> 查找快、但是插入、修改数据慢。</p>
-<p><strong>链表的特性：</strong> 查找慢、插入、修改快。</p>
-<p>在数据库的业务场景里插入、修改、查询都是比较频繁的操作，选链表还是数组好像都不完美。既然都不完美，那么我们只能退而求其次，看谁比较容易去完善。从完善的角度来看，那么我们就会从数组里发现一个致命的问题，数组的修改和移动都会导致数组大量的元素迁移，而且在迁移的过程中是不能查找数据的，数组元素迁移没有完成查询出来的数据就可能是错的，这样就导致数组在频繁插入和修改的过程中不仅仅是修改和插入本身慢，而且因为这个而导致查询也用不了，显然这个问题对于修改和插入频繁的数据库来说是无法忍受的。所以我们只能把链表作为索引的基础结构了，那么剩下的就是如何解决链表查询小笼包慢的问题了。</p>
-<h3 id="2、从链表到二叉树"><a href="#2、从链表到二叉树" class="headerlink" title="2、从链表到二叉树"></a><strong>2、从链表到二叉树</strong></h3><p>如果使用链表来存储数据，那么必须要解决的一个问题就是要解决链表的查询效率问题，我们必须通过一种算法来解决链表查找数据慢的问题，而这里这里就用到了二分查找法，利用二分法思维把链表拆成N个对半分的节点，然后形成了一个数据结构叫二叉查找树，使用了二分法思维衍生出来的树大大提升了查找的性能。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-cjA5NX.jpg" alt="1301-Bnp6DL"></p>
-<h3 id="3、从二叉查树到平衡二叉树"><a href="#3、从二叉查树到平衡二叉树" class="headerlink" title="3、从二叉查树到平衡二叉树"></a><strong>3、从二叉查树到平衡二叉树</strong></h3><p>二叉查找树极大的提升了链表查找数据的效率，不过我们又发现了一个问题，就是二叉查找树的“高度”不可控，一旦树的节点插入变成向下图一样的结构。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-vTHEoc.jpg" alt="1301-4hsdTc">  </p>
-<p>如果树的节点不可控编程变成线性结构，那么就会极大的降低我们的查询效率，所以我们就又需要一种算法来保证二叉树节点的平衡，让树的节点高度差不会太大，这个时候就衍生了一些平衡算法，最终我们的二叉树就有像AVL树和红黑树这些新产品，我们也称这些新产品为平衡二叉树，，平衡二叉树通常会保证树的左右两边的节点层级相差不会大于2。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-2pzIIa.jpg" alt="1301-I8F42Y"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-j9YcaM.jpg" alt=""></p>
-<h3 id="4、从平衡二叉树到B树"><a href="#4、从平衡二叉树到B树" class="headerlink" title="4、从平衡二叉树到B树"></a><strong>4、从平衡二叉树到B树</strong></h3><p>平衡二叉树的出现好像很接近于我们的理想状态了，但好像还有什么优化的空间，我们通过上面两个树的演化过程发现，影响这棵树的查询效率的决定性因素就是树的高度，只要树的层级越少，那么树的查询效率就越高，本着这个原则我们就思考每个节点能不能多存点 数据，只要每个数节点的数据保存的越多，那么我们树的层级就会越少，</p>
-<p>B树相对平衡二叉树最大的一个改变，就是B树的每个节点可存储的关键字增多了，特别是在B树应用到数据库中的时候，节点存储关键字的数量充分利用了磁盘块IO的原理（磁盘数据存储是采用块的形式存储的，每个块的大小为4K，每次IO进行数据读取时，同一个磁盘块的数据可以一次性读取出来），B树只要把节点大小限制在磁盘快大小范围，这样就可以只需要一次IO就读取到节点所有数据，节点存储了更多的关键字，但是并不会影响IO的次数。B树树相对于之前节点可以存储更多的关键字，所以树的层级会比原来少很多，树的层级减少了，那么检索的效率就会大大提升。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-U1Ng5z.jpg" alt="1302-0YutJJ"></p>
-<h3 id="5、从B树到B-树"><a href="#5、从B树到B-树" class="headerlink" title="5、从B树到B+树"></a><strong>5、从B树到B+树</strong></h3><p><strong>其实B树已经接近我们的理想预期了，但是还是能从B树的上面找到可以优化的地方，比如以下几个方面：</strong></p>
-<p>1、B树的节点同时保存了索引的key和数据值（如果节点只保存索引key不保存值，那么是不是会把索引树的层层级更进一步的减少）。</p>
-<p>2、因为每个节点保存了数据值，这样的话查询不同的数据效率就会显得不稳定，有些在树的第一层匹配成功就返回，有些则可能需要匹配到树的最后一层才返回。</p>
-<p>3、如果要查询所有数据，那么就必须遍历整个B树的每个节点。</p>
-<p><strong>B+树在B树的基础上 又做了一些优化，B+树主要做了下面几点的优化。</strong></p>
-<p>1、B+跟B树不同，B+树的非叶子节点不保存实际的数据，只保存索引key，所有的数据都会保存到叶子节点。</p>
-<p><strong>树层级变少：</strong>如果非叶子节点不保存实际的数据值，而只保存索引key，那么相对于B树来说B+树的每个<strong>非叶子</strong>节点存储的索引key会更多，所以树的层级也会更少，那么查询效率也会更快。</p>
-<p><strong>查询更稳定：</strong>因为B+所有数据值都是存在<strong>叶子</strong>节点上，所以每次查找的次数都相同所以查询速度要比B树更稳定；</p>
-<p><strong>遍历整个树更快：</strong>B+树遍历整棵树只需要遍历所有的<strong>叶子</strong>节点即可，，而不需要像B树一样需要对每一层进行遍历，这有利于数据库做全表扫描。</p>
-<p>2、B+树叶子节点的关键字从小到大有序排列，左边结尾数据都会保存右边节点开始数据的指针。</p>
-<p><strong>排序和范围查询更方便</strong>：B+树所有的叶子节点数据构成了一个有序链表，这样在进行数据排序和询范围大小查询数据的时候更方便，数据紧密性也更高。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-rYU3bq.jpg" alt="1302-WFyIHT">  </p>
-<p><strong>（百度百科算法结构示意图）</strong></p>
-<p>总结来说，从平衡二叉树、B树、B+树，总体来看它们的贯彻的思想是相同的，在链表的基础上，如何采用二分法和数据平衡策略来提升查找数据的速度。不同点是他们一个一个在演变的过程中通过IO从磁盘读取数据的原理进行一步步的演变，每一次演变都是为了让节点的空间更合理的运用起来，从而使树的层级减少达到快速查找数据的目的，在这个基础上，B+树的查找速度快、性能稳定、排序快、扫表快等诸多特点也就让Mysql选择了B+树来作为索引的存储结构。</p>
-<h2 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h2><h3 id="为什么说Mysql的索引树一般都在1-3层的结构？"><a href="#为什么说Mysql的索引树一般都在1-3层的结构？" class="headerlink" title="为什么说Mysql的索引树一般都在1-3层的结构？"></a><strong>为什么说Mysql的索引树一般都在1-3层的结构？</strong></h3><p>经常听到别人说Mysql的索引树一般会在3层，这个是有什么依据？ 其实这个的确是有数据计算支撑的，我们可以根据B+树的原理进行一下数据推算，因为磁盘每页数据为4K，而Mysql的B+树对此又进行了一次调整，在Mysql也有自己的页概念，Mysql里的每一页数据等于磁盘4个页的大小，所以在Mysql里面的一页数据其实是16K，那么也就意味着Mysql里B+树的非叶子节点可存储16K的数据。</p>
-<p>然后我们按照一个索引大小，如果字段类型为varchar，长度为10，字符类型为utf8mb4，在不考虑其他因素的影响下，一个索引的大小等于 10 _3+2=32字节，我们按照每个非叶子节点的16K来计算，Mysql索引树每个节点能容纳(16_1024)/32=512个索引key。</p>
-<p><strong>索引树的第一层：</strong>第一层是树的根节点，所以索引树的第一层保存索引Key的数量为512个；</p>
-<p><strong>索引树的第二层：</strong>B+树根节点可保存512个索引key，也就是当前B+树有512个分叉，那么第二层索引树节点个数为512个，保存索引Key的数量=512*512=262144。</p>
-<p><strong>索引树的第三层：</strong>第二层key数量为262144，那么第三层的树节点数量也就是262144，那么第三层索引树节点个数为512个，保存索引Key的数量=262144*512=134217728。</p>
-<p>根据一个计算我们可以基本得出，类型varchar，长度为10，字符类型为utf8mb4的索引字段，数据在512条之内树结构只有一层。数据在262144之内树只有两层，数据在134217728之内，索引树都会保持在3层之内，而我们的表数据一般而言都保持在千万级以内，所以说Mysql的索引树一般都在1-3层。</p>
-<blockquote>
-<p><a href="https://xuemingde.com/JavaNotes/数据库/20220407-Mysql索引原理">20220407-Mysql索引原理</a><br>本文转自 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMTM3NzIwNDI=">https://zhuanlan.zhihu.com/p/213772042<i class="fa fa-external-link-alt"></i></span>，如有侵权，请联系删除。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>sql</tag>
-        <tag>数据库</tag>
-        <tag>Mysql</tag>
-        <tag>数组</tag>
-        <tag>索引</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Innodb的MVCC实现原理</title>
     <url>/posts/VQ077V.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>理解MVCC之前，我们需要回顾了解一下数据库的一些其他相关知识点</p>
@@ -9194,6 +9129,71 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>锁</tag>
         <tag>索引</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql索引原理</title>
+    <url>/posts/VB6XWR.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是索引<br>索引是一种利用某种规则的数据结构与实际数据的关系加快数据查找的功能；索引数据节点中有着实际文件的位置，因为索引是根据特定的规则和算法构建的,在查找的时候遵循索引的规则可以快速查找到对应数据的节点，从而达到快速查找数据的效果；其实宏观来说索引其实是一种概念而不是具体的某项技术，只是我们在某个技术中运用得比较广泛和鲜明（比如说数据库）渐渐的有了特定领域的标签，其实在生活中索引的使用无处不在，比如说：书本里的目录；读书时的座位号，考试编号都有类似索引的功能;</p>
+<p>总结来所有通过某规则数据结构和实际目标关联，根据特定规则算法快速寻址的功能都可以称之为索引；</p>
+<h2 id="二、为什么要用索引"><a href="#二、为什么要用索引" class="headerlink" title="二、为什么要用索引"></a>二、为什么要用索引</h2><p>首先我们看下在没有索引的情况下是怎么查找数据的：</p>
+<p>我们用一个例子来解释比较直观</p>
+<p>（1）没有索引的情况下访问数据：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-vn2lXu.jpg" alt="1300-9A9kOW"></p>
+<p>（2）使用平衡二叉树结构作为索引的情况下访问数据：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-0sjTWg.jpg" alt="1300-EQ6HD3">  </p>
+<p>第一张图没有使用索引我们会进行顺序查找，依照数据顺序逐个进行匹配，进行了5次寻址才查询出所需数据，第二张图用了一个简单的平衡二叉树索引之后我们只用了3次，这还是数据量小的情况下，数据量大了效果更明显，所以总结来说创建索引就是为了加快数据查找速度；</p>
+<h2 id="三、Innodb-的索引选择"><a href="#三、Innodb-的索引选择" class="headerlink" title="三、Innodb 的索引选择"></a>三、Innodb 的索引选择</h2><p>Mysql 的默认存储引擎innodb使用B+树作为索引的存储结构，为了让我们能更深入理解B+树，所以我们会对B+树的衍生过程做一些了解。</p>
+<h3 id="1、数组和链表的选择"><a href="#1、数组和链表的选择" class="headerlink" title="1、数组和链表的选择"></a><strong>1、数组和链表的选择</strong></h3><p>作为最基础的数据存储结构数组和链表，是选用数组还是选择链表来作为索引存储的基本结构呢？首先我们需要从索引和两种数据结构的特性来分析。</p>
+<p><strong>数组的特性：</strong> 查找快、但是插入、修改数据慢。</p>
+<p><strong>链表的特性：</strong> 查找慢、插入、修改快。</p>
+<p>在数据库的业务场景里插入、修改、查询都是比较频繁的操作，选链表还是数组好像都不完美。既然都不完美，那么我们只能退而求其次，看谁比较容易去完善。从完善的角度来看，那么我们就会从数组里发现一个致命的问题，数组的修改和移动都会导致数组大量的元素迁移，而且在迁移的过程中是不能查找数据的，数组元素迁移没有完成查询出来的数据就可能是错的，这样就导致数组在频繁插入和修改的过程中不仅仅是修改和插入本身慢，而且因为这个而导致查询也用不了，显然这个问题对于修改和插入频繁的数据库来说是无法忍受的。所以我们只能把链表作为索引的基础结构了，那么剩下的就是如何解决链表查询小笼包慢的问题了。</p>
+<h3 id="2、从链表到二叉树"><a href="#2、从链表到二叉树" class="headerlink" title="2、从链表到二叉树"></a><strong>2、从链表到二叉树</strong></h3><p>如果使用链表来存储数据，那么必须要解决的一个问题就是要解决链表的查询效率问题，我们必须通过一种算法来解决链表查找数据慢的问题，而这里这里就用到了二分查找法，利用二分法思维把链表拆成N个对半分的节点，然后形成了一个数据结构叫二叉查找树，使用了二分法思维衍生出来的树大大提升了查找的性能。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-cjA5NX.jpg" alt="1301-Bnp6DL"></p>
+<h3 id="3、从二叉查树到平衡二叉树"><a href="#3、从二叉查树到平衡二叉树" class="headerlink" title="3、从二叉查树到平衡二叉树"></a><strong>3、从二叉查树到平衡二叉树</strong></h3><p>二叉查找树极大的提升了链表查找数据的效率，不过我们又发现了一个问题，就是二叉查找树的“高度”不可控，一旦树的节点插入变成向下图一样的结构。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-vTHEoc.jpg" alt="1301-4hsdTc">  </p>
+<p>如果树的节点不可控编程变成线性结构，那么就会极大的降低我们的查询效率，所以我们就又需要一种算法来保证二叉树节点的平衡，让树的节点高度差不会太大，这个时候就衍生了一些平衡算法，最终我们的二叉树就有像AVL树和红黑树这些新产品，我们也称这些新产品为平衡二叉树，，平衡二叉树通常会保证树的左右两边的节点层级相差不会大于2。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-2pzIIa.jpg" alt="1301-I8F42Y"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-j9YcaM.jpg" alt=""></p>
+<h3 id="4、从平衡二叉树到B树"><a href="#4、从平衡二叉树到B树" class="headerlink" title="4、从平衡二叉树到B树"></a><strong>4、从平衡二叉树到B树</strong></h3><p>平衡二叉树的出现好像很接近于我们的理想状态了，但好像还有什么优化的空间，我们通过上面两个树的演化过程发现，影响这棵树的查询效率的决定性因素就是树的高度，只要树的层级越少，那么树的查询效率就越高，本着这个原则我们就思考每个节点能不能多存点 数据，只要每个数节点的数据保存的越多，那么我们树的层级就会越少，</p>
+<p>B树相对平衡二叉树最大的一个改变，就是B树的每个节点可存储的关键字增多了，特别是在B树应用到数据库中的时候，节点存储关键字的数量充分利用了磁盘块IO的原理（磁盘数据存储是采用块的形式存储的，每个块的大小为4K，每次IO进行数据读取时，同一个磁盘块的数据可以一次性读取出来），B树只要把节点大小限制在磁盘快大小范围，这样就可以只需要一次IO就读取到节点所有数据，节点存储了更多的关键字，但是并不会影响IO的次数。B树树相对于之前节点可以存储更多的关键字，所以树的层级会比原来少很多，树的层级减少了，那么检索的效率就会大大提升。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-U1Ng5z.jpg" alt="1302-0YutJJ"></p>
+<h3 id="5、从B树到B-树"><a href="#5、从B树到B-树" class="headerlink" title="5、从B树到B+树"></a><strong>5、从B树到B+树</strong></h3><p><strong>其实B树已经接近我们的理想预期了，但是还是能从B树的上面找到可以优化的地方，比如以下几个方面：</strong></p>
+<p>1、B树的节点同时保存了索引的key和数据值（如果节点只保存索引key不保存值，那么是不是会把索引树的层层级更进一步的减少）。</p>
+<p>2、因为每个节点保存了数据值，这样的话查询不同的数据效率就会显得不稳定，有些在树的第一层匹配成功就返回，有些则可能需要匹配到树的最后一层才返回。</p>
+<p>3、如果要查询所有数据，那么就必须遍历整个B树的每个节点。</p>
+<p><strong>B+树在B树的基础上 又做了一些优化，B+树主要做了下面几点的优化。</strong></p>
+<p>1、B+跟B树不同，B+树的非叶子节点不保存实际的数据，只保存索引key，所有的数据都会保存到叶子节点。</p>
+<p><strong>树层级变少：</strong>如果非叶子节点不保存实际的数据值，而只保存索引key，那么相对于B树来说B+树的每个<strong>非叶子</strong>节点存储的索引key会更多，所以树的层级也会更少，那么查询效率也会更快。</p>
+<p><strong>查询更稳定：</strong>因为B+所有数据值都是存在<strong>叶子</strong>节点上，所以每次查找的次数都相同所以查询速度要比B树更稳定；</p>
+<p><strong>遍历整个树更快：</strong>B+树遍历整棵树只需要遍历所有的<strong>叶子</strong>节点即可，，而不需要像B树一样需要对每一层进行遍历，这有利于数据库做全表扫描。</p>
+<p>2、B+树叶子节点的关键字从小到大有序排列，左边结尾数据都会保存右边节点开始数据的指针。</p>
+<p><strong>排序和范围查询更方便</strong>：B+树所有的叶子节点数据构成了一个有序链表，这样在进行数据排序和询范围大小查询数据的时候更方便，数据紧密性也更高。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-rYU3bq.jpg" alt="1302-WFyIHT">  </p>
+<p><strong>（百度百科算法结构示意图）</strong></p>
+<p>总结来说，从平衡二叉树、B树、B+树，总体来看它们的贯彻的思想是相同的，在链表的基础上，如何采用二分法和数据平衡策略来提升查找数据的速度。不同点是他们一个一个在演变的过程中通过IO从磁盘读取数据的原理进行一步步的演变，每一次演变都是为了让节点的空间更合理的运用起来，从而使树的层级减少达到快速查找数据的目的，在这个基础上，B+树的查找速度快、性能稳定、排序快、扫表快等诸多特点也就让Mysql选择了B+树来作为索引的存储结构。</p>
+<h2 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h2><h3 id="为什么说Mysql的索引树一般都在1-3层的结构？"><a href="#为什么说Mysql的索引树一般都在1-3层的结构？" class="headerlink" title="为什么说Mysql的索引树一般都在1-3层的结构？"></a><strong>为什么说Mysql的索引树一般都在1-3层的结构？</strong></h3><p>经常听到别人说Mysql的索引树一般会在3层，这个是有什么依据？ 其实这个的确是有数据计算支撑的，我们可以根据B+树的原理进行一下数据推算，因为磁盘每页数据为4K，而Mysql的B+树对此又进行了一次调整，在Mysql也有自己的页概念，Mysql里的每一页数据等于磁盘4个页的大小，所以在Mysql里面的一页数据其实是16K，那么也就意味着Mysql里B+树的非叶子节点可存储16K的数据。</p>
+<p>然后我们按照一个索引大小，如果字段类型为varchar，长度为10，字符类型为utf8mb4，在不考虑其他因素的影响下，一个索引的大小等于 10 _3+2=32字节，我们按照每个非叶子节点的16K来计算，Mysql索引树每个节点能容纳(16_1024)/32=512个索引key。</p>
+<p><strong>索引树的第一层：</strong>第一层是树的根节点，所以索引树的第一层保存索引Key的数量为512个；</p>
+<p><strong>索引树的第二层：</strong>B+树根节点可保存512个索引key，也就是当前B+树有512个分叉，那么第二层索引树节点个数为512个，保存索引Key的数量=512*512=262144。</p>
+<p><strong>索引树的第三层：</strong>第二层key数量为262144，那么第三层的树节点数量也就是262144，那么第三层索引树节点个数为512个，保存索引Key的数量=262144*512=134217728。</p>
+<p>根据一个计算我们可以基本得出，类型varchar，长度为10，字符类型为utf8mb4的索引字段，数据在512条之内树结构只有一层。数据在262144之内树只有两层，数据在134217728之内，索引树都会保持在3层之内，而我们的表数据一般而言都保持在千万级以内，所以说Mysql的索引树一般都在1-3层。</p>
+<blockquote>
+<p><a href="https://xuemingde.com/JavaNotes/数据库/20220407-Mysql索引原理">20220407-Mysql索引原理</a><br>本文转自 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMTM3NzIwNDI=">https://zhuanlan.zhihu.com/p/213772042<i class="fa fa-external-link-alt"></i></span>，如有侵权，请联系删除。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>sql</tag>
+        <tag>数据库</tag>
+        <tag>Mysql</tag>
+        <tag>数组</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -9960,8 +9960,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
-        <tag>面试</tag>
         <tag>Mysql</tag>
+        <tag>面试</tag>
         <tag>锁</tag>
         <tag>索引</tag>
         <tag>并发</tag>
@@ -10981,6 +10981,16 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </categories>
   </entry>
   <entry>
+    <title>Spring系列(下)</title>
+    <url>/posts/1ZM62F.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>框架</category>
+        <category>Spring</category>
+      </categories>
+  </entry>
+  <entry>
     <title>spring是如何解决循环依赖的</title>
     <url>/posts/2SH00H4.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -11111,16 +11121,6 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
         <tag>Spring</tag>
         <tag>多线程</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Spring系列(下)</title>
-    <url>/posts/1ZM62F.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>框架</category>
-        <category>Spring</category>
-      </categories>
   </entry>
   <entry>
     <title>SpringBoot 内置工具类</title>
