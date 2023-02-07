@@ -32,11 +32,13 @@
 <meta property="og:site_name" content="meadel&#39;s blog">
 <meta property="og:description" content="qt中将Frame框设置成有颜色的边框 1234QFrame&amp;#123;border-radius:10px;border:1px solid rgb(100, 100,189)&amp;#125;  ​  Qt的LineEdit设置无边框 1QLineEdit&amp;#123;border: none &amp;#125;  ​   1234567891011121314151617181920QFrame&amp;#12">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png">
 <meta property="article:published_time" content="2022-12-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-13T03:09:26.835Z">
+<meta property="article:modified_time" content="2023-02-07T07:02:23.027Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="meadel">
+<meta property="article:tag" content="sql">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png">
 
 <link rel="canonical" href="https://xuemingde.com/posts/23E5YZV.html">
 
@@ -241,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-01-13 11:09:26" itemprop="dateModified" datetime="2023-01-13T11:09:26+08:00">2023-01-13</time>
+                <time title="修改时间：2023-02-07 15:02:23" itemprop="dateModified" datetime="2023-02-07T15:02:23+08:00">2023-02-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,7 +289,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -320,29 +322,21 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">QFrame&#123;<span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line">		<span class="attribute">border-image</span>:None;	</span><br><span class="line">		<span class="attribute">border-radius</span>:<span class="number">22px</span>;</span><br><span class="line">&#125;</span><br><span class="line">QPushButton&#123;</span><br><span class="line"><span class="attribute">border-image</span>:None;	</span><br><span class="line"> <span class="attribute">background-color</span>: white;</span><br><span class="line"> <span class="attribute">color</span>:black;</span><br><span class="line"> <span class="attribute">border-radius</span>:<span class="number">21px</span>;</span><br><span class="line"> <span class="attribute">font</span>: <span class="number">16px</span> <span class="string">&quot;阿里巴巴普惠体 R&quot;</span>;</span><br><span class="line"> <span class="attribute">text-align</span>: center; </span><br><span class="line"><span class="attribute">margin-top</span>:<span class="number">0px</span>;</span><br><span class="line"><span class="attribute">margin-left</span>: <span class="number">0px</span>;</span><br><span class="line">marigin-<span class="attribute">right</span>:<span class="number">0px</span>;</span><br><span class="line">&#125;</span><br><span class="line">QPushButton<span class="selector-pseudo">:checked</span>&#123;</span><br><span class="line"> <span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">102</span>, <span class="number">179</span>, <span class="number">225</span>);</span><br><span class="line"> <span class="attribute">color</span>:white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>Qt::FocusPolicy</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>、Qt::TabFocus：通过按下Tab键获取焦点（这时候鼠标点击获取不到焦点的）。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、Qt::ClickFocus：鼠标点击获取焦点。</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、Qt::StrongFocus：通过Tab键和鼠标点击获取焦点。</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、Qt::WheelFocus：通过Tab键、鼠标点击、鼠标滚轮按下获取焦点。</span><br><span class="line"></span><br><span class="line"><span class="number">5</span>、Qt::NoFocus：不接受焦点。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>acceptDrops</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<blockquote>
-<p>acceptDrops属性表示当前部件是否接受鼠标拖放事件，鼠标拖放应该是与鼠标拖拽结合在一起的，在Qt Designer中可以通过属性acceptDrops设置部件是否接受鼠标拖放事件。如果部件接受拖放，则在鼠标拖放时，拖放事件会发送给鼠标当前光标下接受拖放的第一个部件。</p>
-<p>如果一个部件设置了acceptDrops属性为True，则就是通知系统该部件可能接受鼠标拖放事件。</p>
-<p>注意：<br>1、如果当前部件是一个桌面(windowType() == Qt.Desktop), 如果此时另一应用正在使用桌面则这个属性设置可能失败；<br>2、不要在拖、放事件的处理方法中修改该属性。</p>
-<p>使用acceptDrops(）获取当前部件是否支持拖放；<br>使用setAcceptDrops(bool on)设置当前部件是否支持拖放。</p>
-</blockquote>
+<p>  1、Qt::TabFocus：通过按下Tab键获取焦点（这时候鼠标点击获取不到焦点的）。</p>
+<p>  2、Qt::ClickFocus：鼠标点击获取焦点。</p>
+<p>  3、Qt::StrongFocus：通过Tab键和鼠标点击获取焦点。</p>
+<p>  4、Qt::WheelFocus：通过Tab键、鼠标点击、鼠标滚轮按下获取焦点。</p>
+<p>  5、Qt::NoFocus：不接受焦点。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* acceptDrops</span><br><span class="line"></span><br><span class="line">&gt; acceptDrops属性表示当前部件是否接受鼠标拖放事件，鼠标拖放应该是与鼠标拖拽结合在一起的，在Qt Designer中可以通过属性acceptDrops设置部件是否接受鼠标拖放事件。如果部件接受拖放，则在鼠标拖放时，拖放事件会发送给鼠标当前光标下接受拖放的第一个部件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 如果一个部件设置了acceptDrops属性为True，则就是通知系统该部件可能接受鼠标拖放事件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 注意：</span><br><span class="line">&gt; 1、如果当前部件是一个桌面(windowType() &#x3D;&#x3D; Qt.Desktop), 如果此时另一应用正在使用桌面则这个属性设置可能失败；</span><br><span class="line">&gt; 2、不要在拖、放事件的处理方法中修改该属性。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 使用acceptDrops(）获取当前部件是否支持拖放；</span><br><span class="line">&gt; 使用setAcceptDrops(bool on)设置当前部件是否支持拖放。</span><br><span class="line">&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* QPushButton</span><br><span class="line"></span><br><span class="line">  flat属性用于确认按钮边框是否凸起，如果为False则凸起，如果为True则边框与背景是平坦的。</span><br><span class="line"></span><br><span class="line">  (1) default属性表示当在对话框中时有“Enter”键按下时执行此按键的click()事件。它的默认值是false；</span><br><span class="line"></span><br><span class="line">  (2)autoDefault属性设置为true时会影响按键的外观（略微突出显大），它的默认值是true。</span><br><span class="line"></span><br><span class="line">  ​</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">QFrame&#123;</span><br><span class="line"></span><br><span class="line">border-radius:10px;</span><br><span class="line"></span><br><span class="line">border:1px solid rgb(119, 119,119)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>QPushButton</p>
-<p>flat属性用于确认按钮边框是否凸起，如果为False则凸起，如果为True则边框与背景是平坦的。</p>
-<p>(1) default属性表示当在对话框中时有“Enter”键按下时执行此按键的click()事件。它的默认值是false；</p>
-<p>(2)autoDefault属性设置为true时会影响按键的外观（略微突出显大），它的默认值是true。</p>
+<li><p>QSqlTableModel</p>
+<p><img data-src="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png" alt="150127NvND4X"></p>
 <p>​</p>
 </li>
 </ul>
-<p>QFrame{</p>
-<p>border-radius:10px;</p>
-<p>border:1px solid rgb(119, 119,119)</p>
-<p>}</p>
 
     </div>
    <div>
@@ -358,6 +352,24 @@
     
     
       
+  <div class="popular-posts-header">相关热门文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/HAXCJE.html" rel="bookmark">easypoi导入Excel表格报错</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/2SZHQ52.html" rel="bookmark">如何优雅地记录操作日志</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/2ZZM48T.html" rel="bookmark">Column注解解析</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3V8G3VM.html" rel="bookmark">Qt基础学习笔记01</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
+    </li>
+  </ul>
 
         <div class="reward-container">
   <div></div>
@@ -398,6 +410,10 @@
 
 
       <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+          </div>
 
         
   <div class="post-widgets">
