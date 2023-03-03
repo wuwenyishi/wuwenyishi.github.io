@@ -380,7 +380,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/message/index.html</loc>
+    <loc>https://xuemingde.com/resources/index.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -389,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/resources/index.html</loc>
+    <loc>https://xuemingde.com/message/index.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -425,7 +425,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/1ZN2DTY.html</loc>
+    <loc>https://xuemingde.com/posts/SR6PT0.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -434,7 +434,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/SR6PT0.html</loc>
+    <loc>https://xuemingde.com/posts/1ZN2DTY.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -524,7 +524,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/MVEJAK.html</loc>
+    <loc>https://xuemingde.com/posts/357C6XC.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -533,7 +533,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/357C6XC.html</loc>
+    <loc>https://xuemingde.com/posts/MVEJAK.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -650,7 +650,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/343MDA1.html</loc>
+    <loc>https://xuemingde.com/posts/2QRJVBZ.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -659,7 +659,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/2QRJVBZ.html</loc>
+    <loc>https://xuemingde.com/posts/343MDA1.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -704,6 +704,15 @@
   </url>
   
   <url>
+    <loc>https://xuemingde.com/posts/1KK9G1G.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xuemingde.com/posts/2K0EYDH.html</loc>
     
     <lastmod>2022-08-13</lastmod>
@@ -714,15 +723,6 @@
   
   <url>
     <loc>https://xuemingde.com/posts/2N1HMJH.html</loc>
-    
-    <lastmod>2022-08-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xuemingde.com/posts/1KK9G1G.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -911,15 +911,6 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/2FA73PT.html</loc>
-    
-    <lastmod>2022-08-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xuemingde.com/posts/2NPWEZZ.html</loc>
     
     <lastmod>2022-08-13</lastmod>
@@ -938,7 +929,34 @@
   </url>
   
   <url>
+    <loc>https://xuemingde.com/posts/2FA73PT.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xuemingde.com/posts/1F4JVMQ.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xuemingde.com/posts/VB6XWR.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xuemingde.com/posts/VQ077V.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -957,24 +975,6 @@
   
   <url>
     <loc>https://xuemingde.com/posts/2HNBAGV.html</loc>
-    
-    <lastmod>2022-08-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xuemingde.com/posts/VQ077V.html</loc>
-    
-    <lastmod>2022-08-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xuemingde.com/posts/VB6XWR.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1163,7 +1163,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/12P0DCH.html</loc>
+    <loc>https://xuemingde.com/posts/3V74DRG.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1181,7 +1181,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/33KCKKX.html</loc>
+    <loc>https://xuemingde.com/posts/12P0DCH.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1190,7 +1190,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/3V74DRG.html</loc>
+    <loc>https://xuemingde.com/posts/33KCKKX.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
