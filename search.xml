@@ -736,6 +736,384 @@
       </tags>
   </entry>
   <entry>
+    <title>内存泄漏和内存溢出</title>
+    <url>/posts/266A6Z5.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<h1 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h1><p>是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 </p>
+<h2 id="内存泄漏产生的原因"><a href="#内存泄漏产生的原因" class="headerlink" title="内存泄漏产生的原因"></a>内存泄漏产生的原因</h2><ol>
+<li>单例造成的内存泄漏 </li>
+</ol>
+<p>由于单例的静态特性使得其生命周期和应用的生命周期一样长，如果一个对象已经不再需要使用了，而单例对象还持有该对象的引用，就会使得该对象不能被正常回收，从而导致了内存泄漏。 </p>
+<ol>
+<li>​非静态内部类创建静态实例造成的内存泄漏 </li>
+<li><p>​资源未关闭造成的内存泄漏 </p>
+<h2 id="如何避免内存泄漏"><a href="#如何避免内存泄漏" class="headerlink" title="如何避免内存泄漏"></a>如何避免内存泄漏</h2></li>
+<li><p>​尽量减少使用静态变量，或者使用完及时 赋值为 null。 </p>
+</li>
+<li>​各种连接（数据库连接，网络连接，IO连接）操作，务必显示调用close关闭 </li>
+<li>​减少长生命周期的对象持有短生命周期的引用； </li>
+<li>养成良好的编码习惯。<h2 id="遇到的内存泄漏"><a href="#遇到的内存泄漏" class="headerlink" title="遇到的内存泄漏"></a>遇到的内存泄漏</h2>在使用ThreadLocal时最后没有调用remove，使ThreadLocal对象没有被垃圾回收器回收，造成了内存泄漏。<h1 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h1></li>
+</ol>
+<p>指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出。OutOfMemoryError </p>
+<h2 id="内存溢出产生的原因"><a href="#内存溢出产生的原因" class="headerlink" title="内存溢出产生的原因"></a>内存溢出产生的原因</h2><h3 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h3><blockquote>
+<p>java.lang.OutOfMemoryError: Java heap space  </p>
+</blockquote>
+<p><strong>原因</strong></p>
+<ol>
+<li>代码中可能存在大对象分配。</li>
+<li>可能存在内存泄露，导致在多次GC之后，还是无法找到一块足够大的内存容纳当前对象。</li>
+</ol>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>检查是否存在大对象的分配，最有可能的是大数组分配。</li>
+<li>通过jmap命令，把堆内存dump下来，使用mat工具分析一下，检查是否存在内存泄露的问题。</li>
+<li>如果没有找到明显的内存泄露，使用 -Xmx 加大堆内存.</li>
+<li>还有一点容易被忽略，检查是否有大量的自定义的 Finalizable 对象，也有可能是框架内部提供的，考虑其存在的必要性  </li>
+</ol>
+<h3 id="永久代-元空间溢出"><a href="#永久代-元空间溢出" class="headerlink" title="永久代/元空间溢出"></a>永久代/元空间溢出</h3><p>报错信息：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: PermGen spacejava.lang.OutOfMemoryError: Metaspace</p>
+</blockquote>
+<p><strong>原因</strong><br>永久代是 HotSot 虚拟机对方法区的具体实现，存放了被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等。<br>JDK8后，元空间替换了永久代，元空间使用的是本地内存，还有其它细节变化: </p>
+<ul>
+<li>字符串常量由永久代转移到堆中</li>
+<li>和永久代相关的JVM参数已移除</li>
+<li>​</li>
+</ul>
+<p>可能原因有如下几种：</p>
+<ol>
+<li>在Java7之前，频繁的错误使用String.intern()方法</li>
+<li>运行期间生成了大量的代理类，导致方法区被撑爆，无法卸载</li>
+<li>应用长时间运行，没有重启</li>
+</ol>
+<p>没有重启 JVM 进程一般发生在调试时，如下面 tomcat 官网的一个 FAQ：</p>
+<blockquote>
+<p>Why does the memory usage increase when I redeploy a web application? That is because your web application has a memory leak. A common issue are “PermGen” memory leaks. They happen because the Classloader (and the Class objects it loaded) cannot be recycled unless some requirements are met (). They are stored in the permanent heap generation by the JVM, and when you redeploy a new class loader is created, which loads another copy of all these classes. This can cause OufOfMemoryErrors eventually. (*) The requirement is that all classes loaded by this classloader should be able to be gc’ed at the same time.</p>
+</blockquote>
+<p><strong>解决方法</strong><br>因为该OOM原因比较简单，解决方法有如下几种：</p>
+<ol>
+<li>检查是否永久代空间或者元空间设置的过小</li>
+<li>检查代码中是否存在大量的反射操作</li>
+<li>dump之后通过mat检查是否存在大量由于反射生成的代理类</li>
+<li>放大招，重启JVM</li>
+</ol>
+<h3 id="GC-overhead-limit-exceeded"><a href="#GC-overhead-limit-exceeded" class="headerlink" title="GC overhead limit exceeded"></a>GC overhead limit exceeded</h3><p>这个异常比较的罕见，报错信息：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError：GC overhead limit exceeded</p>
+</blockquote>
+<p><strong>原因</strong><br>这个是JDK6新加的错误类型，一般都是堆太小导致的。Sun 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。</p>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>检查项目中是否有大量的死循环或有使用大内存的代码，优化代码。</li>
+<li>添加参数 -XX:-UseGCOverheadLimit  禁用这个检查，其实这个参数解决不了内存问题，只是把错误的信息延后，最终出现 java.lang.OutOfMemoryError: Java heap space。</li>
+<li>dump内存，检查是否存在内存泄露，如果没有，加大内存。</li>
+</ol>
+<h3 id="方法栈溢出"><a href="#方法栈溢出" class="headerlink" title="方法栈溢出"></a>方法栈溢出</h3><p>报错信息：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError : unable to create new native Thread</p>
+</blockquote>
+<p><strong>原因</strong><br>出现这种异常，基本上都是创建的了大量的线程导致的，以前碰到过一次，通过jstack出来一共8000多个线程。</p>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>通过 -Xss 降低的每个线程栈大小的容量</li>
+<li>线程总数也受到系统空闲内存和操作系统的限制，检查是否该系统下有此限制：</li>
+</ol>
+<ul>
+<li>/proc/sys/kernel/pid_max</li>
+<li>/proc/sys/kernel/thread-max</li>
+<li>maxuserprocess（ulimit -u）</li>
+<li>/proc/sys/vm/maxmapcount</li>
+</ul>
+<h3 id="非常规溢出"><a href="#非常规溢出" class="headerlink" title="非常规溢出"></a>非常规溢出</h3><p>下面这些OOM异常，可能大部分的同学都没有碰到过，但还是需要了解一下</p>
+<h3 id="分配超大数组"><a href="#分配超大数组" class="headerlink" title="分配超大数组"></a>分配超大数组</h3><p>报错信息 ：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: Requested array size exceeds VM limit</p>
+</blockquote>
+<p>这种情况一般是由于不合理的数组分配请求导致的，在为数组分配内存之前，JVM 会执行一项检查。要分配的数组在该平台是否可以寻址(addressable)，如果不能寻址(addressable)就会抛出这个错误<br>解决方法就是检查你的代码中是否有创建超大数组的地方。</p>
+<h3 id="swap溢出"><a href="#swap溢出" class="headerlink" title="swap溢出"></a>swap溢出</h3><p>报错信息 ：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: Out of swap space</p>
+</blockquote>
+<p>这种情况一般是操作系统导致的，可能的原因有：</p>
+<ol>
+<li>swap 分区大小分配不足；</li>
+<li>其他进程消耗了所有的内存。</li>
+</ol>
+<p>解决方案：<br>1、其它服务进程可以选择性的拆分出去 2、加大swap分区大小，或者加大机器内存大小</p>
+<h3 id="本地方法溢出"><a href="#本地方法溢出" class="headerlink" title="本地方法溢出"></a>本地方法溢出</h3><p>报错信息 ：</p>
+<blockquote>
+<p>java.lang.OutOfMemoryError: stack_trace_with_native_method</p>
+</blockquote>
+<p>本地方法在运行时出现了内存分配失败，和之前的方法栈溢出不同，方法栈溢出发生在 JVM 代码层面，而本地方法溢出发生在JNI代码或本地方法处。<br>这个异常出现的概率极低，只能通过操作系统本地工具进行诊断，难度有点大，还是放弃为妙。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">相关文章<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h1 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h1><ul>
+<li>内存泄漏的堆积最终会导致内存溢出 </li>
+<li>内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。 </li>
+<li>内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。 </li>
+<li>内存溢出：一个盘子用尽各种方法只能装4个果子，你装了5个，结果掉倒地上不能吃了。这就是溢出。比方说栈，栈满时再做进栈必定产生空间溢出，叫上溢，栈空时再做退栈也产生空间溢出，称为下溢。就是分配的内存不足以放下数据项序列,称为内存溢出。说白了就是我承受不了那么多，那我就报错。</li>
+</ul>
+<blockquote>
+<p>内存溢出参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">https://blog.51cto.com/u_14442094/2449151<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>数据库</tag>
+        <tag>数组</tag>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java对象布局</title>
+    <url>/posts/28DG2WP.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>一个新 new 出来的对象，分为四部分：</p>
+<ul>
+<li>mark word  </li>
+<li>klass point </li>
+<li>Instance Data</li>
+<li>Padding</li>
+</ul>
+<p>可使用JOL类库查看</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
+<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
+<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
+<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
+<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
+<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
+<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
+<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
+<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
+<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
+<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
+<blockquote>
+<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>谈谈你对 JVM 方法区的理解</title>
+    <url>/posts/2GN96QM.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdS03T2pfQk5tdlFzdWwtZEVkeFJvZw==">面试官：谈谈你对 JVM 方法区的理解<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>运行时数据区”包括程序计数器、虚拟机栈、本地方法栈和堆空间，今天我们就来了解一下方法区。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0811nMChKa.png" alt=""></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>创建对象时内存分配简图</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08128OLLNU.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08139cSMvE.png" alt=""></p>
+<p>《Java虚拟机规范》中明确说明：“尽管所有的方法区在逻辑上属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集或者进行压缩。</p>
+<p>虽然 Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。所以，方法区可以看作是一块<strong>独立</strong>于 Java 堆的内存空间。</p>
+<p>方法区与 Java 堆一样，是各个线程共享的内存区域。方法区在 JVM 启动时就会被创建，并且它的实际的物理内存空间是可以<strong>不连续</strong>的，关闭 JVM 就会释放这个区域的内存。</p>
+<h2 id="永久代、元空间"><a href="#永久代、元空间" class="headerlink" title="永久代、元空间"></a>永久代、元空间</h2><p>《java虚拟机规范》对如何实现方法区，不做统一要求。例如：BEA JRockit/IBM J9 中不存在永久代的概念。而对于 HotSpot 来说，在 jdk7 及以前，习惯上把方法区的实现称为<strong>永久代</strong>，而从 jdk8 开始，使用<strong>元空间</strong>取代了永久代。</p>
+<blockquote>
+<p>方法区是 Java 虚拟机规范中的概念，而永久代和元空间是 HotSpot 虚拟机对方法区的一种实现。通俗点讲：如果把方法区比作接口的话，那永久代和元空间可以比作实现该接口的实现类。</p>
+</blockquote>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>永久代、元空间并不只是名字变了，内部结构也进行了调整。永久代使用的是 JVM 的内存，而元空间使用的是本地的直接内存。</p>
+<p>直接内存并不是 JVM 运行时数据区的一部分，因此不会受到 Java 堆的限制。但是它会受到本机总内存大小以及处理器寻址空间的限制，所以如果这部分内存也被频繁的使用，依然会导致 OOM 错误的出现。</p>
+<h3 id="方法区的大小"><a href="#方法区的大小" class="headerlink" title="方法区的大小"></a>方法区的大小</h3><p>方法区的大小是可以进行设置的，可以选择固定大小也可以进行扩展。</p>
+<h4 id="jdk7-及以前"><a href="#jdk7-及以前" class="headerlink" title="jdk7 及以前"></a>jdk7 及以前</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:PermSize=N //方法区 (永久代) 初始分配空间，默认值为 20.75M</span><br><span class="line">-XX:MaxPermSize=N //方法区 (永久代) 最大可分配空间。32位机器默认是64M，64位机器默认是82M</span><br></pre></td></tr></table></figure>
+<h4 id="jdk8及以后"><a href="#jdk8及以后" class="headerlink" title="jdk8及以后"></a>jdk8及以后</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:MetaspaceSize=N //方法区 (元空间) 初始分配空间，如果未指定此标志，则元空间将根据运行时的应用程序需求动态地重新调整大小。</span><br><span class="line">-XX:MaxMetaspaceSize=N //方法区 (元空间) 最大可分配空间，默认值为 -1，即没有限制</span><br></pre></td></tr></table></figure>
+<p>与永久代很大的不同就是，如果不指定大小的话，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</p>
+<p>方法区的大小决定了系统可以保存多少个类，如果系统定义了太多的类，比如：加载大量的第三方 jar 包、Tomcat 部署的工程过多、大量动态生成反射类等都会导致方法区溢出，抛出内存溢出错误。</p>
+<ul>
+<li>永久代：OutOfMemoryError:PermGen space</li>
+<li>元空间：OutOfMemoryError:Metaspace</li>
+</ul>
+<p><strong>至于如何解决 OOM 异常，将在以后的文章中讲解！</strong></p>
+<h3 id="jvisualvm"><a href="#jvisualvm" class="headerlink" title="jvisualvm"></a>jvisualvm</h3><p>我们可以通过 JDK 自带的 <strong>jvisualvm</strong> 工具来查看程序加载的类文件：</p>
+<p><strong>例</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;start...&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;end...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序，可以看到一个简单的程序就需要加载这么多的类文件。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08172fHLHQ.png" alt=""></p>
+<h3 id="高水位线"><a href="#高水位线" class="headerlink" title="高水位线"></a>高水位线</h3><p>对于一个64位的服务器端 JVM 来说，<code>XX：MetaspaceSize=21</code> 就是初始的高水位线，一旦触及这个水位线，Full GC 将会被触发并卸载没用的类（即这些类对应的类加载器不再存活），然后这个高水位线将会重置。</p>
+<p>新的高水位线的值取决于 GC 后释放了多少元空间：</p>
+<ul>
+<li>如果释放的空间不足，那么在不超过 MaxMetaspaceSize 时，适当提高该值；</li>
+<li>如果释放空间过多，则适当降低该值。</li>
+</ul>
+<blockquote>
+<p>如果初始化的高水位线设置过低，高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到 Full GC 多次调用。为了避免频繁地GC，建议将 <code>-XX ：MetaspaceSize</code> 设置为一个相对较高的值。</p>
+</blockquote>
+<h2 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h2><p>《深入理解Java虚拟机》书中对方法区存储内容描述如下：它用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。接下来我们就一起来看一下它的内部结构。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0818BTvM7A.png" alt=""></p>
+<h3 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h3><p>对每个加载的类型（ 类 class、接口 interface、枚举 enum、注解 annotation），JVM 必须在方法区中存储以下类型信息：</p>
+<ol>
+<li>这个类型的完整有效名称（全名=包名.类名）</li>
+<li>这个类型直接父类的完整有效名（对于 interface 或是 java. lang.Object ，都没有父类）</li>
+<li>这个类型的修饰符（ public ， abstract， final 的某个子集）</li>
+<li>这个类型直接接口的一个有序列表</li>
+</ol>
+<h3 id="域（Field）信息"><a href="#域（Field）信息" class="headerlink" title="域（Field）信息"></a>域（Field）信息</h3><ul>
+<li>JVM必须在方法区中保存类型的所有域（field，也称为属性）的相关信息以及域的声明顺序；</li>
+<li>域的相关信息包括：域名称、 域类型、域修饰符（public， private，protected， static， final， volatile， transient 的某个子集）</li>
+</ul>
+<h3 id="方法（Method）信息"><a href="#方法（Method）信息" class="headerlink" title="方法（Method）信息"></a>方法（Method）信息</h3><p>JVM 必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
+<ul>
+<li>方法名称</li>
+<li>方法的返回类型（或void）</li>
+<li>方法参数的数量和类型（按顺序）</li>
+<li>方法的修饰符（public， private， protected， static， final，synchronized， native ， abstract 的一个子集）</li>
+<li>方法的字节码（bytecodes）、操作数栈、局部变量表及大小（ abstract 和 native 方法除外）</li>
+<li>异常表（ abstract 和 native 方法除外）每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</li>
+</ul>
+<h3 id="non-final-的类变量"><a href="#non-final-的类变量" class="headerlink" title="non-final 的类变量"></a>non-final 的类变量</h3><ul>
+<li>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分</li>
+<li>类变量被类的所有实例所共享，即使没有类实例你也可以访问它。</li>
+</ul>
+<p>我们可以通过例子来查看：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Order order = <span class="keyword">null</span>;</span><br><span class="line">        order.hello();</span><br><span class="line">        System.out.println(order.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> number = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果为：</p>
+<figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">hello!</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>可以打开 IDEA 的 Terminal 窗口，在 MethodAreaDemo2.class 所在的路径下，输入 <code>javap -v -p MethodAreaDemo2.class</code> 命令</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0820D8dllV.png" alt=""></p>
+<p>通过图片我们可以看出被声明为 final 的类变量的处理方法是不一样的，全局常量在编译的时候就被分配了。</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>说到运行时常量池，我们先来了解一下什么是常量池表。</p>
+<h4 id="常量池表"><a href="#常量池表" class="headerlink" title="常量池表"></a>常量池表</h4><p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息那就是常量池表（Constant Pool Table），里边存储着<strong>数量值</strong>、<strong>字符串值</strong>、<strong>类引用</strong>、<strong>字段引用</strong>和<strong>方法引用</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0821NLzPMe.png" alt="图片"></p>
+<h4 id="为什么字节码文件需要常量池？"><a href="#为什么字节码文件需要常量池？" class="headerlink" title="为什么字节码文件需要常量池？"></a>为什么字节码文件需要常量池？</h4><p>java 源文件中的类、接口，编译后会产生一个字节码文件。而字节码文件需要数据支持，通常这种数据会很大，以至于不能直接存放到字节码中。换一种方式，可以将指向这些数据的<strong>符号引用</strong>存到字节码文件的常量池中，这样字节码只需使用常量池就可以在运行时通过<strong>动态链接</strong>找到相应的数据并使用。</p>
+<h4 id="运行时常量池-1"><a href="#运行时常量池-1" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池（ <code>Runtime Constant Pool</code>）是方法区的一部分，类加载器加载字节码文件时，将常量池表加载进方法区的运行时常量池。运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。此时不再是常量池中的符号地址了，这里换为<strong>真实</strong>地址。</p>
+<blockquote>
+<p>运行时常量池，相对于 Class 文件常量池的另一重要特征是：具备动态性，比如 <code>String.intern()</code>。</p>
+</blockquote>
+<h2 id="演进细节"><a href="#演进细节" class="headerlink" title="演进细节"></a>演进细节</h2><p>针对的是 <strong>Hotspot</strong> 的虚拟机：</p>
+<ul>
+<li>jdk1.6 及之前：有<strong>永久代</strong> ，静态变量存放在永久代上；</li>
+<li>jdk1.7：有<strong>永久代</strong>，但已经逐步“去永久代”，字符串常量池、静态变量移除，保存在堆中；</li>
+<li>jdk1.8及之后：无永久代，类型信息、字段、方法、常量保存在本地内存的<strong>元空间</strong>，但字符串常量池、静态变量仍在堆中；</li>
+</ul>
+<h3 id="演变示例图"><a href="#演变示例图" class="headerlink" title="演变示例图"></a>演变示例图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822Hj7z0e.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822u3jIxG.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0823bbxVIm.png" alt=""></p>
+<h3 id="为什么要将永久代替换为元空间呢"><a href="#为什么要将永久代替换为元空间呢" class="headerlink" title="为什么要将永久代替换为元空间呢?"></a>为什么要将永久代替换为元空间呢?</h3><ol>
+<li>永久代使用的是 JVM 的内存，受 JVM 设置的内存大小限制；元空间使用的是本地直接内存，它的最大可分配空间是系统可用内存的空间。因为元空间里存放的是类的<strong>元数据</strong>，所以随着内存空间的增大，能加载的类就更多了，相应的溢出的机率会大大减小。</li>
+<li>在 JDK8，合并 HotSpot 和 JRockit 的代码时，JRockit 从来没有一个叫永久代的东西，合并之后就没有必要额外的设置这么一个永久代的地方了。</li>
+<li>对永久代进行调优是很困难的。</li>
+</ol>
+<h3 id="StringTable-为什么要调整"><a href="#StringTable-为什么要调整" class="headerlink" title="StringTable 为什么要调整"></a>StringTable 为什么要调整</h3><p>因为永久代的回收效率很低，在 full gc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了<code>StringTable</code> 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。方法区的垃圾收集主要回收两部分内容：常量池中废奔的<strong>常量</strong>和不再使用的<strong>类型</strong>。</p>
+<p>方法区内常量池中主要存放字面量和符号引用两大类常量：</p>
+<ul>
+<li>字面量比较接近 Java 语言层次的常量概念，如文本字符串、被声明为 final 的常量值等。</li>
+<li>符号引用则属于编译原理方面的概念，包括类和接口的全限定名、字段的名称和描述符、方法的名称和描述符。</li>
+</ul>
+<p>HotSpot 虚拟机对常量池的回收策略是很明确的，只要常量池中的常量没有被任何地方引用，就可以被回收。</p>
+<h3 id="类型判定"><a href="#类型判定" class="headerlink" title="类型判定"></a>类型判定</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。需要同时满足下面三个条件：</p>
+<ul>
+<li>该类所有的<strong>实例</strong>都已经被回收，也就是 Java 堆中不存在该类及其任何派生子类的实例；</li>
+<li>加载该类的<strong>类加载器</strong>已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如OSGi、JSP的重加载等，否则通常是很难达成的；</li>
+<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>Java 虛拟机被允许对满足上述三个条件的无用类进行回收，这里说的仅仅是“被允许”，而并不是和对象一样，没有引用了就必然会回收。</p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>面试</tag>
+        <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM视频学习笔记-A</title>
+    <url>/posts/C0YKJ4.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>视频地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVBKNDExbjd4Wg==">尚硅谷宋红康JVM全套教程（详解java虚拟机）_哔哩哔哩_bilibili<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>好好学习，天天向上。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMDgmYW1wO2lkeD0xJmFtcDtzbj0zYWE1MjQ1YmMxYjllYTNiNzgzN2ZkZjAxMjZjOWUzOCZhbXA7Y2hrc209YzFmNDkzMGFmNjgzMWExYzFjYzEwNmY2NjZhOTkzMmIyZDkwY2EzMTE5MGFiNjZhMmZmMzY2NmViZjc0NDBlZDY4MjFlNDlkN2E2ZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjQyNzgwMTgzMTE3MjIxMDY5MyNyZA==">01-JVM与java体系结构<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMTQmYW1wO2lkeD0xJmFtcDtzbj1iODkwNTNhM2QwNjFjYTIzY2U2YjI4ODkyMjVlMmRlMCZhbXA7Y2hrc209YzFmNDkzZjRmNjgzMWFlMjQ3MmMxMjg5YTkwYTU5Y2QwZjlhYjgyYmNlYzBmOGE2Y2I4ZjMxYjUzNDQ4Yzk2NDk5MzQ4NzlmMWRiNSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">02-Java代码执行流程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMjQmYW1wO2lkeD0xJmFtcDtzbj1jZDRmNzc2NDY3ZDAxYmYxOGE0NWRhYTdmNjU3OTYwZCZhbXA7Y2hrc209YzFmNDkzZmFmNjgzMWFlY2Y3NzYzNTI4YzRiMDI3ZDFiODgwNjMwYzBjOTM5OGJjZWRjYzIzMWQ0NDI5NzkzMzcxMTllMGUxOGU5NSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">03-JVM的结构模型<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMzEmYW1wO2lkeD0xJmFtcDtzbj00MWYwNTI0NmUxMDU5MDAwMzA2MzkwNTZmNDQ2ODFhNSZhbXA7Y2hrc209YzFmNDkzZTVmNjgzMWFmMzg1NzJiZTliMDk0ZGVhNjU5ODg5NWM3MGRlMGMxNjNhNWY5ODYzYzFiYjVlODcyMjlmNjczNTViMGVmNiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">04-JVM的生命周期<i class="fa fa-external-link-alt"></i></span>  </li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNTMmYW1wO2lkeD0xJmFtcDtzbj03MzFhMzlhM2M5NWM1MTdmZWFlNzgzNjNjNzVkMjEzMiZhbXA7Y2hrc209YzFmNDkzZGZmNjgzMWFjOTc2MDcwY2Y2M2FkZTg0MDMxNWVlZGZhMjVmZTkwYjhmNzg0ODdjYThmMzliY2M3YzU5ZjIxODdmZTE4MSNyZA==">05-概述类的加载器及类加载过程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNjQmYW1wO2lkeD0xJmFtcDtzbj0zM2YwZTM3OTc0MDFmOTk2MTk4MzE0NGRlYzI3YjViZCZhbXA7Y2hrc209YzFmNDkzYzJmNjgzMWFkNGU3M2RjMjdiODJhMzU0ODI4MmU1OTQ5ZTRjYjYyYmRjMTQ1MmEzNGE3ZTU4MjgyOTJlN2FmYjg4MmM5NiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">06-几种类加载器的使用体会<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNzYmYW1wO2lkeD0xJmFtcDtzbj0zOWI2ZmYzMzYxMzZlOGNiMmI4NDkzOGI5MmE4Njg5YyZhbXA7Y2hrc209YzFmNDkzYjZmNjgzMWFhMDUzMzNlNmZjYmQzY2U1NjI5ZmE3NDlhYTYzYTFiYzY5ZjcyY2VmZTMzOGE1MzhlMTQwOGE5NWE4NjYzMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">07-引导类、扩展类、系统类加载器的使用及演示<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzODYmYW1wO2lkeD0xJmFtcDtzbj1lMjE3Mjg0NGFmYTQ0NzMwY2IyOWE0NTgzODY3NmZlMiZhbXA7Y2hrc209YzFmNDkzYmNmNjgzMWFhYTgxNjZiZmVjMWY0MDcxYjBlOWQzNzQ0MTNlODhiNjVkZWFkZDkwOWM2ZDgwYzZjZjk1NTgzZGFmMDFlNyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">为什么需要用户自定义类加载器及具体实现<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzOTMmYW1wO2lkeD0xJmFtcDtzbj05MGUyMDcyZTE4ZTY1Yzc0MjEwYjBjMjZlMDFjM2Y1NSZhbXA7Y2hrc209YzFmNDkzYTdmNjgzMWFiMTQ2ZGVkYTNlZjEzYjEzNTI0MDZlODQ2ZDI0ZGU0YzY1ZDM4YWZhYzg0YTM3NDE5NmRhYzMyMjA5NDNhOSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">08-ClassLoader的常用方法及获取方法<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0MzUmYW1wO2lkeD0xJmFtcDtzbj1mNjkxYWY1NGQxNmIyMGQwOWMzMmJkMDEwMzYwMTQzMCZhbXA7Y2hrc209YzFmNDkzOGRmNjgzMWE5Yjg5NzgxZmI3ODZmM2FlOTA5N2Y2ZjUzODVhMTk0ODI3OTFmMTYzOGU5ZTNlNzFjM2IyNGI4YmUzMjA2OSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">09-双亲委派机制的工作原理及演示<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NDUmYW1wO2lkeD0xJmFtcDtzbj1hYzk3ZjBlMGMxMTEyMDM1NWEyY2FmMTEwNmI3OGM4MyZhbXA7Y2hrc209YzFmNDljNzNmNjgzMTU2NTQ2ZmRhZTI3NmI0M2E2ZjVjOGUxZWRiZDJlMGQzMjc1MDFlZjJjZDk2NWYxYjcwNDg2YzJkNmNiMGU4NCZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">10-沙箱安全机制<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NTcmYW1wO2lkeD0xJmFtcDtzbj1mNzRjM2Q1YzAyYjE0ZTk5MGM1N2Q4Y2I1ZjkyNzQ3ZSZhbXA7Y2hrc209YzFmNDljNjdmNjgzMTU3MWM5YzcyMDVlMjFiNmIwNThiMmQxYzM3OGQ4N2IwZDYxMzU2MjFiMjg5NWEyM2VmYjcwNzFiMWMyNDkwMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">11 - 运行时数据区内部结构<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NzUmYW1wO2lkeD0xJmFtcDtzbj0zZDM3ODM3MDFhNzFmYjg2NDNjODEwN2FlYmE2YmE2MSZhbXA7Y2hrc209YzFmNDljNTVmNjgzMTU0MzAwMmI5NTc5ZmIxYThkOWYwZTM3ZDZiMWY3YmFiMGVlMTBjOTAxNWU3ODhiYzQ5NWY0MmQyZjI1MDY3MSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">12-PC寄存器（程序计数器）<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1MTQmYW1wO2lkeD0xJmFtcDtzbj01ZGNlM2U3ZjkxYTg5YzY3MGVjYTBiNzdhYmVjODM4MSZhbXA7Y2hrc209YzFmNDljM2NmNjgzMTUyYTFhMjMxMDNkM2I2NTcwM2YyZmQ0NzFkNzMxMTRiYWQ1NDZkNmRiMzk3ZTBmZWIwOTBkYjcxYTFiNDYyZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjMxOTY1NTc5NTU4NTcxMjEzMyNyZA==">13-虚拟机栈-概述<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NTQmYW1wO2lkeD0xJmFtcDtzbj1mNmMzNDgxNmEyYmQ5YzMxZTJhZjE3NDk5N2UzYjg1YSZhbXA7Y2hrc209YzFmNDljMDRmNjgzMTUxMjViMTc1NzcyZDZiZWY1ZDcyODA2MWE2NzU1ZTRlYjJlNDA1NmYxZmIyYzIyNWJjNTEwNTZhZDA4ZGI0YyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">14-虚拟机栈-栈的存储单位及运行原理<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NjAmYW1wO2lkeD0xJmFtcDtzbj0zMDJlNDY2NjJiMDE4YjNlMTQ3NzY5MzQxMDhiNzA0OSZhbXA7Y2hrc209YzFmNDljMGVmNjgzMTUxODQ4NTkxZjAxNjgyZmRhYTkxMDIyY2E1MzZlZGEzNDE2MDVmOGRjOGJjZjcyM2M5MmU3MDA3ZWJlMDk2MyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">15-虚拟机栈-栈祯的内部结构<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Volatile的概念</title>
+    <url>/posts/2TD7P25.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>Volatile有两大作用</p>
+<ol>
+<li>保证线程间可见性</li>
+<li>禁止指令重排序</li>
+</ol>
+<h2 id="CPU的乱序执行"><a href="#CPU的乱序执行" class="headerlink" title="CPU的乱序执行"></a>CPU的乱序执行</h2><p><img data-src="https://xuemingde.com/pages/image/others/S8d07j.png" alt=""></p>
+<p>CPU为什么支持乱序执行？是为了提高效率。</p>
+<blockquote>
+<p>CPU的速度要比内存的速度快100倍</p>
+</blockquote>
+<p>如果按顺序执行，有两条指令，第一次指令去内存中读取数据，第二个指令要等99%的时间让第一个指令执行完再去执行，浪费CPU的时间，执行效率就很低。</p>
+<p>在CPU的优化时候，有可能是这样执行的，在第一个指令执行的时候，会把第二个指令拿出来执行，但是有个前提条件，两个指令不能存在前后的依赖关系。</p>
+<h2 id="解释一下对象的创建过程"><a href="#解释一下对象的创建过程" class="headerlink" title="解释一下对象的创建过程"></a>解释一下对象的创建过程</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Object o = <span class="keyword">new</span> Object();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/others/hcd0hK.png" alt=""></p>
+<p>new 出一个对象至少需要三步：</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/xYGO2T.png" alt=""></p>
+<p>第一步：new ，申请一块内存空间，用来装我new出来的对象。如上图所示，申请的内存空间里肯定有一个成员变量m，这个m的值是他的默认值，根据数据类型来定，所以这个m的默认值是0； <img data-src="https://xuemingde.com/pages/image/others/mY2ArO.png" alt=""></p>
+<p>第二步：给成员变量赋值，所以此时的m值变为了8。<strong>这个过程就是对象的半初始化状态。</strong> <img data-src="https://xuemingde.com/pages/image/others/zdwTUK.png" alt=""></p>
+<p>第三步：建立关联，局部变量 t ，t里面存储一个指针，这个指针就指向一个对象。 <img data-src="https://xuemingde.com/pages/image/others/6rJ0tu.png" alt=""></p>
+<h2 id="双重检锁（DCL）单例要不要加Volatile"><a href="#双重检锁（DCL）单例要不要加Volatile" class="headerlink" title="双重检锁（DCL）单例要不要加Volatile"></a>双重检锁（DCL）单例要不要加Volatile</h2><p>双重检锁（DCL）单例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//2.要不要加 volatile</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> TestDemo INST;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">TestDemo</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TestDemo <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.这个地方为什么要为空判断？</span></span><br><span class="line">        <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (TestDemo.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">1</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    INST = <span class="keyword">new</span> TestDemo();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INST;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>为什么要进来就为空判断？</strong></p>
+<p>假如去掉这个判断，现在有1000个线程都来抢这把锁，上来就开始锁竞争，最终只有一个线程能够持有锁，去new对象，剩下的所有线程都参与了锁竞争过程，这样会降低效率。如果加上了判断，只要一个线程new出了对象，就不用去参与锁竞争过程了。</p>
+<p><strong>要不要加Volatile ？？？</strong></p>
+<p>答案是<strong>必须要加</strong>的。</p>
+<p>为什么呢？</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/UF3vK1.png" alt=""></p>
+<p>前面讲了，new一个对象至少有三步，在线程1创建对象时，在申请内存空间的时候，发生了指令重排序（我们前面也讲了，CPU会有乱序执行），第二步和第三步发生了执行顺序的颠倒，线程1在执行完第一步去执行了第三步，这时候局部变量INST指向了创建的对象，此时线程2判断INST不再为null，而线程1还没有执行完第三步，此时线程2拿到的对象是一个半成品，而成员变量的值还是他的默认值。</p>
+<p>Volatile的一个作用就是禁止指令重排序，用Volatile修饰的任何内存空间（对象），在他上面执行的指令不可以乱序。</p>
+<h2 id="Volatile为什么会禁止重排的？"><a href="#Volatile为什么会禁止重排的？" class="headerlink" title="Volatile为什么会禁止重排的？"></a>Volatile为什么会禁止重排的？</h2><p>内存屏障！！</p>
+<h3 id="内存屏障-（JVM级别）"><a href="#内存屏障-（JVM级别）" class="headerlink" title="内存屏障 （JVM级别）"></a>内存屏障 （JVM级别）</h3><p>JVM级别的内存屏障分为四种</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yGGBJz.png" alt=""></p>
+<p>JVM是一种规范，这个规范要求被Volatile修饰的东西要实现内存屏障。但是硬件级别或者hostpot级别或者操作系统级别如何实现的，实际上与JVM的规定没有直接的关系。</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/vSRQKY.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt基础学习笔记01</title>
     <url>/posts/3V8G3VM.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><QtGlobal>头文件包含了Qt类库的一些全局定义，包括基本数据类型、函数和宏，一般的Qt类的头文件都会包含该文件，所以不用显式包含这个头文件也可以使用其中的定义。</p>
@@ -1139,384 +1517,6 @@
       </tags>
   </entry>
   <entry>
-    <title>内存泄漏和内存溢出</title>
-    <url>/posts/266A6Z5.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<h1 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h1><p>是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 </p>
-<h2 id="内存泄漏产生的原因"><a href="#内存泄漏产生的原因" class="headerlink" title="内存泄漏产生的原因"></a>内存泄漏产生的原因</h2><ol>
-<li>单例造成的内存泄漏 </li>
-</ol>
-<p>由于单例的静态特性使得其生命周期和应用的生命周期一样长，如果一个对象已经不再需要使用了，而单例对象还持有该对象的引用，就会使得该对象不能被正常回收，从而导致了内存泄漏。 </p>
-<ol>
-<li>​非静态内部类创建静态实例造成的内存泄漏 </li>
-<li><p>​资源未关闭造成的内存泄漏 </p>
-<h2 id="如何避免内存泄漏"><a href="#如何避免内存泄漏" class="headerlink" title="如何避免内存泄漏"></a>如何避免内存泄漏</h2></li>
-<li><p>​尽量减少使用静态变量，或者使用完及时 赋值为 null。 </p>
-</li>
-<li>​各种连接（数据库连接，网络连接，IO连接）操作，务必显示调用close关闭 </li>
-<li>​减少长生命周期的对象持有短生命周期的引用； </li>
-<li>养成良好的编码习惯。<h2 id="遇到的内存泄漏"><a href="#遇到的内存泄漏" class="headerlink" title="遇到的内存泄漏"></a>遇到的内存泄漏</h2>在使用ThreadLocal时最后没有调用remove，使ThreadLocal对象没有被垃圾回收器回收，造成了内存泄漏。<h1 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h1></li>
-</ol>
-<p>指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出。OutOfMemoryError </p>
-<h2 id="内存溢出产生的原因"><a href="#内存溢出产生的原因" class="headerlink" title="内存溢出产生的原因"></a>内存溢出产生的原因</h2><h3 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h3><blockquote>
-<p>java.lang.OutOfMemoryError: Java heap space  </p>
-</blockquote>
-<p><strong>原因</strong></p>
-<ol>
-<li>代码中可能存在大对象分配。</li>
-<li>可能存在内存泄露，导致在多次GC之后，还是无法找到一块足够大的内存容纳当前对象。</li>
-</ol>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>检查是否存在大对象的分配，最有可能的是大数组分配。</li>
-<li>通过jmap命令，把堆内存dump下来，使用mat工具分析一下，检查是否存在内存泄露的问题。</li>
-<li>如果没有找到明显的内存泄露，使用 -Xmx 加大堆内存.</li>
-<li>还有一点容易被忽略，检查是否有大量的自定义的 Finalizable 对象，也有可能是框架内部提供的，考虑其存在的必要性  </li>
-</ol>
-<h3 id="永久代-元空间溢出"><a href="#永久代-元空间溢出" class="headerlink" title="永久代/元空间溢出"></a>永久代/元空间溢出</h3><p>报错信息：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: PermGen spacejava.lang.OutOfMemoryError: Metaspace</p>
-</blockquote>
-<p><strong>原因</strong><br>永久代是 HotSot 虚拟机对方法区的具体实现，存放了被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等。<br>JDK8后，元空间替换了永久代，元空间使用的是本地内存，还有其它细节变化: </p>
-<ul>
-<li>字符串常量由永久代转移到堆中</li>
-<li>和永久代相关的JVM参数已移除</li>
-<li>​</li>
-</ul>
-<p>可能原因有如下几种：</p>
-<ol>
-<li>在Java7之前，频繁的错误使用String.intern()方法</li>
-<li>运行期间生成了大量的代理类，导致方法区被撑爆，无法卸载</li>
-<li>应用长时间运行，没有重启</li>
-</ol>
-<p>没有重启 JVM 进程一般发生在调试时，如下面 tomcat 官网的一个 FAQ：</p>
-<blockquote>
-<p>Why does the memory usage increase when I redeploy a web application? That is because your web application has a memory leak. A common issue are “PermGen” memory leaks. They happen because the Classloader (and the Class objects it loaded) cannot be recycled unless some requirements are met (). They are stored in the permanent heap generation by the JVM, and when you redeploy a new class loader is created, which loads another copy of all these classes. This can cause OufOfMemoryErrors eventually. (*) The requirement is that all classes loaded by this classloader should be able to be gc’ed at the same time.</p>
-</blockquote>
-<p><strong>解决方法</strong><br>因为该OOM原因比较简单，解决方法有如下几种：</p>
-<ol>
-<li>检查是否永久代空间或者元空间设置的过小</li>
-<li>检查代码中是否存在大量的反射操作</li>
-<li>dump之后通过mat检查是否存在大量由于反射生成的代理类</li>
-<li>放大招，重启JVM</li>
-</ol>
-<h3 id="GC-overhead-limit-exceeded"><a href="#GC-overhead-limit-exceeded" class="headerlink" title="GC overhead limit exceeded"></a>GC overhead limit exceeded</h3><p>这个异常比较的罕见，报错信息：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError：GC overhead limit exceeded</p>
-</blockquote>
-<p><strong>原因</strong><br>这个是JDK6新加的错误类型，一般都是堆太小导致的。Sun 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。</p>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>检查项目中是否有大量的死循环或有使用大内存的代码，优化代码。</li>
-<li>添加参数 -XX:-UseGCOverheadLimit  禁用这个检查，其实这个参数解决不了内存问题，只是把错误的信息延后，最终出现 java.lang.OutOfMemoryError: Java heap space。</li>
-<li>dump内存，检查是否存在内存泄露，如果没有，加大内存。</li>
-</ol>
-<h3 id="方法栈溢出"><a href="#方法栈溢出" class="headerlink" title="方法栈溢出"></a>方法栈溢出</h3><p>报错信息：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError : unable to create new native Thread</p>
-</blockquote>
-<p><strong>原因</strong><br>出现这种异常，基本上都是创建的了大量的线程导致的，以前碰到过一次，通过jstack出来一共8000多个线程。</p>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>通过 -Xss 降低的每个线程栈大小的容量</li>
-<li>线程总数也受到系统空闲内存和操作系统的限制，检查是否该系统下有此限制：</li>
-</ol>
-<ul>
-<li>/proc/sys/kernel/pid_max</li>
-<li>/proc/sys/kernel/thread-max</li>
-<li>maxuserprocess（ulimit -u）</li>
-<li>/proc/sys/vm/maxmapcount</li>
-</ul>
-<h3 id="非常规溢出"><a href="#非常规溢出" class="headerlink" title="非常规溢出"></a>非常规溢出</h3><p>下面这些OOM异常，可能大部分的同学都没有碰到过，但还是需要了解一下</p>
-<h3 id="分配超大数组"><a href="#分配超大数组" class="headerlink" title="分配超大数组"></a>分配超大数组</h3><p>报错信息 ：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: Requested array size exceeds VM limit</p>
-</blockquote>
-<p>这种情况一般是由于不合理的数组分配请求导致的，在为数组分配内存之前，JVM 会执行一项检查。要分配的数组在该平台是否可以寻址(addressable)，如果不能寻址(addressable)就会抛出这个错误<br>解决方法就是检查你的代码中是否有创建超大数组的地方。</p>
-<h3 id="swap溢出"><a href="#swap溢出" class="headerlink" title="swap溢出"></a>swap溢出</h3><p>报错信息 ：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: Out of swap space</p>
-</blockquote>
-<p>这种情况一般是操作系统导致的，可能的原因有：</p>
-<ol>
-<li>swap 分区大小分配不足；</li>
-<li>其他进程消耗了所有的内存。</li>
-</ol>
-<p>解决方案：<br>1、其它服务进程可以选择性的拆分出去 2、加大swap分区大小，或者加大机器内存大小</p>
-<h3 id="本地方法溢出"><a href="#本地方法溢出" class="headerlink" title="本地方法溢出"></a>本地方法溢出</h3><p>报错信息 ：</p>
-<blockquote>
-<p>java.lang.OutOfMemoryError: stack_trace_with_native_method</p>
-</blockquote>
-<p>本地方法在运行时出现了内存分配失败，和之前的方法栈溢出不同，方法栈溢出发生在 JVM 代码层面，而本地方法溢出发生在JNI代码或本地方法处。<br>这个异常出现的概率极低，只能通过操作系统本地工具进行诊断，难度有点大，还是放弃为妙。</p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">相关文章<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h1 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h1><ul>
-<li>内存泄漏的堆积最终会导致内存溢出 </li>
-<li>内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。 </li>
-<li>内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。 </li>
-<li>内存溢出：一个盘子用尽各种方法只能装4个果子，你装了5个，结果掉倒地上不能吃了。这就是溢出。比方说栈，栈满时再做进栈必定产生空间溢出，叫上溢，栈空时再做退栈也产生空间溢出，称为下溢。就是分配的内存不足以放下数据项序列,称为内存溢出。说白了就是我承受不了那么多，那我就报错。</li>
-</ul>
-<blockquote>
-<p>内存溢出参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">https://blog.51cto.com/u_14442094/2449151<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>数据库</tag>
-        <tag>数组</tag>
-        <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java对象布局</title>
-    <url>/posts/28DG2WP.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>一个新 new 出来的对象，分为四部分：</p>
-<ul>
-<li>mark word  </li>
-<li>klass point </li>
-<li>Instance Data</li>
-<li>Padding</li>
-</ul>
-<p>可使用JOL类库查看</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
-<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
-<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
-<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
-<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
-<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
-<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
-<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
-<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
-<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
-<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
-<blockquote>
-<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Volatile的概念</title>
-    <url>/posts/2TD7P25.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>Volatile有两大作用</p>
-<ol>
-<li>保证线程间可见性</li>
-<li>禁止指令重排序</li>
-</ol>
-<h2 id="CPU的乱序执行"><a href="#CPU的乱序执行" class="headerlink" title="CPU的乱序执行"></a>CPU的乱序执行</h2><p><img data-src="https://xuemingde.com/pages/image/others/S8d07j.png" alt=""></p>
-<p>CPU为什么支持乱序执行？是为了提高效率。</p>
-<blockquote>
-<p>CPU的速度要比内存的速度快100倍</p>
-</blockquote>
-<p>如果按顺序执行，有两条指令，第一次指令去内存中读取数据，第二个指令要等99%的时间让第一个指令执行完再去执行，浪费CPU的时间，执行效率就很低。</p>
-<p>在CPU的优化时候，有可能是这样执行的，在第一个指令执行的时候，会把第二个指令拿出来执行，但是有个前提条件，两个指令不能存在前后的依赖关系。</p>
-<h2 id="解释一下对象的创建过程"><a href="#解释一下对象的创建过程" class="headerlink" title="解释一下对象的创建过程"></a>解释一下对象的创建过程</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Object o = <span class="keyword">new</span> Object();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img data-src="https://xuemingde.com/pages/image/others/hcd0hK.png" alt=""></p>
-<p>new 出一个对象至少需要三步：</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/xYGO2T.png" alt=""></p>
-<p>第一步：new ，申请一块内存空间，用来装我new出来的对象。如上图所示，申请的内存空间里肯定有一个成员变量m，这个m的值是他的默认值，根据数据类型来定，所以这个m的默认值是0； <img data-src="https://xuemingde.com/pages/image/others/mY2ArO.png" alt=""></p>
-<p>第二步：给成员变量赋值，所以此时的m值变为了8。<strong>这个过程就是对象的半初始化状态。</strong> <img data-src="https://xuemingde.com/pages/image/others/zdwTUK.png" alt=""></p>
-<p>第三步：建立关联，局部变量 t ，t里面存储一个指针，这个指针就指向一个对象。 <img data-src="https://xuemingde.com/pages/image/others/6rJ0tu.png" alt=""></p>
-<h2 id="双重检锁（DCL）单例要不要加Volatile"><a href="#双重检锁（DCL）单例要不要加Volatile" class="headerlink" title="双重检锁（DCL）单例要不要加Volatile"></a>双重检锁（DCL）单例要不要加Volatile</h2><p>双重检锁（DCL）单例</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//2.要不要加 volatile</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> TestDemo INST;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">TestDemo</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TestDemo <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.这个地方为什么要为空判断？</span></span><br><span class="line">        <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (TestDemo.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (INST == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">1</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    INST = <span class="keyword">new</span> TestDemo();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INST;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>为什么要进来就为空判断？</strong></p>
-<p>假如去掉这个判断，现在有1000个线程都来抢这把锁，上来就开始锁竞争，最终只有一个线程能够持有锁，去new对象，剩下的所有线程都参与了锁竞争过程，这样会降低效率。如果加上了判断，只要一个线程new出了对象，就不用去参与锁竞争过程了。</p>
-<p><strong>要不要加Volatile ？？？</strong></p>
-<p>答案是<strong>必须要加</strong>的。</p>
-<p>为什么呢？</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/UF3vK1.png" alt=""></p>
-<p>前面讲了，new一个对象至少有三步，在线程1创建对象时，在申请内存空间的时候，发生了指令重排序（我们前面也讲了，CPU会有乱序执行），第二步和第三步发生了执行顺序的颠倒，线程1在执行完第一步去执行了第三步，这时候局部变量INST指向了创建的对象，此时线程2判断INST不再为null，而线程1还没有执行完第三步，此时线程2拿到的对象是一个半成品，而成员变量的值还是他的默认值。</p>
-<p>Volatile的一个作用就是禁止指令重排序，用Volatile修饰的任何内存空间（对象），在他上面执行的指令不可以乱序。</p>
-<h2 id="Volatile为什么会禁止重排的？"><a href="#Volatile为什么会禁止重排的？" class="headerlink" title="Volatile为什么会禁止重排的？"></a>Volatile为什么会禁止重排的？</h2><p>内存屏障！！</p>
-<h3 id="内存屏障-（JVM级别）"><a href="#内存屏障-（JVM级别）" class="headerlink" title="内存屏障 （JVM级别）"></a>内存屏障 （JVM级别）</h3><p>JVM级别的内存屏障分为四种</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/yGGBJz.png" alt=""></p>
-<p>JVM是一种规范，这个规范要求被Volatile修饰的东西要实现内存屏障。但是硬件级别或者hostpot级别或者操作系统级别如何实现的，实际上与JVM的规定没有直接的关系。</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/vSRQKY.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>谈谈你对 JVM 方法区的理解</title>
-    <url>/posts/2GN96QM.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdS03T2pfQk5tdlFzdWwtZEVkeFJvZw==">面试官：谈谈你对 JVM 方法区的理解<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>运行时数据区”包括程序计数器、虚拟机栈、本地方法栈和堆空间，今天我们就来了解一下方法区。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0811nMChKa.png" alt=""></p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>创建对象时内存分配简图</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08128OLLNU.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08139cSMvE.png" alt=""></p>
-<p>《Java虚拟机规范》中明确说明：“尽管所有的方法区在逻辑上属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集或者进行压缩。</p>
-<p>虽然 Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。所以，方法区可以看作是一块<strong>独立</strong>于 Java 堆的内存空间。</p>
-<p>方法区与 Java 堆一样，是各个线程共享的内存区域。方法区在 JVM 启动时就会被创建，并且它的实际的物理内存空间是可以<strong>不连续</strong>的，关闭 JVM 就会释放这个区域的内存。</p>
-<h2 id="永久代、元空间"><a href="#永久代、元空间" class="headerlink" title="永久代、元空间"></a>永久代、元空间</h2><p>《java虚拟机规范》对如何实现方法区，不做统一要求。例如：BEA JRockit/IBM J9 中不存在永久代的概念。而对于 HotSpot 来说，在 jdk7 及以前，习惯上把方法区的实现称为<strong>永久代</strong>，而从 jdk8 开始，使用<strong>元空间</strong>取代了永久代。</p>
-<blockquote>
-<p>方法区是 Java 虚拟机规范中的概念，而永久代和元空间是 HotSpot 虚拟机对方法区的一种实现。通俗点讲：如果把方法区比作接口的话，那永久代和元空间可以比作实现该接口的实现类。</p>
-</blockquote>
-<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>永久代、元空间并不只是名字变了，内部结构也进行了调整。永久代使用的是 JVM 的内存，而元空间使用的是本地的直接内存。</p>
-<p>直接内存并不是 JVM 运行时数据区的一部分，因此不会受到 Java 堆的限制。但是它会受到本机总内存大小以及处理器寻址空间的限制，所以如果这部分内存也被频繁的使用，依然会导致 OOM 错误的出现。</p>
-<h3 id="方法区的大小"><a href="#方法区的大小" class="headerlink" title="方法区的大小"></a>方法区的大小</h3><p>方法区的大小是可以进行设置的，可以选择固定大小也可以进行扩展。</p>
-<h4 id="jdk7-及以前"><a href="#jdk7-及以前" class="headerlink" title="jdk7 及以前"></a>jdk7 及以前</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:PermSize=N //方法区 (永久代) 初始分配空间，默认值为 20.75M</span><br><span class="line">-XX:MaxPermSize=N //方法区 (永久代) 最大可分配空间。32位机器默认是64M，64位机器默认是82M</span><br></pre></td></tr></table></figure>
-<h4 id="jdk8及以后"><a href="#jdk8及以后" class="headerlink" title="jdk8及以后"></a>jdk8及以后</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">-XX:MetaspaceSize=N //方法区 (元空间) 初始分配空间，如果未指定此标志，则元空间将根据运行时的应用程序需求动态地重新调整大小。</span><br><span class="line">-XX:MaxMetaspaceSize=N //方法区 (元空间) 最大可分配空间，默认值为 -1，即没有限制</span><br></pre></td></tr></table></figure>
-<p>与永久代很大的不同就是，如果不指定大小的话，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</p>
-<p>方法区的大小决定了系统可以保存多少个类，如果系统定义了太多的类，比如：加载大量的第三方 jar 包、Tomcat 部署的工程过多、大量动态生成反射类等都会导致方法区溢出，抛出内存溢出错误。</p>
-<ul>
-<li>永久代：OutOfMemoryError:PermGen space</li>
-<li>元空间：OutOfMemoryError:Metaspace</li>
-</ul>
-<p><strong>至于如何解决 OOM 异常，将在以后的文章中讲解！</strong></p>
-<h3 id="jvisualvm"><a href="#jvisualvm" class="headerlink" title="jvisualvm"></a>jvisualvm</h3><p>我们可以通过 JDK 自带的 <strong>jvisualvm</strong> 工具来查看程序加载的类文件：</p>
-<p><strong>例</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;start...&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;end...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行程序，可以看到一个简单的程序就需要加载这么多的类文件。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08172fHLHQ.png" alt=""></p>
-<h3 id="高水位线"><a href="#高水位线" class="headerlink" title="高水位线"></a>高水位线</h3><p>对于一个64位的服务器端 JVM 来说，<code>XX：MetaspaceSize=21</code> 就是初始的高水位线，一旦触及这个水位线，Full GC 将会被触发并卸载没用的类（即这些类对应的类加载器不再存活），然后这个高水位线将会重置。</p>
-<p>新的高水位线的值取决于 GC 后释放了多少元空间：</p>
-<ul>
-<li>如果释放的空间不足，那么在不超过 MaxMetaspaceSize 时，适当提高该值；</li>
-<li>如果释放空间过多，则适当降低该值。</li>
-</ul>
-<blockquote>
-<p>如果初始化的高水位线设置过低，高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到 Full GC 多次调用。为了避免频繁地GC，建议将 <code>-XX ：MetaspaceSize</code> 设置为一个相对较高的值。</p>
-</blockquote>
-<h2 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h2><p>《深入理解Java虚拟机》书中对方法区存储内容描述如下：它用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。接下来我们就一起来看一下它的内部结构。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0818BTvM7A.png" alt=""></p>
-<h3 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h3><p>对每个加载的类型（ 类 class、接口 interface、枚举 enum、注解 annotation），JVM 必须在方法区中存储以下类型信息：</p>
-<ol>
-<li>这个类型的完整有效名称（全名=包名.类名）</li>
-<li>这个类型直接父类的完整有效名（对于 interface 或是 java. lang.Object ，都没有父类）</li>
-<li>这个类型的修饰符（ public ， abstract， final 的某个子集）</li>
-<li>这个类型直接接口的一个有序列表</li>
-</ol>
-<h3 id="域（Field）信息"><a href="#域（Field）信息" class="headerlink" title="域（Field）信息"></a>域（Field）信息</h3><ul>
-<li>JVM必须在方法区中保存类型的所有域（field，也称为属性）的相关信息以及域的声明顺序；</li>
-<li>域的相关信息包括：域名称、 域类型、域修饰符（public， private，protected， static， final， volatile， transient 的某个子集）</li>
-</ul>
-<h3 id="方法（Method）信息"><a href="#方法（Method）信息" class="headerlink" title="方法（Method）信息"></a>方法（Method）信息</h3><p>JVM 必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
-<ul>
-<li>方法名称</li>
-<li>方法的返回类型（或void）</li>
-<li>方法参数的数量和类型（按顺序）</li>
-<li>方法的修饰符（public， private， protected， static， final，synchronized， native ， abstract 的一个子集）</li>
-<li>方法的字节码（bytecodes）、操作数栈、局部变量表及大小（ abstract 和 native 方法除外）</li>
-<li>异常表（ abstract 和 native 方法除外）每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</li>
-</ul>
-<h3 id="non-final-的类变量"><a href="#non-final-的类变量" class="headerlink" title="non-final 的类变量"></a>non-final 的类变量</h3><ul>
-<li>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分</li>
-<li>类变量被类的所有实例所共享，即使没有类实例你也可以访问它。</li>
-</ul>
-<p>我们可以通过例子来查看：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Order order = <span class="keyword">null</span>;</span><br><span class="line">        order.hello();</span><br><span class="line">        System.out.println(order.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> number = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果为：</p>
-<figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">hello!</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>可以打开 IDEA 的 Terminal 窗口，在 MethodAreaDemo2.class 所在的路径下，输入 <code>javap -v -p MethodAreaDemo2.class</code> 命令</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0820D8dllV.png" alt=""></p>
-<p>通过图片我们可以看出被声明为 final 的类变量的处理方法是不一样的，全局常量在编译的时候就被分配了。</p>
-<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>说到运行时常量池，我们先来了解一下什么是常量池表。</p>
-<h4 id="常量池表"><a href="#常量池表" class="headerlink" title="常量池表"></a>常量池表</h4><p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息那就是常量池表（Constant Pool Table），里边存储着<strong>数量值</strong>、<strong>字符串值</strong>、<strong>类引用</strong>、<strong>字段引用</strong>和<strong>方法引用</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0821NLzPMe.png" alt="图片"></p>
-<h4 id="为什么字节码文件需要常量池？"><a href="#为什么字节码文件需要常量池？" class="headerlink" title="为什么字节码文件需要常量池？"></a>为什么字节码文件需要常量池？</h4><p>java 源文件中的类、接口，编译后会产生一个字节码文件。而字节码文件需要数据支持，通常这种数据会很大，以至于不能直接存放到字节码中。换一种方式，可以将指向这些数据的<strong>符号引用</strong>存到字节码文件的常量池中，这样字节码只需使用常量池就可以在运行时通过<strong>动态链接</strong>找到相应的数据并使用。</p>
-<h4 id="运行时常量池-1"><a href="#运行时常量池-1" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池（ <code>Runtime Constant Pool</code>）是方法区的一部分，类加载器加载字节码文件时，将常量池表加载进方法区的运行时常量池。运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。此时不再是常量池中的符号地址了，这里换为<strong>真实</strong>地址。</p>
-<blockquote>
-<p>运行时常量池，相对于 Class 文件常量池的另一重要特征是：具备动态性，比如 <code>String.intern()</code>。</p>
-</blockquote>
-<h2 id="演进细节"><a href="#演进细节" class="headerlink" title="演进细节"></a>演进细节</h2><p>针对的是 <strong>Hotspot</strong> 的虚拟机：</p>
-<ul>
-<li>jdk1.6 及之前：有<strong>永久代</strong> ，静态变量存放在永久代上；</li>
-<li>jdk1.7：有<strong>永久代</strong>，但已经逐步“去永久代”，字符串常量池、静态变量移除，保存在堆中；</li>
-<li>jdk1.8及之后：无永久代，类型信息、字段、方法、常量保存在本地内存的<strong>元空间</strong>，但字符串常量池、静态变量仍在堆中；</li>
-</ul>
-<h3 id="演变示例图"><a href="#演变示例图" class="headerlink" title="演变示例图"></a>演变示例图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822Hj7z0e.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822u3jIxG.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0823bbxVIm.png" alt=""></p>
-<h3 id="为什么要将永久代替换为元空间呢"><a href="#为什么要将永久代替换为元空间呢" class="headerlink" title="为什么要将永久代替换为元空间呢?"></a>为什么要将永久代替换为元空间呢?</h3><ol>
-<li>永久代使用的是 JVM 的内存，受 JVM 设置的内存大小限制；元空间使用的是本地直接内存，它的最大可分配空间是系统可用内存的空间。因为元空间里存放的是类的<strong>元数据</strong>，所以随着内存空间的增大，能加载的类就更多了，相应的溢出的机率会大大减小。</li>
-<li>在 JDK8，合并 HotSpot 和 JRockit 的代码时，JRockit 从来没有一个叫永久代的东西，合并之后就没有必要额外的设置这么一个永久代的地方了。</li>
-<li>对永久代进行调优是很困难的。</li>
-</ol>
-<h3 id="StringTable-为什么要调整"><a href="#StringTable-为什么要调整" class="headerlink" title="StringTable 为什么要调整"></a>StringTable 为什么要调整</h3><p>因为永久代的回收效率很低，在 full gc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了<code>StringTable</code> 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存。</p>
-<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。方法区的垃圾收集主要回收两部分内容：常量池中废奔的<strong>常量</strong>和不再使用的<strong>类型</strong>。</p>
-<p>方法区内常量池中主要存放字面量和符号引用两大类常量：</p>
-<ul>
-<li>字面量比较接近 Java 语言层次的常量概念，如文本字符串、被声明为 final 的常量值等。</li>
-<li>符号引用则属于编译原理方面的概念，包括类和接口的全限定名、字段的名称和描述符、方法的名称和描述符。</li>
-</ul>
-<p>HotSpot 虚拟机对常量池的回收策略是很明确的，只要常量池中的常量没有被任何地方引用，就可以被回收。</p>
-<h3 id="类型判定"><a href="#类型判定" class="headerlink" title="类型判定"></a>类型判定</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。需要同时满足下面三个条件：</p>
-<ul>
-<li>该类所有的<strong>实例</strong>都已经被回收，也就是 Java 堆中不存在该类及其任何派生子类的实例；</li>
-<li>加载该类的<strong>类加载器</strong>已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如OSGi、JSP的重加载等，否则通常是很难达成的；</li>
-<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ul>
-<p>Java 虛拟机被允许对满足上述三个条件的无用类进行回收，这里说的仅仅是“被允许”，而并不是和对象一样，没有引用了就必然会回收。</p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-        <tag>面试</tag>
-        <tag>索引</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JVM视频学习笔记-A</title>
-    <url>/posts/C0YKJ4.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>视频地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVBKNDExbjd4Wg==">尚硅谷宋红康JVM全套教程（详解java虚拟机）_哔哩哔哩_bilibili<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>好好学习，天天向上。</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMDgmYW1wO2lkeD0xJmFtcDtzbj0zYWE1MjQ1YmMxYjllYTNiNzgzN2ZkZjAxMjZjOWUzOCZhbXA7Y2hrc209YzFmNDkzMGFmNjgzMWExYzFjYzEwNmY2NjZhOTkzMmIyZDkwY2EzMTE5MGFiNjZhMmZmMzY2NmViZjc0NDBlZDY4MjFlNDlkN2E2ZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjQyNzgwMTgzMTE3MjIxMDY5MyNyZA==">01-JVM与java体系结构<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMTQmYW1wO2lkeD0xJmFtcDtzbj1iODkwNTNhM2QwNjFjYTIzY2U2YjI4ODkyMjVlMmRlMCZhbXA7Y2hrc209YzFmNDkzZjRmNjgzMWFlMjQ3MmMxMjg5YTkwYTU5Y2QwZjlhYjgyYmNlYzBmOGE2Y2I4ZjMxYjUzNDQ4Yzk2NDk5MzQ4NzlmMWRiNSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">02-Java代码执行流程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMjQmYW1wO2lkeD0xJmFtcDtzbj1jZDRmNzc2NDY3ZDAxYmYxOGE0NWRhYTdmNjU3OTYwZCZhbXA7Y2hrc209YzFmNDkzZmFmNjgzMWFlY2Y3NzYzNTI4YzRiMDI3ZDFiODgwNjMwYzBjOTM5OGJjZWRjYzIzMWQ0NDI5NzkzMzcxMTllMGUxOGU5NSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">03-JVM的结构模型<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzMzEmYW1wO2lkeD0xJmFtcDtzbj00MWYwNTI0NmUxMDU5MDAwMzA2MzkwNTZmNDQ2ODFhNSZhbXA7Y2hrc209YzFmNDkzZTVmNjgzMWFmMzg1NzJiZTliMDk0ZGVhNjU5ODg5NWM3MGRlMGMxNjNhNWY5ODYzYzFiYjVlODcyMjlmNjczNTViMGVmNiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">04-JVM的生命周期<i class="fa fa-external-link-alt"></i></span>  </li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNTMmYW1wO2lkeD0xJmFtcDtzbj03MzFhMzlhM2M5NWM1MTdmZWFlNzgzNjNjNzVkMjEzMiZhbXA7Y2hrc209YzFmNDkzZGZmNjgzMWFjOTc2MDcwY2Y2M2FkZTg0MDMxNWVlZGZhMjVmZTkwYjhmNzg0ODdjYThmMzliY2M3YzU5ZjIxODdmZTE4MSNyZA==">05-概述类的加载器及类加载过程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNjQmYW1wO2lkeD0xJmFtcDtzbj0zM2YwZTM3OTc0MDFmOTk2MTk4MzE0NGRlYzI3YjViZCZhbXA7Y2hrc209YzFmNDkzYzJmNjgzMWFkNGU3M2RjMjdiODJhMzU0ODI4MmU1OTQ5ZTRjYjYyYmRjMTQ1MmEzNGE3ZTU4MjgyOTJlN2FmYjg4MmM5NiZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">06-几种类加载器的使用体会<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzNzYmYW1wO2lkeD0xJmFtcDtzbj0zOWI2ZmYzMzYxMzZlOGNiMmI4NDkzOGI5MmE4Njg5YyZhbXA7Y2hrc209YzFmNDkzYjZmNjgzMWFhMDUzMzNlNmZjYmQzY2U1NjI5ZmE3NDlhYTYzYTFiYzY5ZjcyY2VmZTMzOGE1MzhlMTQwOGE5NWE4NjYzMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">07-引导类、扩展类、系统类加载器的使用及演示<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzODYmYW1wO2lkeD0xJmFtcDtzbj1lMjE3Mjg0NGFmYTQ0NzMwY2IyOWE0NTgzODY3NmZlMiZhbXA7Y2hrc209YzFmNDkzYmNmNjgzMWFhYTgxNjZiZmVjMWY0MDcxYjBlOWQzNzQ0MTNlODhiNjVkZWFkZDkwOWM2ZDgwYzZjZjk1NTgzZGFmMDFlNyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">为什么需要用户自定义类加载器及具体实现<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODUzOTMmYW1wO2lkeD0xJmFtcDtzbj05MGUyMDcyZTE4ZTY1Yzc0MjEwYjBjMjZlMDFjM2Y1NSZhbXA7Y2hrc209YzFmNDkzYTdmNjgzMWFiMTQ2ZGVkYTNlZjEzYjEzNTI0MDZlODQ2ZDI0ZGU0YzY1ZDM4YWZhYzg0YTM3NDE5NmRhYzMyMjA5NDNhOSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">08-ClassLoader的常用方法及获取方法<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0MzUmYW1wO2lkeD0xJmFtcDtzbj1mNjkxYWY1NGQxNmIyMGQwOWMzMmJkMDEwMzYwMTQzMCZhbXA7Y2hrc209YzFmNDkzOGRmNjgzMWE5Yjg5NzgxZmI3ODZmM2FlOTA5N2Y2ZjUzODVhMTk0ODI3OTFmMTYzOGU5ZTNlNzFjM2IyNGI4YmUzMjA2OSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">09-双亲委派机制的工作原理及演示<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NDUmYW1wO2lkeD0xJmFtcDtzbj1hYzk3ZjBlMGMxMTEyMDM1NWEyY2FmMTEwNmI3OGM4MyZhbXA7Y2hrc209YzFmNDljNzNmNjgzMTU2NTQ2ZmRhZTI3NmI0M2E2ZjVjOGUxZWRiZDJlMGQzMjc1MDFlZjJjZDk2NWYxYjcwNDg2YzJkNmNiMGU4NCZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">10-沙箱安全机制<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NTcmYW1wO2lkeD0xJmFtcDtzbj1mNzRjM2Q1YzAyYjE0ZTk5MGM1N2Q4Y2I1ZjkyNzQ3ZSZhbXA7Y2hrc209YzFmNDljNjdmNjgzMTU3MWM5YzcyMDVlMjFiNmIwNThiMmQxYzM3OGQ4N2IwZDYxMzU2MjFiMjg5NWEyM2VmYjcwNzFiMWMyNDkwMyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">11 - 运行时数据区内部结构<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU0NzUmYW1wO2lkeD0xJmFtcDtzbj0zZDM3ODM3MDFhNzFmYjg2NDNjODEwN2FlYmE2YmE2MSZhbXA7Y2hrc209YzFmNDljNTVmNjgzMTU0MzAwMmI5NTc5ZmIxYThkOWYwZTM3ZDZiMWY3YmFiMGVlMTBjOTAxNWU3ODhiYzQ5NWY0MmQyZjI1MDY3MSZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">12-PC寄存器（程序计数器）<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1MTQmYW1wO2lkeD0xJmFtcDtzbj01ZGNlM2U3ZjkxYTg5YzY3MGVjYTBiNzdhYmVjODM4MSZhbXA7Y2hrc209YzFmNDljM2NmNjgzMTUyYTFhMjMxMDNkM2I2NTcwM2YyZmQ0NzFkNzMxMTRiYWQ1NDZkNmRiMzk3ZTBmZWIwOTBkYjcxYTFiNDYyZiZhbXA7c2NlbmU9MTc4JmFtcDtjdXJfYWxidW1faWQ9MjMxOTY1NTc5NTU4NTcxMjEzMyNyZA==">13-虚拟机栈-概述<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NTQmYW1wO2lkeD0xJmFtcDtzbj1mNmMzNDgxNmEyYmQ5YzMxZTJhZjE3NDk5N2UzYjg1YSZhbXA7Y2hrc209YzFmNDljMDRmNjgzMTUxMjViMTc1NzcyZDZiZWY1ZDcyODA2MWE2NzU1ZTRlYjJlNDA1NmYxZmIyYzIyNWJjNTEwNTZhZDA4ZGI0YyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">14-虚拟机栈-栈的存储单位及运行原理<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpreU1qTXpPRFU0TlE9PSZhbXA7bWlkPTIyNDc0ODU1NjAmYW1wO2lkeD0xJmFtcDtzbj0zMDJlNDY2NjJiMDE4YjNlMTQ3NzY5MzQxMDhiNzA0OSZhbXA7Y2hrc209YzFmNDljMGVmNjgzMTUxODQ4NTkxZjAxNjgyZmRhYTkxMDIyY2E1MzZlZGEzNDE2MDVmOGRjOGJjZjcyM2M5MmU3MDA3ZWJlMDk2MyZhbXA7dG9rZW49MTgwMDcyMDg3OCZhbXA7bGFuZz16aF9DTiNyZA==">15-虚拟机栈-栈祯的内部结构<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>springboot整合nacos</title>
     <url>/posts/3MH3EJ1.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThHUi16U0hqQ0YtUWc5OGF1NnpmYUE=">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA<i class="fa fa-external-link-alt"></i></span> 提取码: n9fk </p>
@@ -1651,39 +1651,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务_JTA</title>
-    <url>/posts/12G3J8V.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>事务</tag>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式事务_seata</title>
     <url>/posts/2KNM24Z.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -1723,6 +1690,39 @@
         <category>分布式</category>
       </categories>
       <tags>
+        <tag>事务</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式事务_JTA</title>
+    <url>/posts/12G3J8V.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
         <tag>事务</tag>
         <tag>分布式</tag>
       </tags>
@@ -2022,9 +2022,9 @@
       <tags>
         <tag>Java</tag>
         <tag>数据库</tag>
-        <tag>算法</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
@@ -2441,8 +2441,8 @@
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
-        <tag>算法</tag>
         <tag>锁</tag>
+        <tag>算法</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
@@ -2563,9 +2563,9 @@
       <tags>
         <tag>Java</tag>
         <tag>面试</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -3181,10 +3181,10 @@
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
-        <tag>索引</tag>
-        <tag>MQ</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
+        <tag>MQ</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
@@ -3369,8 +3369,8 @@
         <tag>Java</tag>
         <tag>JVM</tag>
         <tag>数据库</tag>
-        <tag>算法</tag>
         <tag>锁</tag>
+        <tag>算法</tag>
         <tag>并发</tag>
         <tag>多线程</tag>
       </tags>
@@ -3426,28 +3426,6 @@
       </categories>
       <tags>
         <tag>线程池</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中的CAS</title>
-    <url>/posts/364DCDS.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="CAS的执行过程"><a href="#CAS的执行过程" class="headerlink" title="CAS的执行过程"></a>CAS的执行过程</h1><p>​    <img data-src="https://xuemingde.com/pages/image/others/Foqp87.png" alt=""></p>
-<h1 id="CAS中存在的问题"><a href="#CAS中存在的问题" class="headerlink" title="CAS中存在的问题"></a>CAS中存在的问题</h1><h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>ABA问题是指在CAS操作时，其他线程将变量值A改为了B，但是又被改回了A，等到本线程使用期望值A与当前变量进行比较时，发现变量A没有变，于是CAS就将A值进行了交换操作，但是实际上该值已经被其他线程改变过。</p>
-<p><strong>解决方式</strong>：加版本号 </p>
-<p>在JDK的 <em>java.util.concurrent.atomic</em> 包中提供了 <code>AtomicStampedReference</code> 来解决ABA问题，该类的compareAndSet是该类的核心方法，实现如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(V   expectedReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 V   newReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> expectedStamp,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> newStamp)</span> </span>&#123;</span><br><span class="line">        Pair&lt;V&gt; current = pair;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">            expectedReference == current.reference &amp;&amp;</span><br><span class="line">            expectedStamp == current.stamp &amp;&amp;</span><br><span class="line">            ((newReference == current.reference &amp;&amp;</span><br><span class="line">              newStamp == current.stamp) ||</span><br><span class="line">             casPair(current, Pair.of(newReference, newStamp)));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><img data-src="https://xuemingde.com/pages/image/others/bkYcDR.png" alt="bkYcDR"></p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9lbHNlZi5jb20vMjAyMC8wMy8wOC8lRTUlQTYlODIlRTQlQkQlOTUlRTclOTAlODYlRTglQTclQTNBQkElRTklOTclQUUlRTklQTIlOTgv">参考文章<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h2 id="修改值时的原子性问题"><a href="#修改值时的原子性问题" class="headerlink" title="修改值时的原子性问题"></a>修改值时的原子性问题</h2><p>底层的最终实现是使用了lock cmpxchg 指令来保证的。</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/VV5fET.png" alt="VV5fET"></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3820,6 +3798,28 @@
         <tag>并发</tag>
         <tag>多线程</tag>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中的CAS</title>
+    <url>/posts/364DCDS.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="CAS的执行过程"><a href="#CAS的执行过程" class="headerlink" title="CAS的执行过程"></a>CAS的执行过程</h1><p>​    <img data-src="https://xuemingde.com/pages/image/others/Foqp87.png" alt=""></p>
+<h1 id="CAS中存在的问题"><a href="#CAS中存在的问题" class="headerlink" title="CAS中存在的问题"></a>CAS中存在的问题</h1><h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>ABA问题是指在CAS操作时，其他线程将变量值A改为了B，但是又被改回了A，等到本线程使用期望值A与当前变量进行比较时，发现变量A没有变，于是CAS就将A值进行了交换操作，但是实际上该值已经被其他线程改变过。</p>
+<p><strong>解决方式</strong>：加版本号 </p>
+<p>在JDK的 <em>java.util.concurrent.atomic</em> 包中提供了 <code>AtomicStampedReference</code> 来解决ABA问题，该类的compareAndSet是该类的核心方法，实现如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(V   expectedReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 V   newReference,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> expectedStamp,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="keyword">int</span> newStamp)</span> </span>&#123;</span><br><span class="line">        Pair&lt;V&gt; current = pair;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">            expectedReference == current.reference &amp;&amp;</span><br><span class="line">            expectedStamp == current.stamp &amp;&amp;</span><br><span class="line">            ((newReference == current.reference &amp;&amp;</span><br><span class="line">              newStamp == current.stamp) ||</span><br><span class="line">             casPair(current, Pair.of(newReference, newStamp)));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/others/bkYcDR.png" alt="bkYcDR"></p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9lbHNlZi5jb20vMjAyMC8wMy8wOC8lRTUlQTYlODIlRTQlQkQlOTUlRTclOTAlODYlRTglQTclQTNBQkElRTklOTclQUUlRTklQTIlOTgv">参考文章<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h2 id="修改值时的原子性问题"><a href="#修改值时的原子性问题" class="headerlink" title="修改值时的原子性问题"></a>修改值时的原子性问题</h2><p>底层的最终实现是使用了lock cmpxchg 指令来保证的。</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/VV5fET.png" alt="VV5fET"></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -4271,9 +4271,9 @@
         <tag>sql</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4567,8 +4567,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4693,8 +4693,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4788,8 +4788,63 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
+        <tag>算法</tag>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法基础11：查找算法</title>
+    <url>/posts/1MBYWYZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="线性查找算法"><a href="#线性查找算法" class="headerlink" title="线性查找算法"></a>线性查找算法</h2><p>从<code>线性数列中</code>的<code>起始位置依次比较</code>判断数列中<code>是否包含需要查找的数</code>，若<code>找到</code>了直接<code>返回下标</code></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/09/04/162226NlrtwV.png" alt=""></p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeqSearch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> search = seqSearch(arr, <span class="number">7</span>);</span><br><span class="line">        <span class="keyword">if</span> (search == -<span class="number">1</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;没有找到&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里我们实现的线性查找是找到一个满足条件的值，就返回</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">seqSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] == value) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="二分查找算法"><a href="#二分查找算法" class="headerlink" title="二分查找算法"></a>二分查找算法</h2><blockquote>
+<p>查找的数组必须是有序的</p>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/2022/09/04/163006ImqIb6.png" alt=""></p>
+<p>思路</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/09/04/164004FYIMqz.png" alt=""></p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二分查找</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 4.9.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>, <span class="number">27</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> search = binarySearch(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>, <span class="number">9</span>);</span><br><span class="line">        System.out.println(search);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> left    左边的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> right   右边的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> findVal 要查找的值</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 如果找到就返回下标，如果没有找到，就返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> findVal)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (left &gt; right)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> midVal = arr[mid];</span><br><span class="line">        <span class="keyword">if</span> (findVal &gt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> binarySearch(arr, mid + <span class="number">1</span>, right, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (findVal &lt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> binarySearch(arr, left, mid - <span class="number">1</span>, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面代码存在问题，如果有重复数据，只会返回一个</p>
+<p>优化</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> left    左边的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> right   右边的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> findVal 要查找的值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 如果找到就返回下标，如果没有找到，就返回-1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">binarySearch2</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> findVal)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt; right) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> midVal = arr[mid];</span><br><span class="line">    <span class="keyword">if</span> (findVal &gt; midVal) &#123;</span><br><span class="line">        <span class="comment">//向右递归</span></span><br><span class="line">        <span class="keyword">return</span> binarySearch2(arr, mid + <span class="number">1</span>, right, findVal);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (findVal &lt; midVal) &#123;</span><br><span class="line">        <span class="comment">//向右递归</span></span><br><span class="line">        <span class="keyword">return</span> binarySearch2(arr, left, mid - <span class="number">1</span>, findVal);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        思路分析</span></span><br><span class="line"><span class="comment">        1。在找到mid索引值，不要马上返回</span></span><br><span class="line"><span class="comment">        2。向mid索引值的左边扫描，将所有满足查询数字，的元素的下标，加入到集合ArrayList</span></span><br><span class="line"><span class="comment">        3。向mid索引值的右边扫描，将所有满足查询数字，的元素的下标，加入到集合ArrayList</span></span><br><span class="line"><span class="comment">        4.将Arraylist返回</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">//索引值的左边扫描，将所有满足查询数字，的元素的下标，加入到集合ArrayList</span></span><br><span class="line">        <span class="keyword">int</span> temp = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp &lt; <span class="number">0</span> || arr[temp] != findVal) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//否则，就temp放入到list</span></span><br><span class="line">            list.add(temp);</span><br><span class="line">            temp--;</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(mid);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//向mid索引值的右边扫描，将所有满足查询数字,的元素的下标，加入到集合ArrayList</span></span><br><span class="line">        temp = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp &gt; arr.length - <span class="number">1</span> || arr[temp] != findVal) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//否则，就temp放入到list</span></span><br><span class="line">            list.add(temp);</span><br><span class="line">            temp++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="插值查找算法"><a href="#插值查找算法" class="headerlink" title="插值查找算法"></a>插值查找算法</h2><p><img data-src="https://xuemingde.com/pages/image/2022/09/05/184209Hy0kLN.png" alt=""></p>
+<p>公式：<code>int mid = left + (right -left) * (findVal - arr[left]) / (arr[right] - arr[left])</code></p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 插值算法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 5.9.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsetValueSearch</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            arr[i] = i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> search = insetValueSearch(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>, <span class="number">15</span>);</span><br><span class="line">        System.out.println(search);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> left</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> right</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> findVal</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">insetValueSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> findVal)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;WWWWWW&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (left &gt; right || findVal &lt; arr[<span class="number">0</span>] || findVal &gt; arr[arr.length - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> mid = left + (right - left) * (findVal - arr[left]) / (arr[right] - arr[left]);</span><br><span class="line">        <span class="keyword">int</span> midVal = arr[mid];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (findVal &gt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> insetValueSearch(arr, mid + <span class="number">1</span>, right, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (findVal &lt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> insetValueSearch(arr, left, mid - <span class="number">1</span>, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>注意事项</p>
+<blockquote>
+<ul>
+<li>对于数据量较大，<strong>关键字分布比较均匀</strong>的查找表来说，采用插值查找，速度较快.</li>
+<li>关键字分布不均匀的情况下，该方法不一定比折半查找要好</li>
+</ul>
+</blockquote>
+<h2 id="斐波那契（黄金分割法）查找算法"><a href="#斐波那契（黄金分割法）查找算法" class="headerlink" title="斐波那契（黄金分割法）查找算法"></a>斐波那契（黄金分割法）查找算法</h2><ol>
+<li>黄金分割点是指把一条线段分割为两部分，使其中一部分与全长之比等于另一部分与这部分之比。取其前三位数字的近似值是0.618。由于按此比例设计的造型十分美丽，因此称为黄金分割，也称为中外比。这是一个神奇的数字，会带来意向不大的效果。</li>
+<li>斐波那契数列{1,1,2,3,5,8,13,21,34,55}发现斐波那契数列的两个相邻数的比例，无限接近黄金分割值0.618</li>
+</ol>
+<p><img data-src="https://xuemingde.com/pages/image/2022/09/05/190728QRsCDP.png" alt=""></p>
+<p><strong>工作原理</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/09/05/191108WLQsTB.png" alt=""></p>
+<p><strong>斐波那契查找应用案例</strong><br>请对一个有序数组进行斐波那契查找{1,8,10,89,1000,1234}，输入一个数看看该数组是否存在此数，并且求出下标，如果没有就提示”没有这个数</p>
+<p><strong>代码</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 斐波那契查找算法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 5.9.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FibonacciSearch</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> maxSize = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">89</span>, <span class="number">1000</span>, <span class="number">1234</span>&#125;;</span><br><span class="line"><span class="comment">//        int[] fibo = fibo();</span></span><br><span class="line"><span class="comment">//        System.out.println(Arrays.toString(fibo));</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> search = fibSearch(arr, <span class="number">10</span>);</span><br><span class="line">        System.out.println(search);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//因为后面我们mid=1ow+F(k-1)-1,需要使用到斐波那契数列，因此我们需要先获取到一个斐波那契数列</span></span><br><span class="line">    <span class="comment">//非递归方法得到一个斐波那契数列</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] fibo() &#123;</span><br><span class="line">        <span class="keyword">int</span>[] fb = <span class="keyword">new</span> <span class="keyword">int</span>[maxSize];</span><br><span class="line">        fb[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        fb[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; maxSize; i++) &#123;</span><br><span class="line">            fb[i] = fb[i - <span class="number">1</span>] + fb[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fb;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 编写斐波那契查找算法</span></span><br><span class="line"><span class="comment">     * 使用非递归的方式编写算法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fibSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//表示斐波那契分割数值的下标</span></span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> mid;</span><br><span class="line">        <span class="comment">//获取到斐波那契数列</span></span><br><span class="line">        <span class="keyword">int</span>[] f = fibo();</span><br><span class="line">        <span class="comment">//获取到斐波那契分割数值的下标</span></span><br><span class="line">        <span class="keyword">while</span> (high &gt; f[k] - <span class="number">1</span>) &#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">///因为f[k]值可能大于a的长度，因此我们需要使用Arrays类，构造一个新的数组，并指向temp[]</span></span><br><span class="line">        <span class="keyword">int</span>[] temp = Arrays.copyOf(arr, f[k]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//实际上需求使用a数组最后的数填充temp</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = high + <span class="number">1</span>; i &lt; temp.length; i++) &#123;</span><br><span class="line">            temp[i] = arr[high];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//使用while来循环处理，找到我们的数key</span></span><br><span class="line">        <span class="comment">//只要这个条件满足，就可以找</span></span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            mid = low + f[k - <span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="comment">//我们应该继续向数组的前面查找（左边）</span></span><br><span class="line">            <span class="keyword">if</span> (key &lt; temp[mid]) &#123;</span><br><span class="line">                high = mid - <span class="number">1</span>;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                //为什么是k--</span></span><br><span class="line"><span class="comment">                //说明</span></span><br><span class="line"><span class="comment">                //1,全部元素=前面的元素+后边元素</span></span><br><span class="line"><span class="comment">                //2.f[k]=f[k-1]+f[k-2]</span></span><br><span class="line"><span class="comment">                /因为前面有f[k-1]个元素，所以可以继续折分f[k-1]=f[k-2]+f[k-3]</span></span><br><span class="line"><span class="comment">                //即在f[k-1]的前面继续查找k--</span></span><br><span class="line"><span class="comment">                //即下次循环mid=f[k-1-1]-1</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                k--;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; temp[mid]) &#123;</span><br><span class="line">                <span class="comment">//我们应该继续向数组的后面查找（右边）</span></span><br><span class="line">                low = mid + <span class="number">1</span>;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                //为什么是k-=2</span></span><br><span class="line"><span class="comment">                //说明</span></span><br><span class="line"><span class="comment">                //1,全部元素=</span></span><br><span class="line"><span class="comment">                前面的元素+后边元素</span></span><br><span class="line"><span class="comment">                //2.f[k]=f[k-1]+f[k-2]</span></span><br><span class="line"><span class="comment">                //3.因为后面我们有f[k-2]所以可以继续拆分f[k-1]=f[k-3]+f[k-4]</span></span><br><span class="line"><span class="comment">                //4。即在f[k-2]的前面进行查找k-=2</span></span><br><span class="line"><span class="comment">                //5,即下次循环mid=f[k-1-2]-1</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                k -= <span class="number">2</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//需要确定，返回的是娜个下标</span></span><br><span class="line">                <span class="keyword">if</span> (mid &lt;= high) &#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> high;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>有点难理解</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>集合</tag>
+        <tag>数组</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -4963,65 +5018,10 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法基础11：查找算法</title>
-    <url>/posts/1MBYWYZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="线性查找算法"><a href="#线性查找算法" class="headerlink" title="线性查找算法"></a>线性查找算法</h2><p>从<code>线性数列中</code>的<code>起始位置依次比较</code>判断数列中<code>是否包含需要查找的数</code>，若<code>找到</code>了直接<code>返回下标</code></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/09/04/162226NlrtwV.png" alt=""></p>
-<p>代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeqSearch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> search = seqSearch(arr, <span class="number">7</span>);</span><br><span class="line">        <span class="keyword">if</span> (search == -<span class="number">1</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;没有找到&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里我们实现的线性查找是找到一个满足条件的值，就返回</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">seqSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] == value) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="二分查找算法"><a href="#二分查找算法" class="headerlink" title="二分查找算法"></a>二分查找算法</h2><blockquote>
-<p>查找的数组必须是有序的</p>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/09/04/163006ImqIb6.png" alt=""></p>
-<p>思路</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/09/04/164004FYIMqz.png" alt=""></p>
-<p>代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二分查找</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 4.9.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>, <span class="number">27</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> search = binarySearch(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>, <span class="number">9</span>);</span><br><span class="line">        System.out.println(search);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> left    左边的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> right   右边的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> findVal 要查找的值</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 如果找到就返回下标，如果没有找到，就返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> findVal)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (left &gt; right)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> midVal = arr[mid];</span><br><span class="line">        <span class="keyword">if</span> (findVal &gt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> binarySearch(arr, mid + <span class="number">1</span>, right, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (findVal &lt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> binarySearch(arr, left, mid - <span class="number">1</span>, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>上面代码存在问题，如果有重复数据，只会返回一个</p>
-<p>优化</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> left    左边的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> right   右边的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> findVal 要查找的值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 如果找到就返回下标，如果没有找到，就返回-1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">binarySearch2</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> findVal)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt; right) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> midVal = arr[mid];</span><br><span class="line">    <span class="keyword">if</span> (findVal &gt; midVal) &#123;</span><br><span class="line">        <span class="comment">//向右递归</span></span><br><span class="line">        <span class="keyword">return</span> binarySearch2(arr, mid + <span class="number">1</span>, right, findVal);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (findVal &lt; midVal) &#123;</span><br><span class="line">        <span class="comment">//向右递归</span></span><br><span class="line">        <span class="keyword">return</span> binarySearch2(arr, left, mid - <span class="number">1</span>, findVal);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        思路分析</span></span><br><span class="line"><span class="comment">        1。在找到mid索引值，不要马上返回</span></span><br><span class="line"><span class="comment">        2。向mid索引值的左边扫描，将所有满足查询数字，的元素的下标，加入到集合ArrayList</span></span><br><span class="line"><span class="comment">        3。向mid索引值的右边扫描，将所有满足查询数字，的元素的下标，加入到集合ArrayList</span></span><br><span class="line"><span class="comment">        4.将Arraylist返回</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">//索引值的左边扫描，将所有满足查询数字，的元素的下标，加入到集合ArrayList</span></span><br><span class="line">        <span class="keyword">int</span> temp = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp &lt; <span class="number">0</span> || arr[temp] != findVal) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//否则，就temp放入到list</span></span><br><span class="line">            list.add(temp);</span><br><span class="line">            temp--;</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(mid);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//向mid索引值的右边扫描，将所有满足查询数字,的元素的下标，加入到集合ArrayList</span></span><br><span class="line">        temp = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp &gt; arr.length - <span class="number">1</span> || arr[temp] != findVal) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//否则，就temp放入到list</span></span><br><span class="line">            list.add(temp);</span><br><span class="line">            temp++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="插值查找算法"><a href="#插值查找算法" class="headerlink" title="插值查找算法"></a>插值查找算法</h2><p><img data-src="https://xuemingde.com/pages/image/2022/09/05/184209Hy0kLN.png" alt=""></p>
-<p>公式：<code>int mid = left + (right -left) * (findVal - arr[left]) / (arr[right] - arr[left])</code></p>
-<p>代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 插值算法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 5.9.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsetValueSearch</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            arr[i] = i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> search = insetValueSearch(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>, <span class="number">15</span>);</span><br><span class="line">        System.out.println(search);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> left</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> right</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> findVal</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">insetValueSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> findVal)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;WWWWWW&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (left &gt; right || findVal &lt; arr[<span class="number">0</span>] || findVal &gt; arr[arr.length - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> mid = left + (right - left) * (findVal - arr[left]) / (arr[right] - arr[left]);</span><br><span class="line">        <span class="keyword">int</span> midVal = arr[mid];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (findVal &gt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> insetValueSearch(arr, mid + <span class="number">1</span>, right, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (findVal &lt; midVal) &#123;</span><br><span class="line">            <span class="comment">//向右递归</span></span><br><span class="line">            <span class="keyword">return</span> insetValueSearch(arr, left, mid - <span class="number">1</span>, findVal);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>注意事项</p>
-<blockquote>
-<ul>
-<li>对于数据量较大，<strong>关键字分布比较均匀</strong>的查找表来说，采用插值查找，速度较快.</li>
-<li>关键字分布不均匀的情况下，该方法不一定比折半查找要好</li>
-</ul>
-</blockquote>
-<h2 id="斐波那契（黄金分割法）查找算法"><a href="#斐波那契（黄金分割法）查找算法" class="headerlink" title="斐波那契（黄金分割法）查找算法"></a>斐波那契（黄金分割法）查找算法</h2><ol>
-<li>黄金分割点是指把一条线段分割为两部分，使其中一部分与全长之比等于另一部分与这部分之比。取其前三位数字的近似值是0.618。由于按此比例设计的造型十分美丽，因此称为黄金分割，也称为中外比。这是一个神奇的数字，会带来意向不大的效果。</li>
-<li>斐波那契数列{1,1,2,3,5,8,13,21,34,55}发现斐波那契数列的两个相邻数的比例，无限接近黄金分割值0.618</li>
-</ol>
-<p><img data-src="https://xuemingde.com/pages/image/2022/09/05/190728QRsCDP.png" alt=""></p>
-<p><strong>工作原理</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/09/05/191108WLQsTB.png" alt=""></p>
-<p><strong>斐波那契查找应用案例</strong><br>请对一个有序数组进行斐波那契查找{1,8,10,89,1000,1234}，输入一个数看看该数组是否存在此数，并且求出下标，如果没有就提示”没有这个数</p>
-<p><strong>代码</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 斐波那契查找算法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 5.9.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FibonacciSearch</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> maxSize = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">89</span>, <span class="number">1000</span>, <span class="number">1234</span>&#125;;</span><br><span class="line"><span class="comment">//        int[] fibo = fibo();</span></span><br><span class="line"><span class="comment">//        System.out.println(Arrays.toString(fibo));</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> search = fibSearch(arr, <span class="number">10</span>);</span><br><span class="line">        System.out.println(search);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//因为后面我们mid=1ow+F(k-1)-1,需要使用到斐波那契数列，因此我们需要先获取到一个斐波那契数列</span></span><br><span class="line">    <span class="comment">//非递归方法得到一个斐波那契数列</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] fibo() &#123;</span><br><span class="line">        <span class="keyword">int</span>[] fb = <span class="keyword">new</span> <span class="keyword">int</span>[maxSize];</span><br><span class="line">        fb[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        fb[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; maxSize; i++) &#123;</span><br><span class="line">            fb[i] = fb[i - <span class="number">1</span>] + fb[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fb;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 编写斐波那契查找算法</span></span><br><span class="line"><span class="comment">     * 使用非递归的方式编写算法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fibSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//表示斐波那契分割数值的下标</span></span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> mid;</span><br><span class="line">        <span class="comment">//获取到斐波那契数列</span></span><br><span class="line">        <span class="keyword">int</span>[] f = fibo();</span><br><span class="line">        <span class="comment">//获取到斐波那契分割数值的下标</span></span><br><span class="line">        <span class="keyword">while</span> (high &gt; f[k] - <span class="number">1</span>) &#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">///因为f[k]值可能大于a的长度，因此我们需要使用Arrays类，构造一个新的数组，并指向temp[]</span></span><br><span class="line">        <span class="keyword">int</span>[] temp = Arrays.copyOf(arr, f[k]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//实际上需求使用a数组最后的数填充temp</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = high + <span class="number">1</span>; i &lt; temp.length; i++) &#123;</span><br><span class="line">            temp[i] = arr[high];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//使用while来循环处理，找到我们的数key</span></span><br><span class="line">        <span class="comment">//只要这个条件满足，就可以找</span></span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            mid = low + f[k - <span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="comment">//我们应该继续向数组的前面查找（左边）</span></span><br><span class="line">            <span class="keyword">if</span> (key &lt; temp[mid]) &#123;</span><br><span class="line">                high = mid - <span class="number">1</span>;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                //为什么是k--</span></span><br><span class="line"><span class="comment">                //说明</span></span><br><span class="line"><span class="comment">                //1,全部元素=前面的元素+后边元素</span></span><br><span class="line"><span class="comment">                //2.f[k]=f[k-1]+f[k-2]</span></span><br><span class="line"><span class="comment">                /因为前面有f[k-1]个元素，所以可以继续折分f[k-1]=f[k-2]+f[k-3]</span></span><br><span class="line"><span class="comment">                //即在f[k-1]的前面继续查找k--</span></span><br><span class="line"><span class="comment">                //即下次循环mid=f[k-1-1]-1</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                k--;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; temp[mid]) &#123;</span><br><span class="line">                <span class="comment">//我们应该继续向数组的后面查找（右边）</span></span><br><span class="line">                low = mid + <span class="number">1</span>;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                //为什么是k-=2</span></span><br><span class="line"><span class="comment">                //说明</span></span><br><span class="line"><span class="comment">                //1,全部元素=</span></span><br><span class="line"><span class="comment">                前面的元素+后边元素</span></span><br><span class="line"><span class="comment">                //2.f[k]=f[k-1]+f[k-2]</span></span><br><span class="line"><span class="comment">                //3.因为后面我们有f[k-2]所以可以继续拆分f[k-1]=f[k-3]+f[k-4]</span></span><br><span class="line"><span class="comment">                //4。即在f[k-2]的前面进行查找k-=2</span></span><br><span class="line"><span class="comment">                //5,即下次循环mid=f[k-1-2]-1</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                k -= <span class="number">2</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//需要确定，返回的是娜个下标</span></span><br><span class="line">                <span class="keyword">if</span> (mid &lt;= high) &#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> high;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>有点难理解</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>算法和数据结构</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>集合</tag>
-        <tag>算法</tag>
-        <tag>数组</tag>
-        <tag>索引</tag>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -5130,9 +5130,28 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
+        <tag>算法</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>算法基础15：多路查找树</title>
+    <url>/posts/WCK7NZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111151zHnpSV.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/1115253jWYVn.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111910VciP2D.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112653rxvhay.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112922xl0e0w.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113905mnSEva.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113959xcVz0p.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114033UzZJ5p.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114306sKgvhF.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/142942ScKhMF.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/14300251T3bZ.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
   </entry>
   <entry>
     <title>算法基础14：树结构的实际应用</title>
@@ -5230,30 +5249,11 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>Java</tag>
         <tag>集合</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>MQ</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>算法基础15：多路查找树</title>
-    <url>/posts/WCK7NZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111151zHnpSV.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/1115253jWYVn.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111910VciP2D.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112653rxvhay.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112922xl0e0w.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113905mnSEva.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113959xcVz0p.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114033UzZJ5p.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114306sKgvhF.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/142942ScKhMF.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/14300251T3bZ.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>算法和数据结构</category>
-      </categories>
   </entry>
   <entry>
     <title>算法基础16：图</title>
@@ -5407,9 +5407,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>Java</tag>
         <tag>集合</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -6011,8 +6011,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>集合</tag>
         <tag>数组</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -6546,9 +6546,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>集合</tag>
         <tag>面试</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
         <tag>锁</tag>
+        <tag>算法</tag>
         <tag>并发</tag>
         <tag>多线程</tag>
       </tags>
@@ -6953,23 +6953,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>从实际案例聊聊Java应用的GC优化</title>
-    <url>/posts/1B1Q39D.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvN05maW5qRUJqVmk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TWpNNU5qUTVNVEk1T0E9PSZhbXA7bWlkPTI2NTE3NDcyNzMmYW1wO2lkeD0xJmFtcDtzbj03Zjk0NzA2NGE0MWVlZWNiNjgxNmE1ZDA4Mzg1ODFhZSZhbXA7Y2hrc209YmQxMmFhODQ4YTY1MjM5Mjg5ZDVjMzkyNjRlODliZDE3NWYzNzdmNjU1NGJmZTkzYjM3YWQ2NDk4Y2YxM2RlZmYzNTYzMzNjNTM5OCZhbXA7c2NlbmU9MjEjd2VjaGF0X3JlZGlyZWN0">从实际案例聊聊Java应用的GC优化<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-        <category>GC</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么确定是垃圾及垃圾回收算法</title>
     <url>/posts/45THTG.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="怎么确定是垃圾"><a href="#怎么确定是垃圾" class="headerlink" title="怎么确定是垃圾"></a>怎么确定是垃圾</h1><h2 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h2><p>给每个对象添加一个引用计数器，每当有一个地方引用它时，引用计数值就+1，当引用失效时，引用计数值就-1，任何时刻引用计数值为0的对象就可以被回收，当一个对象被垃圾收集器收集时，被它引用的对象引用计数值就-1，所以在这种方法中一个对象被垃圾收集会导致后续其他对象的垃圾收集行动。</p>
@@ -6997,44 +6980,21 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>OAuth2的一个简单解释</title>
-    <url>/posts/3E561CR.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE5LzA0L29hdXRoX2Rlc2lnbi5odG1s">OAuth 2.0 的一个简单解释<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE0LzA1L29hdXRoXzJfMC5odG1s">OAuth 2.0<i class="fa fa-external-link-alt"></i></span> 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。</p>
-<p>这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。</p>
-<h2 id="快递员问题"><a href="#快递员问题" class="headerlink" title="快递员问题"></a>快递员问题</h2><p>我住在一个大型的居民小区。</p>
-<p>小区有门禁系统。</p>
-<p>进入的时候需要输入密码。</p>
-<p>我经常网购和外卖，每天都有快递员来送货。我必须找到一个办法，让快递员通过门禁系统，进入小区。</p>
-<p>如果我把自己的密码，告诉快递员，他就拥有了与我同样的权限，这样好像不太合适。万一我想取消他进入小区的权力，也很麻烦，我自己的密码也得跟着改了，还得通知其他的快递员。</p>
-<p>有没有一种办法，让快递员能够自由进入小区，又不必知道小区居民的密码，而且他的唯一权限就是送货，其他需要密码的场合，他都没有权限？</p>
-<h2 id="授权机制的设计"><a href="#授权机制的设计" class="headerlink" title="授权机制的设计"></a>授权机制的设计</h2><p>于是，我设计了一套授权机制。</p>
-<p>第一步，门禁系统的密码输入器下面，增加一个按钮，叫做”获取授权”。快递员需要首先按这个按钮，去申请授权。</p>
-<p>第二步，他按下按钮以后，屋主（也就是我）的手机就会跳出对话框：有人正在要求授权。系统还会显示该快递员的姓名、工号和所属的快递公司。</p>
-<p>我确认请求属实，就点击按钮，告诉门禁系统，我同意给予他进入小区的授权。</p>
-<p>第三步，门禁系统得到我的确认以后，向快递员显示一个进入小区的令牌（access token）。令牌就是类似密码的一串数字，只在短期内（比如七天）有效。</p>
-<p>第四步，快递员向门禁系统输入令牌，进入小区。</p>
-<p>有人可能会问，为什么不是远程为快递员开门，而要为他单独生成一个令牌？这是因为快递员可能每天都会来送货，第二天他还可以复用这个令牌。另外，有的小区有多重门禁，快递员可以使用同一个令牌通过它们。</p>
-<h2 id="互联网场景"><a href="#互联网场景" class="headerlink" title="互联网场景"></a>互联网场景</h2><p>我们把上面的例子搬到互联网，就是 OAuth 的设计了。</p>
-<p>首先，居民小区就是储存用户数据的网络服务。比如，微信储存了我的好友信息，获取这些信息，就必须经过微信的”门禁系统”。</p>
-<p>其次，快递员（或者说快递公司）就是第三方应用，想要穿过门禁系统，进入小区。</p>
-<p>最后，我就是用户本人，同意授权第三方应用进入小区，获取我的数据。</p>
-<p><strong>简单说，OAuth 就是一种授权机制。数据的所有者告诉系统，同意授权第三方应用进入系统，获取这些数据。系统从而产生一个短期的进入令牌（token），用来代替密码，供第三方应用使用。</strong></p>
-<h2 id="令牌与密码"><a href="#令牌与密码" class="headerlink" title="令牌与密码"></a>令牌与密码</h2><p>令牌（token）与密码（password）的作用是一样的，都可以进入系统，但是有三点差异。</p>
-<p>（1）令牌是短期的，到期会自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。</p>
-<p>（2）令牌可以被数据所有者撤销，会立即失效。以上例而言，屋主可以随时取消快递员的令牌。密码一般不允许被他人撤销。</p>
-<p>（3）令牌有权限范围（scope），比如只能进小区的二号门。对于网络服务来说，只读令牌就比读写令牌更安全。密码一般是完整权限。</p>
-<p>上面这些设计，保证了令牌既可以让第三方应用获得权限，同时又随时可控，不会危及系统安全。这就是 OAuth 2.0 的优点。</p>
-<p>注意，只要知道了令牌，就能进入系统。系统一般不会再次确认身份，所以<strong>令牌必须保密，泄漏令牌与泄漏密码的后果是一样的。</strong> 这也是为什么令牌的有效期，一般都设置得很短的原因。</p>
-<p>OAuth 2.0 对于如何颁发令牌的细节，规定得非常详细。具体来说，一共分成四种授权类型（authorization grant），即四种颁发令牌的方式，适用于不同的互联网场景。<span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE5LzA0L29hdXRoLWdyYW50LXR5cGVzLmh0bWw=">下一篇文章<i class="fa fa-external-link-alt"></i></span>，我就来介绍这四种类型，并给出代码实例。</p>
-<p>（完）</p>
+    <title>从实际案例聊聊Java应用的GC优化</title>
+    <url>/posts/1B1Q39D.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvN05maW5qRUJqVmk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TWpNNU5qUTVNVEk1T0E9PSZhbXA7bWlkPTI2NTE3NDcyNzMmYW1wO2lkeD0xJmFtcDtzbj03Zjk0NzA2NGE0MWVlZWNiNjgxNmE1ZDA4Mzg1ODFhZSZhbXA7Y2hrc209YmQxMmFhODQ4YTY1MjM5Mjg5ZDVjMzkyNjRlODliZDE3NWYzNzdmNjU1NGJmZTkzYjM3YWQ2NDk4Y2YxM2RlZmYzNTYzMzNjNTM5OCZhbXA7c2NlbmU9MjEjd2VjaGF0X3JlZGlyZWN0">从实际案例聊聊Java应用的GC优化<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
-        <category>中间件</category>
-        <category>安全框架</category>
+        <category>JVM</category>
+        <category>GC</category>
       </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
   <entry>
     <title>彻底讲透Elasticsearch</title>
@@ -7437,11 +7397,51 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>OAuth2的一个简单解释</title>
+    <url>/posts/3E561CR.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE5LzA0L29hdXRoX2Rlc2lnbi5odG1s">OAuth 2.0 的一个简单解释<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE0LzA1L29hdXRoXzJfMC5odG1s">OAuth 2.0<i class="fa fa-external-link-alt"></i></span> 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。</p>
+<p>这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。</p>
+<h2 id="快递员问题"><a href="#快递员问题" class="headerlink" title="快递员问题"></a>快递员问题</h2><p>我住在一个大型的居民小区。</p>
+<p>小区有门禁系统。</p>
+<p>进入的时候需要输入密码。</p>
+<p>我经常网购和外卖，每天都有快递员来送货。我必须找到一个办法，让快递员通过门禁系统，进入小区。</p>
+<p>如果我把自己的密码，告诉快递员，他就拥有了与我同样的权限，这样好像不太合适。万一我想取消他进入小区的权力，也很麻烦，我自己的密码也得跟着改了，还得通知其他的快递员。</p>
+<p>有没有一种办法，让快递员能够自由进入小区，又不必知道小区居民的密码，而且他的唯一权限就是送货，其他需要密码的场合，他都没有权限？</p>
+<h2 id="授权机制的设计"><a href="#授权机制的设计" class="headerlink" title="授权机制的设计"></a>授权机制的设计</h2><p>于是，我设计了一套授权机制。</p>
+<p>第一步，门禁系统的密码输入器下面，增加一个按钮，叫做”获取授权”。快递员需要首先按这个按钮，去申请授权。</p>
+<p>第二步，他按下按钮以后，屋主（也就是我）的手机就会跳出对话框：有人正在要求授权。系统还会显示该快递员的姓名、工号和所属的快递公司。</p>
+<p>我确认请求属实，就点击按钮，告诉门禁系统，我同意给予他进入小区的授权。</p>
+<p>第三步，门禁系统得到我的确认以后，向快递员显示一个进入小区的令牌（access token）。令牌就是类似密码的一串数字，只在短期内（比如七天）有效。</p>
+<p>第四步，快递员向门禁系统输入令牌，进入小区。</p>
+<p>有人可能会问，为什么不是远程为快递员开门，而要为他单独生成一个令牌？这是因为快递员可能每天都会来送货，第二天他还可以复用这个令牌。另外，有的小区有多重门禁，快递员可以使用同一个令牌通过它们。</p>
+<h2 id="互联网场景"><a href="#互联网场景" class="headerlink" title="互联网场景"></a>互联网场景</h2><p>我们把上面的例子搬到互联网，就是 OAuth 的设计了。</p>
+<p>首先，居民小区就是储存用户数据的网络服务。比如，微信储存了我的好友信息，获取这些信息，就必须经过微信的”门禁系统”。</p>
+<p>其次，快递员（或者说快递公司）就是第三方应用，想要穿过门禁系统，进入小区。</p>
+<p>最后，我就是用户本人，同意授权第三方应用进入小区，获取我的数据。</p>
+<p><strong>简单说，OAuth 就是一种授权机制。数据的所有者告诉系统，同意授权第三方应用进入系统，获取这些数据。系统从而产生一个短期的进入令牌（token），用来代替密码，供第三方应用使用。</strong></p>
+<h2 id="令牌与密码"><a href="#令牌与密码" class="headerlink" title="令牌与密码"></a>令牌与密码</h2><p>令牌（token）与密码（password）的作用是一样的，都可以进入系统，但是有三点差异。</p>
+<p>（1）令牌是短期的，到期会自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。</p>
+<p>（2）令牌可以被数据所有者撤销，会立即失效。以上例而言，屋主可以随时取消快递员的令牌。密码一般不允许被他人撤销。</p>
+<p>（3）令牌有权限范围（scope），比如只能进小区的二号门。对于网络服务来说，只读令牌就比读写令牌更安全。密码一般是完整权限。</p>
+<p>上面这些设计，保证了令牌既可以让第三方应用获得权限，同时又随时可控，不会危及系统安全。这就是 OAuth 2.0 的优点。</p>
+<p>注意，只要知道了令牌，就能进入系统。系统一般不会再次确认身份，所以<strong>令牌必须保密，泄漏令牌与泄漏密码的后果是一样的。</strong> 这也是为什么令牌的有效期，一般都设置得很短的原因。</p>
+<p>OAuth 2.0 对于如何颁发令牌的细节，规定得非常详细。具体来说，一共分成四种授权类型（authorization grant），即四种颁发令牌的方式，适用于不同的互联网场景。<span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE5LzA0L29hdXRoLWdyYW50LXR5cGVzLmh0bWw=">下一篇文章<i class="fa fa-external-link-alt"></i></span>，我就来介绍这四种类型，并给出代码实例。</p>
+<p>（完）</p>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>安全框架</category>
+      </categories>
   </entry>
   <entry>
     <title>OAuth2的四种方式</title>
@@ -7579,6 +7579,35 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>事务</tag>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于一些MQ的面试题</title>
+    <url>/posts/11RZTJV.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+<blockquote>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
         <tag>MQ</tag>
       </tags>
   </entry>
@@ -7883,41 +7912,12 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>集合</tag>
         <tag>面试</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>MQ</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/posts/11RZTJV.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-<blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -8249,10 +8249,10 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
-        <tag>算法</tag>
-        <tag>索引</tag>
-        <tag>MQ</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
+        <tag>MQ</tag>
         <tag>并发</tag>
         <tag>设计模式</tag>
       </tags>
@@ -8378,8 +8378,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>JVM</tag>
         <tag>面试</tag>
         <tag>线程池</tag>
-        <tag>算法</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>并发</tag>
         <tag>设计模式</tag>
       </tags>
@@ -8511,9 +8511,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Java</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
+        <tag>锁</tag>
         <tag>算法</tag>
         <tag>MQ</tag>
-        <tag>锁</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -8788,8 +8788,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
         <tag>锁</tag>
+        <tag>算法</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -8842,8 +8842,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
       </tags>
   </entry>
   <entry>
@@ -8869,6 +8869,34 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>Mysql</tag>
         <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ACID是靠什么保证的</title>
+    <url>/posts/KZ41HP.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<blockquote>
+<p>ACID，事务的四大特性：原子性，一致性，隔离性，持久性</p>
+</blockquote>
+<ul>
+<li><p>原子性<br>原子性是由undolog日志来保证的，它记录了需要回滚的日志信息，事务回滚时撤销已经执行成功的SQL。</p>
+</li>
+<li><p>一致性<br>一致性是由其他三个特性保证的，程序代码要保证业务上的一致性。</p>
+</li>
+<li><p>隔离性<br>隔离性是由MVCC来保证的。</p>
+</li>
+<li><p>持久性<br>持久性是由redo log来保证的，mysql修改数据的时候会在redolog中记录一条日志数据，就算数据没有保存成功，只要日志保存成功了，数据就不会丢失。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>事务</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -8937,34 +8965,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ACID是靠什么保证的</title>
-    <url>/posts/KZ41HP.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<blockquote>
-<p>ACID，事务的四大特性：原子性，一致性，隔离性，持久性</p>
-</blockquote>
-<ul>
-<li><p>原子性<br>原子性是由undolog日志来保证的，它记录了需要回滚的日志信息，事务回滚时撤销已经执行成功的SQL。</p>
-</li>
-<li><p>一致性<br>一致性是由其他三个特性保证的，程序代码要保证业务上的一致性。</p>
-</li>
-<li><p>隔离性<br>隔离性是由MVCC来保证的。</p>
-</li>
-<li><p>持久性<br>持久性是由redo log来保证的，mysql修改数据的时候会在redolog中记录一条日志数据，就算数据没有保存成功，只要日志保存成功了，数据就不会丢失。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-        <tag>事务</tag>
-        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -9046,9 +9046,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -9182,8 +9182,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>事务</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -9247,9 +9247,9 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -9460,8 +9460,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>sql</tag>
         <tag>数据库</tag>
         <tag>Mysql</tag>
-        <tag>算法</tag>
         <tag>索引</tag>
+        <tag>算法</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -9926,8 +9926,8 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>数据库</tag>
         <tag>面试</tag>
         <tag>Mysql</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
         <tag>并发</tag>
       </tags>
   </entry>
@@ -10020,6 +10020,70 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>集合</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis的缓存一致性 问题</title>
+    <url>/posts/15KRDA4.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
+<h3 id="方式一：-先更新数据库，再更新缓存"><a href="#方式一：-先更新数据库，再更新缓存" class="headerlink" title="方式一： 先更新数据库，再更新缓存"></a>方式一： 先更新数据库，再更新缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616831217400-3b84a864-5a2c-4bdf-9e74-3e56c066c30f.png" alt="image.png"></p>
+<h3 id="方式二：先删缓存，再更新数据库"><a href="#方式二：先删缓存，再更新数据库" class="headerlink" title="方式二：先删缓存，再更新数据库"></a>方式二：先删缓存，再更新数据库</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831509175-c5f3169f-903d-4350-ba74-c2bd58286adc.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616831579262-008fbb7b-e557-4304-b68d-9a7116a6b68a.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832118844-b6b49d56-7c2a-4ffe-90df-fec448cd9550.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832224837-2684fac9-4305-4e31-a89b-2c6323be1929.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832261751-69493367-cb6b-45d5-b39c-4e3cc3c0eaaf.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616832301163-15e5857b-acfb-459b-b2fc-5977f5eeb378.png" alt="image.png"></p>
+<h3 id="方式三：先更新数据库，再删缓存"><a href="#方式三：先更新数据库，再删缓存" class="headerlink" title="方式三：先更新数据库，再删缓存"></a>方式三：先更新数据库，再删缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616832821538-ec765b59-1b06-4150-a804-4be074240641.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833138358-58b31377-e7ea-4496-ab02-8e1ca146e25d.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833205589-da05da22-7e3f-491c-834d-dd3b07770714.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833256057-3fc89667-0735-44b6-982d-3f917b245c13.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833278950-6d618e3f-dc05-494b-bd2d-36c36316ecc5.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833293111-53a6c67e-ce63-48bd-9e67-b40970b13e24.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833332680-af709752-31ec-4793-b293-2b98b1936329.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616833344867-42c32b3e-ecee-4139-8df7-7f79aa40f928.png" alt="image.png"></p>
+<blockquote>
+<p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzcxMjI4NQ==">文章1<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcmp6aGVuZy9wLzkwNDE2NTkuaHRtbA==">文章2<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly9ub3RlLmRvbHl3LmNvbS9jYWNoZS8wMC1EYXRhQmFzZUNvbnNpc3RlbmN5Lmh0bWw=">文章3<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis内存淘汰策略</title>
+    <url>/posts/2FA73PT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
+</blockquote>
+<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
+<li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
+<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
+<li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
+<li><strong>allkeys-random</strong>：从所有key中随机淘汰数据</li>
+<li><strong>volatile-random</strong>：从设置了过期时间的key中随机淘汰</li>
+<li><strong>volatile-ttl</strong>：在设置了过期时间的key中，根据key的过期时间进行淘汰，越早过期的越优先被淘汰</li>
+</ul>
+<blockquote>
+<p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
+</blockquote>
+<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
+<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
+<p><code>maxmemory-policy allkeys-lru</code></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -10507,10 +10571,10 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>集合</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
-        <tag>算法</tag>
         <tag>数组</tag>
-        <tag>索引</tag>
         <tag>锁</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
@@ -10694,70 +10758,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Redis的缓存一致性 问题</title>
-    <url>/posts/15KRDA4.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1616830617249-353047f5-904e-404b-baa3-0927fc5b4f77.png" alt="image.png"></p>
-<h3 id="方式一：-先更新数据库，再更新缓存"><a href="#方式一：-先更新数据库，再更新缓存" class="headerlink" title="方式一： 先更新数据库，再更新缓存"></a>方式一： 先更新数据库，再更新缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831172055-44a1ca85-3974-494d-aa8b-d4ebbc3405db.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616831217400-3b84a864-5a2c-4bdf-9e74-3e56c066c30f.png" alt="image.png"></p>
-<h3 id="方式二：先删缓存，再更新数据库"><a href="#方式二：先删缓存，再更新数据库" class="headerlink" title="方式二：先删缓存，再更新数据库"></a>方式二：先删缓存，再更新数据库</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616831509175-c5f3169f-903d-4350-ba74-c2bd58286adc.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616831579262-008fbb7b-e557-4304-b68d-9a7116a6b68a.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832118844-b6b49d56-7c2a-4ffe-90df-fec448cd9550.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832224837-2684fac9-4305-4e31-a89b-2c6323be1929.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832261751-69493367-cb6b-45d5-b39c-4e3cc3c0eaaf.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616832301163-15e5857b-acfb-459b-b2fc-5977f5eeb378.png" alt="image.png"></p>
-<h3 id="方式三：先更新数据库，再删缓存"><a href="#方式三：先更新数据库，再删缓存" class="headerlink" title="方式三：先更新数据库，再删缓存"></a>方式三：先更新数据库，再删缓存</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616832821538-ec765b59-1b06-4150-a804-4be074240641.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833138358-58b31377-e7ea-4496-ab02-8e1ca146e25d.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833205589-da05da22-7e3f-491c-834d-dd3b07770714.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833256057-3fc89667-0735-44b6-982d-3f917b245c13.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833278950-6d618e3f-dc05-494b-bd2d-36c36316ecc5.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833293111-53a6c67e-ce63-48bd-9e67-b40970b13e24.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833332680-af709752-31ec-4793-b293-2b98b1936329.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616833344867-42c32b3e-ecee-4139-8df7-7f79aa40f928.png" alt="image.png"></p>
-<blockquote>
-<p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzcxMjI4NQ==">文章1<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcmp6aGVuZy9wLzkwNDE2NTkuaHRtbA==">文章2<i class="fa fa-external-link-alt"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly9ub3RlLmRvbHl3LmNvbS9jYWNoZS8wMC1EYXRhQmFzZUNvbnNpc3RlbmN5Lmh0bWw=">文章3<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>redis内存淘汰策略</title>
-    <url>/posts/2FA73PT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
-</blockquote>
-<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
-<li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
-<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
-<li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
-<li><strong>allkeys-random</strong>：从所有key中随机淘汰数据</li>
-<li><strong>volatile-random</strong>：从设置了过期时间的key中随机淘汰</li>
-<li><strong>volatile-ttl</strong>：在设置了过期时间的key中，根据key的过期时间进行淘汰，越早过期的越优先被淘汰</li>
-</ul>
-<blockquote>
-<p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
-</blockquote>
-<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
-<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
-<p><code>maxmemory-policy allkeys-lru</code></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL优化和SQl注入问题</title>
     <url>/posts/1NTK6KJ.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vbWVhZGVyL2hleG8tYmxvZy9ibG9iL2Jsb2cvc291cmNlL19wb3N0cy8lRTYlOTUlQjAlRTYlOEQlQUUlRTUlQkElOTMvU1FMLzIwMjEwMzI0LVNRTCVFNCVCQyU5OCVFNSU4QyU5NiVFNSU5MiU4Q1NRbCVFNiVCMyVBOCVFNSU4NSVBNSVFOSU5NyVBRSVFOSVBMiU5OC5tZA==">Gitee原文<i class="fa fa-external-link-alt"></i></span></p>
@@ -10787,6 +10787,30 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
 <p><img data-src="https://xuemingde.com/pages/image/others/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/image-20210324175324481.png" alt="image-20210324175324481"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OR与AND一起的用法</title>
+    <url>/posts/1BED9D0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
+<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
+<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
+<p>查询  </p>
+<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
+SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
+</code></pre>
+<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
+<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -10989,30 +11013,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>数据库</tag>
         <tag>Mysql</tag>
         <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OR与AND一起的用法</title>
-    <url>/posts/1BED9D0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
-<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
-<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
-<p>查询  </p>
-<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
-SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
-</code></pre>
-<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
-<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
