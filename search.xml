@@ -16,33 +16,6 @@
       </categories>
   </entry>
   <entry>
-    <title>springBoot项目打成的jar包无法获取resources下文件</title>
-    <url>/posts/3V4Q1GY.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220217-springBoot%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90%E7%9A%84jar%E5%8C%85%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96resources%E4%B8%8B%E6%96%87%E4%BB%B6.md) 
-</div><br><span id="more"></span><br>错误：</p>
-<blockquote>
-<p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U  </p>
-</blockquote>
-<p>spring boot项目打成的 jar包无法获取src/main/resources下文件  </p>
-<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>打成Jar后<br><img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7">  </p>
-<p>获取resources下的文件<br><img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k">  </p>
-<pre><code class="lang-java"> ClassPathResource classPathResource = new ClassPathResource(&quot;img/tofflon-logo.png&quot;);
- URL url = classPathResource.getURL();
- Image image = Image.getInstance(url);
-</code></pre>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Seata-server启动闪退问题</title>
     <url>/posts/39AKQ95.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>第一步：查看错误日志</p>
@@ -86,6 +59,33 @@
       <tags>
         <tag>Java</tag>
         <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springBoot项目打成的jar包无法获取resources下文件</title>
+    <url>/posts/3V4Q1GY.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220217-springBoot%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90%E7%9A%84jar%E5%8C%85%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96resources%E4%B8%8B%E6%96%87%E4%BB%B6.md) 
+</div><br><span id="more"></span><br>错误：</p>
+<blockquote>
+<p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U  </p>
+</blockquote>
+<p>spring boot项目打成的 jar包无法获取src/main/resources下文件  </p>
+<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>打成Jar后<br><img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7">  </p>
+<p>获取resources下的文件<br><img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k">  </p>
+<pre><code class="lang-java"> ClassPathResource classPathResource = new ClassPathResource(&quot;img/tofflon-logo.png&quot;);
+ URL url = classPathResource.getURL();
+ Image image = Image.getInstance(url);
+</code></pre>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>SpringBoot</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -1517,6 +1517,51 @@
       </tags>
   </entry>
   <entry>
+    <title>springboot整合nacos</title>
+    <url>/posts/3MH3EJ1.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThHUi16U0hqQ0YtUWc5OGF1NnpmYUE=">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA<i class="fa fa-external-link-alt"></i></span> 提取码: n9fk </p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304163758.png" alt="image-20210304163751931"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210304163845.png" alt="image-20210304163843821"></p>
+<p>访问：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>账户密码默认：nacos/nacos </p>
+<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304164000.png" alt="image-20210304163959764"></p>
+<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
+<li><p>新建  命名空间</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305092814.png" alt="image-20210305092812721"></p>
+</li>
+</ol>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305092920.png" alt="image-20210305092919689"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305092945.png" alt="image-20210305092944790"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093109.png" alt="image-20210305093108311"></p>
+<p>新建配置</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093324.png" alt="image-20210305093323554"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093506.png" alt="image-20210305093505015"></p>
+<p>代码配置</p>
+<p>maven引用</p>
+<!--nacos组件-->
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>新建 bootstrap.yml 文件，内容如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093731.png" alt="image-20210305093729513"></p>
+<p>与服务端配置对比</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094240.png" alt="image-20210305094238911"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094354.png" alt="image-20210305094353139"></p>
+<p>新建获取配置信息文件，示例：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094646.png" alt="image-20210305094645537"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094636.png" alt="image-20210305094635853"></p>
+<p>测试获取配置信息：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094745.png" alt="image-20210305094744176"></p>
+<p>测试：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305095010.png" alt="image-20210305095009444"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式事务</title>
     <url>/posts/36WRKNE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
@@ -1603,51 +1648,6 @@
         <tag>MQ</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springboot整合nacos</title>
-    <url>/posts/3MH3EJ1.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThHUi16U0hqQ0YtUWc5OGF1NnpmYUE=">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA<i class="fa fa-external-link-alt"></i></span> 提取码: n9fk </p>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304163758.png" alt="image-20210304163751931"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210304163845.png" alt="image-20210304163843821"></p>
-<p>访问：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>账户密码默认：nacos/nacos </p>
-<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304164000.png" alt="image-20210304163959764"></p>
-<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
-<li><p>新建  命名空间</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092814.png" alt="image-20210305092812721"></p>
-</li>
-</ol>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092920.png" alt="image-20210305092919689"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092945.png" alt="image-20210305092944790"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093109.png" alt="image-20210305093108311"></p>
-<p>新建配置</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093324.png" alt="image-20210305093323554"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093506.png" alt="image-20210305093505015"></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093731.png" alt="image-20210305093729513"></p>
-<p>与服务端配置对比</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094240.png" alt="image-20210305094238911"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094354.png" alt="image-20210305094353139"></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094646.png" alt="image-20210305094645537"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094636.png" alt="image-20210305094635853"></p>
-<p>测试获取配置信息：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094745.png" alt="image-20210305094744176"></p>
-<p>测试：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305095010.png" alt="image-20210305095009444"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
       </tags>
   </entry>
   <entry>
@@ -2031,103 +2031,6 @@
       </tags>
   </entry>
   <entry>
-    <title>撸一下Nacos</title>
-    <url>/posts/MMNJGZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是 Nacos</p>
-<p>Nacos 是阿里巴巴开源的一款优秀的中间件，在分布式微服务场景下用的非常多。</p>
-<p><strong>Nacos</strong> 英文全称 <strong>Naming and Configuration Service</strong>，其中 Na 是 naming 的缩写，注册中心；co为 configuration 的缩写， 配置中心；</p>
-<p>不管是配置中心还是注册中心本质都是围着<strong>服务（微服务）</strong>转的，用官方的话来说：<strong>服务在 Nacos 里是一等公民</strong>。</p>
-<p>Nacos 分为服务端和客户端，这一点不要含糊。</p>
-<p><strong>Nacos Server</strong></p>
-<p>Nacos Server 使用 Java 语言编写，提供了服务注册发现和服务配置功能；对外提供了 SDK 接入以及HTTP RESTful 开放接口，SDK 接入和 RESTful 接口的功能是一致的。</p>
-<p><strong>Nacos Client</strong></p>
-<p>Nacos提供了官方的 SDK，遗憾的是只有 Java 版本，官方的 SDK 可以很方便与一些主流的框架进行集成，比如：Spring Cloud、Dubbo 等。</p>
-<p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
-<p><strong>数据模型</strong></p>
-<p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
-<p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
-<h1 id="Nacos-注册中心原理"><a href="#Nacos-注册中心原理" class="headerlink" title="Nacos 注册中心原理"></a>Nacos 注册中心原理</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
-<p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
-<p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
-<p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
-<h1 id="小试牛刀：Nacos-服务注册发现功能体验"><a href="#小试牛刀：Nacos-服务注册发现功能体验" class="headerlink" title="小试牛刀：Nacos 服务注册发现功能体验"></a>小试牛刀：Nacos 服务注册发现功能体验</h1><p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
-<h2 id="搭建运行-Nacos-Server"><a href="#搭建运行-Nacos-Server" class="headerlink" title="搭建运行 Nacos Server"></a>搭建运行 Nacos Server</h2><p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
-<p>进入 Github Nacos 下载主页：</p>
-<blockquote>
-<p>主页链接：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly8qZ2l0aHViKi5jb20vYWxpYmFiYS9uYWNvcy9yZWxlYXNlcw==">https://*github*.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
-<p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></table></figure>
-<p>如果是 windows 系统，执行以下命令：</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">startup.<span class="built_in">cmd</span> -m standalone</span><br></pre></td></tr></table></figure>
-<p><strong>（2）使用 Docker 启动 Nacos Server</strong></p>
-<p>如果你电脑上已经装了 Docker，建议你直接使用 Docker 来运行。</p>
-<p>先拉取最新镜像：</p>
-<figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">docker pull nacos/nacos-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
-<p>拉取成功后启动实例：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name nacos-demo -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
-<p>这里有坑需要注意下，8848 是 Nacos Server 的主端口需要暴露出来，如果你安装的是 Nacos 2.0 版本还需要将 9848 端口暴露出来，这里我含泪调试了一下午才知道的，哭晕……</p>
-<p>为什么需要 9848 端口呢？因为 Nacos 2.0 版本之后默认将这个端口作为 grpc 的通信端口，官方提供的 Client SDK使用 grpc 来与 Nacos Server 进行通信，包括服务实例注册、心跳检查等功能。</p>
-<blockquote>
-<p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
-</blockquote>
-<h2 id="熟悉-Nacos-Server-控制台界面"><a href="#熟悉-Nacos-Server-控制台界面" class="headerlink" title="熟悉 Nacos Server 控制台界面"></a>熟悉 Nacos Server 控制台界面</h2><p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
-<blockquote>
-<p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
-<p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
-<p><strong>（1）服务管理</strong></p>
-<p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
-<p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
-<p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
-<p><strong>（2）权限控制</strong></p>
-<p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
-<p><strong>（3）命名空间</strong></p>
-<p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
-<p><strong>（4）集群管理</strong></p>
-<p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
-<h2 id="学习使用-Nacos-Client-SDK"><a href="#学习使用-Nacos-Client-SDK" class="headerlink" title="学习使用 Nacos Client SDK"></a>学习使用 Nacos Client SDK</h2><p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
-<p>我们拿 Java 版本 SDK 为例进行说明。</p>
-<p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
-<p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用-Nacos-Client-注册实例"><a href="#使用-Nacos-Client-注册实例" class="headerlink" title="使用 Nacos Client 注册实例"></a>使用 Nacos Client 注册实例</h2><p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">&quot;server status: &quot;</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="string">&quot;11.11.11.11&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
-<p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
-<h2 id="使用-Nacos-Client-消费实例"><a href="#使用-Nacos-Client-消费实例" class="headerlink" title="使用 Nacos Client 消费实例"></a>使用 Nacos Client 消费实例</h2><p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;server status: %s&quot;</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">&quot;~~event start&quot;</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">&quot;~~event end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
-<p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
-<p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
-<blockquote>
-<p>原文连接：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmNSZkNzWGU1VW9LNVpvaVg5eGxpQQ==">折腾一个周末，撸Nacos可真不容易<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>浅析 RPC 与基本实现</title>
     <url>/posts/1E7Q3HG.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本文主要论述的是“RPC 实现原理”，那么首先明确一个问题什么是 RPC 呢？RPC 是 Remote Procedure Call 的缩写，即，远程过程调用。RPC  是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而开发人员无需额外地为这个交互编程。<br>值得注意是，两个或多个应用程序都分布在不同的服务器上，它们之间的调用都像是本地方法调用一样。接下来我们便来分析一下一次 RPC 调用发生了些什么？</p>
@@ -2238,6 +2141,103 @@
         <tag>Java</tag>
         <tag>Spring</tag>
         <tag>线程池</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>撸一下Nacos</title>
+    <url>/posts/MMNJGZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是 Nacos</p>
+<p>Nacos 是阿里巴巴开源的一款优秀的中间件，在分布式微服务场景下用的非常多。</p>
+<p><strong>Nacos</strong> 英文全称 <strong>Naming and Configuration Service</strong>，其中 Na 是 naming 的缩写，注册中心；co为 configuration 的缩写， 配置中心；</p>
+<p>不管是配置中心还是注册中心本质都是围着<strong>服务（微服务）</strong>转的，用官方的话来说：<strong>服务在 Nacos 里是一等公民</strong>。</p>
+<p>Nacos 分为服务端和客户端，这一点不要含糊。</p>
+<p><strong>Nacos Server</strong></p>
+<p>Nacos Server 使用 Java 语言编写，提供了服务注册发现和服务配置功能；对外提供了 SDK 接入以及HTTP RESTful 开放接口，SDK 接入和 RESTful 接口的功能是一致的。</p>
+<p><strong>Nacos Client</strong></p>
+<p>Nacos提供了官方的 SDK，遗憾的是只有 Java 版本，官方的 SDK 可以很方便与一些主流的框架进行集成，比如：Spring Cloud、Dubbo 等。</p>
+<p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
+<p><strong>数据模型</strong></p>
+<p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
+<p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
+<h1 id="Nacos-注册中心原理"><a href="#Nacos-注册中心原理" class="headerlink" title="Nacos 注册中心原理"></a>Nacos 注册中心原理</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
+<p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
+<p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
+<p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
+<h1 id="小试牛刀：Nacos-服务注册发现功能体验"><a href="#小试牛刀：Nacos-服务注册发现功能体验" class="headerlink" title="小试牛刀：Nacos 服务注册发现功能体验"></a>小试牛刀：Nacos 服务注册发现功能体验</h1><p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
+<h2 id="搭建运行-Nacos-Server"><a href="#搭建运行-Nacos-Server" class="headerlink" title="搭建运行 Nacos Server"></a>搭建运行 Nacos Server</h2><p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
+<p>进入 Github Nacos 下载主页：</p>
+<blockquote>
+<p>主页链接：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly8qZ2l0aHViKi5jb20vYWxpYmFiYS9uYWNvcy9yZWxlYXNlcw==">https://*github*.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
+<p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></table></figure>
+<p>如果是 windows 系统，执行以下命令：</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">startup.<span class="built_in">cmd</span> -m standalone</span><br></pre></td></tr></table></figure>
+<p><strong>（2）使用 Docker 启动 Nacos Server</strong></p>
+<p>如果你电脑上已经装了 Docker，建议你直接使用 Docker 来运行。</p>
+<p>先拉取最新镜像：</p>
+<figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">docker pull nacos/nacos-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+<p>拉取成功后启动实例：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name nacos-demo -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
+<p>这里有坑需要注意下，8848 是 Nacos Server 的主端口需要暴露出来，如果你安装的是 Nacos 2.0 版本还需要将 9848 端口暴露出来，这里我含泪调试了一下午才知道的，哭晕……</p>
+<p>为什么需要 9848 端口呢？因为 Nacos 2.0 版本之后默认将这个端口作为 grpc 的通信端口，官方提供的 Client SDK使用 grpc 来与 Nacos Server 进行通信，包括服务实例注册、心跳检查等功能。</p>
+<blockquote>
+<p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
+</blockquote>
+<h2 id="熟悉-Nacos-Server-控制台界面"><a href="#熟悉-Nacos-Server-控制台界面" class="headerlink" title="熟悉 Nacos Server 控制台界面"></a>熟悉 Nacos Server 控制台界面</h2><p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
+<blockquote>
+<p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
+<p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
+<p><strong>（1）服务管理</strong></p>
+<p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
+<p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
+<p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
+<p><strong>（2）权限控制</strong></p>
+<p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
+<p><strong>（3）命名空间</strong></p>
+<p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
+<p><strong>（4）集群管理</strong></p>
+<p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
+<h2 id="学习使用-Nacos-Client-SDK"><a href="#学习使用-Nacos-Client-SDK" class="headerlink" title="学习使用 Nacos Client SDK"></a>学习使用 Nacos Client SDK</h2><p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
+<p>我们拿 Java 版本 SDK 为例进行说明。</p>
+<p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
+<p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用-Nacos-Client-注册实例"><a href="#使用-Nacos-Client-注册实例" class="headerlink" title="使用 Nacos Client 注册实例"></a>使用 Nacos Client 注册实例</h2><p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">&quot;server status: &quot;</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="string">&quot;11.11.11.11&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
+<p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
+<h2 id="使用-Nacos-Client-消费实例"><a href="#使用-Nacos-Client-消费实例" class="headerlink" title="使用 Nacos Client 消费实例"></a>使用 Nacos Client 消费实例</h2><p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;server status: %s&quot;</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">&quot;~~event start&quot;</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">&quot;~~event end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
+<p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
+<p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
+<blockquote>
+<p>原文连接：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmNSZkNzWGU1VW9LNVpvaVg5eGxpQQ==">折腾一个周末，撸Nacos可真不容易<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -3980,8 +3980,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>Spring</tag>
         <tag>JVM</tag>
+        <tag>Spring</tag>
         <tag>数据库</tag>
         <tag>面试</tag>
         <tag>线程池</tag>
@@ -5070,6 +5070,35 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
   </entry>
   <entry>
+    <title>算法基础16：图</title>
+    <url>/posts/15KJ31K.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="图的基本介绍"><a href="#图的基本介绍" class="headerlink" title="图的基本介绍"></a>图的基本介绍</h1><p><strong>为什么要有图</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/1414506sNQMH.png" alt=""></p>
+<p><strong>图的举例说明</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141527E8jUYT.png" alt=""></p>
+<h1 id="图的常用概念"><a href="#图的常用概念" class="headerlink" title="图的常用概念"></a>图的常用概念</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141723LQQY8y.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141754tviCu3.png" alt=""></p>
+<h1 id="图的表示方式"><a href="#图的表示方式" class="headerlink" title="图的表示方式"></a>图的表示方式</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141918IYcm2m.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142209DGc0Mc.png" alt=""></p>
+<h1 id="图的快速入门案例"><a href="#图的快速入门案例" class="headerlink" title="图的快速入门案例"></a>图的快速入门案例</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142500Z38tsY.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结点个数</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(n);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">4</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line">        graph.showGraph();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="图的深度优先遍历"><a href="#图的深度优先遍历" class="headerlink" title="图的深度优先遍历"></a>图的深度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/153916N6Efvo.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/155015t6vgIK.png" alt=""></p>
+<h1 id="图的广度优先遍历"><a href="#图的广度优先遍历" class="headerlink" title="图的广度优先遍历"></a>图的广度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/090950GajbCf.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/17/091259tagB5U.png" alt=""></p>
+<h1 id="广度优先与深度优先遍历的代码实现"><a href="#广度优先与深度优先遍历的代码实现" class="headerlink" title="广度优先与深度优先遍历的代码实现"></a>广度优先与深度优先遍历的代码实现</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line">    <span class="comment">//记录某个结点是否被访问</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] isVisited;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(vertexs.length);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line"><span class="comment">//        graph.showGraph();</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println(&quot;测试DFS&quot;);</span></span><br><span class="line"><span class="comment">//        graph.dfs();</span></span><br><span class="line">        System.out.println(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;测试BFS&quot;</span>);</span><br><span class="line">        graph.bfs();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[n];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 得到第一个邻接结点的下标</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> index</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 如果存在就返回对应的下标，否则返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFirstNeighbor</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[index][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据前一个邻接结点的下标来获取下一个邻接结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNextNeighbor</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = v2 + <span class="number">1</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[v1][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 深度优先遍历算法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//首先我们访问该结点，输出</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        <span class="comment">//将结点设置为已经访问</span></span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">//查找结点i的第一个邻接结点w</span></span><br><span class="line">        <span class="keyword">int</span> w = getFirstNeighbor(i);</span><br><span class="line">        <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                <span class="comment">//没有被访问过</span></span><br><span class="line">                dfs(isVisited, w);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果w结点已经被访问过</span></span><br><span class="line">            w = getNextNeighbor(i, w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对dfs进行重载，遍历所有的节点，进行dfs</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行dfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                dfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对一个结点进行广度优先遍历的方法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> u; <span class="comment">// 表示队列的头节点对应的下标</span></span><br><span class="line">        <span class="keyword">int</span> w; <span class="comment">//邻接结点W</span></span><br><span class="line">        LinkedList&lt;Object&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">//访问结点，输出结点的信息</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        queue.addLast(i);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="comment">//取出队列的头结点下标</span></span><br><span class="line">            u = (Integer) queue.removeFirst();</span><br><span class="line">            <span class="comment">//得到第一个邻接结点的下标W</span></span><br><span class="line">            w = getFirstNeighbor(u);</span><br><span class="line">            <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="comment">//是否访问过</span></span><br><span class="line">                <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                    System.out.print(getValueByIndex(w) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">                    isVisited[w] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">//入队列</span></span><br><span class="line">                    queue.addLast(w);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//以u为前驱点，找w后面的下一个邻结点</span></span><br><span class="line">                w = getNextNeighbor(u, w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历所有的结点，都进行广度优先搜索</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行bfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                bfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="DFS与BFS-比较"><a href="#DFS与BFS-比较" class="headerlink" title="DFS与BFS 比较"></a>DFS与BFS 比较</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/09380119ieBJ.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>集合</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>算法基础13：数结构</title>
     <url>/posts/6ZR6PR.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="基础部分"><a href="#基础部分" class="headerlink" title="基础部分"></a>基础部分</h1><p><strong>为什么要学习树结构</strong></p>
@@ -5150,35 +5179,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       <tags>
         <tag>Java</tag>
         <tag>数组</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法基础16：图</title>
-    <url>/posts/15KJ31K.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="图的基本介绍"><a href="#图的基本介绍" class="headerlink" title="图的基本介绍"></a>图的基本介绍</h1><p><strong>为什么要有图</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/1414506sNQMH.png" alt=""></p>
-<p><strong>图的举例说明</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141527E8jUYT.png" alt=""></p>
-<h1 id="图的常用概念"><a href="#图的常用概念" class="headerlink" title="图的常用概念"></a>图的常用概念</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141723LQQY8y.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141754tviCu3.png" alt=""></p>
-<h1 id="图的表示方式"><a href="#图的表示方式" class="headerlink" title="图的表示方式"></a>图的表示方式</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/141918IYcm2m.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142209DGc0Mc.png" alt=""></p>
-<h1 id="图的快速入门案例"><a href="#图的快速入门案例" class="headerlink" title="图的快速入门案例"></a>图的快速入门案例</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/142500Z38tsY.png" alt=""></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结点个数</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(n);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>,<span class="number">4</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line">        graph.showGraph();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="图的深度优先遍历"><a href="#图的深度优先遍历" class="headerlink" title="图的深度优先遍历"></a>图的深度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/15/153916N6Efvo.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/15/155015t6vgIK.png" alt=""></p>
-<h1 id="图的广度优先遍历"><a href="#图的广度优先遍历" class="headerlink" title="图的广度优先遍历"></a>图的广度优先遍历</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/090950GajbCf.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/17/091259tagB5U.png" alt=""></p>
-<h1 id="广度优先与深度优先遍历的代码实现"><a href="#广度优先与深度优先遍历的代码实现" class="headerlink" title="广度优先与深度优先遍历的代码实现"></a>广度优先与深度优先遍历的代码实现</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 15.10.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</span><br><span class="line">    <span class="comment">//存储顶点集合</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; vertexList;</span><br><span class="line">    <span class="comment">//存储图对应的邻结矩阵</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] edges;</span><br><span class="line">    <span class="comment">//表示边的数目</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> numOfEdges;</span><br><span class="line">    <span class="comment">//记录某个结点是否被访问</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] isVisited;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String vertexs[] = &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;;</span><br><span class="line">        <span class="comment">//创建图对象</span></span><br><span class="line">        Graph graph = <span class="keyword">new</span> Graph(vertexs.length);</span><br><span class="line">        <span class="comment">//添加顶点</span></span><br><span class="line">        <span class="keyword">for</span> (String value : vertexs) &#123;</span><br><span class="line">            graph.insertVertex(value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加边  A-B  A-C  B-C  B-D  B-E</span></span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">        graph.insetEdges(<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显式</span></span><br><span class="line"><span class="comment">//        graph.showGraph();</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println(&quot;测试DFS&quot;);</span></span><br><span class="line"><span class="comment">//        graph.dfs();</span></span><br><span class="line">        System.out.println(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;测试BFS&quot;</span>);</span><br><span class="line">        graph.bfs();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        vertexList = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</span><br><span class="line">        numOfEdges = <span class="number">0</span>;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[n];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 得到第一个邻接结点的下标</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> index</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 如果存在就返回对应的下标，否则返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFirstNeighbor</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[index][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据前一个邻接结点的下标来获取下一个邻接结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNextNeighbor</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = v2 + <span class="number">1</span>; i &lt; vertexList.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (edges[v1][i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 深度优先遍历算法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//首先我们访问该结点，输出</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        <span class="comment">//将结点设置为已经访问</span></span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">//查找结点i的第一个邻接结点w</span></span><br><span class="line">        <span class="keyword">int</span> w = getFirstNeighbor(i);</span><br><span class="line">        <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                <span class="comment">//没有被访问过</span></span><br><span class="line">                dfs(isVisited, w);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果w结点已经被访问过</span></span><br><span class="line">            w = getNextNeighbor(i, w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对dfs进行重载，遍历所有的节点，进行dfs</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行dfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                dfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对一个结点进行广度优先遍历的方法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isVisited</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">boolean</span>[] isVisited, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> u; <span class="comment">// 表示队列的头节点对应的下标</span></span><br><span class="line">        <span class="keyword">int</span> w; <span class="comment">//邻接结点W</span></span><br><span class="line">        LinkedList&lt;Object&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">//访问结点，输出结点的信息</span></span><br><span class="line">        System.out.print(getValueByIndex(i) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">        isVisited[i] = <span class="keyword">true</span>;</span><br><span class="line">        queue.addLast(i);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="comment">//取出队列的头结点下标</span></span><br><span class="line">            u = (Integer) queue.removeFirst();</span><br><span class="line">            <span class="comment">//得到第一个邻接结点的下标W</span></span><br><span class="line">            w = getFirstNeighbor(u);</span><br><span class="line">            <span class="keyword">while</span> (w != -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="comment">//是否访问过</span></span><br><span class="line">                <span class="keyword">if</span> (!isVisited[w]) &#123;</span><br><span class="line">                    System.out.print(getValueByIndex(w) + <span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">                    isVisited[w] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">//入队列</span></span><br><span class="line">                    queue.addLast(w);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//以u为前驱点，找w后面的下一个邻结点</span></span><br><span class="line">                w = getNextNeighbor(u, w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历所有的结点，都进行广度优先搜索</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[vertexList.size()];</span><br><span class="line">        <span class="comment">//遍历所有的结点进行bfs</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getNumOfVertex(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVisited[i]) &#123;</span><br><span class="line">                bfs(isVisited, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//显式图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showGraph</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge : edges) &#123;</span><br><span class="line">            System.err.println(Arrays.toString(edge));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfVertex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//得到边的数目</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumOfEdges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> numOfEdges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回结点对应的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValueByIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> vertexList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回v1和v2的权值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> edges[v1][v2];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加结点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> vertex</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertVertex</span><span class="params">(String vertex)</span> </span>&#123;</span><br><span class="line">        vertexList.add(vertex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v1     表示点的下标即使第几个顶点&quot;A&quot;-&quot;B&quot;&quot;A&quot;-&gt;0&quot;B&quot;-&gt;1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v2     第二个顶点对应的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weight</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insetEdges</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        edges[v1][v2] = weight;</span><br><span class="line">        edges[v2][v1] = weight;</span><br><span class="line">        numOfEdges++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="DFS与BFS-比较"><a href="#DFS与BFS-比较" class="headerlink" title="DFS与BFS 比较"></a>DFS与BFS 比较</h1><p><img data-src="https://xuemingde.com/pages/image/2022/10/17/09380119ieBJ.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>算法和数据结构</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>集合</tag>
         <tag>算法</tag>
       </tags>
   </entry>
@@ -8794,6 +8794,31 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>Mysql复制插入数据</title>
+    <url>/posts/1H0J6ZZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主键设为自增</p>
+<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
+<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
+<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
+<p>将ID中的a替换成b  </p>
+<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
+<p>create_time 为返回值，在原来的时间上加一个月。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>InnoDB与MYISAM的区别</title>
     <url>/posts/3R3HSKP.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误！！" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -8819,31 +8844,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mysql复制插入数据</title>
-    <url>/posts/1H0J6ZZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>主键设为自增</p>
-<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
-<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
-<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
-<p>将ID中的a替换成b  </p>
-<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
-<p>create_time 为返回值，在原来的时间上加一个月。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -9253,6 +9253,49 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>事务持久性与原子性的保障</title>
+    <url>/posts/2DEMJ1C.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>持久性的意义</strong></p>
+<p>所谓持久性就是说在事务成功提交了之后，数据的最终变更操作都会持久化到磁盘上去,不会因为故障导致数据丢失。而在计算机系统里，只有数据保存到了磁盘才能保证数据不会丢失，持久化的问题是所有数据库系统都需要面临的，无法保证持久性的数据库就意味着在数据库、系统、服务器发生故障时无法进行数据恢复。</p>
+<p><strong>持久性的难题</strong></p>
+<p>保证持久性的意义在于，就算遇到数据库、系统、服务器崩溃，我们依然能对已经损坏的数据进行恢复，用习惯了ACID的数据库，我们潜意识里就以为持久化是自然而然的事情，然而并非这样，我们经典的MyIsam 就不支持这个特性，至于为什么，因为保证持久化的操作本身是有难题需要攻克的，这个难题在于把数据写入磁盘的操作过程并不是原子性的。</p>
+<p>因为一次事务会牵扯到多次调用磁盘写数据的操作，而多次磁盘操作相互是独立的，所以一个事务是无法保障多次磁盘读写的原子操作的。这也就意味着，如果事务提交的时候如果发生故障、崩溃，就有可能部分写磁盘操作调用成功，部分写操作调用失败的情况，从而导致产生了脏数据。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1114-VY1lSA.jpg" alt="img"></p>
+<p>除了原子性问题之外，为了提升IO的效率， 数据库是允许异步写入数据到磁盘的，数据写入通常会先写内存、再写磁盘。 为了优化写入数据的性能，通常应用也会在内存中加入各种缓冲区，  所以数据最终什么时候写入到磁盘   这个时间是根据具体的策略来决定，简单来说就是应用程序写入数据成功了，但是并不一定代表数据已经持久化到磁盘了。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-jg7jSN.jpg" alt="img"></p>
+<p><strong>所以综合来看持久化的关键问题在于两方面，：</strong></p>
+<p>一方面，应用程序的一次业务操作会牵扯到多次调用磁盘写，而多次写入磁盘的操作并不具备原子性，所以就也会存在部分数据写入成功，部分数据写入失败的情况。</p>
+<p>另一方面，数据从内存写入到磁盘的整个过程可以异步进行的，所以导致从程序上来看数据写入成功了，但是数据并不一定已经持久化到磁盘了。 </p>
+<h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a><strong>redo log</strong></h3><p>上面我们已经了解到 如果提交事务的过程中发生崩溃、宕机，就有可能会导致数据丢失和损坏，那么如何解决这个问题就在于，在数据丢失和损坏之后我们能通过什么方式对数据进行恢复。</p>
+<p>回想到现实世界里，有时候我们在做某件事情的时候，偶尔会遇到脑子突然断片或失忆的情况（好比应用崩溃、服务器宕机），然后断片了之后，回想不起来断片之前自己在做什么，也不知道事情做到了哪一步，而这个时候我们往往会想着要是在做事情之前把这些记录在笔记本里面就好了，按着记事本里面的记录就知道自己应该做什么事情，还有哪些事情没有做了，然后把没做的事情继续做完就行了。</p>
+<p>在现实世界我们用记事本的方式解决脑子失忆、断片的问题，在计算机里我们用记日志的方式来解决数据崩溃恢复问题，而Mysql里这个日志就是redo log。 redo  log的功能就是事务提交之前首先会把本次事务需要变更的数据，包括修改磁盘那块扇区、修改哪些数据等，通通都记录下来。所以只要保证成功记录了redo log  ，那么就算事务提交之后发生了崩溃、宕机，此时内存的数据即便没有即时写入磁盘，又或则只写入了一部分数据到磁盘，我们只需要通过找到事务对应的redo log，再对数据进行对比恢复即可。</p>
+<p><strong>加入redo log后，事务执行过程如下：</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-40zR4M.jpg" alt="img"></p>
+<h3 id="原子性保障"><a href="#原子性保障" class="headerlink" title="原子性保障"></a><strong>原子性保障</strong></h3><p>所谓原子性就是说，在事务中进行的一系列操作，要么全部执行成功，要么全部执行失败，不存在部分执行部分不执行的情况。</p>
+<p>首先事务的操作<strong>“要么全部成功”</strong>，这个是指事务提交后必须保证数据全部修改成功，在正常情况下事务提交后数据是肯定能修改成功的，所以这里需要考虑的是异常情况下能否保证数据全部修改成功 (比如在数据库崩溃、宕机等故障的情况)，所以保证原子性操作全部成功的前提就得必须保证持久性，这这部分的功能在上面我们已经知道是通过redo  log 来解决了。</p>
+<p>然后原子性中还有一个特性<strong>“要么全部失败”，</strong>，这个是指事务可以在任何阶段进行回滚了，并且在执行回滚操作后，必须保证事务所变更的数据恢复到修改之前的样子。  比如上面的流程中，在修改数据后业务不具备事务提交的条件，那么此时就需要对事务进行回滚，可是需要注意的是，此时已经变更的数据有可能已经写入到磁盘了，所以如果需要进行事务回滚，那么就必然需要对已经修改的数据进行还原，所以此时我们就需要有一个记录的历史数据快照的日志，这个日志的作用在于如果事务需要进行回滚，那么通过该日志考记录的历史快照可以还原已经变更的数据信息，在Mysql 里这个快照日志就是undo log。</p>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a><strong>undo log</strong></h3><p>在Mysql里每次修改数据前，首先会把修改之前的数据作为历史保存一份到undo log里面的，数据里面会记录操作该数据的事务ID，在事务需要进行回滚的时候，通过对比undo log日志把已经修改的数据进行还原。</p>
+<p><strong>加入redo log后，事务执行过程如下：</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-BoH8vP.jpg" alt="img"></p>
+<p><strong>总结：</strong></p>
+<p>事务持久性的难题在于，一个事务会牵扯到多次磁盘IO操作，多次IO之间操作相互独立，所以在发生故障和意外情况会出现部分数据写入成功，部分数据写入失败的情况，为了保障数据最终都能成功写入到磁盘，所以在修改数据之前，通过redo log提前记录一份最终需要完成修改的数据记录，如果在事务提交的的过程中发生故障、宕机的意外导致数据写入不成功，从而在意外发生后通过redo  log来将未成功写入的数据重新写入，最终把需要修改的数据全部写入磁盘，从而保障了事务的持久性。</p>
+<p>原子性的难题在于，当修改数据后如果需要对事务进行回滚，这个过程中内存中修改的数据可能持久化到磁盘，导致脏数据，所以必须通过undo  log提前记录一份历史数据的快照，在事务需要进行回滚的时候，通过历史数据的快照来将已经变更的数据恢复如初，从而保障事务回滚后就像什么都没发生过一样，配合redo log 保障了事务原子性要么全部成功，要么全部失败的原子特性。</p>
+<blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MjA2MjI0NzI=">数据库基础（五）事务持久性与原子性的保障 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>事务</tag>
+        <tag>数据库</tag>
+        <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于代价的慢查询优化建议</title>
     <url>/posts/2HNBAGV.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -9420,49 +9463,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>索引</tag>
         <tag>算法</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务持久性与原子性的保障</title>
-    <url>/posts/2DEMJ1C.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>持久性的意义</strong></p>
-<p>所谓持久性就是说在事务成功提交了之后，数据的最终变更操作都会持久化到磁盘上去,不会因为故障导致数据丢失。而在计算机系统里，只有数据保存到了磁盘才能保证数据不会丢失，持久化的问题是所有数据库系统都需要面临的，无法保证持久性的数据库就意味着在数据库、系统、服务器发生故障时无法进行数据恢复。</p>
-<p><strong>持久性的难题</strong></p>
-<p>保证持久性的意义在于，就算遇到数据库、系统、服务器崩溃，我们依然能对已经损坏的数据进行恢复，用习惯了ACID的数据库，我们潜意识里就以为持久化是自然而然的事情，然而并非这样，我们经典的MyIsam 就不支持这个特性，至于为什么，因为保证持久化的操作本身是有难题需要攻克的，这个难题在于把数据写入磁盘的操作过程并不是原子性的。</p>
-<p>因为一次事务会牵扯到多次调用磁盘写数据的操作，而多次磁盘操作相互是独立的，所以一个事务是无法保障多次磁盘读写的原子操作的。这也就意味着，如果事务提交的时候如果发生故障、崩溃，就有可能部分写磁盘操作调用成功，部分写操作调用失败的情况，从而导致产生了脏数据。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1114-VY1lSA.jpg" alt="img"></p>
-<p>除了原子性问题之外，为了提升IO的效率， 数据库是允许异步写入数据到磁盘的，数据写入通常会先写内存、再写磁盘。 为了优化写入数据的性能，通常应用也会在内存中加入各种缓冲区，  所以数据最终什么时候写入到磁盘   这个时间是根据具体的策略来决定，简单来说就是应用程序写入数据成功了，但是并不一定代表数据已经持久化到磁盘了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-jg7jSN.jpg" alt="img"></p>
-<p><strong>所以综合来看持久化的关键问题在于两方面，：</strong></p>
-<p>一方面，应用程序的一次业务操作会牵扯到多次调用磁盘写，而多次写入磁盘的操作并不具备原子性，所以就也会存在部分数据写入成功，部分数据写入失败的情况。</p>
-<p>另一方面，数据从内存写入到磁盘的整个过程可以异步进行的，所以导致从程序上来看数据写入成功了，但是数据并不一定已经持久化到磁盘了。 </p>
-<h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a><strong>redo log</strong></h3><p>上面我们已经了解到 如果提交事务的过程中发生崩溃、宕机，就有可能会导致数据丢失和损坏，那么如何解决这个问题就在于，在数据丢失和损坏之后我们能通过什么方式对数据进行恢复。</p>
-<p>回想到现实世界里，有时候我们在做某件事情的时候，偶尔会遇到脑子突然断片或失忆的情况（好比应用崩溃、服务器宕机），然后断片了之后，回想不起来断片之前自己在做什么，也不知道事情做到了哪一步，而这个时候我们往往会想着要是在做事情之前把这些记录在笔记本里面就好了，按着记事本里面的记录就知道自己应该做什么事情，还有哪些事情没有做了，然后把没做的事情继续做完就行了。</p>
-<p>在现实世界我们用记事本的方式解决脑子失忆、断片的问题，在计算机里我们用记日志的方式来解决数据崩溃恢复问题，而Mysql里这个日志就是redo log。 redo  log的功能就是事务提交之前首先会把本次事务需要变更的数据，包括修改磁盘那块扇区、修改哪些数据等，通通都记录下来。所以只要保证成功记录了redo log  ，那么就算事务提交之后发生了崩溃、宕机，此时内存的数据即便没有即时写入磁盘，又或则只写入了一部分数据到磁盘，我们只需要通过找到事务对应的redo log，再对数据进行对比恢复即可。</p>
-<p><strong>加入redo log后，事务执行过程如下：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-40zR4M.jpg" alt="img"></p>
-<h3 id="原子性保障"><a href="#原子性保障" class="headerlink" title="原子性保障"></a><strong>原子性保障</strong></h3><p>所谓原子性就是说，在事务中进行的一系列操作，要么全部执行成功，要么全部执行失败，不存在部分执行部分不执行的情况。</p>
-<p>首先事务的操作<strong>“要么全部成功”</strong>，这个是指事务提交后必须保证数据全部修改成功，在正常情况下事务提交后数据是肯定能修改成功的，所以这里需要考虑的是异常情况下能否保证数据全部修改成功 (比如在数据库崩溃、宕机等故障的情况)，所以保证原子性操作全部成功的前提就得必须保证持久性，这这部分的功能在上面我们已经知道是通过redo  log 来解决了。</p>
-<p>然后原子性中还有一个特性<strong>“要么全部失败”，</strong>，这个是指事务可以在任何阶段进行回滚了，并且在执行回滚操作后，必须保证事务所变更的数据恢复到修改之前的样子。  比如上面的流程中，在修改数据后业务不具备事务提交的条件，那么此时就需要对事务进行回滚，可是需要注意的是，此时已经变更的数据有可能已经写入到磁盘了，所以如果需要进行事务回滚，那么就必然需要对已经修改的数据进行还原，所以此时我们就需要有一个记录的历史数据快照的日志，这个日志的作用在于如果事务需要进行回滚，那么通过该日志考记录的历史快照可以还原已经变更的数据信息，在Mysql 里这个快照日志就是undo log。</p>
-<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a><strong>undo log</strong></h3><p>在Mysql里每次修改数据前，首先会把修改之前的数据作为历史保存一份到undo log里面的，数据里面会记录操作该数据的事务ID，在事务需要进行回滚的时候，通过对比undo log日志把已经修改的数据进行还原。</p>
-<p><strong>加入redo log后，事务执行过程如下：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1115-BoH8vP.jpg" alt="img"></p>
-<p><strong>总结：</strong></p>
-<p>事务持久性的难题在于，一个事务会牵扯到多次磁盘IO操作，多次IO之间操作相互独立，所以在发生故障和意外情况会出现部分数据写入成功，部分数据写入失败的情况，为了保障数据最终都能成功写入到磁盘，所以在修改数据之前，通过redo log提前记录一份最终需要完成修改的数据记录，如果在事务提交的的过程中发生故障、宕机的意外导致数据写入不成功，从而在意外发生后通过redo  log来将未成功写入的数据重新写入，最终把需要修改的数据全部写入磁盘，从而保障了事务的持久性。</p>
-<p>原子性的难题在于，当修改数据后如果需要对事务进行回滚，这个过程中内存中修改的数据可能持久化到磁盘，导致脏数据，所以必须通过undo  log提前记录一份历史数据的快照，在事务需要进行回滚的时候，通过历史数据的快照来将已经变更的数据恢复如初，从而保障事务回滚后就像什么都没发生过一样，配合redo log 保障了事务原子性要么全部成功，要么全部失败的原子特性。</p>
-<blockquote>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MjA2MjI0NzI=">数据库基础（五）事务持久性与原子性的保障 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-        <tag>事务</tag>
-        <tag>数据库</tag>
-        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -10265,6 +10265,17 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>MybatisPlus自动生成主键策略</title>
+    <url>/posts/9P9EMN.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1617185015632-98ebebc3-0fc9-4502-aa98-2ba9ee508b26.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1617185033768-20f85bfc-7299-4260-bbb4-b9978e341d78.png" alt="image.png"></p>
+]]></content>
+      <categories>
+        <category>框架</category>
+        <category>MyBatis</category>
+      </categories>
+  </entry>
+  <entry>
     <title>SQL优化和SQl注入问题</title>
     <url>/posts/1NTK6KJ.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vbWVhZGVyL2hleG8tYmxvZy9ibG9iL2Jsb2cvc291cmNlL19wb3N0cy8lRTYlOTUlQjAlRTYlOEQlQUUlRTUlQkElOTMvU1FMLzIwMjEwMzI0LVNRTCVFNCVCQyU5OCVFNSU4QyU5NiVFNSU5MiU4Q1NRbCVFNiVCMyVBOCVFNSU4NSVBNSVFOSU5NyVBRSVFOSVBMiU5OC5tZA==">Gitee原文<i class="fa fa-external-link-alt"></i></span></p>
@@ -10294,30 +10305,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
 <p><img data-src="https://xuemingde.com/pages/image/others/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/image-20210324175324481.png" alt="image-20210324175324481"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OR与AND一起的用法</title>
-    <url>/posts/1BED9D0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
-<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
-<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
-<p>查询  </p>
-<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
-SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
-</code></pre>
-<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
-<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -10821,6 +10808,30 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </tags>
   </entry>
   <entry>
+    <title>OR与AND一起的用法</title>
+    <url>/posts/1BED9D0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
+<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
+<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
+<p>查询  </p>
+<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
+SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
+</code></pre>
+<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
+<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文详解SQL关联子查询</title>
     <url>/posts/33P1FY8.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -11014,17 +11025,6 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
         <tag>Mysql</tag>
         <tag>分布式</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>MybatisPlus自动生成主键策略</title>
-    <url>/posts/9P9EMN.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1617185015632-98ebebc3-0fc9-4502-aa98-2ba9ee508b26.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1617185033768-20f85bfc-7299-4260-bbb4-b9978e341d78.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>框架</category>
-        <category>MyBatis</category>
-      </categories>
   </entry>
   <entry>
     <title>Spring系列(上)</title>
