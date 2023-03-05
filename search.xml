@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo 打包报错</title>
-    <url>/posts/32Z7N4H.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-</div><br><span id="more"></span></p>
-<p>Hexo g 打包报错：</p>
-<p><code>can not read a block mapping entry; a multiline key may not be an implicit key at line 5, column 1</code></p>
-<p>是在md文件中使用了 <code>---</code> 作为分割线 的缘故。删除即可。</p>
-<p>如果使用分割线，可以使用  <code>***</code></p>
-<hr>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Seata-server启动闪退问题</title>
     <url>/posts/39AKQ95.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>第一步：查看错误日志</p>
@@ -60,6 +45,21 @@
         <tag>Java</tag>
         <tag>JVM</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hexo 打包报错</title>
+    <url>/posts/32Z7N4H.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+</div><br><span id="more"></span></p>
+<p>Hexo g 打包报错：</p>
+<p><code>can not read a block mapping entry; a multiline key may not be an implicit key at line 5, column 1</code></p>
+<p>是在md文件中使用了 <code>---</code> 作为分割线 的缘故。删除即可。</p>
+<p>如果使用分割线，可以使用  <code>***</code></p>
+<hr>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
   </entry>
   <entry>
     <title>springBoot项目打成的jar包无法获取resources下文件</title>
@@ -2031,6 +2031,103 @@
       </tags>
   </entry>
   <entry>
+    <title>撸一下Nacos</title>
+    <url>/posts/MMNJGZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是 Nacos</p>
+<p>Nacos 是阿里巴巴开源的一款优秀的中间件，在分布式微服务场景下用的非常多。</p>
+<p><strong>Nacos</strong> 英文全称 <strong>Naming and Configuration Service</strong>，其中 Na 是 naming 的缩写，注册中心；co为 configuration 的缩写， 配置中心；</p>
+<p>不管是配置中心还是注册中心本质都是围着<strong>服务（微服务）</strong>转的，用官方的话来说：<strong>服务在 Nacos 里是一等公民</strong>。</p>
+<p>Nacos 分为服务端和客户端，这一点不要含糊。</p>
+<p><strong>Nacos Server</strong></p>
+<p>Nacos Server 使用 Java 语言编写，提供了服务注册发现和服务配置功能；对外提供了 SDK 接入以及HTTP RESTful 开放接口，SDK 接入和 RESTful 接口的功能是一致的。</p>
+<p><strong>Nacos Client</strong></p>
+<p>Nacos提供了官方的 SDK，遗憾的是只有 Java 版本，官方的 SDK 可以很方便与一些主流的框架进行集成，比如：Spring Cloud、Dubbo 等。</p>
+<p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
+<p><strong>数据模型</strong></p>
+<p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
+<p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
+<h1 id="Nacos-注册中心原理"><a href="#Nacos-注册中心原理" class="headerlink" title="Nacos 注册中心原理"></a>Nacos 注册中心原理</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
+<p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
+<p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
+<p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
+<h1 id="小试牛刀：Nacos-服务注册发现功能体验"><a href="#小试牛刀：Nacos-服务注册发现功能体验" class="headerlink" title="小试牛刀：Nacos 服务注册发现功能体验"></a>小试牛刀：Nacos 服务注册发现功能体验</h1><p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
+<h2 id="搭建运行-Nacos-Server"><a href="#搭建运行-Nacos-Server" class="headerlink" title="搭建运行 Nacos Server"></a>搭建运行 Nacos Server</h2><p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
+<p>进入 Github Nacos 下载主页：</p>
+<blockquote>
+<p>主页链接：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly8qZ2l0aHViKi5jb20vYWxpYmFiYS9uYWNvcy9yZWxlYXNlcw==">https://*github*.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
+<p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></table></figure>
+<p>如果是 windows 系统，执行以下命令：</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">startup.<span class="built_in">cmd</span> -m standalone</span><br></pre></td></tr></table></figure>
+<p><strong>（2）使用 Docker 启动 Nacos Server</strong></p>
+<p>如果你电脑上已经装了 Docker，建议你直接使用 Docker 来运行。</p>
+<p>先拉取最新镜像：</p>
+<figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">docker pull nacos/nacos-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+<p>拉取成功后启动实例：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name nacos-demo -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
+<p>这里有坑需要注意下，8848 是 Nacos Server 的主端口需要暴露出来，如果你安装的是 Nacos 2.0 版本还需要将 9848 端口暴露出来，这里我含泪调试了一下午才知道的，哭晕……</p>
+<p>为什么需要 9848 端口呢？因为 Nacos 2.0 版本之后默认将这个端口作为 grpc 的通信端口，官方提供的 Client SDK使用 grpc 来与 Nacos Server 进行通信，包括服务实例注册、心跳检查等功能。</p>
+<blockquote>
+<p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
+</blockquote>
+<h2 id="熟悉-Nacos-Server-控制台界面"><a href="#熟悉-Nacos-Server-控制台界面" class="headerlink" title="熟悉 Nacos Server 控制台界面"></a>熟悉 Nacos Server 控制台界面</h2><p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
+<blockquote>
+<p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
+<p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
+<p><strong>（1）服务管理</strong></p>
+<p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
+<p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
+<p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
+<p><strong>（2）权限控制</strong></p>
+<p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
+<p><strong>（3）命名空间</strong></p>
+<p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
+<p><strong>（4）集群管理</strong></p>
+<p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
+<h2 id="学习使用-Nacos-Client-SDK"><a href="#学习使用-Nacos-Client-SDK" class="headerlink" title="学习使用 Nacos Client SDK"></a>学习使用 Nacos Client SDK</h2><p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
+<p>我们拿 Java 版本 SDK 为例进行说明。</p>
+<p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
+<p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用-Nacos-Client-注册实例"><a href="#使用-Nacos-Client-注册实例" class="headerlink" title="使用 Nacos Client 注册实例"></a>使用 Nacos Client 注册实例</h2><p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">&quot;server status: &quot;</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="string">&quot;11.11.11.11&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
+<p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
+<h2 id="使用-Nacos-Client-消费实例"><a href="#使用-Nacos-Client-消费实例" class="headerlink" title="使用 Nacos Client 消费实例"></a>使用 Nacos Client 消费实例</h2><p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;server status: %s&quot;</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">&quot;~~event start&quot;</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">&quot;~~event end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
+<p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
+<p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
+<blockquote>
+<p>原文连接：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmNSZkNzWGU1VW9LNVpvaVg5eGxpQQ==">折腾一个周末，撸Nacos可真不容易<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅析 RPC 与基本实现</title>
     <url>/posts/1E7Q3HG.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本文主要论述的是“RPC 实现原理”，那么首先明确一个问题什么是 RPC 呢？RPC 是 Remote Procedure Call 的缩写，即，远程过程调用。RPC  是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而开发人员无需额外地为这个交互编程。<br>值得注意是，两个或多个应用程序都分布在不同的服务器上，它们之间的调用都像是本地方法调用一样。接下来我们便来分析一下一次 RPC 调用发生了些什么？</p>
@@ -2141,103 +2238,6 @@
         <tag>Java</tag>
         <tag>Spring</tag>
         <tag>线程池</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>撸一下Nacos</title>
-    <url>/posts/MMNJGZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是 Nacos</p>
-<p>Nacos 是阿里巴巴开源的一款优秀的中间件，在分布式微服务场景下用的非常多。</p>
-<p><strong>Nacos</strong> 英文全称 <strong>Naming and Configuration Service</strong>，其中 Na 是 naming 的缩写，注册中心；co为 configuration 的缩写， 配置中心；</p>
-<p>不管是配置中心还是注册中心本质都是围着<strong>服务（微服务）</strong>转的，用官方的话来说：<strong>服务在 Nacos 里是一等公民</strong>。</p>
-<p>Nacos 分为服务端和客户端，这一点不要含糊。</p>
-<p><strong>Nacos Server</strong></p>
-<p>Nacos Server 使用 Java 语言编写，提供了服务注册发现和服务配置功能；对外提供了 SDK 接入以及HTTP RESTful 开放接口，SDK 接入和 RESTful 接口的功能是一致的。</p>
-<p><strong>Nacos Client</strong></p>
-<p>Nacos提供了官方的 SDK，遗憾的是只有 Java 版本，官方的 SDK 可以很方便与一些主流的框架进行集成，比如：Spring Cloud、Dubbo 等。</p>
-<p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
-<p><strong>数据模型</strong></p>
-<p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
-<p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
-<h1 id="Nacos-注册中心原理"><a href="#Nacos-注册中心原理" class="headerlink" title="Nacos 注册中心原理"></a>Nacos 注册中心原理</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
-<p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
-<p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
-<p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
-<h1 id="小试牛刀：Nacos-服务注册发现功能体验"><a href="#小试牛刀：Nacos-服务注册发现功能体验" class="headerlink" title="小试牛刀：Nacos 服务注册发现功能体验"></a>小试牛刀：Nacos 服务注册发现功能体验</h1><p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
-<h2 id="搭建运行-Nacos-Server"><a href="#搭建运行-Nacos-Server" class="headerlink" title="搭建运行 Nacos Server"></a>搭建运行 Nacos Server</h2><p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
-<p>进入 Github Nacos 下载主页：</p>
-<blockquote>
-<p>主页链接：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly8qZ2l0aHViKi5jb20vYWxpYmFiYS9uYWNvcy9yZWxlYXNlcw==">https://*github*.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
-<p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></table></figure>
-<p>如果是 windows 系统，执行以下命令：</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">startup.<span class="built_in">cmd</span> -m standalone</span><br></pre></td></tr></table></figure>
-<p><strong>（2）使用 Docker 启动 Nacos Server</strong></p>
-<p>如果你电脑上已经装了 Docker，建议你直接使用 Docker 来运行。</p>
-<p>先拉取最新镜像：</p>
-<figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">docker pull nacos/nacos-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
-<p>拉取成功后启动实例：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name nacos-demo -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
-<p>这里有坑需要注意下，8848 是 Nacos Server 的主端口需要暴露出来，如果你安装的是 Nacos 2.0 版本还需要将 9848 端口暴露出来，这里我含泪调试了一下午才知道的，哭晕……</p>
-<p>为什么需要 9848 端口呢？因为 Nacos 2.0 版本之后默认将这个端口作为 grpc 的通信端口，官方提供的 Client SDK使用 grpc 来与 Nacos Server 进行通信，包括服务实例注册、心跳检查等功能。</p>
-<blockquote>
-<p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
-</blockquote>
-<h2 id="熟悉-Nacos-Server-控制台界面"><a href="#熟悉-Nacos-Server-控制台界面" class="headerlink" title="熟悉 Nacos Server 控制台界面"></a>熟悉 Nacos Server 控制台界面</h2><p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
-<blockquote>
-<p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
-<p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
-<p><strong>（1）服务管理</strong></p>
-<p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
-<p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
-<p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
-<p><strong>（2）权限控制</strong></p>
-<p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
-<p><strong>（3）命名空间</strong></p>
-<p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
-<p><strong>（4）集群管理</strong></p>
-<p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
-<h2 id="学习使用-Nacos-Client-SDK"><a href="#学习使用-Nacos-Client-SDK" class="headerlink" title="学习使用 Nacos Client SDK"></a>学习使用 Nacos Client SDK</h2><p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
-<p>我们拿 Java 版本 SDK 为例进行说明。</p>
-<p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
-<p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用-Nacos-Client-注册实例"><a href="#使用-Nacos-Client-注册实例" class="headerlink" title="使用 Nacos Client 注册实例"></a>使用 Nacos Client 注册实例</h2><p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">&quot;server status: &quot;</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="string">&quot;11.11.11.11&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
-<p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
-<h2 id="使用-Nacos-Client-消费实例"><a href="#使用-Nacos-Client-消费实例" class="headerlink" title="使用 Nacos Client 消费实例"></a>使用 Nacos Client 消费实例</h2><p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;server status: %s&quot;</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">&quot;~~event start&quot;</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">&quot;~~event end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
-<p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
-<p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
-<blockquote>
-<p>原文连接：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmNSZkNzWGU1VW9LNVpvaVg5eGxpQQ==">折腾一个周末，撸Nacos可真不容易<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -5135,25 +5135,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>算法基础15：多路查找树</title>
-    <url>/posts/WCK7NZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111151zHnpSV.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/1115253jWYVn.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111910VciP2D.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112653rxvhay.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112922xl0e0w.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113905mnSEva.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113959xcVz0p.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114033UzZJ5p.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114306sKgvhF.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/142942ScKhMF.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/14300251T3bZ.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>算法和数据结构</category>
-      </categories>
-  </entry>
-  <entry>
     <title>算法基础14：树结构的实际应用</title>
     <url>/posts/QAQAP8.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p>堆排序基本介绍</p>
@@ -5254,6 +5235,25 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>算法</tag>
         <tag>MQ</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>算法基础15：多路查找树</title>
+    <url>/posts/WCK7NZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111151zHnpSV.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/1115253jWYVn.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/111910VciP2D.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112653rxvhay.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/112922xl0e0w.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113905mnSEva.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/113959xcVz0p.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114033UzZJ5p.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/114306sKgvhF.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/142942ScKhMF.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/10/14/14300251T3bZ.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
   </entry>
   <entry>
     <title>算法基础16：图</title>
@@ -5859,6 +5859,22 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>装饰器模式</title>
+    <url>/posts/2DXJCR6.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>设计模式：装饰器模式</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210304105514.png" alt="image-20210304105512902"></p>
+<p>代码示例：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210304112222.png" alt="20210304111428"></p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>门面模式</title>
     <url>/posts/3WTTEPN.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -5878,13 +5894,14 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>装饰器模式</title>
-    <url>/posts/2DXJCR6.html</url>
+    <title>命令模式</title>
+    <url>/posts/1W16KG7.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>设计模式：装饰器模式</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210304105514.png" alt="image-20210304105512902"></p>
-<p>代码示例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210304112222.png" alt="20210304111428"></p>
+<p>设计模式：命令模式</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210304140012.png" alt="image-20210304140011639"></p>
+<blockquote>
+<p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9yZWZhY3RvcmluZ2d1cnUuY24vZGVzaWduLXBhdHRlcm5zL2NvbW1hbmQ=">https://refactoringguru.cn/design-patterns/command<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
 ]]></content>
       <categories>
         <category>设计模式</category>
@@ -5906,23 +5923,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
 <p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9yZWZhY3RvcmluZ2d1cnUuY24vZGVzaWduLXBhdHRlcm5zL2NoYWluLW9mLXJlc3BvbnNpYmlsaXR5">https://refactoringguru.cn/design-patterns/chain-of-responsibility<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <h4 id=""><a href="#" class="headerlink" title=" "></a> </h4>]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>命令模式</title>
-    <url>/posts/1W16KG7.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>设计模式：命令模式</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210304140012.png" alt="image-20210304140011639"></p>
-<blockquote>
-<p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9yZWZhY3RvcmluZ2d1cnUuY24vZGVzaWduLXBhdHRlcm5zL2NvbW1hbmQ=">https://refactoringguru.cn/design-patterns/command<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
       <categories>
         <category>设计模式</category>
       </categories>
@@ -7612,46 +7612,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot-Rabbitmq实现延迟队列</title>
-    <url>/posts/R5RB64.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="MAC-系统"><a href="#MAC-系统" class="headerlink" title="MAC 系统"></a>MAC 系统</h2><p>安装命令：brew install rabbitmq<br>​</p>
-<p>安装的路径是 /usr/local/Cellar/rabbitmq/3.8.3，具体情况要视版本而定，我安装的版本是 3.8.3。<br>​</p>
-<p>接下来就可以启动了，进入安装目录，执行命令：./sbin/rabbitmq-server </p>
-<p>接下来可以在浏览器打开 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDoxNTY3Mu+8jOWPr+S7peeci+WIsA==">http://localhost:15672，可以看到<i class="fa fa-external-link-alt"></i></span> RabbitMQ 的管理页面。<br>​</p>
-<p>登录账号密码：guest/guest</p>
-<h2 id="导入-Maven-依赖"><a href="#导入-Maven-依赖" class="headerlink" title="导入 Maven 依赖"></a>导入 Maven 依赖</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">&lt;/dependency</span><br></pre></td></tr></table></figure>
-<h2 id="TTL-方式"><a href="#TTL-方式" class="headerlink" title="TTL 方式"></a>TTL 方式</h2><h3 id="application-properties-配置信息"><a href="#application-properties-配置信息" class="headerlink" title="application.properties 配置信息"></a>application.properties 配置信息</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 应用名称</span></span><br><span class="line"><span class="string">spring.application.name=rabbitMq</span></span><br><span class="line"><span class="comment"># 应用服务 WEB 访问端口</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">spring.rabbitmq.host=127.0.0.1</span></span><br><span class="line"><span class="string">spring.rabbitmq.port=5672</span></span><br><span class="line"><span class="string">spring.rabbitmq.username=guest</span></span><br><span class="line"><span class="string">spring.rabbitmq.password=guest</span></span><br><span class="line"><span class="comment"># 开启消息确认机制 confirm 异步</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-confirm-type=correlated</span></span><br><span class="line"><span class="comment"># 之前的旧版本 开启消息确认机制的方式</span></span><br><span class="line"><span class="comment"># spring.rabbitmq.publisher-confirms=true</span></span><br><span class="line"><span class="comment"># 开启return机制</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-returns=true</span></span><br><span class="line"><span class="comment"># 消息开启手动确认</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.direct.acknowledge-mode=manual</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.acknowledge-mode=manual</span></span><br><span class="line"><span class="comment"># 消费者每次从队列获取的消息数量。此属性当不设置时为：轮询分发，设置为1为：公平分发</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.prefetch=1</span></span><br><span class="line"><span class="comment"># 是否支持重试</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.retry.enabled=true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#消费者最小数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.concurrency=1</span></span><br><span class="line"><span class="comment">#消费之最大数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.max-concurrency=10</span></span><br></pre></td></tr></table></figure>
-<h3 id="RabbitmqConfig-配置信息"><a href="#RabbitmqConfig-配置信息" class="headerlink" title="RabbitmqConfig 配置信息"></a>RabbitmqConfig 配置信息</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bean.springcloudproduct.config;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span> //TODO</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span> huangwb</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitmqConfig</span> </span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderDelayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.delay_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderDelayQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-exchange&quot;</span>, <span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-routing-key&quot;</span>, <span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.delay_queue&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, map);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 给死信队列绑定交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderDelayBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderDelayQueue()).to(userOrderDelayExchange()).with(<span class="string">&quot;user.order.delay_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderReceiveExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderReceiveQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.receive_queue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机绑定消费队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderReceiveBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderReceiveQueue()).to(userOrderReceiveExchange()).with(<span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderServiceImpl</span> <span class="keyword">implements</span> <span class="title">DeadLetterSenderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            <span class="comment">//在这里也可以设置超时时间,也可以设置x-message-ttl</span></span><br><span class="line">            message.getMessageProperties().setExpiration(<span class="string">&quot;5000&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line">        rabbitTemplate.setReturnCallback(returnCallback);</span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;user.order.delay_exchange&quot;</span>, <span class="string">&quot;user.order.delay_key&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 confirm 机制</span></span><br><span class="line"><span class="comment">     * 交换机错误出发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ConfirmCallback confirmCallback = <span class="keyword">new</span> RabbitTemplate.ConfirmCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> correlationData 消息相关的数据，一般用于获取 唯一标识 id</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> b true 消息确认成功，false 失败</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 确认失败的原因</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">confirm</span><span class="params">(CorrelationData correlationData, <span class="keyword">boolean</span> b, String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (b) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认成功...&quot;</span> + correlationData.getId() + <span class="keyword">new</span> Date());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认失败...&quot;</span> + correlationData.getId() + <span class="string">&quot; cause: &quot;</span> + s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 return 消息机制</span></span><br><span class="line"><span class="comment">     * 找不到路由才会触发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ReturnCallback returnCallback = <span class="keyword">new</span> RabbitTemplate.ReturnCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  return 的回调方法（找不到路由才会触发）</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> message 消息的相关信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> i 错误状态码</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 错误状态码对应的文本信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s1 交换机的名字</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s2 路由的key</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">returnedMessage</span><span class="params">(Message message, <span class="keyword">int</span> i, String s, String s1, String s2)</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;消息：&quot;</span> + message);</span><br><span class="line">            System.out.println(<span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">            System.out.println(<span class="string">&quot;回应码：&quot;</span> + i);</span><br><span class="line">            System.out.println(<span class="string">&quot;回应信息：&quot;</span> + s);</span><br><span class="line">            System.out.println(<span class="string">&quot;交换机：&quot;</span> + s1);</span><br><span class="line">            System.out.println(<span class="string">&quot;路由键：&quot;</span> + s2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Slf4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 延迟队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Author</span> jxb</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Date</span> 2019-04-04 16:34:28</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">            <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">            <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">            <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">            <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">            channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">                <span class="comment">// 拒绝消息</span></span><br><span class="line">                <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">                <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="DLX"><a href="#DLX" class="headerlink" title="DLX"></a>DLX</h2><blockquote>
-<p>首先我们需要下载并安装 RabbitMQ 的延迟插件。</p>
-</blockquote>
-<p>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JhYmJpdG1xL3JhYmJpdG1xLWRlbGF5ZWQtbWVzc2FnZS1leGNoYW5nZS9yZWxlYXNlcw==">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases<i class="fa fa-external-link-alt"></i></span><br>​</p>
-<p>将插件文件复制到 RabbitMQ 安装目录的 plugins 目录下；<br>​</p>
-<p>进入 RabbitMQ 安装目录的 sbin 目录下，使用如下命令启用延迟插件</p>
-<blockquote>
-<p>rabbitmq-plugins enable rabbitmq_delayed_message_exchange</p>
-</blockquote>
-<p>代码实现：<br>​</p>
-<h3 id="配置文件："><a href="#配置文件：" class="headerlink" title="配置文件："></a>配置文件：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列交换机 DLX方式</span></span><br><span class="line"><span class="comment"> * 注意这里的交换机类型：CustomExchange</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CustomExchange <span class="title">delayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Object&gt; args = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">    args.put(<span class="string">&quot;x-delayed-type&quot;</span>, <span class="string">&quot;direct&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CustomExchange(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;x-delayed-message&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列</span></span><br><span class="line"><span class="comment"> *  DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Queue <span class="title">immediateQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 第一个参数是创建的queue的名字，第二个参数是是否支持持久化</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;queue.xdelay.immediate&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给延时队列绑定交换机</span></span><br><span class="line"><span class="comment"> *   DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Binding <span class="title">bindingNotify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BindingBuilder.bind(immediateQueue()).to(delayExchange()).with(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>).noargs();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="生产者-1"><a href="#生产者-1" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterDLXSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            message.getMessageProperties().setDelay(<span class="number">5000</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line"><span class="comment">//        rabbitTemplate.setReturnCallback(returnCallback);</span></span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;exchange.xdelay.delayed&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="消费者-1"><a href="#消费者-1" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * DLX方式</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> channel</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLXMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">          <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">          <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">          <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">          <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">          channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">              <span class="comment">// 拒绝消息</span></span><br><span class="line">              <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">              <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3ODkyOTU3L2FydGljbGUvZGV0YWlscy84OTI5NjE1Nw==">https://blog.csdn.net/qq_37892957/article/details/89296157<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka面试连环炮-上</title>
     <url>/posts/3DS4M6Q.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Kafka-是什么-适应场景有哪些"><a href="#Kafka-是什么-适应场景有哪些" class="headerlink" title="Kafka 是什么, 适应场景有哪些"></a>Kafka 是什么, 适应场景有哪些</h2><p>Kafka 是一个分布式的流式处理平台，用于实时构建流处理应用。主要应用在大数据实时处理领域。Kafka 凭借「<strong>高性能</strong>」、「<strong>高吞吐</strong>」、「<strong>高可用</strong>」、「<strong>低延迟</strong>」、「<strong>可伸缩</strong>」几大特性，成为「<strong>消息队列」</strong>的首选。</p>
@@ -7918,6 +7878,46 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Redis</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot-Rabbitmq实现延迟队列</title>
+    <url>/posts/R5RB64.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="MAC-系统"><a href="#MAC-系统" class="headerlink" title="MAC 系统"></a>MAC 系统</h2><p>安装命令：brew install rabbitmq<br>​</p>
+<p>安装的路径是 /usr/local/Cellar/rabbitmq/3.8.3，具体情况要视版本而定，我安装的版本是 3.8.3。<br>​</p>
+<p>接下来就可以启动了，进入安装目录，执行命令：./sbin/rabbitmq-server </p>
+<p>接下来可以在浏览器打开 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDoxNTY3Mu+8jOWPr+S7peeci+WIsA==">http://localhost:15672，可以看到<i class="fa fa-external-link-alt"></i></span> RabbitMQ 的管理页面。<br>​</p>
+<p>登录账号密码：guest/guest</p>
+<h2 id="导入-Maven-依赖"><a href="#导入-Maven-依赖" class="headerlink" title="导入 Maven 依赖"></a>导入 Maven 依赖</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">&lt;/dependency</span><br></pre></td></tr></table></figure>
+<h2 id="TTL-方式"><a href="#TTL-方式" class="headerlink" title="TTL 方式"></a>TTL 方式</h2><h3 id="application-properties-配置信息"><a href="#application-properties-配置信息" class="headerlink" title="application.properties 配置信息"></a>application.properties 配置信息</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 应用名称</span></span><br><span class="line"><span class="string">spring.application.name=rabbitMq</span></span><br><span class="line"><span class="comment"># 应用服务 WEB 访问端口</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">spring.rabbitmq.host=127.0.0.1</span></span><br><span class="line"><span class="string">spring.rabbitmq.port=5672</span></span><br><span class="line"><span class="string">spring.rabbitmq.username=guest</span></span><br><span class="line"><span class="string">spring.rabbitmq.password=guest</span></span><br><span class="line"><span class="comment"># 开启消息确认机制 confirm 异步</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-confirm-type=correlated</span></span><br><span class="line"><span class="comment"># 之前的旧版本 开启消息确认机制的方式</span></span><br><span class="line"><span class="comment"># spring.rabbitmq.publisher-confirms=true</span></span><br><span class="line"><span class="comment"># 开启return机制</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-returns=true</span></span><br><span class="line"><span class="comment"># 消息开启手动确认</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.direct.acknowledge-mode=manual</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.acknowledge-mode=manual</span></span><br><span class="line"><span class="comment"># 消费者每次从队列获取的消息数量。此属性当不设置时为：轮询分发，设置为1为：公平分发</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.prefetch=1</span></span><br><span class="line"><span class="comment"># 是否支持重试</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.retry.enabled=true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#消费者最小数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.concurrency=1</span></span><br><span class="line"><span class="comment">#消费之最大数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.max-concurrency=10</span></span><br></pre></td></tr></table></figure>
+<h3 id="RabbitmqConfig-配置信息"><a href="#RabbitmqConfig-配置信息" class="headerlink" title="RabbitmqConfig 配置信息"></a>RabbitmqConfig 配置信息</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bean.springcloudproduct.config;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span> //TODO</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span> huangwb</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitmqConfig</span> </span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderDelayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.delay_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderDelayQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-exchange&quot;</span>, <span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-routing-key&quot;</span>, <span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.delay_queue&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, map);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 给死信队列绑定交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderDelayBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderDelayQueue()).to(userOrderDelayExchange()).with(<span class="string">&quot;user.order.delay_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderReceiveExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderReceiveQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.receive_queue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机绑定消费队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderReceiveBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderReceiveQueue()).to(userOrderReceiveExchange()).with(<span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderServiceImpl</span> <span class="keyword">implements</span> <span class="title">DeadLetterSenderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            <span class="comment">//在这里也可以设置超时时间,也可以设置x-message-ttl</span></span><br><span class="line">            message.getMessageProperties().setExpiration(<span class="string">&quot;5000&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line">        rabbitTemplate.setReturnCallback(returnCallback);</span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;user.order.delay_exchange&quot;</span>, <span class="string">&quot;user.order.delay_key&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 confirm 机制</span></span><br><span class="line"><span class="comment">     * 交换机错误出发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ConfirmCallback confirmCallback = <span class="keyword">new</span> RabbitTemplate.ConfirmCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> correlationData 消息相关的数据，一般用于获取 唯一标识 id</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> b true 消息确认成功，false 失败</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 确认失败的原因</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">confirm</span><span class="params">(CorrelationData correlationData, <span class="keyword">boolean</span> b, String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (b) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认成功...&quot;</span> + correlationData.getId() + <span class="keyword">new</span> Date());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认失败...&quot;</span> + correlationData.getId() + <span class="string">&quot; cause: &quot;</span> + s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 return 消息机制</span></span><br><span class="line"><span class="comment">     * 找不到路由才会触发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ReturnCallback returnCallback = <span class="keyword">new</span> RabbitTemplate.ReturnCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  return 的回调方法（找不到路由才会触发）</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> message 消息的相关信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> i 错误状态码</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 错误状态码对应的文本信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s1 交换机的名字</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s2 路由的key</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">returnedMessage</span><span class="params">(Message message, <span class="keyword">int</span> i, String s, String s1, String s2)</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;消息：&quot;</span> + message);</span><br><span class="line">            System.out.println(<span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">            System.out.println(<span class="string">&quot;回应码：&quot;</span> + i);</span><br><span class="line">            System.out.println(<span class="string">&quot;回应信息：&quot;</span> + s);</span><br><span class="line">            System.out.println(<span class="string">&quot;交换机：&quot;</span> + s1);</span><br><span class="line">            System.out.println(<span class="string">&quot;路由键：&quot;</span> + s2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Slf4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 延迟队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Author</span> jxb</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Date</span> 2019-04-04 16:34:28</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">            <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">            <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">            <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">            <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">            channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">                <span class="comment">// 拒绝消息</span></span><br><span class="line">                <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">                <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="DLX"><a href="#DLX" class="headerlink" title="DLX"></a>DLX</h2><blockquote>
+<p>首先我们需要下载并安装 RabbitMQ 的延迟插件。</p>
+</blockquote>
+<p>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JhYmJpdG1xL3JhYmJpdG1xLWRlbGF5ZWQtbWVzc2FnZS1leGNoYW5nZS9yZWxlYXNlcw==">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases<i class="fa fa-external-link-alt"></i></span><br>​</p>
+<p>将插件文件复制到 RabbitMQ 安装目录的 plugins 目录下；<br>​</p>
+<p>进入 RabbitMQ 安装目录的 sbin 目录下，使用如下命令启用延迟插件</p>
+<blockquote>
+<p>rabbitmq-plugins enable rabbitmq_delayed_message_exchange</p>
+</blockquote>
+<p>代码实现：<br>​</p>
+<h3 id="配置文件："><a href="#配置文件：" class="headerlink" title="配置文件："></a>配置文件：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列交换机 DLX方式</span></span><br><span class="line"><span class="comment"> * 注意这里的交换机类型：CustomExchange</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CustomExchange <span class="title">delayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Object&gt; args = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">    args.put(<span class="string">&quot;x-delayed-type&quot;</span>, <span class="string">&quot;direct&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CustomExchange(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;x-delayed-message&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列</span></span><br><span class="line"><span class="comment"> *  DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Queue <span class="title">immediateQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 第一个参数是创建的queue的名字，第二个参数是是否支持持久化</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;queue.xdelay.immediate&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给延时队列绑定交换机</span></span><br><span class="line"><span class="comment"> *   DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Binding <span class="title">bindingNotify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BindingBuilder.bind(immediateQueue()).to(delayExchange()).with(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>).noargs();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生产者-1"><a href="#生产者-1" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterDLXSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            message.getMessageProperties().setDelay(<span class="number">5000</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line"><span class="comment">//        rabbitTemplate.setReturnCallback(returnCallback);</span></span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;exchange.xdelay.delayed&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="消费者-1"><a href="#消费者-1" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * DLX方式</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> channel</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLXMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">          <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">          <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">          <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">          <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">          channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">              <span class="comment">// 拒绝消息</span></span><br><span class="line">              <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">              <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3ODkyOTU3L2FydGljbGUvZGV0YWlscy84OTI5NjE1Nw==">https://blog.csdn.net/qq_37892957/article/details/89296157<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -8385,6 +8385,104 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>Docker下RabbitMQ延时队列实战两部曲之一：极速体验</title>
+    <url>/posts/3V74DRG.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>原文： <span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS8xMTQwYjQ4Y2I5YTFlN2RiZmNmODU1Njk4">Docker下RabbitMQ延时队列实战两部曲之一：极速体验<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg" alt=""></p>
+<h3 id="关于延时队列"><a href="#关于延时队列" class="headerlink" title="关于延时队列"></a>关于延时队列</h3><p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1106Vy0IMl.png" alt=""></p>
+<h3 id="延时的时长"><a href="#延时的时长" class="headerlink" title="延时的时长"></a>延时的时长</h3><ul>
+<li>从上面的描述可以看出，延时时长就是消息的过期时间 TTL（Time To Live），这个参数可以通过以下两种方式设置：</li>
+</ul>
+<ol>
+<li><p>生产消息时，设置该消息的 TTL；</p>
+</li>
+<li><p>设置整个队列的 TTL，队列中每个消息的 TTL 都是一样的；</p>
+</li>
+</ol>
+<ul>
+<li>接下来的实战，我们将上述两种方式都体验一次；</li>
+</ul>
+<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ol>
+<li>操作系统：Ubuntu 16.04.3 LTS</li>
+<li>Docker：1.12.6</li>
+<li>RabbitMQ：3.7.5-rc.1</li>
+</ol>
+<h3 id="极速体验"><a href="#极速体验" class="headerlink" title="极速体验"></a>极速体验</h3><ul>
+<li><p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1108hShQ3h.png" alt=""></p>
+</li>
+<li><p>简单说一下上图中应用的身份：</p>
+<ol>
+<li>delayrabbitmqconsumer：SpringBoot 框架的应用，连接 RabbitMQ 的两个队列，消费消息；</li>
+<li>messagettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中带有过期时间（TTL）；</li>
+<li>queuettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中不带过期时间（TTL），但是对应的消息队列已经设置了过期时间；</li>
+</ol>
+</li>
+<li><p>开始实战：</p>
+</li>
+<li><p>确保当前电脑上 Docker 可用，创建 docker-compose.yml 文件，内容如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rabbit1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15672:15672&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_PASS=888888</span></span><br><span class="line">  <span class="attr">rabbit2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">RAM_NODE=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">HA_ENABLE=true</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15673:15672&quot;</span></span><br><span class="line">  <span class="attr">rabbit3:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15675:15672&quot;</span></span><br><span class="line">  <span class="attr">messagettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/messagettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18080:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.exchange=message.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.source=message.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">  <span class="attr">queuettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/queuettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18081:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.exchange=queue.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.source=queue.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.value=5000</span></span><br><span class="line">  <span class="attr">delayrabbitmqconsumer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/delayrabbitmqconsumer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">delayrabbitmqconsumer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>在 docker-compose.yml 文件所在目录执行命令 <strong>docker-compose up -d</strong>，docker 会先去下载镜像，然后创建多个容器，请静候启动完成，如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">root@willzhao-Vostro-3267:/usr/local/work/github/blog_demos/rabbitmq_docker_files/delaymq#</span> <span class="string">docker-compose</span> <span class="string">up</span> <span class="string">-d</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">network</span> <span class="string">&quot;delaymq_default&quot;</span> <span class="string">with</span> <span class="string">the</span> <span class="string">default</span> <span class="string">driver</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit1_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit2_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit3_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_messagettlproducer_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_queuettlproducer_1</span>   <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_delayrabbitmqconsumer_1</span> <span class="string">...</span> <span class="string">done</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>一共启动了 5 个容器，将他们的名称和作用列举到下面表格中：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111M3kYEP.png" alt=""></p>
+</li>
+<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，可以进入 RabbitMQ 的登录页面，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111USpaye.png" alt=""></p>
+</li>
+<li><p>登录用户名：<strong>admin</strong>，密码：<strong>888888</strong>，登录后页面如下图，可以见到 RabbitMQ 集群已经就绪：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1112mC9tZP.png" alt=""></p>
+</li>
+<li><p>如果您的页面中的三个 RabbitMQ 还没有完全就绪（绿色状态），建议稍等几分钟后再刷新页面；</p>
+</li>
+<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhL2JiYi8z">http://192.168.31.102:18080/messagettl/aaa/bbb/3<i class="fa fa-external-link-alt"></i></span> ，即可向 delaymq_messagettlproducer_1 容器发起一次请求，容器会发送一条带有 TTL  的消息，然后页面提示发送成功，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11120vsfud.png" alt=""></p>
+</li>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYy9kZGQ=">http://192.168.31.102:18081/queuettl/ccc/ddd<i class="fa fa-external-link-alt"></i></span> ，即可向  delaymq_queuettlproducer_1 容器发起一次请求，容器会向一个已经设置了 TTL  的队列发送一条消息，然后页面提示发送成功，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113xOGFtE.png" alt=""></p>
+</li>
+<li><p>再次进入 RabbitMQ 管理页面 <span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，查看队列情况如下图，已经有四个队列了：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113gawCLe.png" alt=""></p>
+</li>
+<li><p>用下列表格对上述四个队列简单说明：</p>
+</li>
+<li><p>容器 delaymq_delayrabbitmqconsumer_1 中的 tomcat 在启动时候，由于此时队列还没创建，因此无法连接队列，会导致 tomcat 启动失败，进而导致容器退出(因为 tomcat 进程占据了控制台，它退出容器就会退出)，此时请执行 <strong>docker restart delaymq_delayrabbitmqconsumer_1</strong> 重启容器；</p>
+</li>
+<li><p>重启后，执行命令 <strong>docker logs -f delaymq_delayrabbitmqconsumer_1</strong>，开始实时打印消费者容器的日志，可以看到 SpringBoot 刚刚启动就把之前的两条消息给消费了，如下图红框所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11140q4wiY.png" alt=""></p>
+</li>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhMDEvYmJiMDEvMTA=">http://192.168.31.102:18080/messagettl/aaa01/bbb01/10<i class="fa fa-external-link-alt"></i></span> ，url 中的 10  表示延时十秒，去看 delaymq_delayrabbitmqconsumer_1 的日志，果然，10  秒钟后日志才会打印出来，如下所示，消息中的时间和日志的时间戳相差 10 秒：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:13:25.878  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.MessageTtlReceiver        : receive message : hello, aaa01 , bbb01, from queue [message.ttl.queue.source], delay 10&#x27;s, 2018-06-09 07:13:15</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYzAxL2RkZDAx">http://192.168.31.102:18081/queuettl/ccc01/ddd01<i class="fa fa-external-link-alt"></i></span> ，会发送消息到队列  queue.ttl.queue.source，这个队列的 TTL 是 5 秒，在 delaymq_delayrabbitmqconsumer_1 的日志中可以看见发起和收到时间正好差 5 秒，如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:31:05.101  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.QueueTtlReceiver          : receive message : hello, ccc01 , ddd01, from queue [queue.ttl.queue.source], 2018-06-09 07:31:00</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>至此，咱们的极速体验延时队列实战就结束了，接下来的章节，我们一起实战详细的开发过程《Docker 下 RabbitMQ 延时队列实战两部曲之二：细说开发》</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>SpringBoot</tag>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RocketMQ 消息积压了，增加消费者有用吗</title>
     <url>/posts/12P0DCH.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>面试官</strong>：RocketMQ 消息积压了，增加消费者有用吗？</p>
@@ -8515,104 +8613,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>算法</tag>
         <tag>MQ</tag>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker下RabbitMQ延时队列实战两部曲之一：极速体验</title>
-    <url>/posts/3V74DRG.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>原文： <span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS8xMTQwYjQ4Y2I5YTFlN2RiZmNmODU1Njk4">Docker下RabbitMQ延时队列实战两部曲之一：极速体验<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg" alt=""></p>
-<h3 id="关于延时队列"><a href="#关于延时队列" class="headerlink" title="关于延时队列"></a>关于延时队列</h3><p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1106Vy0IMl.png" alt=""></p>
-<h3 id="延时的时长"><a href="#延时的时长" class="headerlink" title="延时的时长"></a>延时的时长</h3><ul>
-<li>从上面的描述可以看出，延时时长就是消息的过期时间 TTL（Time To Live），这个参数可以通过以下两种方式设置：</li>
-</ul>
-<ol>
-<li><p>生产消息时，设置该消息的 TTL；</p>
-</li>
-<li><p>设置整个队列的 TTL，队列中每个消息的 TTL 都是一样的；</p>
-</li>
-</ol>
-<ul>
-<li>接下来的实战，我们将上述两种方式都体验一次；</li>
-</ul>
-<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ol>
-<li>操作系统：Ubuntu 16.04.3 LTS</li>
-<li>Docker：1.12.6</li>
-<li>RabbitMQ：3.7.5-rc.1</li>
-</ol>
-<h3 id="极速体验"><a href="#极速体验" class="headerlink" title="极速体验"></a>极速体验</h3><ul>
-<li><p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1108hShQ3h.png" alt=""></p>
-</li>
-<li><p>简单说一下上图中应用的身份：</p>
-<ol>
-<li>delayrabbitmqconsumer：SpringBoot 框架的应用，连接 RabbitMQ 的两个队列，消费消息；</li>
-<li>messagettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中带有过期时间（TTL）；</li>
-<li>queuettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中不带过期时间（TTL），但是对应的消息队列已经设置了过期时间；</li>
-</ol>
-</li>
-<li><p>开始实战：</p>
-</li>
-<li><p>确保当前电脑上 Docker 可用，创建 docker-compose.yml 文件，内容如下：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rabbit1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15672:15672&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_PASS=888888</span></span><br><span class="line">  <span class="attr">rabbit2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">RAM_NODE=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">HA_ENABLE=true</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15673:15672&quot;</span></span><br><span class="line">  <span class="attr">rabbit3:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15675:15672&quot;</span></span><br><span class="line">  <span class="attr">messagettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/messagettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18080:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.exchange=message.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.source=message.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">  <span class="attr">queuettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/queuettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18081:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.exchange=queue.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.source=queue.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.value=5000</span></span><br><span class="line">  <span class="attr">delayrabbitmqconsumer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/delayrabbitmqconsumer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">delayrabbitmqconsumer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>在 docker-compose.yml 文件所在目录执行命令 <strong>docker-compose up -d</strong>，docker 会先去下载镜像，然后创建多个容器，请静候启动完成，如下：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">root@willzhao-Vostro-3267:/usr/local/work/github/blog_demos/rabbitmq_docker_files/delaymq#</span> <span class="string">docker-compose</span> <span class="string">up</span> <span class="string">-d</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">network</span> <span class="string">&quot;delaymq_default&quot;</span> <span class="string">with</span> <span class="string">the</span> <span class="string">default</span> <span class="string">driver</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit1_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit2_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit3_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_messagettlproducer_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_queuettlproducer_1</span>   <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_delayrabbitmqconsumer_1</span> <span class="string">...</span> <span class="string">done</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>一共启动了 5 个容器，将他们的名称和作用列举到下面表格中：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111M3kYEP.png" alt=""></p>
-</li>
-<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，可以进入 RabbitMQ 的登录页面，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111USpaye.png" alt=""></p>
-</li>
-<li><p>登录用户名：<strong>admin</strong>，密码：<strong>888888</strong>，登录后页面如下图，可以见到 RabbitMQ 集群已经就绪：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1112mC9tZP.png" alt=""></p>
-</li>
-<li><p>如果您的页面中的三个 RabbitMQ 还没有完全就绪（绿色状态），建议稍等几分钟后再刷新页面；</p>
-</li>
-<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhL2JiYi8z">http://192.168.31.102:18080/messagettl/aaa/bbb/3<i class="fa fa-external-link-alt"></i></span> ，即可向 delaymq_messagettlproducer_1 容器发起一次请求，容器会发送一条带有 TTL  的消息，然后页面提示发送成功，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11120vsfud.png" alt=""></p>
-</li>
-<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYy9kZGQ=">http://192.168.31.102:18081/queuettl/ccc/ddd<i class="fa fa-external-link-alt"></i></span> ，即可向  delaymq_queuettlproducer_1 容器发起一次请求，容器会向一个已经设置了 TTL  的队列发送一条消息，然后页面提示发送成功，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113xOGFtE.png" alt=""></p>
-</li>
-<li><p>再次进入 RabbitMQ 管理页面 <span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，查看队列情况如下图，已经有四个队列了：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113gawCLe.png" alt=""></p>
-</li>
-<li><p>用下列表格对上述四个队列简单说明：</p>
-</li>
-<li><p>容器 delaymq_delayrabbitmqconsumer_1 中的 tomcat 在启动时候，由于此时队列还没创建，因此无法连接队列，会导致 tomcat 启动失败，进而导致容器退出(因为 tomcat 进程占据了控制台，它退出容器就会退出)，此时请执行 <strong>docker restart delaymq_delayrabbitmqconsumer_1</strong> 重启容器；</p>
-</li>
-<li><p>重启后，执行命令 <strong>docker logs -f delaymq_delayrabbitmqconsumer_1</strong>，开始实时打印消费者容器的日志，可以看到 SpringBoot 刚刚启动就把之前的两条消息给消费了，如下图红框所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11140q4wiY.png" alt=""></p>
-</li>
-<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhMDEvYmJiMDEvMTA=">http://192.168.31.102:18080/messagettl/aaa01/bbb01/10<i class="fa fa-external-link-alt"></i></span> ，url 中的 10  表示延时十秒，去看 delaymq_delayrabbitmqconsumer_1 的日志，果然，10  秒钟后日志才会打印出来，如下所示，消息中的时间和日志的时间戳相差 10 秒：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:13:25.878  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.MessageTtlReceiver        : receive message : hello, aaa01 , bbb01, from queue [message.ttl.queue.source], delay 10&#x27;s, 2018-06-09 07:13:15</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYzAxL2RkZDAx">http://192.168.31.102:18081/queuettl/ccc01/ddd01<i class="fa fa-external-link-alt"></i></span> ，会发送消息到队列  queue.ttl.queue.source，这个队列的 TTL 是 5 秒，在 delaymq_delayrabbitmqconsumer_1 的日志中可以看见发起和收到时间正好差 5 秒，如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:31:05.101  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.QueueTtlReceiver          : receive message : hello, ccc01 , ddd01, from queue [queue.ttl.queue.source], 2018-06-09 07:31:00</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>至此，咱们的极速体验延时队列实战就结束了，接下来的章节，我们一起实战详细的开发过程《Docker 下 RabbitMQ 延时队列实战两部曲之二：细说开发》</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -8872,34 +8872,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>ACID是靠什么保证的</title>
-    <url>/posts/KZ41HP.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<blockquote>
-<p>ACID，事务的四大特性：原子性，一致性，隔离性，持久性</p>
-</blockquote>
-<ul>
-<li><p>原子性<br>原子性是由undolog日志来保证的，它记录了需要回滚的日志信息，事务回滚时撤销已经执行成功的SQL。</p>
-</li>
-<li><p>一致性<br>一致性是由其他三个特性保证的，程序代码要保证业务上的一致性。</p>
-</li>
-<li><p>隔离性<br>隔离性是由MVCC来保证的。</p>
-</li>
-<li><p>持久性<br>持久性是由redo log来保证的，mysql修改数据的时候会在redolog中记录一条日志数据，就算数据没有保存成功，只要日志保存成功了，数据就不会丢失。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-        <tag>事务</tag>
-        <tag>Mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>事务并发与事务隔离</title>
     <url>/posts/2EGA14J.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>什么是事务的隔离性？</strong></p>
@@ -8965,6 +8937,34 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ACID是靠什么保证的</title>
+    <url>/posts/KZ41HP.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<blockquote>
+<p>ACID，事务的四大特性：原子性，一致性，隔离性，持久性</p>
+</blockquote>
+<ul>
+<li><p>原子性<br>原子性是由undolog日志来保证的，它记录了需要回滚的日志信息，事务回滚时撤销已经执行成功的SQL。</p>
+</li>
+<li><p>一致性<br>一致性是由其他三个特性保证的，程序代码要保证业务上的一致性。</p>
+</li>
+<li><p>隔离性<br>隔离性是由MVCC来保证的。</p>
+</li>
+<li><p>持久性<br>持久性是由redo log来保证的，mysql修改数据的时候会在redolog中记录一条日志数据，就算数据没有保存成功，只要日志保存成功了，数据就不会丢失。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>事务</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
