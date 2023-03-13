@@ -25,15 +25,15 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  JVM 面试突击44：volatile 有什么用？ - 掘金 5张图带你彻底理解G1垃圾收集器 20220407-深入理解volatile 这一次，彻底弄懂java中的常量池 - 掘金  消息队列 6 种实现延时消息的方案 RocketMQ 延时方案分析与总结 -">
+  <meta name="description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 面试突击48：死锁的排查工具有哪些？ - 掘金 面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金 面试突击42：sy">
 <meta property="og:type" content="website">
 <meta property="og:title" content="个人收藏">
 <meta property="og:url" content="https://xuemingde.com/collect/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  JVM 面试突击44：volatile 有什么用？ - 掘金 5张图带你彻底理解G1垃圾收集器 20220407-深入理解volatile 这一次，彻底弄懂java中的常量池 - 掘金  消息队列 6 种实现延时消息的方案 RocketMQ 延时方案分析与总结 -">
+<meta property="og:description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 面试突击48：死锁的排查工具有哪些？ - 掘金 面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金 面试突击42：sy">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-11T06:12:53.000Z">
-<meta property="article:modified_time" content="2023-03-13T07:21:57.817Z">
+<meta property="article:modified_time" content="2023-03-13T07:32:21.287Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="meadel">
 <meta name="twitter:card" content="summary">
@@ -230,21 +230,72 @@
       
       
       <div class="post-body">
-          <h1 id="集合数组"><a href="#集合数组" class="headerlink" title="集合数组"></a>集合数组</h1><ul>
+          <h1 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h1><h2 id="集合数组"><a href="#集合数组" class="headerlink" title="集合数组"></a>集合数组</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk3MTQ3OTg3MDU4NDkxNDIz">HashMap与ConcurrentHashMap面试要点 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDc0OTg4MzM2ODA0MjY1OTk4">ConcurrentHashMap源码解析 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><ul>
+<h2 id="并发-amp-多线程"><a href="#并发-amp-多线程" class="headerlink" title="并发&amp;多线程"></a>并发&amp;多线程</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTAxOTU2MDk0MTM3NzI5MDMxI2hlYWRpbmctNA==">ReentrantLock 源码分析 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8yMDAyMzk4">无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk4MTg1Njc4NTI5MjMyOTA5">面试突击48：死锁的排查工具有哪些？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDgwNjk0ODQzOTgyMjE3MjUz">面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkwMDY4MTgwODEwMzM0MjQ0">面试突击42：synchronized和ReentrantLock有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkxMTMzMDk3MDgwNTIwNzM1">面试突击43：lock、tryLock、lockInterruptibly有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0Nzk0ODY5MzAxODM3ODMx">面试突击45：为什么要用读写锁？它有什么优点？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk1NTQyNjEyNTYzNjA3NTYw">面试突击46：公平锁和非公平锁有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDQ0MDMyOTAxNjYyMzc1OTQ5">如何设计一个高并发的秒杀架构？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM1Uxa1lnb1pIZ1BNcm9RSGxmS3ZqQQ==">头条二面：你确定ThreadLocal真的会造成内存泄露？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">图解Java中那18 把锁<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvYmV3bFVjSEwyZTZmdzJ2RHJoRURDdw==">高并发场景下，到底先更新缓存还是先更新数据库？<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0MDg3MDQzMDEzNjQwMjI4">面试突击44：volatile 有什么用？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvLXI3SzYwYW9aRkNQOXZMZ2ZpeGlEQQ==">5张图带你彻底理解G1垃圾收集器<i class="fa fa-external-link-alt"></i></span></li>
 <li><a href="https://xuemingde.com/JavaNotes/JVM/20220407-深入理解volatile">20220407-深入理解volatile</a></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODU0NTczMjE2ODI0ODE5NzE5">这一次，彻底弄懂java中的常量池 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-<h1 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h1><ul>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvanVyWWJDWjVOSk10NFJZWXRhU25Idw==">6 种实现延时消息的方案<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDg4ODQxNjE5NTE1ODk5OTM0">RocketMQ 延时方案分析与总结 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk2MzM1MzI2NjgzMDcwNDcy">万字长文深度剖析 RocketMQ 的设计理念 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvcFRsOFJvZnhSTkE2LUZqRUFDZEQzZw==">《面试八股文》之 Kafka 21卷，全文背诵<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk5MjMzNDMxMDgyNTAwMTA5">分布式一致性 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MDAzODc3MjA4MDcx">《我们一起进大厂》系列-分布式事务、重复消费、顺序消费 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM2NDUDFKWUJWUHVBSU9SSzBwQlpaUQ==">Sentinel 万字教程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbHRvczFuRWdrdGVjNXBuNDd4QWdNdw==">用通俗的语言介绍 RPC 框架的架构原理<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDc1NTcxODE1MTMyNjkyNDk0"> 并发-分布式锁质量保障总结 <i class="fa fa-external-link-alt"></i></span></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-分布式缓存">20220407-分布式缓存</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-分布式事务">20220407-分布式事务</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-高可用篇-容错设计">20220407-高可用篇-容错设计</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-进程本地缓存">20220407-进程本地缓存</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTY3MjYwNjYzNjIxMzIwNzM0">美团外卖搜索基于Elasticsearch的优化实践 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTM5ODI0MjY1ODI1NjE1ODg1">阿里 Seata 新版本终于解决了 TCC 模式的幂等、悬挂和空回滚问题 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="Spring-amp-SpringBoot"><a href="#Spring-amp-SpringBoot" class="headerlink" title="Spring &amp; SpringBoot"></a>Spring &amp; SpringBoot</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVE01VFhWSDZjUTQyTS1VaWt2bE5nZw==">spring：我是如何解决循环依赖的？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTA2NjM3Nzk3MDgwMTcwNTEw">Spring容器启动流程（源码解读） - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWnpwN2lKelVZRFJ0cFloWVVaeEZOQQ==">@Transactional 注解失效的3种原因及解决办法<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdU5UczQxWHpHMC1mbm1KWXlOeElQdw==">你能说说Spring框架中Bean的生命周期吗？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODk1MzQxMTIzODE2OTE0OTU4">SpringBoot启动流程是怎样的？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9mb3J1bS90b3BpYy8wMjAyNDk0MDgxOTM3MzAwMjU0">深入剖析Springboot启动原理的底层源码，再也不怕面试官问了<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h2><ul>
+<li><a href="https://xuemingde.com/pages/image/2022/09/06/0944255tftP6.pdf">Math类 (Java Platform SE 8 )</a></li>
+</ul>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTY2MDIzMjI1MTY3ODM5MjYy">字节面试：什么是责任链模式？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL2MuYmlhbmNoZW5nLm5ldC92aWV3LzEzNjEuaHRtbA==">设计模式<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbDFwMS1qRk5Xa0FEUklOM3F0ZXdwZw==">23 种设计模式的通俗解释，虽然有点污，但是秒懂<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xOTMyOTM0">浅谈缓存最终一致性的解决方案 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODUwNDE4MTIwOTg1ODM3NTc1">防止数据重复提交的6种方法(超简单)！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODYxNzQ5MjM4NDY2NTc2Mzk3">秒杀系统设计 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMkVWdHVoSThxd1BpdXctR05va05vdw==">面试官：淘宝七天自动确认收货，可以怎么实现？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWGVBNU94UlczUXkxNXJuZFZmUDZHdw==">阿里二面：现针对一个请求量10000次/s的秒杀系统，说说你的优化思路<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTgxMjk3NzI5OTc5NTQ3NzA1I2hlYWRpbmctMTk=">订单30分钟未支付自动取消怎么实现？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 <h1 id="Reids"><a href="#Reids" class="headerlink" title="Reids"></a>Reids</h1><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTAzNTUxNzE0ODc5MzQwNTgw">Redis 高可用集群原理和实践 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
@@ -261,7 +312,7 @@
 <li><a href="https://xuemingde.com/JavaNotes/数据库/Redis基础">Redis基础</a></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkaXMubmV0LmNuL29yZGVyLw==">redis命令手册<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><ul>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h2 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvQ2h3bnpTQ3djOEhVNFFRTHo3Vk5QUQ==">阿里一面：SQL 优化有哪些技巧？<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvUzNEWmYweVRJSzYzVmxycTU4SDctQQ==">你管这破玩意叫 B+ 树?<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvQWx4SU1QbktjV1N5aE9TZTgtT2ZUUQ==">业务数据治理体系化思考与实践<i class="fa fa-external-link-alt"></i></span></li>
@@ -270,56 +321,13 @@
 <li><a href="https://xuemingde.com/JavaNotes/JVM/MVCC%E5%BC%84%E6%87%82%E4%BA%86%E7%9C%9F%E7%9A%84%E5%A5%BD%E7%88%BD">MVCC弄懂了真的好爽</a></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXprd05qTXdNVGd6TVE9PSZhbXA7bWlkPTIyNDc0OTM1MjEmYW1wO2lkeD0xJmFtcDtzbj1iZmY4NGU3YTgxOWQ3OWU0YjhlYjdlNzIyZTk2ZGRmYyZhbXA7Y2hrc209YzBlODNmNzlmNzlmYjY2ZjJlN2JmMDNhMTA0NTgwYjQwNGVhMGEzYzk3Nzg0NmU0MjhmMTNjMWYxMmZiYWQ0NmQ0ZDc3OGIyZGExNCZhbXA7dG9rZW49NjYwNzczMTY2JmFtcDtsYW5nPXpoX0NOJmFtcDtzY2VuZT0yMSN3ZWNoYXRfcmVkaXJlY3Q=">如何保证数据库和缓存双写一致性？<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-<h1 id="并发-amp-多线程"><a href="#并发-amp-多线程" class="headerlink" title="并发&amp;多线程"></a>并发&amp;多线程</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTAxOTU2MDk0MTM3NzI5MDMxI2hlYWRpbmctNA==">ReentrantLock 源码分析 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8yMDAyMzk4">无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk4MTg1Njc4NTI5MjMyOTA5">面试突击48：死锁的排查工具有哪些？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDgwNjk0ODQzOTgyMjE3MjUz">面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkwMDY4MTgwODEwMzM0MjQ0">面试突击42：synchronized和ReentrantLock有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkxMTMzMDk3MDgwNTIwNzM1">面试突击43：lock、tryLock、lockInterruptibly有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0Nzk0ODY5MzAxODM3ODMx">面试突击45：为什么要用读写锁？它有什么优点？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk1NTQyNjEyNTYzNjA3NTYw">面试突击46：公平锁和非公平锁有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDQ0MDMyOTAxNjYyMzc1OTQ5">如何设计一个高并发的秒杀架构？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM1Uxa1lnb1pIZ1BNcm9RSGxmS3ZqQQ==">头条二面：你确定ThreadLocal真的会造成内存泄露？<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">图解Java中那18 把锁<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvYmV3bFVjSEwyZTZmdzJ2RHJoRURDdw==">高并发场景下，到底先更新缓存还是先更新数据库？<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk5MjMzNDMxMDgyNTAwMTA5">分布式一致性 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MDAzODc3MjA4MDcx">《我们一起进大厂》系列-分布式事务、重复消费、顺序消费 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM2NDUDFKWUJWUHVBSU9SSzBwQlpaUQ==">Sentinel 万字教程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbHRvczFuRWdrdGVjNXBuNDd4QWdNdw==">用通俗的语言介绍 RPC 框架的架构原理<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDc1NTcxODE1MTMyNjkyNDk0"> 并发-分布式锁质量保障总结 <i class="fa fa-external-link-alt"></i></span></li>
-<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-分布式缓存">20220407-分布式缓存</a></li>
-<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-分布式事务">20220407-分布式事务</a></li>
-<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-高可用篇-容错设计">20220407-高可用篇-容错设计</a></li>
-<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-进程本地缓存">20220407-进程本地缓存</a></li>
-</ul>
-<h1 id="Spring-amp-SpringBoot"><a href="#Spring-amp-SpringBoot" class="headerlink" title="Spring &amp; SpringBoot"></a>Spring &amp; SpringBoot</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVE01VFhWSDZjUTQyTS1VaWt2bE5nZw==">spring：我是如何解决循环依赖的？<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTA2NjM3Nzk3MDgwMTcwNTEw">Spring容器启动流程（源码解读） - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWnpwN2lKelVZRFJ0cFloWVVaeEZOQQ==">@Transactional 注解失效的3种原因及解决办法<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdU5UczQxWHpHMC1mbm1KWXlOeElQdw==">你能说说Spring框架中Bean的生命周期吗？<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODk1MzQxMTIzODE2OTE0OTU4">SpringBoot启动流程是怎样的？<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9mb3J1bS90b3BpYy8wMjAyNDk0MDgxOTM3MzAwMjU0">深入剖析Springboot启动原理的底层源码，再也不怕面试官问了<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTY2MDIzMjI1MTY3ODM5MjYy">字节面试：什么是责任链模式？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cDovL2MuYmlhbmNoZW5nLm5ldC92aWV3LzEzNjEuaHRtbA==">设计模式<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbDFwMS1qRk5Xa0FEUklOM3F0ZXdwZw==">23 种设计模式的通俗解释，虽然有点污，但是秒懂<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h1 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xOTMyOTM0">浅谈缓存最终一致性的解决方案 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODUwNDE4MTIwOTg1ODM3NTc1">防止数据重复提交的6种方法(超简单)！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODYxNzQ5MjM4NDY2NTc2Mzk3">秒杀系统设计 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMkVWdHVoSThxd1BpdXctR05va05vdw==">面试官：淘宝七天自动确认收货，可以怎么实现？<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWGVBNU94UlczUXkxNXJuZFZmUDZHdw==">阿里二面：现针对一个请求量10000次/s的秒杀系统，说说你的优化思路<i class="fa fa-external-link-alt"></i></span></li>
+<h2 id="Mongo"><a href="#Mongo" class="headerlink" title="Mongo"></a>Mongo</h2><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTczNjI5OTI0MTExNTMyMDQ1">如何保证mongodb和数据库双写数据一致性？ - 掘金<i class="fa fa-external-link-alt"></i></span></p>
+<p>​</p>
+</li>
 </ul>
 <h1 id="网络通信"><a href="#网络通信" class="headerlink" title="网络通信"></a>网络通信</h1><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvQVg2RnZhbDhSd2tnenB0ZGpsVTVrZw==">万字多图，搞懂 Nginx 高性能网络工作原理！<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h1 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h1><ul>
-<li><a href="https://xuemingde.com/pages/image/2022/09/06/0944255tftP6.pdf">Math类 (Java Platform SE 8 )</a></li>
 </ul>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk2MTM1MzAxNzAxMDQyMTg5">@Transactional 注解失效场景？看这一篇就够了！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
@@ -397,7 +405,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">集合数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">2.</span> <span class="nav-text">JVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">3.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reids"><span class="nav-number">4.</span> <span class="nav-text">Reids</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91-amp-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">并发&amp;多线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-amp-SpringBoot"><span class="nav-number">8.</span> <span class="nav-text">Spring &amp; SpringBoot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="nav-number">10.</span> <span class="nav-text">设计方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="nav-number">11.</span> <span class="nav-text">网络通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API%E6%96%87%E6%A1%A3"><span class="nav-number">12.</span> <span class="nav-text">API文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">13.</span> <span class="nav-text">其他</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA"><span class="nav-number">1.</span> <span class="nav-text">JAVA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%95%B0%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">集合数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91-amp-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">并发&amp;多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM"><span class="nav-number">1.3.</span> <span class="nav-text">JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">1.4.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-amp-SpringBoot"><span class="nav-number">1.6.</span> <span class="nav-text">Spring &amp; SpringBoot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API%E6%96%87%E6%A1%A3"><span class="nav-number">1.7.</span> <span class="nav-text">API文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="nav-number">1.9.</span> <span class="nav-text">设计方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reids"><span class="nav-number">2.</span> <span class="nav-text">Reids</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySql"><span class="nav-number">3.1.</span> <span class="nav-text">MySql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mongo"><span class="nav-number">3.2.</span> <span class="nav-text">Mongo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="nav-number">4.</span> <span class="nav-text">网络通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -473,12 +481,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">815k</span>
+    <span title="站点总字数">903k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:21</span>
+    <span title="站点阅读时长">13:41</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 
