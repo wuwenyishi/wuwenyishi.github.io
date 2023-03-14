@@ -25,15 +25,15 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 面试突击48：死锁的排查工具有哪些？ - 掘金 面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金 面试突击42：sy">
+  <meta name="description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 死锁的排查工具有哪些？ - 掘金 如何判断线程池已经执行完所有任务了？ - 掘金 synchronized和ReentrantL">
 <meta property="og:type" content="website">
 <meta property="og:title" content="个人收藏">
 <meta property="og:url" content="https://xuemingde.com/collect/index.html">
 <meta property="og:site_name" content="meadel&#39;s blog">
-<meta property="og:description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 面试突击48：死锁的排查工具有哪些？ - 掘金 面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金 面试突击42：sy">
+<meta property="og:description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 死锁的排查工具有哪些？ - 掘金 如何判断线程池已经执行完所有任务了？ - 掘金 synchronized和ReentrantL">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-11T06:12:53.000Z">
-<meta property="article:modified_time" content="2023-03-13T07:38:10.267Z">
+<meta property="article:modified_time" content="2023-03-14T00:43:49.024Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="meadel">
 <meta name="twitter:card" content="summary">
@@ -242,19 +242,19 @@
 <h2 id="并发-amp-多线程"><a href="#并发-amp-多线程" class="headerlink" title="并发&amp;多线程"></a>并发&amp;多线程</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTAxOTU2MDk0MTM3NzI5MDMxI2hlYWRpbmctNA==">ReentrantLock 源码分析 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8yMDAyMzk4">无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk4MTg1Njc4NTI5MjMyOTA5">面试突击48：死锁的排查工具有哪些？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDgwNjk0ODQzOTgyMjE3MjUz">面试突击35：如何判断线程池已经执行完所有任务了？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkwMDY4MTgwODEwMzM0MjQ0">面试突击42：synchronized和ReentrantLock有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkxMTMzMDk3MDgwNTIwNzM1">面试突击43：lock、tryLock、lockInterruptibly有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0Nzk0ODY5MzAxODM3ODMx">面试突击45：为什么要用读写锁？它有什么优点？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk1NTQyNjEyNTYzNjA3NTYw">面试突击46：公平锁和非公平锁有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk4MTg1Njc4NTI5MjMyOTA5">死锁的排查工具有哪些？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDgwNjk0ODQzOTgyMjE3MjUz">如何判断线程池已经执行完所有任务了？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkwMDY4MTgwODEwMzM0MjQ0">synchronized和ReentrantLock有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkxMTMzMDk3MDgwNTIwNzM1">lock、tryLock、lockInterruptibly有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0Nzk0ODY5MzAxODM3ODMx">为什么要用读写锁？它有什么优点？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk1NTQyNjEyNTYzNjA3NTYw">公平锁和非公平锁有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDQ0MDMyOTAxNjYyMzc1OTQ5">如何设计一个高并发的秒杀架构？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM1Uxa1lnb1pIZ1BNcm9RSGxmS3ZqQQ==">头条二面：你确定ThreadLocal真的会造成内存泄露？<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">图解Java中那18 把锁<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvYmV3bFVjSEwyZTZmdzJ2RHJoRURDdw==">高并发场景下，到底先更新缓存还是先更新数据库？<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 <h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0MDg3MDQzMDEzNjQwMjI4">面试突击44：volatile 有什么用？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0MDg3MDQzMDEzNjQwMjI4">volatile 有什么用？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvLXI3SzYwYW9aRkNQOXZMZ2ZpeGlEQQ==">5张图带你彻底理解G1垃圾收集器<i class="fa fa-external-link-alt"></i></span></li>
 <li><a href="https://xuemingde.com/JavaNotes/JVM/20220407-深入理解volatile">20220407-深入理解volatile</a></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODU0NTczMjE2ODI0ODE5NzE5">这一次，彻底弄懂java中的常量池 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
@@ -263,11 +263,11 @@
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvanVyWWJDWjVOSk10NFJZWXRhU25Idw==">6 种实现延时消息的方案<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDg4ODQxNjE5NTE1ODk5OTM0">RocketMQ 延时方案分析与总结 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk2MzM1MzI2NjgzMDcwNDcy">万字长文深度剖析 RocketMQ 的设计理念 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvcFRsOFJvZnhSTkE2LUZqRUFDZEQzZw==">《面试八股文》之 Kafka 21卷，全文背诵<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvcFRsOFJvZnhSTkE2LUZqRUFDZEQzZw==">《八股文》之 Kafka 21卷，全文背诵<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 <h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk5MjMzNDMxMDgyNTAwMTA5">分布式一致性 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MDAzODc3MjA4MDcx">《我们一起进大厂》系列-分布式事务、重复消费、顺序消费 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MDAzODc3MjA4MDcx">分布式事务、重复消费、顺序消费 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM2NDUDFKWUJWUHVBSU9SSzBwQlpaUQ==">Sentinel 万字教程<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbHRvczFuRWdrdGVjNXBuNDd4QWdNdw==">用通俗的语言介绍 RPC 框架的架构原理<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDc1NTcxODE1MTMyNjkyNDk0"> 并发-分布式锁质量保障总结 <i class="fa fa-external-link-alt"></i></span></li>
@@ -277,6 +277,7 @@
 <li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-进程本地缓存">20220407-进程本地缓存</a></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTY3MjYwNjYzNjIxMzIwNzM0">美团外卖搜索基于Elasticsearch的优化实践 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTM5ODI0MjY1ODI1NjE1ODg1">阿里 Seata 新版本终于解决了 TCC 模式的幂等、悬挂和空回滚问题 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTQ1NDM1OTUxODk5NTc0MzAyI2hlYWRpbmctNw==">把限流实现的那叫一个优雅，佩服！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 <h2 id="Spring-amp-SpringBoot"><a href="#Spring-amp-SpringBoot" class="headerlink" title="Spring &amp; SpringBoot"></a>Spring &amp; SpringBoot</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVE01VFhWSDZjUTQyTS1VaWt2bE5nZw==">spring：我是如何解决循环依赖的？<i class="fa fa-external-link-alt"></i></span></li>
