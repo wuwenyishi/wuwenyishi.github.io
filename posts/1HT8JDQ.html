@@ -37,10 +37,10 @@
 <meta property="og:image" content="https://xuemingde.com/pages/image/2023/03/14/1648379wQcvZ.png">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2023/03/15/093613wEIw3F.png">
 <meta property="article:published_time" content="2023-03-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-15T01:36:19.422Z">
+<meta property="article:modified_time" content="2023-03-15T05:13:06.905Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="C">
 <meta property="article:tag" content="Java">
+<meta property="article:tag" content="C">
 <meta property="article:tag" content="const">
 <meta property="article:tag" content="栈">
 <meta property="article:tag" content="函数">
@@ -258,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-15 09:36:19" itemprop="dateModified" datetime="2023-03-15T09:36:19+08:00">2023-03-15</time>
+                <time title="修改时间：2023-03-15 13:13:06" itemprop="dateModified" datetime="2023-03-15T13:13:06+08:00">2023-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -353,6 +353,11 @@
 <h4 id="拷贝构造函数调用的时机"><a href="#拷贝构造函数调用的时机" class="headerlink" title="拷贝构造函数调用的时机"></a>拷贝构造函数调用的时机</h4><p><img data-src="https://xuemingde.com/pages/image/2023/03/14/1648379wQcvZ.png" alt=""></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用一个已经创建完毕的对象初始化吧另一个新对象</span></span><br><span class="line"><span class="function">person <span class="title">p2</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"><span class="function">person <span class="title">p3</span><span class="params">(p2)</span></span>;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(person p)</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//值传递的方式给函数参数传值</span></span><br><span class="line">person p;</span><br><span class="line">func(p);</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line"><span class="comment">//值方式返回局部对象</span></span><br><span class="line"><span class="function">person <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    person p1;</span><br><span class="line">    <span class="keyword">return</span> p1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    person p = func();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    func2();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h4 id="构造函数调用规则"><a href="#构造函数调用规则" class="headerlink" title="构造函数调用规则"></a>构造函数调用规则</h4><p><img data-src="https://xuemingde.com/pages/image/2023/03/15/093613wEIw3F.png" alt=""></p>
+<ul>
+<li>如果我们写了有参构造函数，编译器不再提供默认构造函数，依然提供拷贝构造</li>
+<li>如果我们写了拷贝构造函数，编译器就不再提供其他普通构造函数</li>
+<li>​</li>
+</ul>
 
     </div>
    <div>
@@ -428,8 +433,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/const/" rel="tag"><i class="fa fa-tag"></i> const</a>
               <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
@@ -603,7 +608,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">820k</span>
+    <span title="站点总字数">821k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
