@@ -721,7 +721,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/2DEMJ1C.html">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/VQ077V.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpeg">
@@ -735,7 +735,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/2DEMJ1C.html" class="post-title-link" itemprop="url">事务持久性与原子性的保障</a>
+            <a href="/posts/VQ077V.html" class="post-title-link" itemprop="url">Innodb的MVCC实现原理</a>
         </h2>
 
         <div class="post-meta">
@@ -769,7 +769,7 @@
             </span>
 
           
-            <span id="/posts/2DEMJ1C.html" class="post-meta-item leancloud_visitors" data-flag-title="事务持久性与原子性的保障" title="阅读次数">
+            <span id="/posts/VQ077V.html" class="post-meta-item leancloud_visitors" data-flag-title="Innodb的MVCC实现原理" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -784,8 +784,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/posts/2DEMJ1C.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/2DEMJ1C.html" itemprop="commentCount"></span>
+    <a title="valine" href="/posts/VQ077V.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/VQ077V.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -795,14 +795,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -814,11 +814,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>持久性的意义</strong></p>
-<p>所谓持久性就是说在事务成功提交了之后，数据的最终变更操作都会持久化到磁盘上去,不会因为故障导致数据丢失。而在计算机系统里，只有数据保存到了磁盘才能保证数据不会丢失，持久化的问题是所有数据库系统都需要面临的，无法保证持久性的数据库就意味着在数据库、系统、服务器发生故障时无法进行数据恢复。</p>
+          <p>理解MVCC之前，我们需要回顾了解一下数据库的一些其他相关知识点</p>
+<p>（1）数据库为什么要有事务？</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/2DEMJ1C.html#more" rel="contents">
+              <a class="btn" href="/posts/VQ077V.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -978,12 +978,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">913k</span>
+    <span title="站点总字数">824k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13:50</span>
+    <span title="站点阅读时长">12:29</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 
