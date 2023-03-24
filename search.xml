@@ -2144,105 +2144,6 @@
       </tags>
   </entry>
   <entry>
-    <title>撸一下Nacos</title>
-    <url>/posts/MMNJGZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是 Nacos</p>
-<p>Nacos 是阿里巴巴开源的一款优秀的中间件，在分布式微服务场景下用的非常多。</p>
-<p><strong>Nacos</strong> 英文全称 <strong>Naming and Configuration Service</strong>，其中 Na 是 naming 的缩写，注册中心；co为 configuration 的缩写， 配置中心；</p>
-<p>不管是配置中心还是注册中心本质都是围着<strong>服务（微服务）</strong>转的，用官方的话来说：<strong>服务在 Nacos 里是一等公民</strong>。</p>
-<p>Nacos 分为服务端和客户端，这一点不要含糊。</p>
-<p><strong>Nacos Server</strong></p>
-<p>Nacos Server 使用 Java 语言编写，提供了服务注册发现和服务配置功能；对外提供了 SDK 接入以及HTTP RESTful 开放接口，SDK 接入和 RESTful 接口的功能是一致的。</p>
-<p><strong>Nacos Client</strong></p>
-<p>Nacos提供了官方的 SDK，遗憾的是只有 Java 版本，官方的 SDK 可以很方便与一些主流的框架进行集成，比如：Spring Cloud、Dubbo 等。</p>
-<p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
-<p><strong>数据模型</strong></p>
-<p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
-<p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
-<h1 id="Nacos-注册中心原理"><a href="#Nacos-注册中心原理" class="headerlink" title="Nacos 注册中心原理"></a>Nacos 注册中心原理</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
-<p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
-<p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
-<p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
-<h1 id="小试牛刀：Nacos-服务注册发现功能体验"><a href="#小试牛刀：Nacos-服务注册发现功能体验" class="headerlink" title="小试牛刀：Nacos 服务注册发现功能体验"></a>小试牛刀：Nacos 服务注册发现功能体验</h1><p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
-<h2 id="搭建运行-Nacos-Server"><a href="#搭建运行-Nacos-Server" class="headerlink" title="搭建运行 Nacos Server"></a>搭建运行 Nacos Server</h2><p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
-<p>进入 Github Nacos 下载主页：</p>
-<blockquote>
-<p>主页链接：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly8qZ2l0aHViKi5jb20vYWxpYmFiYS9uYWNvcy9yZWxlYXNlcw==">https://*github*.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
-<p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></table></figure>
-<p>如果是 windows 系统，执行以下命令：</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">startup.<span class="built_in">cmd</span> -m standalone</span><br></pre></td></tr></table></figure>
-<p><strong>（2）使用 Docker 启动 Nacos Server</strong></p>
-<p>如果你电脑上已经装了 Docker，建议你直接使用 Docker 来运行。</p>
-<p>先拉取最新镜像：</p>
-<figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">docker pull nacos/nacos-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
-<p>拉取成功后启动实例：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name nacos-demo -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
-<p>这里有坑需要注意下，8848 是 Nacos Server 的主端口需要暴露出来，如果你安装的是 Nacos 2.0 版本还需要将 9848 端口暴露出来，这里我含泪调试了一下午才知道的，哭晕……</p>
-<p>为什么需要 9848 端口呢？因为 Nacos 2.0 版本之后默认将这个端口作为 grpc 的通信端口，官方提供的 Client SDK使用 grpc 来与 Nacos Server 进行通信，包括服务实例注册、心跳检查等功能。</p>
-<blockquote>
-<p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
-</blockquote>
-<h2 id="熟悉-Nacos-Server-控制台界面"><a href="#熟悉-Nacos-Server-控制台界面" class="headerlink" title="熟悉 Nacos Server 控制台界面"></a>熟悉 Nacos Server 控制台界面</h2><p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
-<blockquote>
-<p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
-<p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
-<p><strong>（1）服务管理</strong></p>
-<p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
-<p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
-<p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
-<p><strong>（2）权限控制</strong></p>
-<p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
-<p><strong>（3）命名空间</strong></p>
-<p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
-<p><strong>（4）集群管理</strong></p>
-<p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
-<h2 id="学习使用-Nacos-Client-SDK"><a href="#学习使用-Nacos-Client-SDK" class="headerlink" title="学习使用 Nacos Client SDK"></a>学习使用 Nacos Client SDK</h2><p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
-<p>我们拿 Java 版本 SDK 为例进行说明。</p>
-<p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
-<p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用-Nacos-Client-注册实例"><a href="#使用-Nacos-Client-注册实例" class="headerlink" title="使用 Nacos Client 注册实例"></a>使用 Nacos Client 注册实例</h2><p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">&quot;server status: &quot;</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="string">&quot;11.11.11.11&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
-<p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
-<h2 id="使用-Nacos-Client-消费实例"><a href="#使用-Nacos-Client-消费实例" class="headerlink" title="使用 Nacos Client 消费实例"></a>使用 Nacos Client 消费实例</h2><p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;server status: %s&quot;</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">&quot;~~event start&quot;</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">&quot;~~event end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
-<p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
-<p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
-<blockquote>
-<p>原文连接：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmNSZkNzWGU1VW9LNVpvaVg5eGxpQQ==">折腾一个周末，撸Nacos可真不容易<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>linux</tag>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式锁的多种实现</title>
     <url>/posts/5HB0NA.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -2450,6 +2351,105 @@
         <tag>并发</tag>
         <tag>算法</tag>
         <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>撸一下Nacos</title>
+    <url>/posts/MMNJGZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是 Nacos</p>
+<p>Nacos 是阿里巴巴开源的一款优秀的中间件，在分布式微服务场景下用的非常多。</p>
+<p><strong>Nacos</strong> 英文全称 <strong>Naming and Configuration Service</strong>，其中 Na 是 naming 的缩写，注册中心；co为 configuration 的缩写， 配置中心；</p>
+<p>不管是配置中心还是注册中心本质都是围着<strong>服务（微服务）</strong>转的，用官方的话来说：<strong>服务在 Nacos 里是一等公民</strong>。</p>
+<p>Nacos 分为服务端和客户端，这一点不要含糊。</p>
+<p><strong>Nacos Server</strong></p>
+<p>Nacos Server 使用 Java 语言编写，提供了服务注册发现和服务配置功能；对外提供了 SDK 接入以及HTTP RESTful 开放接口，SDK 接入和 RESTful 接口的功能是一致的。</p>
+<p><strong>Nacos Client</strong></p>
+<p>Nacos提供了官方的 SDK，遗憾的是只有 Java 版本，官方的 SDK 可以很方便与一些主流的框架进行集成，比如：Spring Cloud、Dubbo 等。</p>
+<p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
+<p><strong>数据模型</strong></p>
+<p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
+<p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
+<h1 id="Nacos-注册中心原理"><a href="#Nacos-注册中心原理" class="headerlink" title="Nacos 注册中心原理"></a>Nacos 注册中心原理</h1><p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
+<p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
+<p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
+<p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
+<h1 id="小试牛刀：Nacos-服务注册发现功能体验"><a href="#小试牛刀：Nacos-服务注册发现功能体验" class="headerlink" title="小试牛刀：Nacos 服务注册发现功能体验"></a>小试牛刀：Nacos 服务注册发现功能体验</h1><p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
+<h2 id="搭建运行-Nacos-Server"><a href="#搭建运行-Nacos-Server" class="headerlink" title="搭建运行 Nacos Server"></a>搭建运行 Nacos Server</h2><p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
+<p>进入 Github Nacos 下载主页：</p>
+<blockquote>
+<p>主页链接：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly8qZ2l0aHViKi5jb20vYWxpYmFiYS9uYWNvcy9yZWxlYXNlcw==">https://*github*.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
+<p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></table></figure>
+<p>如果是 windows 系统，执行以下命令：</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">startup.<span class="built_in">cmd</span> -m standalone</span><br></pre></td></tr></table></figure>
+<p><strong>（2）使用 Docker 启动 Nacos Server</strong></p>
+<p>如果你电脑上已经装了 Docker，建议你直接使用 Docker 来运行。</p>
+<p>先拉取最新镜像：</p>
+<figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">docker pull nacos/nacos-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+<p>拉取成功后启动实例：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name nacos-demo -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
+<p>这里有坑需要注意下，8848 是 Nacos Server 的主端口需要暴露出来，如果你安装的是 Nacos 2.0 版本还需要将 9848 端口暴露出来，这里我含泪调试了一下午才知道的，哭晕……</p>
+<p>为什么需要 9848 端口呢？因为 Nacos 2.0 版本之后默认将这个端口作为 grpc 的通信端口，官方提供的 Client SDK使用 grpc 来与 Nacos Server 进行通信，包括服务实例注册、心跳检查等功能。</p>
+<blockquote>
+<p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
+</blockquote>
+<h2 id="熟悉-Nacos-Server-控制台界面"><a href="#熟悉-Nacos-Server-控制台界面" class="headerlink" title="熟悉 Nacos Server 控制台界面"></a>熟悉 Nacos Server 控制台界面</h2><p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
+<blockquote>
+<p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
+<p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
+<p><strong>（1）服务管理</strong></p>
+<p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
+<p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
+<p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
+<p><strong>（2）权限控制</strong></p>
+<p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
+<p><strong>（3）命名空间</strong></p>
+<p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
+<p><strong>（4）集群管理</strong></p>
+<p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
+<h2 id="学习使用-Nacos-Client-SDK"><a href="#学习使用-Nacos-Client-SDK" class="headerlink" title="学习使用 Nacos Client SDK"></a>学习使用 Nacos Client SDK</h2><p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
+<p>我们拿 Java 版本 SDK 为例进行说明。</p>
+<p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
+<p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用-Nacos-Client-注册实例"><a href="#使用-Nacos-Client-注册实例" class="headerlink" title="使用 Nacos Client 注册实例"></a>使用 Nacos Client 注册实例</h2><p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">&quot;server status: &quot;</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="string">&quot;11.11.11.11&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
+<p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
+<h2 id="使用-Nacos-Client-消费实例"><a href="#使用-Nacos-Client-消费实例" class="headerlink" title="使用 Nacos Client 消费实例"></a>使用 Nacos Client 消费实例</h2><p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>&#123;</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">&quot;127.0.0.1:8848&quot;</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;server status: %s&quot;</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">&quot;com.leixiaoshuai.rpc.provider&quot;</span>, <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">&quot;~~event start&quot;</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">&quot;~~event end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
+<p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
+<p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
+<blockquote>
+<p>原文连接：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmNSZkNzWGU1VW9LNVpvaVg5eGxpQQ==">折腾一个周末，撸Nacos可真不容易<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>linux</tag>
+        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -4691,25 +4691,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法基础05：双向链表</title>
-    <url>/posts/2K0EYDH.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>双向链表的应用实例</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/08/11/221252y5Xw06.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/08/13/112215fDsuEl.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/08/13/100328tY8WKv.png" alt=""></p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.algorithm.linkedlist;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 13.8.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleLinkedListDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//测试</span></span><br><span class="line">        <span class="comment">//先创建节点</span></span><br><span class="line">        HeroNode2 heroNode1 = <span class="keyword">new</span> HeroNode2(<span class="number">1</span>, <span class="string">&quot;宋江&quot;</span>, <span class="string">&quot;及时雨&quot;</span>);</span><br><span class="line">        HeroNode2 heroNode2 = <span class="keyword">new</span> HeroNode2(<span class="number">2</span>, <span class="string">&quot;卢俊义&quot;</span>, <span class="string">&quot;玉麒麟&quot;</span>);</span><br><span class="line">        HeroNode2 heroNode3 = <span class="keyword">new</span> HeroNode2(<span class="number">3</span>, <span class="string">&quot;吴用&quot;</span>, <span class="string">&quot;智多星&quot;</span>);</span><br><span class="line">        HeroNode2 heroNode4 = <span class="keyword">new</span> HeroNode2(<span class="number">4</span>, <span class="string">&quot;林冲&quot;</span>, <span class="string">&quot;豹子头&quot;</span>);</span><br><span class="line"></span><br><span class="line">        DoubleLinkedList doubleLinkedList = <span class="keyword">new</span> DoubleLinkedList();</span><br><span class="line">        doubleLinkedList.add(heroNode1);</span><br><span class="line">        doubleLinkedList.add(heroNode2);</span><br><span class="line">        doubleLinkedList.add(heroNode3);</span><br><span class="line">        doubleLinkedList.add(heroNode4);</span><br><span class="line">        doubleLinkedList.list();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        HeroNode2 newHeroNode4 = <span class="keyword">new</span> HeroNode2(<span class="number">4</span>, <span class="string">&quot;孙大圣&quot;</span>, <span class="string">&quot;悟空&quot;</span>);</span><br><span class="line">        doubleLinkedList.update(newHeroNode4);</span><br><span class="line">        doubleLinkedList.list();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        doubleLinkedList.delete(<span class="number">3</span>);</span><br><span class="line">        doubleLinkedList.list();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubleLinkedList</span></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 先初始化一个头节点，头节点不要动，不存放具体数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> HeroNode2 head = <span class="keyword">new</span> HeroNode2(<span class="number">0</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    <span class="function"><span class="keyword">public</span> HeroNode2 <span class="title">getHead</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显式链表（遍历）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断链表是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;链表为空&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//因为头节点不能动，因为我们需要一个辅助变量来遍历</span></span><br><span class="line">        HeroNode2 temp = head.next;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="comment">//判断是否到链表的最后</span></span><br><span class="line">            <span class="keyword">if</span> (temp == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//输出结点信息</span></span><br><span class="line">            System.out.println(temp);</span><br><span class="line">            <span class="comment">//将节点后移</span></span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加一个节点到双向链表的最后</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> heroNode</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(HeroNode2 heroNode)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//因为head节点不能动，因此我们需要一个辅助变量temp</span></span><br><span class="line">        HeroNode2 temp = head;</span><br><span class="line">        <span class="comment">//遍历链表，找到最后</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="comment">//找到链表的最后</span></span><br><span class="line">            <span class="keyword">if</span> (temp.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果没有找到，将temp后移</span></span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//当退出while循环时，temp就指向了链表的最后</span></span><br><span class="line">        <span class="comment">//形成一个双向；链表</span></span><br><span class="line">        temp.next = heroNode;</span><br><span class="line">        heroNode.pre = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改双向链表的一个节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newHeroNode</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(HeroNode2 newHeroNode)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;链表为空&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        HeroNode2 temp = head.next;</span><br><span class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;<span class="comment">//已经遍历完</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (temp.no == newHeroNode.no) &#123;</span><br><span class="line">                <span class="comment">//找到</span></span><br><span class="line">                flag = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//根据flag判断是否找到</span></span><br><span class="line">        <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">            temp.name = newHeroNode.name;</span><br><span class="line">            temp.nickname = newHeroNode.nickname;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;没有找到&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除双向链表的一个节点</span></span><br><span class="line"><span class="comment">     * 1 对于双向链表，我们可以直接找到要删除的节点</span></span><br><span class="line"><span class="comment">     * 2 找到后自我删除即可</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> no</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> no)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;链表为空&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//辅助变量</span></span><br><span class="line">        HeroNode2 temp = head.next;</span><br><span class="line">        <span class="keyword">boolean</span> boo = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">//已经到最后</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (temp.no == no) &#123;</span><br><span class="line">                <span class="comment">//找到需要删除的前一个节点</span></span><br><span class="line">                boo = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (boo) &#123;</span><br><span class="line">            temp.pre.next = temp.next;</span><br><span class="line">            <span class="comment">//不加判断，如果最后一个会揣想那空指针异常</span></span><br><span class="line">            <span class="keyword">if</span> (temp.next != <span class="keyword">null</span>)&#123;</span><br><span class="line">                temp.next.pre = temp.pre;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;没有找到这个节点&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义heroNode,每个heroNode对象就是一个节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeroNode2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> no;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> String nickname;</span><br><span class="line">    <span class="comment">//指向后一个节点,默认null</span></span><br><span class="line">    <span class="keyword">public</span> HeroNode2 next;</span><br><span class="line">    <span class="comment">//指向前一个节点,默认null</span></span><br><span class="line">    <span class="keyword">public</span> HeroNode2 pre;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HeroNode2</span><span class="params">(<span class="keyword">int</span> no, String name, String nickname)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.no = no;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.nickname = nickname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;no=&quot;</span> + no + <span class="string">&quot;, name=&quot;</span> + name + <span class="string">&quot;, nickname=&quot;</span> + nickname;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法和数据结构</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Java</tag>
-        <tag>指针</tag>
-        <tag>变量</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>算法基础04：单链表面试题</title>
     <url>/posts/1KK9G1G.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>单链表几个面试题  </p>
@@ -4733,6 +4714,25 @@
         <tag>指针</tag>
         <tag>变量</tag>
         <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法基础05：双向链表</title>
+    <url>/posts/2K0EYDH.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>双向链表的应用实例</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/08/11/221252y5Xw06.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/08/13/112215fDsuEl.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/08/13/100328tY8WKv.png" alt=""></p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.algorithm.linkedlist;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * TODO</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：XMD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 13.8.22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleLinkedListDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//测试</span></span><br><span class="line">        <span class="comment">//先创建节点</span></span><br><span class="line">        HeroNode2 heroNode1 = <span class="keyword">new</span> HeroNode2(<span class="number">1</span>, <span class="string">&quot;宋江&quot;</span>, <span class="string">&quot;及时雨&quot;</span>);</span><br><span class="line">        HeroNode2 heroNode2 = <span class="keyword">new</span> HeroNode2(<span class="number">2</span>, <span class="string">&quot;卢俊义&quot;</span>, <span class="string">&quot;玉麒麟&quot;</span>);</span><br><span class="line">        HeroNode2 heroNode3 = <span class="keyword">new</span> HeroNode2(<span class="number">3</span>, <span class="string">&quot;吴用&quot;</span>, <span class="string">&quot;智多星&quot;</span>);</span><br><span class="line">        HeroNode2 heroNode4 = <span class="keyword">new</span> HeroNode2(<span class="number">4</span>, <span class="string">&quot;林冲&quot;</span>, <span class="string">&quot;豹子头&quot;</span>);</span><br><span class="line"></span><br><span class="line">        DoubleLinkedList doubleLinkedList = <span class="keyword">new</span> DoubleLinkedList();</span><br><span class="line">        doubleLinkedList.add(heroNode1);</span><br><span class="line">        doubleLinkedList.add(heroNode2);</span><br><span class="line">        doubleLinkedList.add(heroNode3);</span><br><span class="line">        doubleLinkedList.add(heroNode4);</span><br><span class="line">        doubleLinkedList.list();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        HeroNode2 newHeroNode4 = <span class="keyword">new</span> HeroNode2(<span class="number">4</span>, <span class="string">&quot;孙大圣&quot;</span>, <span class="string">&quot;悟空&quot;</span>);</span><br><span class="line">        doubleLinkedList.update(newHeroNode4);</span><br><span class="line">        doubleLinkedList.list();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        doubleLinkedList.delete(<span class="number">3</span>);</span><br><span class="line">        doubleLinkedList.list();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubleLinkedList</span></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 先初始化一个头节点，头节点不要动，不存放具体数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> HeroNode2 head = <span class="keyword">new</span> HeroNode2(<span class="number">0</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    <span class="function"><span class="keyword">public</span> HeroNode2 <span class="title">getHead</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显式链表（遍历）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断链表是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;链表为空&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//因为头节点不能动，因为我们需要一个辅助变量来遍历</span></span><br><span class="line">        HeroNode2 temp = head.next;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="comment">//判断是否到链表的最后</span></span><br><span class="line">            <span class="keyword">if</span> (temp == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//输出结点信息</span></span><br><span class="line">            System.out.println(temp);</span><br><span class="line">            <span class="comment">//将节点后移</span></span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加一个节点到双向链表的最后</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> heroNode</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(HeroNode2 heroNode)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//因为head节点不能动，因此我们需要一个辅助变量temp</span></span><br><span class="line">        HeroNode2 temp = head;</span><br><span class="line">        <span class="comment">//遍历链表，找到最后</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="comment">//找到链表的最后</span></span><br><span class="line">            <span class="keyword">if</span> (temp.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果没有找到，将temp后移</span></span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//当退出while循环时，temp就指向了链表的最后</span></span><br><span class="line">        <span class="comment">//形成一个双向；链表</span></span><br><span class="line">        temp.next = heroNode;</span><br><span class="line">        heroNode.pre = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改双向链表的一个节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newHeroNode</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(HeroNode2 newHeroNode)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;链表为空&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        HeroNode2 temp = head.next;</span><br><span class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;<span class="comment">//已经遍历完</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (temp.no == newHeroNode.no) &#123;</span><br><span class="line">                <span class="comment">//找到</span></span><br><span class="line">                flag = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//根据flag判断是否找到</span></span><br><span class="line">        <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">            temp.name = newHeroNode.name;</span><br><span class="line">            temp.nickname = newHeroNode.nickname;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;没有找到&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除双向链表的一个节点</span></span><br><span class="line"><span class="comment">     * 1 对于双向链表，我们可以直接找到要删除的节点</span></span><br><span class="line"><span class="comment">     * 2 找到后自我删除即可</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> no</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> no)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;链表为空&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//辅助变量</span></span><br><span class="line">        HeroNode2 temp = head.next;</span><br><span class="line">        <span class="keyword">boolean</span> boo = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">//已经到最后</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (temp.no == no) &#123;</span><br><span class="line">                <span class="comment">//找到需要删除的前一个节点</span></span><br><span class="line">                boo = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (boo) &#123;</span><br><span class="line">            temp.pre.next = temp.next;</span><br><span class="line">            <span class="comment">//不加判断，如果最后一个会揣想那空指针异常</span></span><br><span class="line">            <span class="keyword">if</span> (temp.next != <span class="keyword">null</span>)&#123;</span><br><span class="line">                temp.next.pre = temp.pre;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;没有找到这个节点&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义heroNode,每个heroNode对象就是一个节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeroNode2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> no;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> String nickname;</span><br><span class="line">    <span class="comment">//指向后一个节点,默认null</span></span><br><span class="line">    <span class="keyword">public</span> HeroNode2 next;</span><br><span class="line">    <span class="comment">//指向前一个节点,默认null</span></span><br><span class="line">    <span class="keyword">public</span> HeroNode2 pre;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HeroNode2</span><span class="params">(<span class="keyword">int</span> no, String name, String nickname)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.no = no;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.nickname = nickname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;no=&quot;</span> + no + <span class="string">&quot;, name=&quot;</span> + name + <span class="string">&quot;, nickname=&quot;</span> + nickname;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Java</tag>
+        <tag>指针</tag>
+        <tag>变量</tag>
       </tags>
   </entry>
   <entry>
@@ -7415,6 +7415,36 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>关于一些MQ的面试题</title>
+    <url>/posts/11RZTJV.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
+<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
+<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
+<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
+<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
+<blockquote>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>面试</tag>
+        <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>彻底讲透Elasticsearch</title>
     <url>/posts/3N8921N.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -7827,36 +7857,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>索引</tag>
         <tag>分布式</tag>
         <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于一些MQ的面试题</title>
-    <url>/posts/11RZTJV.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-<blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>面试</tag>
-        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -8444,107 +8444,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Docker下RabbitMQ延时队列实战两部曲之一：极速体验</title>
-    <url>/posts/3V74DRG.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>原文： <span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS8xMTQwYjQ4Y2I5YTFlN2RiZmNmODU1Njk4">Docker下RabbitMQ延时队列实战两部曲之一：极速体验<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg" alt=""></p>
-<h3 id="关于延时队列"><a href="#关于延时队列" class="headerlink" title="关于延时队列"></a>关于延时队列</h3><p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1106Vy0IMl.png" alt=""></p>
-<h3 id="延时的时长"><a href="#延时的时长" class="headerlink" title="延时的时长"></a>延时的时长</h3><ul>
-<li>从上面的描述可以看出，延时时长就是消息的过期时间 TTL（Time To Live），这个参数可以通过以下两种方式设置：</li>
-</ul>
-<ol>
-<li><p>生产消息时，设置该消息的 TTL；</p>
-</li>
-<li><p>设置整个队列的 TTL，队列中每个消息的 TTL 都是一样的；</p>
-</li>
-</ol>
-<ul>
-<li>接下来的实战，我们将上述两种方式都体验一次；</li>
-</ul>
-<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ol>
-<li>操作系统：Ubuntu 16.04.3 LTS</li>
-<li>Docker：1.12.6</li>
-<li>RabbitMQ：3.7.5-rc.1</li>
-</ol>
-<h3 id="极速体验"><a href="#极速体验" class="headerlink" title="极速体验"></a>极速体验</h3><ul>
-<li><p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1108hShQ3h.png" alt=""></p>
-</li>
-<li><p>简单说一下上图中应用的身份：</p>
-<ol>
-<li>delayrabbitmqconsumer：SpringBoot 框架的应用，连接 RabbitMQ 的两个队列，消费消息；</li>
-<li>messagettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中带有过期时间（TTL）；</li>
-<li>queuettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中不带过期时间（TTL），但是对应的消息队列已经设置了过期时间；</li>
-</ol>
-</li>
-<li><p>开始实战：</p>
-</li>
-<li><p>确保当前电脑上 Docker 可用，创建 docker-compose.yml 文件，内容如下：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rabbit1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15672:15672&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_PASS=888888</span></span><br><span class="line">  <span class="attr">rabbit2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">RAM_NODE=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">HA_ENABLE=true</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15673:15672&quot;</span></span><br><span class="line">  <span class="attr">rabbit3:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15675:15672&quot;</span></span><br><span class="line">  <span class="attr">messagettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/messagettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18080:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.exchange=message.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.source=message.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">  <span class="attr">queuettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/queuettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18081:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.exchange=queue.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.source=queue.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.value=5000</span></span><br><span class="line">  <span class="attr">delayrabbitmqconsumer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/delayrabbitmqconsumer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">delayrabbitmqconsumer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>在 docker-compose.yml 文件所在目录执行命令 <strong>docker-compose up -d</strong>，docker 会先去下载镜像，然后创建多个容器，请静候启动完成，如下：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">root@willzhao-Vostro-3267:/usr/local/work/github/blog_demos/rabbitmq_docker_files/delaymq#</span> <span class="string">docker-compose</span> <span class="string">up</span> <span class="string">-d</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">network</span> <span class="string">&quot;delaymq_default&quot;</span> <span class="string">with</span> <span class="string">the</span> <span class="string">default</span> <span class="string">driver</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit1_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit2_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit3_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_messagettlproducer_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_queuettlproducer_1</span>   <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_delayrabbitmqconsumer_1</span> <span class="string">...</span> <span class="string">done</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>一共启动了 5 个容器，将他们的名称和作用列举到下面表格中：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111M3kYEP.png" alt=""></p>
-</li>
-<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，可以进入 RabbitMQ 的登录页面，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111USpaye.png" alt=""></p>
-</li>
-<li><p>登录用户名：<strong>admin</strong>，密码：<strong>888888</strong>，登录后页面如下图，可以见到 RabbitMQ 集群已经就绪：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1112mC9tZP.png" alt=""></p>
-</li>
-<li><p>如果您的页面中的三个 RabbitMQ 还没有完全就绪（绿色状态），建议稍等几分钟后再刷新页面；</p>
-</li>
-<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhL2JiYi8z">http://192.168.31.102:18080/messagettl/aaa/bbb/3<i class="fa fa-external-link-alt"></i></span> ，即可向 delaymq_messagettlproducer_1 容器发起一次请求，容器会发送一条带有 TTL  的消息，然后页面提示发送成功，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11120vsfud.png" alt=""></p>
-</li>
-<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYy9kZGQ=">http://192.168.31.102:18081/queuettl/ccc/ddd<i class="fa fa-external-link-alt"></i></span> ，即可向  delaymq_queuettlproducer_1 容器发起一次请求，容器会向一个已经设置了 TTL  的队列发送一条消息，然后页面提示发送成功，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113xOGFtE.png" alt=""></p>
-</li>
-<li><p>再次进入 RabbitMQ 管理页面 <span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，查看队列情况如下图，已经有四个队列了：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113gawCLe.png" alt=""></p>
-</li>
-<li><p>用下列表格对上述四个队列简单说明：</p>
-</li>
-<li><p>容器 delaymq_delayrabbitmqconsumer_1 中的 tomcat 在启动时候，由于此时队列还没创建，因此无法连接队列，会导致 tomcat 启动失败，进而导致容器退出(因为 tomcat 进程占据了控制台，它退出容器就会退出)，此时请执行 <strong>docker restart delaymq_delayrabbitmqconsumer_1</strong> 重启容器；</p>
-</li>
-<li><p>重启后，执行命令 <strong>docker logs -f delaymq_delayrabbitmqconsumer_1</strong>，开始实时打印消费者容器的日志，可以看到 SpringBoot 刚刚启动就把之前的两条消息给消费了，如下图红框所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11140q4wiY.png" alt=""></p>
-</li>
-<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhMDEvYmJiMDEvMTA=">http://192.168.31.102:18080/messagettl/aaa01/bbb01/10<i class="fa fa-external-link-alt"></i></span> ，url 中的 10  表示延时十秒，去看 delaymq_delayrabbitmqconsumer_1 的日志，果然，10  秒钟后日志才会打印出来，如下所示，消息中的时间和日志的时间戳相差 10 秒：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:13:25.878  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.MessageTtlReceiver        : receive message : hello, aaa01 , bbb01, from queue [message.ttl.queue.source], delay 10&#x27;s, 2018-06-09 07:13:15</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYzAxL2RkZDAx">http://192.168.31.102:18081/queuettl/ccc01/ddd01<i class="fa fa-external-link-alt"></i></span> ，会发送消息到队列  queue.ttl.queue.source，这个队列的 TTL 是 5 秒，在 delaymq_delayrabbitmqconsumer_1 的日志中可以看见发起和收到时间正好差 5 秒，如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:31:05.101  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.QueueTtlReceiver          : receive message : hello, ccc01 , ddd01, from queue [queue.ttl.queue.source], 2018-06-09 07:31:00</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>至此，咱们的极速体验延时队列实战就结束了，接下来的章节，我们一起实战详细的开发过程《Docker 下 RabbitMQ 延时队列实战两部曲之二：细说开发》</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
-        <tag>GC</tag>
-        <tag>MQ</tag>
-        <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka面试连环炮-中</title>
     <url>/posts/1Z9HSDW.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="谈谈你对-kafka-的集群架构是如何理解的"><a href="#谈谈你对-kafka-的集群架构是如何理解的" class="headerlink" title="谈谈你对 kafka 的集群架构是如何理解的"></a>谈谈你对 kafka 的集群架构是如何理解的</h2><h3 id="Kafka-整体架构图"><a href="#Kafka-整体架构图" class="headerlink" title="Kafka 整体架构图"></a>Kafka 整体架构图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1102-jB6bMF.png" alt="图片"></p>
@@ -9022,66 +8921,104 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Qt基础学习笔记01</title>
-    <url>/posts/3V8G3VM.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><QtGlobal>头文件包含了Qt类库的一些全局定义，包括基本数据类型、函数和宏，一般的Qt类的头文件都会包含该文件，所以不用显式包含这个头文件也可以使用其中的定义。</p>
-<h2 id="数据类型定义"><a href="#数据类型定义" class="headerlink" title="数据类型定义"></a>数据类型定义</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/142148yi18pE.png" alt=""></p>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/152327E1M2Pg.png" alt=""></p>
-<h2 id="容器类"><a href="#容器类" class="headerlink" title="容器类"></a>容器类</h2><p>字符串列表类QStringList就是从容器类QList<QString>继承的，实现对字符串列表的添加、存储、删除等操作。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153248tsdG7P.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153450kFMr4y.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153639pw8d6P.png" alt=""></p>
-<h3 id="顺序容器类"><a href="#顺序容器类" class="headerlink" title="顺序容器类"></a>顺序容器类</h3><p>Qt的顺序容器类有QList、QLinkedList、QVector、QStack和QQueue。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154140lipzsB.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154228cvqtqS.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154320lPlewQ.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1544149aKShL.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154440JhsHyq.png" alt=""></p>
-<h3 id="关联容器类"><a href="#关联容器类" class="headerlink" title="关联容器类"></a>关联容器类</h3><p>Qt还提供关联容器类QMap、QMultiMap、QHash、QMultiHash和QSet。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154749eh9GjD.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/155539JL2xWV.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/155755rEv1ya.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1600342ZL5vE.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/160134XvWC3v.png" alt=""></p>
-<h2 id="容器类的迭代"><a href="#容器类的迭代" class="headerlink" title="容器类的迭代"></a>容器类的迭代</h2><p>迭代器(iterator)为访问容器类里的数据项提供了统一的方法，Qt有两种迭代器类：Java类型的迭代器和STL类型的迭代器。<br>Java类型的迭代器更易于使用，且提供一些高级功能，而STL类型的迭代器效率更高。<br>Qt还提供一个关键字foreach(实际是<QtGlobal>里定义的一个宏)用于方便地访问容器里所有数据项。</p>
-<h3 id="java类型迭代器"><a href="#java类型迭代器" class="headerlink" title="java类型迭代器"></a>java类型迭代器</h3><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/161658qhNpCu.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/162648qxdRsk.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1630500gEZ7S.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/164737i7iJef.png" alt=""></p>
-<h3 id="STL类型迭代器"><a href="#STL类型迭代器" class="headerlink" title="STL类型迭代器"></a>STL类型迭代器</h3><p>STL迭代器与Qt和STL的原生算法兼容，并且进行了速度优化。<br>对于每一个容器类，都有两个STL类型迭代器：一个用于只读访问，一个用于读写访问。<code>无需修改数据时一定使用只读迭代器，因为它们速度更快。</code></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/165029ahXnvM.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/165157sCic3c.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/172406EVXyOj.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/172637JF92Z6.png" alt=""></p>
-<h3 id="foreach-关键字"><a href="#foreach-关键字" class="headerlink" title="foreach 关键字"></a>foreach 关键字</h3><p>如果只是想遍历容器中所有的项，可以使用foreach关键字。foreach是<QtGlobal>头文件中定义的一个宏。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1728538fAXpi.png" alt=""></p>
-<h2 id="Qt类库的模块"><a href="#Qt类库的模块" class="headerlink" title="Qt类库的模块"></a>Qt类库的模块</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173613OH5ro9.png" alt=""></p>
-<h3 id="基本模块"><a href="#基本模块" class="headerlink" title="基本模块"></a>基本模块</h3><p>Qt基本模块是Qt在所有平台上的基本功能，它们在所有的开发平台和目标平台上都可用，在Qt5所有版本上是源代码和二进制兼容的。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173407GFWHl1.png" alt=""></p>
-<p>Ot Core模块是Qt类库的核心，所有其他模块都依赖于此模块，如果使用qmake构建项目，则Qt Core模块是自动被加入项目的。</p>
-<p>Qt GUI模块提供了用于开发GUI应用程序的必要的类，使用qmake构建应用程序时，Qt GUI模块是自动被加入项目的。如果项目中不使用GUI功能，则需要在项目配置文件中加入如下的一行：<br><code>QT -= gui</code></p>
-<p>其他的模块一般不会被自动加入到项目，如果需要在项目中使用某个模块，则可以在项目配置中添加此模块。例如，如果需要在项目中使用Qt Multimedia和Qt Multimedia Widgets模块，需要在项目配置文件中加入如下的语句：<br><code>OT += multimedia multimediawidgets</code><br>需要在项目中使用Qt SQL模块，就在项目配置文件中加入如下的语句：<br><code>OT += sql</code></p>
-<h3 id="附加模块"><a href="#附加模块" class="headerlink" title="附加模块"></a>附加模块</h3><p>Q附加模块可以实现一些特定目的。这些模块可能只在某些开发平台上有，或只能用于某些操作系统，或只是为了向后兼容。用户安装时可以选择性地安装这些附加模块。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173738uWsVMZ.png" alt=""></p>
-<h3 id="增值模块"><a href="#增值模块" class="headerlink" title="增值模块"></a>增值模块</h3><p>除了随Q5发布的上述这些模块，还有一些模块（见表3-8）是单独发布的，这些模块只在商业版许可的Qt里才有。</p>
-<h3 id="技术预览模块"><a href="#技术预览模块" class="headerlink" title="技术预览模块"></a>技术预览模块</h3><p>技术预览模块就是一些还处于开发和测试阶段的模块，一般技术预览模块经过几个版本的发布后会变成正式的模块。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173948dKlybJ.png" alt=""></p>
-<h3 id="Qt工具"><a href="#Qt工具" class="headerlink" title="Qt工具"></a>Qt工具</h3><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/174047wHXBsi.png" alt=""></p>
+    <title>Docker下RabbitMQ延时队列实战两部曲之一：极速体验</title>
+    <url>/posts/3V74DRG.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>原文： <span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS8xMTQwYjQ4Y2I5YTFlN2RiZmNmODU1Njk4">Docker下RabbitMQ延时队列实战两部曲之一：极速体验<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg" alt=""></p>
+<h3 id="关于延时队列"><a href="#关于延时队列" class="headerlink" title="关于延时队列"></a>关于延时队列</h3><p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1106Vy0IMl.png" alt=""></p>
+<h3 id="延时的时长"><a href="#延时的时长" class="headerlink" title="延时的时长"></a>延时的时长</h3><ul>
+<li>从上面的描述可以看出，延时时长就是消息的过期时间 TTL（Time To Live），这个参数可以通过以下两种方式设置：</li>
+</ul>
+<ol>
+<li><p>生产消息时，设置该消息的 TTL；</p>
+</li>
+<li><p>设置整个队列的 TTL，队列中每个消息的 TTL 都是一样的；</p>
+</li>
+</ol>
+<ul>
+<li>接下来的实战，我们将上述两种方式都体验一次；</li>
+</ul>
+<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ol>
+<li>操作系统：Ubuntu 16.04.3 LTS</li>
+<li>Docker：1.12.6</li>
+<li>RabbitMQ：3.7.5-rc.1</li>
+</ol>
+<h3 id="极速体验"><a href="#极速体验" class="headerlink" title="极速体验"></a>极速体验</h3><ul>
+<li><p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1108hShQ3h.png" alt=""></p>
+</li>
+<li><p>简单说一下上图中应用的身份：</p>
+<ol>
+<li>delayrabbitmqconsumer：SpringBoot 框架的应用，连接 RabbitMQ 的两个队列，消费消息；</li>
+<li>messagettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中带有过期时间（TTL）；</li>
+<li>queuettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中不带过期时间（TTL），但是对应的消息队列已经设置了过期时间；</li>
+</ol>
+</li>
+<li><p>开始实战：</p>
+</li>
+<li><p>确保当前电脑上 Docker 可用，创建 docker-compose.yml 文件，内容如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rabbit1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15672:15672&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_PASS=888888</span></span><br><span class="line">  <span class="attr">rabbit2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">RAM_NODE=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">HA_ENABLE=true</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15673:15672&quot;</span></span><br><span class="line">  <span class="attr">rabbit3:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;15675:15672&quot;</span></span><br><span class="line">  <span class="attr">messagettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/messagettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18080:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.exchange=message.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.source=message.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">  <span class="attr">queuettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/queuettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;18081:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.exchange=queue.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.source=queue.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.value=5000</span></span><br><span class="line">  <span class="attr">delayrabbitmqconsumer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/delayrabbitmqconsumer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">delayrabbitmqconsumer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>在 docker-compose.yml 文件所在目录执行命令 <strong>docker-compose up -d</strong>，docker 会先去下载镜像，然后创建多个容器，请静候启动完成，如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">root@willzhao-Vostro-3267:/usr/local/work/github/blog_demos/rabbitmq_docker_files/delaymq#</span> <span class="string">docker-compose</span> <span class="string">up</span> <span class="string">-d</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">network</span> <span class="string">&quot;delaymq_default&quot;</span> <span class="string">with</span> <span class="string">the</span> <span class="string">default</span> <span class="string">driver</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit1_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit2_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit3_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_messagettlproducer_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_queuettlproducer_1</span>   <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_delayrabbitmqconsumer_1</span> <span class="string">...</span> <span class="string">done</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>一共启动了 5 个容器，将他们的名称和作用列举到下面表格中：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111M3kYEP.png" alt=""></p>
+</li>
+<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，可以进入 RabbitMQ 的登录页面，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111USpaye.png" alt=""></p>
+</li>
+<li><p>登录用户名：<strong>admin</strong>，密码：<strong>888888</strong>，登录后页面如下图，可以见到 RabbitMQ 集群已经就绪：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1112mC9tZP.png" alt=""></p>
+</li>
+<li><p>如果您的页面中的三个 RabbitMQ 还没有完全就绪（绿色状态），建议稍等几分钟后再刷新页面；</p>
+</li>
+<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhL2JiYi8z">http://192.168.31.102:18080/messagettl/aaa/bbb/3<i class="fa fa-external-link-alt"></i></span> ，即可向 delaymq_messagettlproducer_1 容器发起一次请求，容器会发送一条带有 TTL  的消息，然后页面提示发送成功，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11120vsfud.png" alt=""></p>
+</li>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYy9kZGQ=">http://192.168.31.102:18081/queuettl/ccc/ddd<i class="fa fa-external-link-alt"></i></span> ，即可向  delaymq_queuettlproducer_1 容器发起一次请求，容器会向一个已经设置了 TTL  的队列发送一条消息，然后页面提示发送成功，如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113xOGFtE.png" alt=""></p>
+</li>
+<li><p>再次进入 RabbitMQ 管理页面 <span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，查看队列情况如下图，已经有四个队列了：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113gawCLe.png" alt=""></p>
+</li>
+<li><p>用下列表格对上述四个队列简单说明：</p>
+</li>
+<li><p>容器 delaymq_delayrabbitmqconsumer_1 中的 tomcat 在启动时候，由于此时队列还没创建，因此无法连接队列，会导致 tomcat 启动失败，进而导致容器退出(因为 tomcat 进程占据了控制台，它退出容器就会退出)，此时请执行 <strong>docker restart delaymq_delayrabbitmqconsumer_1</strong> 重启容器；</p>
+</li>
+<li><p>重启后，执行命令 <strong>docker logs -f delaymq_delayrabbitmqconsumer_1</strong>，开始实时打印消费者容器的日志，可以看到 SpringBoot 刚刚启动就把之前的两条消息给消费了，如下图红框所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11140q4wiY.png" alt=""></p>
+</li>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhMDEvYmJiMDEvMTA=">http://192.168.31.102:18080/messagettl/aaa01/bbb01/10<i class="fa fa-external-link-alt"></i></span> ，url 中的 10  表示延时十秒，去看 delaymq_delayrabbitmqconsumer_1 的日志，果然，10  秒钟后日志才会打印出来，如下所示，消息中的时间和日志的时间戳相差 10 秒：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:13:25.878  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.MessageTtlReceiver        : receive message : hello, aaa01 , bbb01, from queue [message.ttl.queue.source], delay 10&#x27;s, 2018-06-09 07:13:15</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYzAxL2RkZDAx">http://192.168.31.102:18081/queuettl/ccc01/ddd01<i class="fa fa-external-link-alt"></i></span> ，会发送消息到队列  queue.ttl.queue.source，这个队列的 TTL 是 5 秒，在 delaymq_delayrabbitmqconsumer_1 的日志中可以看见发起和收到时间正好差 5 秒，如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2018-06-09 07:31:05.101  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.QueueTtlReceiver          : receive message : hello, ccc01 , ddd01, from queue [queue.ttl.queue.source], 2018-06-09 07:31:00</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>至此，咱们的极速体验延时队列实战就结束了，接下来的章节，我们一起实战详细的开发过程《Docker 下 RabbitMQ 延时队列实战两部曲之二：细说开发》</p>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>嵌入式</category>
-        <category>Qt</category>
+        <category>中间件</category>
+        <category>消息队列</category>
       </categories>
       <tags>
         <tag>C</tag>
-        <tag>Java</tag>
-        <tag>sql</tag>
-        <tag>函数</tag>
-        <tag>全局</tag>
-        <tag>Qt</tag>
-        <tag>算法</tag>
+        <tag>Spring</tag>
+        <tag>SpringBoot</tag>
+        <tag>GC</tag>
+        <tag>MQ</tag>
         <tag>容器</tag>
-        <tag>Widget</tag>
       </tags>
   </entry>
   <entry>
@@ -9224,37 +9161,51 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Qt基础学习笔记04</title>
-    <url>/posts/23E5YZV.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li><p>qt中将Frame框设置成有颜色的边框</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QFrame&#123;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">10px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">1px</span> solid <span class="built_in">rgb</span>(<span class="number">100</span>, <span class="number">100</span>,<span class="number">189</span>)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-<li><p>Qt的LineEdit设置无边框</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QLineEdit&#123;<span class="attribute">border</span>: none &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>​</p>
-</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QFrame&#123;<span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line">		<span class="attribute">border-image</span>:None;	</span><br><span class="line">		<span class="attribute">border-radius</span>:<span class="number">22px</span>;</span><br><span class="line">&#125;</span><br><span class="line">QPushButton&#123;</span><br><span class="line"><span class="attribute">border-image</span>:None;	</span><br><span class="line"> <span class="attribute">background-color</span>: white;</span><br><span class="line"> <span class="attribute">color</span>:black;</span><br><span class="line"> <span class="attribute">border-radius</span>:<span class="number">21px</span>;</span><br><span class="line"> <span class="attribute">font</span>: <span class="number">16px</span> <span class="string">&quot;阿里巴巴普惠体 R&quot;</span>;</span><br><span class="line"> <span class="attribute">text-align</span>: center; </span><br><span class="line"><span class="attribute">margin-top</span>:<span class="number">0px</span>;</span><br><span class="line"><span class="attribute">margin-left</span>: <span class="number">0px</span>;</span><br><span class="line">marigin-<span class="attribute">right</span>:<span class="number">0px</span>;</span><br><span class="line">&#125;</span><br><span class="line">QPushButton<span class="selector-pseudo">:checked</span>&#123;</span><br><span class="line"> <span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">102</span>, <span class="number">179</span>, <span class="number">225</span>);</span><br><span class="line"> <span class="attribute">color</span>:white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>Qt::FocusPolicy</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>  1、Qt::TabFocus：通过按下Tab键获取焦点（这时候鼠标点击获取不到焦点的）。</p>
-<p>  2、Qt::ClickFocus：鼠标点击获取焦点。</p>
-<p>  3、Qt::StrongFocus：通过Tab键和鼠标点击获取焦点。</p>
-<p>  4、Qt::WheelFocus：通过Tab键、鼠标点击、鼠标滚轮按下获取焦点。</p>
-<p>  5、Qt::NoFocus：不接受焦点。</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* acceptDrops</span><br><span class="line"></span><br><span class="line">&gt; acceptDrops属性表示当前部件是否接受鼠标拖放事件，鼠标拖放应该是与鼠标拖拽结合在一起的，在Qt Designer中可以通过属性acceptDrops设置部件是否接受鼠标拖放事件。如果部件接受拖放，则在鼠标拖放时，拖放事件会发送给鼠标当前光标下接受拖放的第一个部件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 如果一个部件设置了acceptDrops属性为True，则就是通知系统该部件可能接受鼠标拖放事件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 注意：</span><br><span class="line">&gt; 1、如果当前部件是一个桌面(windowType() &#x3D;&#x3D; Qt.Desktop), 如果此时另一应用正在使用桌面则这个属性设置可能失败；</span><br><span class="line">&gt; 2、不要在拖、放事件的处理方法中修改该属性。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 使用acceptDrops(）获取当前部件是否支持拖放；</span><br><span class="line">&gt; 使用setAcceptDrops(bool on)设置当前部件是否支持拖放。</span><br><span class="line">&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* QPushButton</span><br><span class="line"></span><br><span class="line">  flat属性用于确认按钮边框是否凸起，如果为False则凸起，如果为True则边框与背景是平坦的。</span><br><span class="line"></span><br><span class="line">  (1) default属性表示当在对话框中时有“Enter”键按下时执行此按键的click()事件。它的默认值是false；</span><br><span class="line"></span><br><span class="line">  (2)autoDefault属性设置为true时会影响按键的外观（略微突出显大），它的默认值是true。</span><br><span class="line"></span><br><span class="line">  ​</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">QFrame&#123;</span><br><span class="line"></span><br><span class="line">border-radius:10px;</span><br><span class="line"></span><br><span class="line">border:1px solid rgb(119, 119,119)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>QSqlTableModel</p>
-<p><img data-src="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png" alt="150127NvND4X"></p>
-<p>​</p>
-</li>
-</ul>
+    <title>Qt基础学习笔记01</title>
+    <url>/posts/3V8G3VM.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><QtGlobal>头文件包含了Qt类库的一些全局定义，包括基本数据类型、函数和宏，一般的Qt类的头文件都会包含该文件，所以不用显式包含这个头文件也可以使用其中的定义。</p>
+<h2 id="数据类型定义"><a href="#数据类型定义" class="headerlink" title="数据类型定义"></a>数据类型定义</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/142148yi18pE.png" alt=""></p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/152327E1M2Pg.png" alt=""></p>
+<h2 id="容器类"><a href="#容器类" class="headerlink" title="容器类"></a>容器类</h2><p>字符串列表类QStringList就是从容器类QList<QString>继承的，实现对字符串列表的添加、存储、删除等操作。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153248tsdG7P.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153450kFMr4y.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153639pw8d6P.png" alt=""></p>
+<h3 id="顺序容器类"><a href="#顺序容器类" class="headerlink" title="顺序容器类"></a>顺序容器类</h3><p>Qt的顺序容器类有QList、QLinkedList、QVector、QStack和QQueue。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154140lipzsB.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154228cvqtqS.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154320lPlewQ.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1544149aKShL.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154440JhsHyq.png" alt=""></p>
+<h3 id="关联容器类"><a href="#关联容器类" class="headerlink" title="关联容器类"></a>关联容器类</h3><p>Qt还提供关联容器类QMap、QMultiMap、QHash、QMultiHash和QSet。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154749eh9GjD.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/155539JL2xWV.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/155755rEv1ya.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1600342ZL5vE.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/160134XvWC3v.png" alt=""></p>
+<h2 id="容器类的迭代"><a href="#容器类的迭代" class="headerlink" title="容器类的迭代"></a>容器类的迭代</h2><p>迭代器(iterator)为访问容器类里的数据项提供了统一的方法，Qt有两种迭代器类：Java类型的迭代器和STL类型的迭代器。<br>Java类型的迭代器更易于使用，且提供一些高级功能，而STL类型的迭代器效率更高。<br>Qt还提供一个关键字foreach(实际是<QtGlobal>里定义的一个宏)用于方便地访问容器里所有数据项。</p>
+<h3 id="java类型迭代器"><a href="#java类型迭代器" class="headerlink" title="java类型迭代器"></a>java类型迭代器</h3><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/161658qhNpCu.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/162648qxdRsk.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1630500gEZ7S.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/164737i7iJef.png" alt=""></p>
+<h3 id="STL类型迭代器"><a href="#STL类型迭代器" class="headerlink" title="STL类型迭代器"></a>STL类型迭代器</h3><p>STL迭代器与Qt和STL的原生算法兼容，并且进行了速度优化。<br>对于每一个容器类，都有两个STL类型迭代器：一个用于只读访问，一个用于读写访问。<code>无需修改数据时一定使用只读迭代器，因为它们速度更快。</code></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/165029ahXnvM.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/165157sCic3c.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/172406EVXyOj.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/172637JF92Z6.png" alt=""></p>
+<h3 id="foreach-关键字"><a href="#foreach-关键字" class="headerlink" title="foreach 关键字"></a>foreach 关键字</h3><p>如果只是想遍历容器中所有的项，可以使用foreach关键字。foreach是<QtGlobal>头文件中定义的一个宏。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1728538fAXpi.png" alt=""></p>
+<h2 id="Qt类库的模块"><a href="#Qt类库的模块" class="headerlink" title="Qt类库的模块"></a>Qt类库的模块</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173613OH5ro9.png" alt=""></p>
+<h3 id="基本模块"><a href="#基本模块" class="headerlink" title="基本模块"></a>基本模块</h3><p>Qt基本模块是Qt在所有平台上的基本功能，它们在所有的开发平台和目标平台上都可用，在Qt5所有版本上是源代码和二进制兼容的。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173407GFWHl1.png" alt=""></p>
+<p>Ot Core模块是Qt类库的核心，所有其他模块都依赖于此模块，如果使用qmake构建项目，则Qt Core模块是自动被加入项目的。</p>
+<p>Qt GUI模块提供了用于开发GUI应用程序的必要的类，使用qmake构建应用程序时，Qt GUI模块是自动被加入项目的。如果项目中不使用GUI功能，则需要在项目配置文件中加入如下的一行：<br><code>QT -= gui</code></p>
+<p>其他的模块一般不会被自动加入到项目，如果需要在项目中使用某个模块，则可以在项目配置中添加此模块。例如，如果需要在项目中使用Qt Multimedia和Qt Multimedia Widgets模块，需要在项目配置文件中加入如下的语句：<br><code>OT += multimedia multimediawidgets</code><br>需要在项目中使用Qt SQL模块，就在项目配置文件中加入如下的语句：<br><code>OT += sql</code></p>
+<h3 id="附加模块"><a href="#附加模块" class="headerlink" title="附加模块"></a>附加模块</h3><p>Q附加模块可以实现一些特定目的。这些模块可能只在某些开发平台上有，或只能用于某些操作系统，或只是为了向后兼容。用户安装时可以选择性地安装这些附加模块。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173738uWsVMZ.png" alt=""></p>
+<h3 id="增值模块"><a href="#增值模块" class="headerlink" title="增值模块"></a>增值模块</h3><p>除了随Q5发布的上述这些模块，还有一些模块（见表3-8）是单独发布的，这些模块只在商业版许可的Qt里才有。</p>
+<h3 id="技术预览模块"><a href="#技术预览模块" class="headerlink" title="技术预览模块"></a>技术预览模块</h3><p>技术预览模块就是一些还处于开发和测试阶段的模块，一般技术预览模块经过几个版本的发布后会变成正式的模块。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173948dKlybJ.png" alt=""></p>
+<h3 id="Qt工具"><a href="#Qt工具" class="headerlink" title="Qt工具"></a>Qt工具</h3><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/174047wHXBsi.png" alt=""></p>
 ]]></content>
       <categories>
         <category>嵌入式</category>
@@ -9262,8 +9213,14 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </categories>
       <tags>
         <tag>C</tag>
+        <tag>Java</tag>
         <tag>sql</tag>
+        <tag>函数</tag>
+        <tag>全局</tag>
         <tag>Qt</tag>
+        <tag>算法</tag>
+        <tag>容器</tag>
+        <tag>Widget</tag>
       </tags>
   </entry>
   <entry>
@@ -9414,6 +9371,76 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>Qt基础学习笔记04</title>
+    <url>/posts/23E5YZV.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li><p>qt中将Frame框设置成有颜色的边框</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QFrame&#123;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">10px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">1px</span> solid <span class="built_in">rgb</span>(<span class="number">100</span>, <span class="number">100</span>,<span class="number">189</span>)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>Qt的LineEdit设置无边框</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QLineEdit&#123;<span class="attribute">border</span>: none &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>​</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">QFrame&#123;<span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line">		<span class="attribute">border-image</span>:None;	</span><br><span class="line">		<span class="attribute">border-radius</span>:<span class="number">22px</span>;</span><br><span class="line">&#125;</span><br><span class="line">QPushButton&#123;</span><br><span class="line"><span class="attribute">border-image</span>:None;	</span><br><span class="line"> <span class="attribute">background-color</span>: white;</span><br><span class="line"> <span class="attribute">color</span>:black;</span><br><span class="line"> <span class="attribute">border-radius</span>:<span class="number">21px</span>;</span><br><span class="line"> <span class="attribute">font</span>: <span class="number">16px</span> <span class="string">&quot;阿里巴巴普惠体 R&quot;</span>;</span><br><span class="line"> <span class="attribute">text-align</span>: center; </span><br><span class="line"><span class="attribute">margin-top</span>:<span class="number">0px</span>;</span><br><span class="line"><span class="attribute">margin-left</span>: <span class="number">0px</span>;</span><br><span class="line">marigin-<span class="attribute">right</span>:<span class="number">0px</span>;</span><br><span class="line">&#125;</span><br><span class="line">QPushButton<span class="selector-pseudo">:checked</span>&#123;</span><br><span class="line"> <span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">102</span>, <span class="number">179</span>, <span class="number">225</span>);</span><br><span class="line"> <span class="attribute">color</span>:white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Qt::FocusPolicy</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  1、Qt::TabFocus：通过按下Tab键获取焦点（这时候鼠标点击获取不到焦点的）。</p>
+<p>  2、Qt::ClickFocus：鼠标点击获取焦点。</p>
+<p>  3、Qt::StrongFocus：通过Tab键和鼠标点击获取焦点。</p>
+<p>  4、Qt::WheelFocus：通过Tab键、鼠标点击、鼠标滚轮按下获取焦点。</p>
+<p>  5、Qt::NoFocus：不接受焦点。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* acceptDrops</span><br><span class="line"></span><br><span class="line">&gt; acceptDrops属性表示当前部件是否接受鼠标拖放事件，鼠标拖放应该是与鼠标拖拽结合在一起的，在Qt Designer中可以通过属性acceptDrops设置部件是否接受鼠标拖放事件。如果部件接受拖放，则在鼠标拖放时，拖放事件会发送给鼠标当前光标下接受拖放的第一个部件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 如果一个部件设置了acceptDrops属性为True，则就是通知系统该部件可能接受鼠标拖放事件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 注意：</span><br><span class="line">&gt; 1、如果当前部件是一个桌面(windowType() &#x3D;&#x3D; Qt.Desktop), 如果此时另一应用正在使用桌面则这个属性设置可能失败；</span><br><span class="line">&gt; 2、不要在拖、放事件的处理方法中修改该属性。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 使用acceptDrops(）获取当前部件是否支持拖放；</span><br><span class="line">&gt; 使用setAcceptDrops(bool on)设置当前部件是否支持拖放。</span><br><span class="line">&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* QPushButton</span><br><span class="line"></span><br><span class="line">  flat属性用于确认按钮边框是否凸起，如果为False则凸起，如果为True则边框与背景是平坦的。</span><br><span class="line"></span><br><span class="line">  (1) default属性表示当在对话框中时有“Enter”键按下时执行此按键的click()事件。它的默认值是false；</span><br><span class="line"></span><br><span class="line">  (2)autoDefault属性设置为true时会影响按键的外观（略微突出显大），它的默认值是true。</span><br><span class="line"></span><br><span class="line">  ​</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">QFrame&#123;</span><br><span class="line"></span><br><span class="line">border-radius:10px;</span><br><span class="line"></span><br><span class="line">border:1px solid rgb(119, 119,119)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>QSqlTableModel</p>
+<p><img data-src="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png" alt="150127NvND4X"></p>
+<p>​</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>嵌入式</category>
+        <category>Qt</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>sql</tag>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql复制插入数据</title>
+    <url>/posts/1H0J6ZZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主键设为自增</p>
+<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
+<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
+<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
+<p>将ID中的a替换成b  </p>
+<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
+<p>create_time 为返回值，在原来的时间上加一个月。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>sql</tag>
+        <tag>函数</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL的事务隔离级别有哪些</title>
     <url>/posts/Y4WPCX.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -9461,33 +9488,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>锁</tag>
         <tag>并发</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mysql复制插入数据</title>
-    <url>/posts/1H0J6ZZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>主键设为自增</p>
-<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
-<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
-<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
-<p>将ID中的a替换成b  </p>
-<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
-<p>create_time 为返回值，在原来的时间上加一个月。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>sql</tag>
-        <tag>函数</tag>
       </tags>
   </entry>
   <entry>
@@ -9734,73 +9734,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>Mysql索引原理</title>
-    <url>/posts/VB6XWR.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是索引<br>索引是一种利用某种规则的数据结构与实际数据的关系加快数据查找的功能；索引数据节点中有着实际文件的位置，因为索引是根据特定的规则和算法构建的,在查找的时候遵循索引的规则可以快速查找到对应数据的节点，从而达到快速查找数据的效果；其实宏观来说索引其实是一种概念而不是具体的某项技术，只是我们在某个技术中运用得比较广泛和鲜明（比如说数据库）渐渐的有了特定领域的标签，其实在生活中索引的使用无处不在，比如说：书本里的目录；读书时的座位号，考试编号都有类似索引的功能;</p>
-<p>总结来所有通过某规则数据结构和实际目标关联，根据特定规则算法快速寻址的功能都可以称之为索引；</p>
-<h2 id="二、为什么要用索引"><a href="#二、为什么要用索引" class="headerlink" title="二、为什么要用索引"></a>二、为什么要用索引</h2><p>首先我们看下在没有索引的情况下是怎么查找数据的：</p>
-<p>我们用一个例子来解释比较直观</p>
-<p>（1）没有索引的情况下访问数据：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-vn2lXu.jpg" alt="1300-9A9kOW"></p>
-<p>（2）使用平衡二叉树结构作为索引的情况下访问数据：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-0sjTWg.jpg" alt="1300-EQ6HD3">  </p>
-<p>第一张图没有使用索引我们会进行顺序查找，依照数据顺序逐个进行匹配，进行了5次寻址才查询出所需数据，第二张图用了一个简单的平衡二叉树索引之后我们只用了3次，这还是数据量小的情况下，数据量大了效果更明显，所以总结来说创建索引就是为了加快数据查找速度；</p>
-<h2 id="三、Innodb-的索引选择"><a href="#三、Innodb-的索引选择" class="headerlink" title="三、Innodb 的索引选择"></a>三、Innodb 的索引选择</h2><p>Mysql 的默认存储引擎innodb使用B+树作为索引的存储结构，为了让我们能更深入理解B+树，所以我们会对B+树的衍生过程做一些了解。</p>
-<h3 id="1、数组和链表的选择"><a href="#1、数组和链表的选择" class="headerlink" title="1、数组和链表的选择"></a><strong>1、数组和链表的选择</strong></h3><p>作为最基础的数据存储结构数组和链表，是选用数组还是选择链表来作为索引存储的基本结构呢？首先我们需要从索引和两种数据结构的特性来分析。</p>
-<p><strong>数组的特性：</strong> 查找快、但是插入、修改数据慢。</p>
-<p><strong>链表的特性：</strong> 查找慢、插入、修改快。</p>
-<p>在数据库的业务场景里插入、修改、查询都是比较频繁的操作，选链表还是数组好像都不完美。既然都不完美，那么我们只能退而求其次，看谁比较容易去完善。从完善的角度来看，那么我们就会从数组里发现一个致命的问题，数组的修改和移动都会导致数组大量的元素迁移，而且在迁移的过程中是不能查找数据的，数组元素迁移没有完成查询出来的数据就可能是错的，这样就导致数组在频繁插入和修改的过程中不仅仅是修改和插入本身慢，而且因为这个而导致查询也用不了，显然这个问题对于修改和插入频繁的数据库来说是无法忍受的。所以我们只能把链表作为索引的基础结构了，那么剩下的就是如何解决链表查询小笼包慢的问题了。</p>
-<h3 id="2、从链表到二叉树"><a href="#2、从链表到二叉树" class="headerlink" title="2、从链表到二叉树"></a><strong>2、从链表到二叉树</strong></h3><p>如果使用链表来存储数据，那么必须要解决的一个问题就是要解决链表的查询效率问题，我们必须通过一种算法来解决链表查找数据慢的问题，而这里这里就用到了二分查找法，利用二分法思维把链表拆成N个对半分的节点，然后形成了一个数据结构叫二叉查找树，使用了二分法思维衍生出来的树大大提升了查找的性能。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-cjA5NX.jpg" alt="1301-Bnp6DL"></p>
-<h3 id="3、从二叉查树到平衡二叉树"><a href="#3、从二叉查树到平衡二叉树" class="headerlink" title="3、从二叉查树到平衡二叉树"></a><strong>3、从二叉查树到平衡二叉树</strong></h3><p>二叉查找树极大的提升了链表查找数据的效率，不过我们又发现了一个问题，就是二叉查找树的“高度”不可控，一旦树的节点插入变成向下图一样的结构。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-vTHEoc.jpg" alt="1301-4hsdTc">  </p>
-<p>如果树的节点不可控编程变成线性结构，那么就会极大的降低我们的查询效率，所以我们就又需要一种算法来保证二叉树节点的平衡，让树的节点高度差不会太大，这个时候就衍生了一些平衡算法，最终我们的二叉树就有像AVL树和红黑树这些新产品，我们也称这些新产品为平衡二叉树，，平衡二叉树通常会保证树的左右两边的节点层级相差不会大于2。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-2pzIIa.jpg" alt="1301-I8F42Y"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-j9YcaM.jpg" alt=""></p>
-<h3 id="4、从平衡二叉树到B树"><a href="#4、从平衡二叉树到B树" class="headerlink" title="4、从平衡二叉树到B树"></a><strong>4、从平衡二叉树到B树</strong></h3><p>平衡二叉树的出现好像很接近于我们的理想状态了，但好像还有什么优化的空间，我们通过上面两个树的演化过程发现，影响这棵树的查询效率的决定性因素就是树的高度，只要树的层级越少，那么树的查询效率就越高，本着这个原则我们就思考每个节点能不能多存点 数据，只要每个数节点的数据保存的越多，那么我们树的层级就会越少，</p>
-<p>B树相对平衡二叉树最大的一个改变，就是B树的每个节点可存储的关键字增多了，特别是在B树应用到数据库中的时候，节点存储关键字的数量充分利用了磁盘块IO的原理（磁盘数据存储是采用块的形式存储的，每个块的大小为4K，每次IO进行数据读取时，同一个磁盘块的数据可以一次性读取出来），B树只要把节点大小限制在磁盘快大小范围，这样就可以只需要一次IO就读取到节点所有数据，节点存储了更多的关键字，但是并不会影响IO的次数。B树树相对于之前节点可以存储更多的关键字，所以树的层级会比原来少很多，树的层级减少了，那么检索的效率就会大大提升。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-U1Ng5z.jpg" alt="1302-0YutJJ"></p>
-<h3 id="5、从B树到B-树"><a href="#5、从B树到B-树" class="headerlink" title="5、从B树到B+树"></a><strong>5、从B树到B+树</strong></h3><p><strong>其实B树已经接近我们的理想预期了，但是还是能从B树的上面找到可以优化的地方，比如以下几个方面：</strong></p>
-<p>1、B树的节点同时保存了索引的key和数据值（如果节点只保存索引key不保存值，那么是不是会把索引树的层层级更进一步的减少）。</p>
-<p>2、因为每个节点保存了数据值，这样的话查询不同的数据效率就会显得不稳定，有些在树的第一层匹配成功就返回，有些则可能需要匹配到树的最后一层才返回。</p>
-<p>3、如果要查询所有数据，那么就必须遍历整个B树的每个节点。</p>
-<p><strong>B+树在B树的基础上 又做了一些优化，B+树主要做了下面几点的优化。</strong></p>
-<p>1、B+跟B树不同，B+树的非叶子节点不保存实际的数据，只保存索引key，所有的数据都会保存到叶子节点。</p>
-<p><strong>树层级变少：</strong>如果非叶子节点不保存实际的数据值，而只保存索引key，那么相对于B树来说B+树的每个<strong>非叶子</strong>节点存储的索引key会更多，所以树的层级也会更少，那么查询效率也会更快。</p>
-<p><strong>查询更稳定：</strong>因为B+所有数据值都是存在<strong>叶子</strong>节点上，所以每次查找的次数都相同所以查询速度要比B树更稳定；</p>
-<p><strong>遍历整个树更快：</strong>B+树遍历整棵树只需要遍历所有的<strong>叶子</strong>节点即可，，而不需要像B树一样需要对每一层进行遍历，这有利于数据库做全表扫描。</p>
-<p>2、B+树叶子节点的关键字从小到大有序排列，左边结尾数据都会保存右边节点开始数据的指针。</p>
-<p><strong>排序和范围查询更方便</strong>：B+树所有的叶子节点数据构成了一个有序链表，这样在进行数据排序和询范围大小查询数据的时候更方便，数据紧密性也更高。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-rYU3bq.jpg" alt="1302-WFyIHT">  </p>
-<p><strong>（百度百科算法结构示意图）</strong></p>
-<p>总结来说，从平衡二叉树、B树、B+树，总体来看它们的贯彻的思想是相同的，在链表的基础上，如何采用二分法和数据平衡策略来提升查找数据的速度。不同点是他们一个一个在演变的过程中通过IO从磁盘读取数据的原理进行一步步的演变，每一次演变都是为了让节点的空间更合理的运用起来，从而使树的层级减少达到快速查找数据的目的，在这个基础上，B+树的查找速度快、性能稳定、排序快、扫表快等诸多特点也就让Mysql选择了B+树来作为索引的存储结构。</p>
-<h2 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h2><h3 id="为什么说Mysql的索引树一般都在1-3层的结构？"><a href="#为什么说Mysql的索引树一般都在1-3层的结构？" class="headerlink" title="为什么说Mysql的索引树一般都在1-3层的结构？"></a><strong>为什么说Mysql的索引树一般都在1-3层的结构？</strong></h3><p>经常听到别人说Mysql的索引树一般会在3层，这个是有什么依据？ 其实这个的确是有数据计算支撑的，我们可以根据B+树的原理进行一下数据推算，因为磁盘每页数据为4K，而Mysql的B+树对此又进行了一次调整，在Mysql也有自己的页概念，Mysql里的每一页数据等于磁盘4个页的大小，所以在Mysql里面的一页数据其实是16K，那么也就意味着Mysql里B+树的非叶子节点可存储16K的数据。</p>
-<p>然后我们按照一个索引大小，如果字段类型为varchar，长度为10，字符类型为utf8mb4，在不考虑其他因素的影响下，一个索引的大小等于 10 _3+2=32字节，我们按照每个非叶子节点的16K来计算，Mysql索引树每个节点能容纳(16_1024)/32=512个索引key。</p>
-<p><strong>索引树的第一层：</strong>第一层是树的根节点，所以索引树的第一层保存索引Key的数量为512个；</p>
-<p><strong>索引树的第二层：</strong>B+树根节点可保存512个索引key，也就是当前B+树有512个分叉，那么第二层索引树节点个数为512个，保存索引Key的数量=512*512=262144。</p>
-<p><strong>索引树的第三层：</strong>第二层key数量为262144，那么第三层的树节点数量也就是262144，那么第三层索引树节点个数为512个，保存索引Key的数量=262144*512=134217728。</p>
-<p>根据一个计算我们可以基本得出，类型varchar，长度为10，字符类型为utf8mb4的索引字段，数据在512条之内树结构只有一层。数据在262144之内树只有两层，数据在134217728之内，索引树都会保持在3层之内，而我们的表数据一般而言都保持在千万级以内，所以说Mysql的索引树一般都在1-3层。</p>
-<blockquote>
-<p><a href="https://xuemingde.com/JavaNotes/数据库/20220407-Mysql索引原理">20220407-Mysql索引原理</a><br>本文转自 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMTM3NzIwNDI=">https://zhuanlan.zhihu.com/p/213772042<i class="fa fa-external-link-alt"></i></span>，如有侵权，请联系删除。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Java</tag>
-        <tag>sql</tag>
-        <tag>数据库</tag>
-        <tag>数组</tag>
-        <tag>指针</tag>
-        <tag>Mysql</tag>
-        <tag>索引</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Innodb的MVCC实现原理</title>
     <url>/posts/VQ077V.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>理解MVCC之前，我们需要回顾了解一下数据库的一些其他相关知识点</p>
@@ -9935,6 +9868,73 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>锁</tag>
         <tag>索引</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql索引原理</title>
+    <url>/posts/VB6XWR.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>什么是索引<br>索引是一种利用某种规则的数据结构与实际数据的关系加快数据查找的功能；索引数据节点中有着实际文件的位置，因为索引是根据特定的规则和算法构建的,在查找的时候遵循索引的规则可以快速查找到对应数据的节点，从而达到快速查找数据的效果；其实宏观来说索引其实是一种概念而不是具体的某项技术，只是我们在某个技术中运用得比较广泛和鲜明（比如说数据库）渐渐的有了特定领域的标签，其实在生活中索引的使用无处不在，比如说：书本里的目录；读书时的座位号，考试编号都有类似索引的功能;</p>
+<p>总结来所有通过某规则数据结构和实际目标关联，根据特定规则算法快速寻址的功能都可以称之为索引；</p>
+<h2 id="二、为什么要用索引"><a href="#二、为什么要用索引" class="headerlink" title="二、为什么要用索引"></a>二、为什么要用索引</h2><p>首先我们看下在没有索引的情况下是怎么查找数据的：</p>
+<p>我们用一个例子来解释比较直观</p>
+<p>（1）没有索引的情况下访问数据：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-vn2lXu.jpg" alt="1300-9A9kOW"></p>
+<p>（2）使用平衡二叉树结构作为索引的情况下访问数据：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1300-0sjTWg.jpg" alt="1300-EQ6HD3">  </p>
+<p>第一张图没有使用索引我们会进行顺序查找，依照数据顺序逐个进行匹配，进行了5次寻址才查询出所需数据，第二张图用了一个简单的平衡二叉树索引之后我们只用了3次，这还是数据量小的情况下，数据量大了效果更明显，所以总结来说创建索引就是为了加快数据查找速度；</p>
+<h2 id="三、Innodb-的索引选择"><a href="#三、Innodb-的索引选择" class="headerlink" title="三、Innodb 的索引选择"></a>三、Innodb 的索引选择</h2><p>Mysql 的默认存储引擎innodb使用B+树作为索引的存储结构，为了让我们能更深入理解B+树，所以我们会对B+树的衍生过程做一些了解。</p>
+<h3 id="1、数组和链表的选择"><a href="#1、数组和链表的选择" class="headerlink" title="1、数组和链表的选择"></a><strong>1、数组和链表的选择</strong></h3><p>作为最基础的数据存储结构数组和链表，是选用数组还是选择链表来作为索引存储的基本结构呢？首先我们需要从索引和两种数据结构的特性来分析。</p>
+<p><strong>数组的特性：</strong> 查找快、但是插入、修改数据慢。</p>
+<p><strong>链表的特性：</strong> 查找慢、插入、修改快。</p>
+<p>在数据库的业务场景里插入、修改、查询都是比较频繁的操作，选链表还是数组好像都不完美。既然都不完美，那么我们只能退而求其次，看谁比较容易去完善。从完善的角度来看，那么我们就会从数组里发现一个致命的问题，数组的修改和移动都会导致数组大量的元素迁移，而且在迁移的过程中是不能查找数据的，数组元素迁移没有完成查询出来的数据就可能是错的，这样就导致数组在频繁插入和修改的过程中不仅仅是修改和插入本身慢，而且因为这个而导致查询也用不了，显然这个问题对于修改和插入频繁的数据库来说是无法忍受的。所以我们只能把链表作为索引的基础结构了，那么剩下的就是如何解决链表查询小笼包慢的问题了。</p>
+<h3 id="2、从链表到二叉树"><a href="#2、从链表到二叉树" class="headerlink" title="2、从链表到二叉树"></a><strong>2、从链表到二叉树</strong></h3><p>如果使用链表来存储数据，那么必须要解决的一个问题就是要解决链表的查询效率问题，我们必须通过一种算法来解决链表查找数据慢的问题，而这里这里就用到了二分查找法，利用二分法思维把链表拆成N个对半分的节点，然后形成了一个数据结构叫二叉查找树，使用了二分法思维衍生出来的树大大提升了查找的性能。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-cjA5NX.jpg" alt="1301-Bnp6DL"></p>
+<h3 id="3、从二叉查树到平衡二叉树"><a href="#3、从二叉查树到平衡二叉树" class="headerlink" title="3、从二叉查树到平衡二叉树"></a><strong>3、从二叉查树到平衡二叉树</strong></h3><p>二叉查找树极大的提升了链表查找数据的效率，不过我们又发现了一个问题，就是二叉查找树的“高度”不可控，一旦树的节点插入变成向下图一样的结构。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-vTHEoc.jpg" alt="1301-4hsdTc">  </p>
+<p>如果树的节点不可控编程变成线性结构，那么就会极大的降低我们的查询效率，所以我们就又需要一种算法来保证二叉树节点的平衡，让树的节点高度差不会太大，这个时候就衍生了一些平衡算法，最终我们的二叉树就有像AVL树和红黑树这些新产品，我们也称这些新产品为平衡二叉树，，平衡二叉树通常会保证树的左右两边的节点层级相差不会大于2。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1301-2pzIIa.jpg" alt="1301-I8F42Y"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-j9YcaM.jpg" alt=""></p>
+<h3 id="4、从平衡二叉树到B树"><a href="#4、从平衡二叉树到B树" class="headerlink" title="4、从平衡二叉树到B树"></a><strong>4、从平衡二叉树到B树</strong></h3><p>平衡二叉树的出现好像很接近于我们的理想状态了，但好像还有什么优化的空间，我们通过上面两个树的演化过程发现，影响这棵树的查询效率的决定性因素就是树的高度，只要树的层级越少，那么树的查询效率就越高，本着这个原则我们就思考每个节点能不能多存点 数据，只要每个数节点的数据保存的越多，那么我们树的层级就会越少，</p>
+<p>B树相对平衡二叉树最大的一个改变，就是B树的每个节点可存储的关键字增多了，特别是在B树应用到数据库中的时候，节点存储关键字的数量充分利用了磁盘块IO的原理（磁盘数据存储是采用块的形式存储的，每个块的大小为4K，每次IO进行数据读取时，同一个磁盘块的数据可以一次性读取出来），B树只要把节点大小限制在磁盘快大小范围，这样就可以只需要一次IO就读取到节点所有数据，节点存储了更多的关键字，但是并不会影响IO的次数。B树树相对于之前节点可以存储更多的关键字，所以树的层级会比原来少很多，树的层级减少了，那么检索的效率就会大大提升。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-U1Ng5z.jpg" alt="1302-0YutJJ"></p>
+<h3 id="5、从B树到B-树"><a href="#5、从B树到B-树" class="headerlink" title="5、从B树到B+树"></a><strong>5、从B树到B+树</strong></h3><p><strong>其实B树已经接近我们的理想预期了，但是还是能从B树的上面找到可以优化的地方，比如以下几个方面：</strong></p>
+<p>1、B树的节点同时保存了索引的key和数据值（如果节点只保存索引key不保存值，那么是不是会把索引树的层层级更进一步的减少）。</p>
+<p>2、因为每个节点保存了数据值，这样的话查询不同的数据效率就会显得不稳定，有些在树的第一层匹配成功就返回，有些则可能需要匹配到树的最后一层才返回。</p>
+<p>3、如果要查询所有数据，那么就必须遍历整个B树的每个节点。</p>
+<p><strong>B+树在B树的基础上 又做了一些优化，B+树主要做了下面几点的优化。</strong></p>
+<p>1、B+跟B树不同，B+树的非叶子节点不保存实际的数据，只保存索引key，所有的数据都会保存到叶子节点。</p>
+<p><strong>树层级变少：</strong>如果非叶子节点不保存实际的数据值，而只保存索引key，那么相对于B树来说B+树的每个<strong>非叶子</strong>节点存储的索引key会更多，所以树的层级也会更少，那么查询效率也会更快。</p>
+<p><strong>查询更稳定：</strong>因为B+所有数据值都是存在<strong>叶子</strong>节点上，所以每次查找的次数都相同所以查询速度要比B树更稳定；</p>
+<p><strong>遍历整个树更快：</strong>B+树遍历整棵树只需要遍历所有的<strong>叶子</strong>节点即可，，而不需要像B树一样需要对每一层进行遍历，这有利于数据库做全表扫描。</p>
+<p>2、B+树叶子节点的关键字从小到大有序排列，左边结尾数据都会保存右边节点开始数据的指针。</p>
+<p><strong>排序和范围查询更方便</strong>：B+树所有的叶子节点数据构成了一个有序链表，这样在进行数据排序和询范围大小查询数据的时候更方便，数据紧密性也更高。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1302-rYU3bq.jpg" alt="1302-WFyIHT">  </p>
+<p><strong>（百度百科算法结构示意图）</strong></p>
+<p>总结来说，从平衡二叉树、B树、B+树，总体来看它们的贯彻的思想是相同的，在链表的基础上，如何采用二分法和数据平衡策略来提升查找数据的速度。不同点是他们一个一个在演变的过程中通过IO从磁盘读取数据的原理进行一步步的演变，每一次演变都是为了让节点的空间更合理的运用起来，从而使树的层级减少达到快速查找数据的目的，在这个基础上，B+树的查找速度快、性能稳定、排序快、扫表快等诸多特点也就让Mysql选择了B+树来作为索引的存储结构。</p>
+<h2 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h2><h3 id="为什么说Mysql的索引树一般都在1-3层的结构？"><a href="#为什么说Mysql的索引树一般都在1-3层的结构？" class="headerlink" title="为什么说Mysql的索引树一般都在1-3层的结构？"></a><strong>为什么说Mysql的索引树一般都在1-3层的结构？</strong></h3><p>经常听到别人说Mysql的索引树一般会在3层，这个是有什么依据？ 其实这个的确是有数据计算支撑的，我们可以根据B+树的原理进行一下数据推算，因为磁盘每页数据为4K，而Mysql的B+树对此又进行了一次调整，在Mysql也有自己的页概念，Mysql里的每一页数据等于磁盘4个页的大小，所以在Mysql里面的一页数据其实是16K，那么也就意味着Mysql里B+树的非叶子节点可存储16K的数据。</p>
+<p>然后我们按照一个索引大小，如果字段类型为varchar，长度为10，字符类型为utf8mb4，在不考虑其他因素的影响下，一个索引的大小等于 10 _3+2=32字节，我们按照每个非叶子节点的16K来计算，Mysql索引树每个节点能容纳(16_1024)/32=512个索引key。</p>
+<p><strong>索引树的第一层：</strong>第一层是树的根节点，所以索引树的第一层保存索引Key的数量为512个；</p>
+<p><strong>索引树的第二层：</strong>B+树根节点可保存512个索引key，也就是当前B+树有512个分叉，那么第二层索引树节点个数为512个，保存索引Key的数量=512*512=262144。</p>
+<p><strong>索引树的第三层：</strong>第二层key数量为262144，那么第三层的树节点数量也就是262144，那么第三层索引树节点个数为512个，保存索引Key的数量=262144*512=134217728。</p>
+<p>根据一个计算我们可以基本得出，类型varchar，长度为10，字符类型为utf8mb4的索引字段，数据在512条之内树结构只有一层。数据在262144之内树只有两层，数据在134217728之内，索引树都会保持在3层之内，而我们的表数据一般而言都保持在千万级以内，所以说Mysql的索引树一般都在1-3层。</p>
+<blockquote>
+<p><a href="https://xuemingde.com/JavaNotes/数据库/20220407-Mysql索引原理">20220407-Mysql索引原理</a><br>本文转自 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMTM3NzIwNDI=">https://zhuanlan.zhihu.com/p/213772042<i class="fa fa-external-link-alt"></i></span>，如有侵权，请联系删除。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Java</tag>
+        <tag>sql</tag>
+        <tag>数据库</tag>
+        <tag>数组</tag>
+        <tag>指针</tag>
+        <tag>Mysql</tag>
+        <tag>索引</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -10973,31 +10973,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>OR与AND一起的用法</title>
-    <url>/posts/1BED9D0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
-<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
-<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
-<p>查询  </p>
-<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
-SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
-</code></pre>
-<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
-<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL优化和SQl注入问题</title>
     <url>/posts/1NTK6KJ.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vbWVhZGVyL2hleG8tYmxvZy9ibG9iL2Jsb2cvc291cmNlL19wb3N0cy8lRTYlOTUlQjAlRTYlOEQlQUUlRTUlQkElOTMvU1FMLzIwMjEwMzI0LVNRTCVFNCVCQyU5OCVFNSU4QyU5NiVFNSU5MiU4Q1NRbCVFNiVCMyVBOCVFNSU4NSVBNSVFOSU5NyVBRSVFOSVBMiU5OC5tZA==">Gitee原文<i class="fa fa-external-link-alt"></i></span></p>
@@ -11027,6 +11002,31 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
 <p><img data-src="https://xuemingde.com/pages/image/others/1616578269256-50e74199-38ea-4d0b-9578-89a0fc62191e.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/1616579091545-5c28d7c4-ecbe-43db-b31d-736843686929.png" alt="image.png"></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/image-20210324175324481.png" alt="image-20210324175324481"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OR与AND一起的用法</title>
+    <url>/posts/1BED9D0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
+<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
+<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
+<p>查询  </p>
+<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
+SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
+</code></pre>
+<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
+<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -11765,6 +11765,19 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </tags>
   </entry>
   <entry>
+    <title>Spring系列(下)</title>
+    <url>/posts/1ZM62F.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>框架</category>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring是如何解决循环依赖的</title>
     <url>/posts/2SH00H4.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -11964,19 +11977,6 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
         <tag>数组</tag>
         <tag>索引</tag>
         <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring系列(下)</title>
-    <url>/posts/1ZM62F.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>框架</category>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
