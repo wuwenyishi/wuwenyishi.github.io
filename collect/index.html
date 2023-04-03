@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://cdn.baomitu.com/index/fonts/css?family=Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Noto Sans Simplified Chinese:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//lib.baomitu.com/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//lib.baomitu.com/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//lib.baomitu.com/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 死锁的排查工具有哪些？ - 掘金 如何判断线程池已经执行完所有任务了？ - 掘金 synchronized和ReentrantL">
+<meta property="og:type" content="website">
+<meta property="og:title" content="个人收藏">
+<meta property="og:url" content="https://xuemingde.com/collect/index.html">
+<meta property="og:site_name" content="meadel&#39;s blog">
+<meta property="og:description" content="JAVA集合数组 HashMap与ConcurrentHashMap面试要点 - 掘金 ConcurrentHashMap源码解析 - 掘金  并发&amp;多线程 ReentrantLock 源码分析 - 掘金 无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云 死锁的排查工具有哪些？ - 掘金 如何判断线程池已经执行完所有任务了？ - 掘金 synchronized和ReentrantL">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-11T06:12:53.000Z">
+<meta property="article:modified_time" content="2023-03-15T01:20:01.700Z">
+<meta property="article:author" content="meadel">
+<meta property="article:tag" content="meadel">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://xuemingde.com/collect/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>个人收藏 | meadel's blog
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">meadel's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一位程序员的成长之路</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-notepad">
+
+    <a href="/notepad/" rel="section"><i class="fa fa-book fa-fw"></i>备忘录</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源库</a>
+
+  </li>
+        <li class="menu-item menu-item-collect">
+
+    <a href="/collect/" rel="section"><i class="fa fa-star fa-fw"></i>收藏夹</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+           <div id="container-1">
+            <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">个人收藏<a href="/nullcollect/index.md" class="post-edit-link" title="编辑"><i class="fa fa-pencil-alt"></i></a>
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h1><h2 id="集合数组"><a href="#集合数组" class="headerlink" title="集合数组"></a>集合数组</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk3MTQ3OTg3MDU4NDkxNDIz">HashMap与ConcurrentHashMap面试要点 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDc0OTg4MzM2ODA0MjY1OTk4">ConcurrentHashMap源码解析 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="并发-amp-多线程"><a href="#并发-amp-多线程" class="headerlink" title="并发&amp;多线程"></a>并发&amp;多线程</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTAxOTU2MDk0MTM3NzI5MDMxI2hlYWRpbmctNA==">ReentrantLock 源码分析 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8yMDAyMzk4">无锁队列的几种实现及其性能对比 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk4MTg1Njc4NTI5MjMyOTA5">死锁的排查工具有哪些？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDgwNjk0ODQzOTgyMjE3MjUz">如何判断线程池已经执行完所有任务了？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkwMDY4MTgwODEwMzM0MjQ0">synchronized和ReentrantLock有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDkxMTMzMDk3MDgwNTIwNzM1">lock、tryLock、lockInterruptibly有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0Nzk0ODY5MzAxODM3ODMx">为什么要用读写锁？它有什么优点？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk1NTQyNjEyNTYzNjA3NTYw">公平锁和非公平锁有什么区别？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDQ0MDMyOTAxNjYyMzc1OTQ5">如何设计一个高并发的秒杀架构？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM1Uxa1lnb1pIZ1BNcm9RSGxmS3ZqQQ==">头条二面：你确定ThreadLocal真的会造成内存泄露？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">图解Java中那18 把锁<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvYmV3bFVjSEwyZTZmdzJ2RHJoRURDdw==">高并发场景下，到底先更新缓存还是先更新数据库？<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk0MDg3MDQzMDEzNjQwMjI4">volatile 有什么用？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvLXI3SzYwYW9aRkNQOXZMZ2ZpeGlEQQ==">5张图带你彻底理解G1垃圾收集器<i class="fa fa-external-link-alt"></i></span></li>
+<li><a href="https://xuemingde.com/JavaNotes/JVM/20220407-深入理解volatile">20220407-深入理解volatile</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODU0NTczMjE2ODI0ODE5NzE5">这一次，彻底弄懂java中的常量池 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvanVyWWJDWjVOSk10NFJZWXRhU25Idw==">6 种实现延时消息的方案<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDg4ODQxNjE5NTE1ODk5OTM0">RocketMQ 延时方案分析与总结 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk2MzM1MzI2NjgzMDcwNDcy">万字长文深度剖析 RocketMQ 的设计理念 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvcFRsOFJvZnhSTkE2LUZqRUFDZEQzZw==">《八股文》之 Kafka 21卷，全文背诵<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk5MjMzNDMxMDgyNTAwMTA5">分布式一致性 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MDAzODc3MjA4MDcx">分布式事务、重复消费、顺序消费 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvM2NDUDFKWUJWUHVBSU9SSzBwQlpaUQ==">Sentinel 万字教程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbHRvczFuRWdrdGVjNXBuNDd4QWdNdw==">用通俗的语言介绍 RPC 框架的架构原理<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDc1NTcxODE1MTMyNjkyNDk0"> 并发-分布式锁质量保障总结 <i class="fa fa-external-link-alt"></i></span></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-分布式缓存">20220407-分布式缓存</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-分布式事务">20220407-分布式事务</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-高可用篇-容错设计">20220407-高可用篇-容错设计</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/分布式/20220407-进程本地缓存">20220407-进程本地缓存</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTY3MjYwNjYzNjIxMzIwNzM0">美团外卖搜索基于Elasticsearch的优化实践 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTM5ODI0MjY1ODI1NjE1ODg1">阿里 Seata 新版本终于解决了 TCC 模式的幂等、悬挂和空回滚问题 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTQ1NDM1OTUxODk5NTc0MzAyI2hlYWRpbmctNw==">把限流实现的那叫一个优雅，佩服！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="Spring-amp-SpringBoot"><a href="#Spring-amp-SpringBoot" class="headerlink" title="Spring &amp; SpringBoot"></a>Spring &amp; SpringBoot</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvVE01VFhWSDZjUTQyTS1VaWt2bE5nZw==">spring：我是如何解决循环依赖的？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTA2NjM3Nzk3MDgwMTcwNTEw">Spring容器启动流程（源码解读） - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWnpwN2lKelVZRFJ0cFloWVVaeEZOQQ==">@Transactional 注解失效的3种原因及解决办法<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvdU5UczQxWHpHMC1mbm1KWXlOeElQdw==">你能说说Spring框架中Bean的生命周期吗？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODk1MzQxMTIzODE2OTE0OTU4">SpringBoot启动流程是怎样的？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9mb3J1bS90b3BpYy8wMjAyNDk0MDgxOTM3MzAwMjU0">深入剖析Springboot启动原理的底层源码，再也不怕面试官问了<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk2MTM1MzAxNzAxMDQyMTg5">@Transactional 注解失效场景？看这一篇就够了！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h2><ul>
+<li><a href="https://xuemingde.com/pages/image/2022/09/06/0944255tftP6.pdf">Math类 (Java Platform SE 8 )</a></li>
+</ul>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTY2MDIzMjI1MTY3ODM5MjYy">字节面试：什么是责任链模式？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL2MuYmlhbmNoZW5nLm5ldC92aWV3LzEzNjEuaHRtbA==">设计模式<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbDFwMS1qRk5Xa0FEUklOM3F0ZXdwZw==">23 种设计模式的通俗解释，虽然有点污，但是秒懂<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xOTMyOTM0">浅谈缓存最终一致性的解决方案 - 云+社区 - 腾讯云<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODUwNDE4MTIwOTg1ODM3NTc1">防止数据重复提交的6种方法(超简单)！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODYxNzQ5MjM4NDY2NTc2Mzk3">秒杀系统设计 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMkVWdHVoSThxd1BpdXctR05va05vdw==">面试官：淘宝七天自动确认收货，可以怎么实现？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWGVBNU94UlczUXkxNXJuZFZmUDZHdw==">阿里二面：现针对一个请求量10000次/s的秒杀系统，说说你的优化思路<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTgxMjk3NzI5OTc5NTQ3NzA1I2hlYWRpbmctMTk=">订单30分钟未支付自动取消怎么实现？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTY4Nzc3MTc2NTIxNjM3OTI0">最终一致性的方案 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8yMDc0NjY4">springboot进行图片上传和添加水印 - 腾讯云开发者社区-腾讯云<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h1 id="C-amp-C"><a href="#C-amp-C" class="headerlink" title="C&amp;C++"></a>C&amp;C++</h1><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTc1MDI4OTkwNzkxMzg1MTQz">性能提升 2.5 倍！字节开源高性能 C++ JSON 库 sonic-cpp - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h1 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h1><h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h2 id="Reids"><a href="#Reids" class="headerlink" title="Reids"></a>Reids</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTAzNTUxNzE0ODc5MzQwNTgw">Redis 高可用集群原理和实践 - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDk3NTIxNTcyODg1Mjk5MjE0">Redis综述篇：与面试官彻夜长谈Redis缓存、持久化、淘汰机制、哨兵、集群底层原理！ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTc4MjgwODk0NzA0Mzg2MDc5">大厂经典面试题：Redis为什么这么快？ - 掘金<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9pYml0LnRlY2gvYXJjaGl2ZXMvcmVkaXMtMTYtdXNhZ2Utc2l0dWF0aW9u">互联网公司使用 Redis 的16个应用场景<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MjI3Mjk3OQ==">洞察Redis是单线程的，但Redis为什么这么快？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1hpbmdYaW5nX0phdmEvYXJ0aWNsZS9kZXRhaWxzLzkyNjI2MTc0">Redis为什么是单线程还这么快?<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTY0NTMxMzY1NjQzNTUwNzUx">Redis与MySQL双写一致性如何保证<i class="fa fa-external-link-alt"></i></span></li>
+<li><a href="https://xuemingde.com/JavaNotes/%E6%95%B0%E6%8D%AE%E5%BA%93/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF-%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9">烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7">如何保证缓存和数据库的一致性</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/数据库/缓存雪崩-击穿-穿透">缓存雪崩-击穿-穿透</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/数据库/Redis常见面试题">Redis常见面试题</a></li>
+<li><a href="https://xuemingde.com/JavaNotes/数据库/Redis基础">Redis基础</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkaXMubmV0LmNuL29yZGVyLw==">redis命令手册<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvQ2h3bnpTQ3djOEhVNFFRTHo3Vk5QUQ==">阿里一面：SQL 优化有哪些技巧？<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvUzNEWmYweVRJSzYzVmxycTU4SDctQQ==">你管这破玩意叫 B+ 树?<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvQWx4SU1QbktjV1N5aE9TZTgtT2ZUUQ==">业务数据治理体系化思考与实践<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvbDQwYXN0R3NmZ2huelhTbDBWZVVLUQ==">20 张图带你彻底搞懂MySQL MVCC原理<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvTWFWWUVOYXBlSmNMTnBZY1I3dHFCUQ==">《面试八股文》之 MySql 35卷<i class="fa fa-external-link-alt"></i></span></li>
+<li><a href="https://xuemingde.com/JavaNotes/JVM/MVCC%E5%BC%84%E6%87%82%E4%BA%86%E7%9C%9F%E7%9A%84%E5%A5%BD%E7%88%BD">MVCC弄懂了真的好爽</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXprd05qTXdNVGd6TVE9PSZhbXA7bWlkPTIyNDc0OTM1MjEmYW1wO2lkeD0xJmFtcDtzbj1iZmY4NGU3YTgxOWQ3OWU0YjhlYjdlNzIyZTk2ZGRmYyZhbXA7Y2hrc209YzBlODNmNzlmNzlmYjY2ZjJlN2JmMDNhMTA0NTgwYjQwNGVhMGEzYzk3Nzg0NmU0MjhmMTNjMWYxMmZiYWQ0NmQ0ZDc3OGIyZGExNCZhbXA7dG9rZW49NjYwNzczMTY2JmFtcDtsYW5nPXpoX0NOJmFtcDtzY2VuZT0yMSN3ZWNoYXRfcmVkaXJlY3Q=">如何保证数据库和缓存双写一致性？<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="Mongo"><a href="#Mongo" class="headerlink" title="Mongo"></a>Mongo</h2><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MTczNjI5OTI0MTExNTMyMDQ1">如何保证mongodb和数据库双写数据一致性？ - 掘金<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9pdC5iYWlrZWQuY29tL2RhdGFiYXNlLzIzOTIuaHRtbA==">mongodb几种备份恢复方式比较 互联网技术圈 互联网技术圈<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9tb25nb2luZy5jb20vZG9jcy9jb3JlL2JhY2t1cHMuaHRtbCNiYWNrLXVwLXdpdGgtbW9uZ29kdW1w">MongoDB备份方案 — MongoDB Manual 3.4<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC83NjM3Mjg4OA==">MongoDB 备份方法 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MDQxMzExMzcxMjcx">[译] MongoDB 几种备份方案 - 掘金<i class="fa fa-external-link-alt"></i></span></p>
+<p>​</p>
+</li>
+</ul>
+<h1 id="网络通信"><a href="#网络通信" class="headerlink" title="网络通信"></a>网络通信</h1><h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvQVg2RnZhbDhSd2tnenB0ZGpsVTVrZw==">万字多图，搞懂 Nginx 高性能网络工作原理！<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h1 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h1><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3Mva0NPX1B2ZnlqSnROSWhZT0M0SGZkdw==">数据库精选 60 道面试题<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubm93Y29kZXIuY29tL3R1dG9yaWFsLzk0L2VhMTk4NmZjZmYyOTRmNjI5MjM4NTcwM2U5NDY4OWU4">牛客网整理的一些简单的面试题<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTgxNjA4MTY3MDQxOTI1MTM0">B站五面面经（附过程、答案）<i class="fa fa-external-link-alt"></i></span> </li>
+</ul>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vYWpheC9wcm9maWxlL2luZm8/dWlkPQ==">weibo用户信息返回，需要传入用户ID<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vYWpheC9wcm9maWxlL2dldEltYWdlV2FsbD91aWQ9Pz8/JmFtcDtzaW5jZWlkPTAmYW1wO2hhc19hbGJ1bT10cnVl">weibo用户相册链表返回<i class="fa fa-external-link-alt"></i></span><blockquote>
+<p>图片链接域名：<span class="exturl" data-url="aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzIwMDAv">https://wx4.sinaimg.cn/mw2000/<i class="fa fa-external-link-alt"></i></span>   ||    <span class="exturl" data-url="aHR0cHM6Ly93eDIuc2luYWltZy5jbi93ZWJwNzIwLw==">https://wx2.sinaimg.cn/webp720/<i class="fa fa-external-link-alt"></i></span>   ||  <span class="exturl" data-url="aHR0cHM6Ly93eDEuc2luYWltZy5jbi9vcmozNjAv">https://wx1.sinaimg.cn/orj360/<i class="fa fa-external-link-alt"></i></span>  || <span class="exturl" data-url="aHR0cHM6Ly93eDMuc2luYWltZy5jbi93ZWJwNzIw">https://wx3.sinaimg.cn/webp720<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+           </div>
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+          
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA"><span class="nav-number">1.</span> <span class="nav-text">JAVA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%95%B0%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">集合数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91-amp-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">并发&amp;多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM"><span class="nav-number">1.3.</span> <span class="nav-text">JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">1.4.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-amp-SpringBoot"><span class="nav-number">1.6.</span> <span class="nav-text">Spring &amp; SpringBoot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API%E6%96%87%E6%A1%A3"><span class="nav-number">1.7.</span> <span class="nav-text">API文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="nav-number">1.9.</span> <span class="nav-text">设计方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.10.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-amp-C"><span class="nav-number">2.</span> <span class="nav-text">C&amp;C++</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Qt"><span class="nav-number">3.</span> <span class="nav-text">Qt</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reids"><span class="nav-number">4.1.</span> <span class="nav-text">Reids</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySql"><span class="nav-number">4.2.</span> <span class="nav-text">MySql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mongo"><span class="nav-number">4.3.</span> <span class="nav-text">Mongo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="nav-number">5.</span> <span class="nav-text">网络通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx"><span class="nav-number">5.1.</span> <span class="nav-text">Nginx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96-1"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meadel"
+      src="/images/touxiang.jpeg">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">我的愿望，世界和平</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80MDE5NDcwMjQ0MjU4NTUyL3Bvc3Rz" title="掘金 → https:&#x2F;&#x2F;juejin.cn&#x2F;user&#x2F;4019470244258552&#x2F;posts"><i class="fa fa-share-alt fa-fw"></i>掘金</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZV9taW5k" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;xue_mind"><i class="fa fa-th-list fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">824k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">12:29</span>
+</div>
+  <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="js/canvas-ribbon.js"></script>
+  <script src="//lib.baomitu.com/animejs/3.2.1/anime.min.js"></script>
+  <script src="//lib.baomitu.com/next-theme-pjax/0.5.0/pjax.min.js"></script>
+  <script src="//lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//lib.baomitu.com/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+  <script src="https://lib.baomitu.com/lozad.js/1.16.0/lozad.min.js"></script>
+  <script src="https://lib.baomitu.com/pangu/4.0.7/pangu.min.js"></script>
+  <script src="//lib.baomitu.com/velocity/1.5.2/velocity.min.js"></script>
+  <script src="//lib.baomitu.com/velocity/1.5.2/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer src="js/three.min.js"></script>
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+  <script data-pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 34163,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://评论数.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "留个脚印吧...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <div id="aplayer"></div>
+  <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+  <script type="text/javascript" src="/dist/music.js"></script>
+</body>
+</html>
