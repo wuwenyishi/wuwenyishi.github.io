@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://cdn.baomitu.com/index/fonts/css?family=Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Noto Sans Simplified Chinese:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//lib.baomitu.com/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//lib.baomitu.com/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//lib.baomitu.com/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="如何优雅地记录操作日志">
+<meta property="og:url" content="https://xuemingde.com/posts/2SZHQ52.html">
+<meta property="og:site_name" content="meadel&#39;s blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203319.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203536.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203601.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/28/165704.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203622.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203633.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203701.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203731.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203739.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203751.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/03/203817.png">
+<meta property="article:published_time" content="2022-03-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-13T08:46:48.924Z">
+<meta property="article:author" content="meadel">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="GC">
+<meta property="article:tag" content="事务">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="栈">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="变量">
+<meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="线程池">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/03/203319.png">
+
+<link rel="canonical" href="https://xuemingde.com/posts/2SZHQ52.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何优雅地记录操作日志 | meadel's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">meadel's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一位程序员的成长之路</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-notepad">
+
+    <a href="/notepad/" rel="section"><i class="fa fa-book fa-fw"></i>备忘录</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源库</a>
+
+  </li>
+        <li class="menu-item menu-item-collect">
+
+    <a href="/collect/" rel="section"><i class="fa fa-star fa-fw"></i>收藏夹</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+           <div id="container-1">
+            <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/2SZHQ52.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="我的愿望，世界和平">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="meadel's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何优雅地记录操作日志<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy9KQVZB5Z+656GALzIwMjIwMzI0LeWmguS9leS8mOmbheWcsOiusOW9leaTjeS9nOaXpeW/ly5tZA==" title="编辑"><i class="fa fa-pencil-alt"></i></span>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-24T00:00:00+08:00">2022-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-13 16:46:48" itemprop="dateModified" datetime="2022-08-13T16:46:48+08:00">2022-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">JAVA基础</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/2SZHQ52.html" class="post-meta-item leancloud_visitors" data-flag-title="如何优雅地记录操作日志" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/posts/2SZHQ52.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/2SZHQ52.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/2SZHQ52.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/2SZHQ52.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<blockquote>
+<p>本文转自 <span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvSkM1MVNfYkkwMm5wbTRDRTVORUVvdw=="> 美团技术团队<i class="fa fa-external-link-alt"></i></span></p>
+<p>操作日志几乎存在于每个系统中，而这些系统都有记录操作日志的一套 API。操作日志和系统日志不一样，操作日志必须要做到简单易懂。所以如何让操作日志不跟业务逻辑耦合，如何让操作日志的内容易于理解，如何让操作日志的接入更加简单？上面这些都是本文要回答的问题。我们主要围绕着如何“优雅”地记录操作日志展开描述，希望对从事相关工作的同学能够有所帮助或者启发。</p>
+</blockquote>
+<ul>
+<li><ol>
+<li>操作日志的使用场景</li>
+</ol>
+</li>
+<li><ol>
+<li>实现方式</li>
+</ol>
+</li>
+<li><ul>
+<li>2.1 使用 Canal 监听数据库记录操作日志</li>
+<li>2.2 通过日志文件的方式记录</li>
+<li>2.3 通过 LogUtil 的方式记录日志</li>
+<li>2.4 方法注解实现操作日志</li>
+</ul>
+</li>
+<li><ol>
+<li>优雅地支持 AOP 生成动态的操作日志</li>
+</ol>
+</li>
+<li><ul>
+<li>3.1 动态模板</li>
+</ul>
+</li>
+<li><ol>
+<li>代码实现解析</li>
+</ol>
+</li>
+<li><ul>
+<li>4.1 代码结构</li>
+<li>4.2 模块介绍</li>
+</ul>
+</li>
+<li><ol>
+<li>总结</li>
+</ol>
+</li>
+</ul>
+<h2 id="操作日志的使用场景"><a href="#操作日志的使用场景" class="headerlink" title="操作日志的使用场景"></a>操作日志的使用场景</h2><p><img data-src="https://xuemingde.com/pages/image/2022/03/203319.png" alt="图片">例子</p>
+<p><strong>系统日志和操作日志的区别</strong></p>
+<p><strong>系统日志</strong>：系统日志主要是为开发排查问题提供依据，一般打印在日志文件中；系统日志的可读性要求没那么高，日志中会包含代码的信息，比如在某个类的某一行打印了一个日志。</p>
+<p><strong>操作日志</strong>：主要是对某个对象进行新增操作或者修改操作后记录下这个新增或者修改，操作日志要求可读性比较强，因为它主要是给用户看的，比如订单的物流信息，用户需要知道在什么时间发生了什么事情。再比如，客服对工单的处理记录信息。</p>
+<p>操作日志的记录格式大概分为下面几种：</p>
+<ul>
+<li>单纯的文字记录，比如：2021-09-16 10:00 订单创建。</li>
+<li>简单的动态的文本记录，比如：2021-09-16 10:00 订单创建，订单号：NO.11089999，其中涉及变量订单号“NO.11089999”。</li>
+<li>修改类型的文本，包含修改前和修改后的值，比如：2021-09-16 10:00 用户小明修改了订单的配送地址：从“金灿灿小区”修改到“银盏盏小区” ，其中涉及变量配送的原地址“金灿灿小区”和新地址“银盏盏小区”。</li>
+<li>修改表单，一次会修改多个字段。</li>
+</ul>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="使用-Canal-监听数据库记录操作日志"><a href="#使用-Canal-监听数据库记录操作日志" class="headerlink" title="使用 Canal 监听数据库记录操作日志"></a>使用 Canal 监听数据库记录操作日志</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvY2FuYWw=">Canal<i class="fa fa-external-link-alt"></i></span> 是一款基于 MySQL 数据库增量日志解析，提供增量数据订阅和消费的开源组件，通过采用监听数据库 Binlog 的方式，这样可以从底层知道是哪些数据做了修改，然后根据更改的数据记录操作日志。</p>
+<p>这种方式的优点是和业务逻辑完全分离。缺点也很明显，局限性太高，只能针对数据库的更改做操作日志记录，如果修改涉及到其他团队的 RPC 的调用，就没办法监听数据库了。举个例子：给用户发送通知，通知服务一般都是公司内部的公共组件，这时候只能在调用 RPC 的时候手工记录发送通知的操作日志了。</p>
+<h3 id="通过日志文件的方式记录"><a href="#通过日志文件的方式记录" class="headerlink" title="通过日志文件的方式记录"></a>通过日志文件的方式记录</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">log</span>.<span class="keyword">info</span>(&quot;订单创建&quot;)</span><br><span class="line"><span class="keyword">log</span>.<span class="keyword">info</span>(&quot;订单已经创建，订单编号:&#123;&#125;&quot;, orderNo)</span><br><span class="line"><span class="keyword">log</span>.<span class="keyword">info</span>(&quot;修改了订单的配送地址：从“&#123;&#125;”修改到“&#123;&#125;”， &quot;金灿灿小区&quot;, &quot;银盏盏小区&quot;)</span><br></pre></td></tr></table></figure>
+<p>这种方式的操作记录需要解决三个问题。</p>
+<p><strong>问题一：操作人如何记录</strong></p>
+<p>借助 SLF4J 中的 MDC 工具类，把操作人放在日志中，然后在日志中统一打印出来。首先在用户的拦截器中把用户的标识 Put 到 MDC 中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserInterceptor</span> <span class="keyword">extends</span> <span class="title">HandlerInterceptorAdapter</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//获取到用户标识</span></span><br><span class="line">    String userNo = getUserNo(request);</span><br><span class="line">    <span class="comment">//把用户 ID 放到 MDC 上下文中</span></span><br><span class="line">    MDC.put(<span class="string">&quot;userId&quot;</span>, userNo);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.preHandle(request, response, handler);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> String <span class="title">getUserNo</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 SSO 或者Cookie 或者 Auth信息获取到 当前登陆的用户信息</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其次，把 userId 格式化到日志中，使用 %X{userId} 可以取到 MDC 中用户标识。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">pattern</span>&gt;</span>&quot;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %t %-5level %X&#123;userId&#125; %logger&#123;30&#125;.%method:%L - %msg%n&quot;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>问题二：操作日志如何和系统日志区分开</strong></p>
+<p>通过配置 Log 的配置文件，把有关操作日志的 Log 单独放到一日志文件中。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//不同业务日志记录到不同的文件</span><br><span class="line"><span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">&quot;businessLogAppender&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">File</span>&gt;</span>logs/business.log<span class="tag">&lt;/<span class="name">File</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">append</span>&gt;</span>true<span class="tag">&lt;/<span class="name">append</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.classic.filter.LevelFilter&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">level</span>&gt;</span>INFO<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">onMatch</span>&gt;</span>ACCEPT<span class="tag">&lt;/<span class="name">onMatch</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">onMismatch</span>&gt;</span>DENY<span class="tag">&lt;/<span class="name">onMismatch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">fileNamePattern</span>&gt;</span>logs/业务A.%d.%i.log<span class="tag">&lt;/<span class="name">fileNamePattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maxHistory</span>&gt;</span>90<span class="tag">&lt;/<span class="name">maxHistory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">timeBasedFileNamingAndTriggeringPolicy</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">maxFileSize</span>&gt;</span>10MB<span class="tag">&lt;/<span class="name">maxFileSize</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">timeBasedFileNamingAndTriggeringPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>&quot;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %t %-5level %X&#123;userId&#125; %logger&#123;30&#125;.%method:%L - %msg%n&quot;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">charset</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line">        </span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;businessLog&quot;</span> <span class="attr">additivity</span>=<span class="string">&quot;false&quot;</span> <span class="attr">level</span>=<span class="string">&quot;INFO&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">&quot;businessLogAppender&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">logger</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在 Java 代码中单独的记录业务日志。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//记录特定日志的声明</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Logger businessLog = LoggerFactory.getLogger(<span class="string">&quot;businessLog&quot;</span>);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//日志存储</span></span><br><span class="line">businessLog.info(<span class="string">&quot;修改了配送地址&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>问题三：如何生成可读懂的日志文案</strong></p>
+<p>可以采用 LogUtil 的方式，也可以采用切面的方式生成日志模板，后续内容将会进行介绍。这样就可以把日志单独保存在一个文件中，然后通过日志收集可以把日志保存在 Elasticsearch 或者数据库中，接下来我们看下如何生成可读的操作日志。</p>
+<h3 id="通过-LogUtil-的方式记录日志"><a href="#通过-LogUtil-的方式记录日志" class="headerlink" title="通过 LogUtil 的方式记录日志"></a>通过 LogUtil 的方式记录日志</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogUtil.log(orderNo, <span class="string">&quot;订单创建&quot;</span>, <span class="string">&quot;小明&quot;</span>)</span><br><span class="line">LogUtil.log(orderNo, <span class="string">&quot;订单创建，订单号&quot;</span>+<span class="string">&quot;NO.11089999&quot;</span>,  <span class="string">&quot;小明&quot;</span>)</span><br><span class="line">String template = <span class="string">&quot;用户%s修改了订单的配送地址：从“%s”修改到“%s”&quot;</span></span><br><span class="line">LogUtil.log(orderNo, String.format(tempalte, <span class="string">&quot;小明&quot;</span>, <span class="string">&quot;金灿灿小区&quot;</span>, <span class="string">&quot;银盏盏小区&quot;</span>),  <span class="string">&quot;小明&quot;</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里解释下为什么记录操作日志的时候都绑定了一个 OrderNo，因为操作日志记录的是：某一个“时间”“谁”对“什么”做了什么“事情”。当查询业务的操作日志的时候，会查询针对这个订单的的所有操作，所以代码中加上了 OrderNo，记录操作日志的时候需要记录下操作人，所以传了操作人“小明”进来。</p>
+</blockquote>
+<p>上面看起来问题并不大，在修改地址的业务逻辑方法中使用一行代码记录了操作日志，接下来再看一个更复杂的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> OnesIssueDO <span class="title">updateAddress</span><span class="params">(updateDeliveryRequest request)</span> </span>&#123;</span><br><span class="line">    DeliveryOrder deliveryOrder = deliveryQueryService.queryOldAddress(request.getDeliveryOrderNo());</span><br><span class="line">    <span class="comment">// 更新派送信息，电话，收件人，地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">    String logContent = getLogContent(request, deliveryOrder);</span><br><span class="line">    LogUtils.logRecord(request.getOrderNo(), logContent, request.getOperator);</span><br><span class="line">    <span class="keyword">return</span> onesIssueDO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getLogContent</span><span class="params">(updateDeliveryRequest request, DeliveryOrder deliveryOrder)</span> </span>&#123;</span><br><span class="line">    String template = <span class="string">&quot;用户%s修改了订单的配送地址：从“%s”修改到“%s”&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> String.format(tempalte, request.getUserName(), deliveryOrder.getAddress(), request.getAddress);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到上面的例子使用了两个方法代码，外加一个 getLogContent 的函数实现了操作日志的记录。当业务变得复杂后，记录操作日志放在业务代码中会导致业务的逻辑比较繁杂，最后导致 LogUtils.logRecord() 方法的调用存在于很多业务的代码中，而且类似 getLogContent() 这样的方法也散落在各个业务类中，对于代码的可读性和可维护性来说是一个灾难。下面介绍下如何避免这个灾难。</p>
+<h3 id="方法注解实现操作日志"><a href="#方法注解实现操作日志" class="headerlink" title="方法注解实现操作日志"></a>方法注解实现操作日志</h3><p>为了解决上面问题，一般采用 AOP 的方式记录日志，让操作日志和业务逻辑解耦，接下来看一个简单的 AOP 日志的例子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content=&quot;修改了配送地址&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以在注解的操作日志上记录固定文案，这样业务逻辑和业务代码可以做到解耦，让我们的业务代码变得纯净起来。可能有同学注意到，上面的方式虽然解耦了操作日志的代码，但是记录的文案并不符合我们的预期，文案是静态的，没有包含动态的文案，因为我们需要记录的操作日志是：用户%s修改了订单的配送地址，从“%s”修改到“%s”。接下来，我们介绍一下如何优雅地使用 AOP 生成动态的操作日志。</p>
+<h2 id="优雅地支持-AOP-生成动态的操作日志"><a href="#优雅地支持-AOP-生成动态的操作日志" class="headerlink" title="优雅地支持 AOP 生成动态的操作日志"></a>优雅地支持 AOP 生成动态的操作日志</h2><h3 id="动态模板"><a href="#动态模板" class="headerlink" title="动态模板"></a>动态模板</h3><p>一提到动态模板，就会涉及到让变量通过占位符的方式解析模板，从而达到通过注解记录操作日志的目的。模板解析的方式有很多种，这里使用了 SpEL（Spring Expression Language，Spring表达式语言）来实现。我们可以先写下期望的记录日志的方式，然后再看看能否实现这样的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送地址：从“#oldAddress”, 修改到“#request.address”&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request, String oldAddress)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过 SpEL 表达式引用方法上的参数，可以让变量填充到模板中达到动态的操作日志文本内容。但是现在还有几个问题需要解决：</p>
+<ul>
+<li>操作日志需要知道是哪个操作人修改的订单配送地址。</li>
+<li>修改订单配送地址的操作日志需要绑定在配送的订单上，从而可以根据配送订单号查询出对这个配送订单的所有操作。</li>
+<li>为了在注解上记录之前的配送地址是什么，在方法签名上添加了一个和业务无关的 oldAddress 的变量，这样就不优雅了。</li>
+</ul>
+<p>为了解决前两个问题，我们需要把期望的操作日志使用形式改成下面的方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(</span></span><br><span class="line"><span class="meta">     content = &quot;修改了订单的配送地址：从“#oldAddress”, 修改到“#request.address”&quot;,</span></span><br><span class="line"><span class="meta">     operator = &quot;#request.userName&quot;, bizNo=&quot;#request.deliveryOrderNo&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request, String oldAddress)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改后的代码在注解上添加两个参数，一个是操作人，一个是操作日志需要绑定的对象。但是，在普通的 Web 应用中用户信息都是保存在一个线程上下文的静态方法中，所以 operator 一般是这样的写法（假定获取当前登陆用户的方式是 UserContext.getCurrentUser()）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">operator = <span class="string">&quot;#&#123;T(com.meituan.user.UserContext).getCurrentUser()&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这样的话，每个 @LogRecord 的注解上的操作人都是这么长一串。为了避免过多的重复代码，我们可以把注解上的 operator 参数设置为非必填，这样用户可以填写操作人。但是，如果用户不填写我们就取 UserContext 的 user（下文会介绍如何取 user）。最后，最简单的日志变成了下面的形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送地址：从“#oldAddress”, 修改到“#request.address”&quot;, </span></span><br><span class="line"><span class="meta">           bizNo=&quot;#request.deliveryOrderNo&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request, String oldAddress)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，我们需要解决第三个问题：为了记录业务操作记录添加了一个 oldAddress 变量，不管怎么样这都不是一个好的实现方式，所以接下来，我们需要把 oldAddress 变量从修改地址的方法签名上去掉。但是操作日志确实需要 oldAddress 变量，怎么办呢？</p>
+<p>要么和产品经理 PK 一下，让产品经理把文案从“修改了订单的配送地址：从 xx 修改到 yy” 改为 “修改了订单的配送地址为：yy”。但是从用户体验上来看，第一种文案更人性化一些，显然我们不会 PK 成功的。那么我们就必须要把这个 oldAddress 查询出来然后供操作日志使用了。还有一种解决办法是：把这个参数放到操作日志的线程上下文中，供注解上的模板使用。我们按照这个思路再改下操作日志的实现代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送地址：从“#oldAddress”, 修改到“#request.address”&quot;,</span></span><br><span class="line"><span class="meta">        bizNo=&quot;#request.deliveryOrderNo&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 查询出原来的地址是什么</span></span><br><span class="line">    LogRecordContext.putVariable(<span class="string">&quot;oldAddress&quot;</span>, DeliveryService.queryOldAddress(request.getDeliveryOrderNo()));</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候可以看到，LogRecordContext 解决了操作日志模板上使用方法参数以外变量的问题，同时避免了为了记录操作日志修改方法签名的设计。虽然已经比之前的代码好了些，但是依然需要在业务代码里面加了一行业务逻辑无关的代码，如果有“强迫症”的同学还可以继续往下看，接下来我们会讲解自定义函数的解决方案。下面再看另一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送员：从“#oldDeliveryUserId”, 修改到“#request.userId”&quot;,</span></span><br><span class="line"><span class="meta">        bizNo=&quot;#request.deliveryOrderNo&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 查询出原来的地址是什么</span></span><br><span class="line">    LogRecordContext.putVariable(<span class="string">&quot;oldDeliveryUserId&quot;</span>, DeliveryService.queryOldDeliveryUserId(request.getDeliveryOrderNo()));</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个操作日志的模板最后记录的内容是这样的格式：修改了订单的配送员：从 “10090”，修改到 “10099”，显然用户看到这样的操作日志是不明白的。用户对于用户 ID 是 10090 还是 10099 并不了解，用户期望看到的是：修改了订单的配送员：从“张三（18910008888）”，修改到“小明（13910006666）”。用户关心的是配送员的姓名和电话。但是我们方法中传递的参数只有配送员的 ID，没有配送员的姓名可电话。我们可以通过上面的方法，把用户的姓名和电话查询出来，然后通过 LogRecordContext 实现。</p>
+<p>但是，“强迫症”是不期望操作日志的代码嵌入在业务逻辑中的。接下来，我们考虑另一种实现方式：自定义函数。如果我们可以通过自定义函数把用户 ID 转换为用户姓名和电话，那么就能解决这一问题，按照这个思路，我们把模板修改为下面的形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送员：从“&#123;deliveryUser&#123;#oldDeliveryUserId&#125;&#125;”, 修改到“&#123;deveryUser&#123;#request.userId&#125;&#125;”&quot;,</span></span><br><span class="line"><span class="meta">        bizNo=&quot;#request.deliveryOrderNo&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 查询出原来的地址是什么</span></span><br><span class="line">    LogRecordContext.putVariable(<span class="string">&quot;oldDeliveryUserId&quot;</span>, DeliveryService.queryOldDeliveryUserId(request.getDeliveryOrderNo()));</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 deliveryUser 是自定义函数，使用大括号把 Spring 的 SpEL 表达式包裹起来，这样做的好处：一是把 Spring EL 表达式和自定义函数区分开便于解析；二是如果模板中不需要 SpEL 表达式解析可以容易的识别出来，减少 SpEL 的解析提高性能。这时候我们发现上面代码还可以优化成下面的形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送员：从“&#123;queryOldUser&#123;#request.deliveryOrderNo()&#125;&#125;”, 修改到“&#123;deveryUser&#123;#request.userId&#125;&#125;”&quot;,</span></span><br><span class="line"><span class="meta">        bizNo=&quot;#request.deliveryOrderNo&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就不需要在 modifyAddress 方法中通过 LogRecordContext.putVariable() 设置老的快递员了，通过直接新加一个自定义函数 queryOldUser() 参数把派送订单传递进去，就能查到之前的配送人了，只需要让方法的解析在 modifyAddress() 方法执行之前运行。这样的话，我们让业务代码又变得纯净了起来，同时也让“强迫症”不再感到难受了。</p>
+<h2 id="代码实现解析"><a href="#代码实现解析" class="headerlink" title="代码实现解析"></a>代码实现解析</h2><h3 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h3><p><img data-src="https://xuemingde.com/pages/image/2022/03/203536.png" alt="图片"></p>
+<p>上面的操作日志主要是通过一个 AOP 拦截器实现的，整体主要分为 AOP 模块、日志解析模块、日志保存模块、Starter 模块；组件提供了4个扩展点，分别是：自定义函数、默认处理人、业务保存和查询；业务可以根据自己的业务特性定制符合自己业务的逻辑。</p>
+<h3 id="模块介绍"><a href="#模块介绍" class="headerlink" title="模块介绍"></a>模块介绍</h3><p>有了上面的分析，已经得出一种我们期望的操作日志记录的方式，接下来我们看下如何实现上面的逻辑。实现主要分为下面几个步骤：</p>
+<ul>
+<li><p>AOP 拦截逻辑</p>
+</li>
+<li><p>解析逻辑</p>
+</li>
+<li><ul>
+<li>模板解析</li>
+<li>LogContext 逻辑</li>
+<li>默认的 operator 逻辑</li>
+<li>自定义函数逻辑</li>
+</ul>
+</li>
+<li><p>默认的日志持久化逻辑</p>
+</li>
+<li><p>Starter 封装逻辑</p>
+</li>
+</ul>
+<h4 id="AOP-拦截逻辑"><a href="#AOP-拦截逻辑" class="headerlink" title="AOP 拦截逻辑"></a>AOP 拦截逻辑</h4><p>这块逻辑主要是一个拦截器，针对 @LogRecord 注解分析出需要记录的操作日志，然后把操作日志持久化，这里把注解命名为 @LogRecordAnnotation。接下来，我们看下注解的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> LogRecordAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">success</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">fail</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">operator</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">bizNo</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">category</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">detail</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">condition</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注解中除了上面提到参数外，还增加了 fail、category、detail、condition 等参数，这几个参数是为了满足特定的场景，后面还会给出具体的例子。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203601.png" alt="图片"></p>
+<p>为了保持简单，组件的必填参数就两个。业务中的 AOP 逻辑大部分是使用 @Aspect 注解实现的，但是基于注解的 AOP 在 Spring boot 1.5 中兼容性是有问题的，组件为了兼容 Spring boot1.5 的版本我们手工实现 Spring 的 AOP 逻辑。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/28/165704.jpg" alt="165704"></p>
+<p>切面选择 <code>AbstractBeanFactoryPointcutAdvisor</code> 实现，切点是通过 <code>StaticMethodMatcherPointcut</code> 匹配包含 <code>LogRecordAnnotation</code> 注解的方法。通过实现 <code>MethodInterceptor</code> 接口实现操作日志的增强逻辑。</p>
+<p>下面是拦截器的切点逻辑：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogRecordPointcut</span> <span class="keyword">extends</span> <span class="title">StaticMethodMatcherPointcut</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="comment">// LogRecord的解析类</span></span><br><span class="line">    <span class="keyword">private</span> LogRecordOperationSource logRecordOperationSource;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(<span class="meta">@NonNull</span> Method method, <span class="meta">@NonNull</span> Class&lt;?&gt; targetClass)</span> </span>&#123;</span><br><span class="line">          <span class="comment">// 解析 这个 method 上有没有 @LogRecordAnnotation 注解，有的话会解析出来注解上的各个参数</span></span><br><span class="line">        <span class="keyword">return</span> !CollectionUtils.isEmpty(logRecordOperationSource.computeLogRecordOperations(method, targetClass));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setLogRecordOperationSource</span><span class="params">(LogRecordOperationSource logRecordOperationSource)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.logRecordOperationSource = logRecordOperationSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>切面的增强逻辑主要代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(MethodInvocation invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    Method method = invocation.getMethod();</span><br><span class="line">    <span class="comment">// 记录日志</span></span><br><span class="line">    <span class="keyword">return</span> execute(invocation, invocation.getThis(), method, invocation.getArguments());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">execute</span><span class="params">(MethodInvocation invoker, Object target, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    Class&lt;?&gt; targetClass = getTargetClass(target);</span><br><span class="line">    Object ret = <span class="keyword">null</span>;</span><br><span class="line">    MethodExecuteResult methodExecuteResult = <span class="keyword">new</span> MethodExecuteResult(<span class="keyword">true</span>, <span class="keyword">null</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    LogRecordContext.putEmptySpan();</span><br><span class="line">    Collection&lt;LogRecordOps&gt; operations = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Map&lt;String, String&gt; functionNameAndReturnMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        operations = logRecordOperationSource.computeLogRecordOperations(method, targetClass);</span><br><span class="line">        List&lt;String&gt; spElTemplates = getBeforeExecuteFunctionTemplate(operations);</span><br><span class="line">        <span class="comment">//业务逻辑执行前的自定义函数解析</span></span><br><span class="line">        functionNameAndReturnMap = processBeforeExecuteFunctionTemplate(spElTemplates, targetClass, method, args);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        log.error(<span class="string">&quot;log record parse before function exception&quot;</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ret = invoker.proceed();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        methodExecuteResult = <span class="keyword">new</span> MethodExecuteResult(<span class="keyword">false</span>, e, e.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!CollectionUtils.isEmpty(operations)) &#123;</span><br><span class="line">            recordExecute(ret, method, args, operations, targetClass,</span><br><span class="line">                    methodExecuteResult.isSuccess(), methodExecuteResult.getErrorMsg(), functionNameAndReturnMap);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception t) &#123;</span><br><span class="line">        <span class="comment">//记录日志错误不要影响业务</span></span><br><span class="line">        log.error(<span class="string">&quot;log record parse exception&quot;</span>, t);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        LogRecordContext.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (methodExecuteResult.throwable != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> methodExecuteResult.throwable;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>拦截逻辑的流程：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203622.png" alt="图片"></p>
+<p>可以看到，操作日志的记录持久化是在方法执行完之后执行的，当方法抛出异常之后会先捕获异常，等操作日志持久化完成后再抛出异常。在业务的方法执行之前，会对提前解析的自定义函数求值，解决了前面提到的需要查询修改之前的内容。</p>
+<h4 id="解析逻辑"><a href="#解析逻辑" class="headerlink" title="解析逻辑"></a>解析逻辑</h4><p><strong>模板解析</strong></p>
+<p>Spring 3 中提供了一个非常强大的功能：SpEL，SpEL 在 Spring 产品中是作为表达式求值的核心基础模块，它本身是可以脱离 Spring 独立使用的。举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpelExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">        Expression expression = parser.parseExpression(<span class="string">&quot;#root.purchaseName&quot;</span>);</span><br><span class="line">        Order order = <span class="keyword">new</span> Order();</span><br><span class="line">        order.setPurchaseName(<span class="string">&quot;张三&quot;</span>);</span><br><span class="line">        System.out.println(expression.getValue(order));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法将打印 “张三”。LogRecord 解析的类图如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203633.png" alt="图片"></p>
+<p><strong>解析核心类</strong>：<code>LogRecordValueParser</code> 里面封装了自定义函数和 SpEL 解析类 <code>LogRecordExpressionEvaluator</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogRecordExpressionEvaluator</span> <span class="keyword">extends</span> <span class="title">CachedExpressionEvaluator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;ExpressionKey, Expression&gt; expressionCache = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="number">64</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;AnnotatedElementKey, Method&gt; targetMethodCache = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="number">64</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">parseExpression</span><span class="params">(String conditionExpression, AnnotatedElementKey methodKey, EvaluationContext evalContext)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getExpression(<span class="keyword">this</span>.expressionCache, methodKey, conditionExpression).getValue(evalContext, String.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>LogRecordExpressionEvaluator</code> 继承自 <code>CachedExpressionEvaluator</code> 类，这个类里面有两个 Map，一个是 expressionCache 一个是 targetMethodCache。在上面的例子中可以看到，SpEL 会解析成一个 Expression 表达式，然后根据传入的 Object 获取到对应的值，所以 expressionCache 是为了缓存方法、表达式和 SpEL 的 Expression 的对应关系，让方法注解上添加的 SpEL 表达式只解析一次。下面的 targetMethodCache 是为了缓存传入到 Expression 表达式的 Object。核心的解析逻辑是上面最后一行代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getExpression(<span class="keyword">this</span>.expressionCache, methodKey, conditionExpression).getValue(evalContext, String.class);</span><br></pre></td></tr></table></figure>
+<p><code>getExpression</code> 方法会从 expressionCache 中获取到 @LogRecordAnnotation 注解上的表达式的解析 Expression 的实例，然后调用 <code>getValue</code> 方法，<code>getValue</code> 传入一个 evalContext 就是类似上面例子中的 order 对象。其中 Context 的实现将会在下文介绍。</p>
+<p><strong>日志上下文实现</strong></p>
+<p>下面的例子把变量放到了 LogRecordContext 中，然后 SpEL 表达式就可以顺利的解析方法上不存在的参数了，通过上面的 SpEL 的例子可以看出，要把方法的参数和 LogRecordContext 中的变量都放到 SpEL 的 <code>getValue</code> 方法的 Object 中才可以顺利的解析表达式的值。下面看看如何实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送员：从“&#123;deveryUser&#123;#oldDeliveryUserId&#125;&#125;”, 修改到“&#123;deveryUser&#123;#request.getUserId()&#125;&#125;”&quot;,</span></span><br><span class="line"><span class="meta">            bizNo=&quot;#request.getDeliveryOrderNo()&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 查询出原来的地址是什么</span></span><br><span class="line">    LogRecordContext.putVariable(<span class="string">&quot;oldDeliveryUserId&quot;</span>, DeliveryService.queryOldDeliveryUserId(request.getDeliveryOrderNo()));</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 LogRecordValueParser 中创建了一个 EvaluationContext，用来给 SpEL 解析方法参数和 Context 中的变量。相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EvaluationContext evaluationContext = expressionEvaluator.createEvaluationContext(method, args, targetClass, ret, errorMsg, beanFactory);</span><br></pre></td></tr></table></figure>
+<p>在解析的时候调用 <code>getValue</code> 方法传入的参数 evalContext，就是上面这个 EvaluationContext 对象。下面是 LogRecordEvaluationContext 对象的继承体系：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203701.png" alt="图片"></p>
+<p>LogRecordEvaluationContext 做了三个事情：</p>
+<ul>
+<li>把方法的参数都放到 SpEL 解析的 RootObject 中。</li>
+<li>把 LogRecordContext 中的变量都放到 RootObject 中。</li>
+<li>把方法的返回值和 ErrorMsg 都放到 RootObject 中。</li>
+</ul>
+<p>LogRecordEvaluationContext 的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogRecordEvaluationContext</span> <span class="keyword">extends</span> <span class="title">MethodBasedEvaluationContext</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LogRecordEvaluationContext</span><span class="params">(Object rootObject, Method method, Object[] arguments,</span></span></span><br><span class="line"><span class="function"><span class="params">                                      ParameterNameDiscoverer parameterNameDiscoverer, Object ret, String errorMsg)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//把方法的参数都放到 SpEL 解析的 RootObject 中</span></span><br><span class="line">       <span class="keyword">super</span>(rootObject, method, arguments, parameterNameDiscoverer);</span><br><span class="line">       <span class="comment">//把 LogRecordContext 中的变量都放到 RootObject 中</span></span><br><span class="line">        Map&lt;String, Object&gt; variables = LogRecordContext.getVariables();</span><br><span class="line">        <span class="keyword">if</span> (variables != <span class="keyword">null</span> &amp;&amp; variables.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : variables.entrySet()) &#123;</span><br><span class="line">                setVariable(entry.getKey(), entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//把方法的返回值和 ErrorMsg 都放到 RootObject 中</span></span><br><span class="line">        setVariable(<span class="string">&quot;_ret&quot;</span>, ret);</span><br><span class="line">        setVariable(<span class="string">&quot;_errorMsg&quot;</span>, errorMsg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是 LogRecordContext 的实现，这个类里面通过一个 ThreadLocal 变量保持了一个栈，栈里面是个 Map，Map 对应了变量的名称和变量的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogRecordContext</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> InheritableThreadLocal&lt;Stack&lt;Map&lt;String, Object&gt;&gt;&gt; variableMapStack = <span class="keyword">new</span> InheritableThreadLocal&lt;&gt;();</span><br><span class="line">   <span class="comment">//其他省略....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面使用了 InheritableThreadLocal，所以在线程池的场景下使用 LogRecordContext 会出现问题，如果支持线程池可以使用阿里巴巴开源的 TTL 框架。那这里为什么不直接设置一个 ThreadLocal<Map<String, Object>&gt; 对象，而是要设置一个 Stack 结构呢？我们看一下这么做的原因是什么。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LogRecord(content = &quot;修改了订单的配送员：从“&#123;deveryUser&#123;#oldDeliveryUserId&#125;&#125;”, 修改到“&#123;deveryUser&#123;#request.getUserId()&#125;&#125;”&quot;,</span></span><br><span class="line"><span class="meta">        bizNo=&quot;#request.getDeliveryOrderNo()&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyAddress</span><span class="params">(updateDeliveryRequest request)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 查询出原来的地址是什么</span></span><br><span class="line">    LogRecordContext.putVariable(<span class="string">&quot;oldDeliveryUserId&quot;</span>, DeliveryService.queryOldDeliveryUserId(request.getDeliveryOrderNo()));</span><br><span class="line">    <span class="comment">// 更新派送信息 电话，收件人、地址</span></span><br><span class="line">    doUpdate(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码的执行流程如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203731.png" alt="图片"></p>
+<p>看起来没有什么问题，但是使用 LogRecordAnnotation 的方法里面嵌套了另一个使用 LogRecordAnnotation 方法的时候，流程就变成下面的形式：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203739.png" alt="图片"></p>
+<p>可以看到，当方法二执行了释放变量后，继续执行方法一的 logRecord 逻辑，此时解析的时候 ThreadLocal<Map<String, Object>&gt;的 Map 已经被释放掉，所以方法一就获取不到对应的变量了。方法一和方法二共用一个变量 Map 还有个问题是：如果方法二设置了和方法一相同的变量两个方法的变量就会被相互覆盖。所以最终 LogRecordContext 的变量的生命周期需要是下面的形式：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203751.png" alt="图片"></p>
+<p>LogRecordContext 每执行一个方法都会压栈一个 Map，方法执行完之后会 Pop 掉这个 Map，从而避免变量共享和覆盖问题。</p>
+<p><strong>默认操作人逻辑</strong></p>
+<p>在 LogRecordInterceptor 中 IOperatorGetService 接口，这个接口可以获取到当前的用户。下面是接口的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IOperatorGetService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 可以在里面外部的获取当前登陆的用户，比如 UserContext.getCurrentUser()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 转换成Operator返回</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">Operator <span class="title">getUser</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面给出了从用户上下文中获取用户的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultOperatorGetServiceImpl</span> <span class="keyword">implements</span> <span class="title">IOperatorGetService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Operator <span class="title">getUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//UserUtils 是获取用户上下文的方法</span></span><br><span class="line">         <span class="keyword">return</span> Optional.ofNullable(UserUtils.getUser())</span><br><span class="line">                        .map(a -&gt; <span class="keyword">new</span> Operator(a.getName(), a.getLogin()))</span><br><span class="line">                        .orElseThrow(()-&gt;<span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;user is null&quot;</span>));</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>组件在解析 operator 的时候，就判断注解上的 operator 是否是空，如果注解上没有指定，我们就从 IOperatorGetService 的 getUser 方法获取了。如果都获取不到，就会报错。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String realOperatorId = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">if</span> (StringUtils.isEmpty(operatorId)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (operatorGetService.getUser() == <span class="keyword">null</span> || StringUtils.isEmpty(operatorGetService.getUser().getOperatorId())) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;user is null&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    realOperatorId = operatorGetService.getUser().getOperatorId();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    spElTemplates = Lists.newArrayList(bizKey, bizNo, action, operatorId, detail);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>自定义函数逻辑</strong></p>
+<p>自定义函数的类图如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/203817.png" alt="图片"></p>
+<p>下面是 IParseFunction 的接口定义：<code>executeBefore</code> 函数代表了自定义函数是否在业务代码执行之前解析，上面提到的查询修改之前的内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IParseFunction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">executeBefore</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">String <span class="title">functionName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">String <span class="title">apply</span><span class="params">(String value)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ParseFunctionFactory 的代码比较简单，它的功能是把所有的 IParseFunction 注入到函数工厂中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ParseFunctionFactory</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Map&lt;String, IParseFunction&gt; allFunctionMap;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ParseFunctionFactory</span><span class="params">(List&lt;IParseFunction&gt; parseFunctions)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (CollectionUtils.isEmpty(parseFunctions)) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    allFunctionMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (IParseFunction parseFunction : parseFunctions) &#123;</span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isEmpty(parseFunction.functionName())) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      allFunctionMap.put(parseFunction.functionName(), parseFunction);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> IParseFunction <span class="title">getFunction</span><span class="params">(String functionName)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> allFunctionMap.get(functionName);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBeforeFunction</span><span class="params">(String functionName)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> allFunctionMap.get(functionName) != <span class="keyword">null</span> &amp;&amp; allFunctionMap.get(functionName).executeBefore();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DefaultFunctionServiceImpl 的逻辑就是根据传入的函数名称 functionName 找到对应的 IParseFunction，然后把参数传入到 IParseFunction 的 <code>apply</code> 方法上最后返回函数的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultFunctionServiceImpl</span> <span class="keyword">implements</span> <span class="title">IFunctionService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> ParseFunctionFactory parseFunctionFactory;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">DefaultFunctionServiceImpl</span><span class="params">(ParseFunctionFactory parseFunctionFactory)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.parseFunctionFactory = parseFunctionFactory;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(String functionName, String value)</span> </span>&#123;</span><br><span class="line">    IParseFunction function = parseFunctionFactory.getFunction(functionName);</span><br><span class="line">    <span class="keyword">if</span> (function == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> function.apply(value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">beforeFunction</span><span class="params">(String functionName)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> parseFunctionFactory.isBeforeFunction(functionName);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="日志持久化逻辑"><a href="#日志持久化逻辑" class="headerlink" title="日志持久化逻辑"></a>日志持久化逻辑</h4><p>同样在 LogRecordInterceptor 的代码中引用了 ILogRecordService，这个 Service 主要包含了日志记录的接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ILogRecordService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存 log</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> logRecord 日志实体</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">(LogRecord logRecord)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>业务可以实现这个保存接口，然后把日志保存在任何存储介质上。这里给了一个 2.2 节介绍的通过 log.info 保存在日志文件中的例子，业务可以把保存设置成异步或者同步，可以和业务放在一个事务中保证操作日志和业务的一致性，也可以新开辟一个事务，保证日志的错误不影响业务的事务。业务可以保存在 Elasticsearch、数据库或者文件中，用户可以根据日志结构和日志的存储实现相应的查询逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultLogRecordServiceImpl</span> <span class="keyword">implements</span> <span class="title">ILogRecordService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line"><span class="comment">//    @Transactional(propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">(LogRecord logRecord)</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;【logRecord】log=&#123;&#125;&quot;</span>, logRecord);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Starter-逻辑封装"><a href="#Starter-逻辑封装" class="headerlink" title="Starter 逻辑封装"></a>Starter 逻辑封装</h4><p>上面逻辑代码已经介绍完毕，那么接下来需要把这些组件组装起来，然后让用户去使用。在使用这个组件的时候只需要在 Springboot 的入口上添加一个注解 @EnableLogRecord(tenant = “com.mzt.test”)。其中 tenant 代表租户，是为了多租户使用的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="meta">@EnableLogRecord(tenant = &quot;com.mzt.test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(Main.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们再看下 EnableLogRecord 的代码，代码中 Import 了 <code>LogRecordConfigureSelector.class</code>，在 <code>LogRecordConfigureSelector</code> 类中暴露了 <code>LogRecordProxyAutoConfiguration</code> 类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Import(LogRecordConfigureSelector.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableLogRecord &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">tenant</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function">AdviceMode <span class="title">mode</span><span class="params">()</span> <span class="keyword">default</span> AdviceMode.PROXY</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>LogRecordProxyAutoConfiguration</code> 就是装配上面组件的核心类了，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogRecordProxyAutoConfiguration</span> <span class="keyword">implements</span> <span class="title">ImportAware</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> AnnotationAttributes enableLogRecord;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@Role(BeanDefinition.ROLE_INFRASTRUCTURE)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LogRecordOperationSource <span class="title">logRecordOperationSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> LogRecordOperationSource();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@ConditionalOnMissingBean(IFunctionService.class)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> IFunctionService <span class="title">functionService</span><span class="params">(ParseFunctionFactory parseFunctionFactory)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DefaultFunctionServiceImpl(parseFunctionFactory);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> ParseFunctionFactory <span class="title">parseFunctionFactory</span><span class="params">(<span class="meta">@Autowired</span> List&lt;IParseFunction&gt; parseFunctions)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ParseFunctionFactory(parseFunctions);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@ConditionalOnMissingBean(IParseFunction.class)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> DefaultParseFunction <span class="title">parseFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DefaultParseFunction();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@Role(BeanDefinition.ROLE_INFRASTRUCTURE)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> BeanFactoryLogRecordAdvisor <span class="title">logRecordAdvisor</span><span class="params">(IFunctionService functionService)</span> </span>&#123;</span><br><span class="line">    BeanFactoryLogRecordAdvisor advisor =</span><br><span class="line">            <span class="keyword">new</span> BeanFactoryLogRecordAdvisor();</span><br><span class="line">    advisor.setLogRecordOperationSource(logRecordOperationSource());</span><br><span class="line">    advisor.setAdvice(logRecordInterceptor(functionService));</span><br><span class="line">    <span class="keyword">return</span> advisor;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@Role(BeanDefinition.ROLE_INFRASTRUCTURE)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LogRecordInterceptor <span class="title">logRecordInterceptor</span><span class="params">(IFunctionService functionService)</span> </span>&#123;</span><br><span class="line">    LogRecordInterceptor interceptor = <span class="keyword">new</span> LogRecordInterceptor();</span><br><span class="line">    interceptor.setLogRecordOperationSource(logRecordOperationSource());</span><br><span class="line">    interceptor.setTenant(enableLogRecord.getString(<span class="string">&quot;tenant&quot;</span>));</span><br><span class="line">    interceptor.setFunctionService(functionService);</span><br><span class="line">    <span class="keyword">return</span> interceptor;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@ConditionalOnMissingBean(IOperatorGetService.class)</span></span><br><span class="line">  <span class="meta">@Role(BeanDefinition.ROLE_APPLICATION)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> IOperatorGetService <span class="title">operatorGetService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DefaultOperatorGetServiceImpl();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@ConditionalOnMissingBean(ILogRecordService.class)</span></span><br><span class="line">  <span class="meta">@Role(BeanDefinition.ROLE_APPLICATION)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> ILogRecordService <span class="title">recordService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DefaultLogRecordServiceImpl();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImportMetadata</span><span class="params">(AnnotationMetadata importMetadata)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.enableLogRecord = AnnotationAttributes.fromMap(</span><br><span class="line">            importMetadata.getAnnotationAttributes(EnableLogRecord.class.getName(), <span class="keyword">false</span>));</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.enableLogRecord == <span class="keyword">null</span>) &#123;</span><br><span class="line">      log.info(<span class="string">&quot;@EnableCaching is not present on importing class&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类继承 ImportAware 是为了拿到 EnableLogRecord 上的租户属性，这个类使用变量 logRecordAdvisor 和 logRecordInterceptor 装配了 AOP，同时把自定义函数注入到了 logRecordAdvisor 中。</p>
+<p><strong>对外扩展类</strong>：分别是<code>IOperatorGetService</code>、<code>ILogRecordService</code>、<code>IParseFunction</code>。业务可以自己实现相应的接口，因为配置了 @ConditionalOnMissingBean，所以用户的实现类会覆盖组件内的默认实现。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章介绍了操作日志的常见写法，以及如何让操作日志的实现更加简单、易懂，通过组件的四个模块，介绍了组件的具体实现。对于上面的组件介绍，大家如果有疑问，也欢迎在文末留言，我们会进行答疑。</p>
+<h2 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h2><p>站通，2020年加入美团，基础研发平台/研发质量及效率部工程师。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvY2FuYWw=">Canal<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zcHJpbmcuaW8vcHJvamVjdHMvc3ByaW5nLWZyYW1ld29yaw==">Spring-Framework<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctZnJhbWV3b3JrL2RvY3MvMy4yLngvc3ByaW5nLWZyYW1ld29yay1yZWZlcmVuY2UvaHRtbC9leHByZXNzaW9ucy5odG1s">Spring Expression Language (SpEL)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1NDMwMy9hcnRpY2xlL2RldGFpbHMvMTEzODM3OTI4P3NwbT0xMDAxLjIwMTQuMzAwMS41NTAx">ThreadLocal、InheritableThreadLocal、TransmittableThreadLocal三者之间区别<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+    </div>
+   <div>
+        
+            <div style="text-align:left;font-size:14px;">
+    <p style="text-align:center;color: #ccc;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</p>
+            </div>
+        
+    </div>
+
+   
+    
+    
+    
+      
+  <div class="popular-posts-header">相关热门文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/HRQWG9.html" rel="bookmark">Transactional 注解失效的3种原因及解决办法 </a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/WTSYSE.html" rel="bookmark">Java并发常见知识点&面试题总结_进阶篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1F4JVMQ.html" rel="bookmark">一文搞懂redis</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wexinPay.jpeg" alt="meadel 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/zhifubaoPay.jpeg" alt="meadel 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuemingde.com/posts/2SZHQ52.html" title="如何优雅地记录操作日志">https://xuemingde.com/posts/2SZHQ52.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+              <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i> SpringBoot</a>
+              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+              <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
+              <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
+              <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/1BED9D0.html" rel="prev" title="OR与AND一起的用法">
+      <i class="fa fa-chevron-left"></i> OR与AND一起的用法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/33P1FY8.html" rel="next" title="一文详解SQL关联子查询">
+      一文详解SQL关联子查询 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+
+  </article>
+  
+  
+  
+
+
+
+           </div>
+          </div>
+          
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-disqus">disqus</a></li>
+            <li class="tab"><a href="#comment-valine">valine</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane disqus" id="comment-disqus">
+              
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+            </div>
+            <div class="tab-pane valine" id="comment-valine">
+              <div class="comments" id="valine-comments"></div>
+            </div>
+        </div>
+      </div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+          
+<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container-1',
+        blogId: '29491-1649429697615-963',
+        name: '不闻一时',
+        qrcode: 'https://xuemingde.com/pages/image/2022/05/31093822.png',
+        keyword: 'meadel',
+    });
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%97%A5%E5%BF%97%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">操作日志的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Canal-%E7%9B%91%E5%90%AC%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%B0%E5%BD%95%E6%93%8D%E4%BD%9C%E6%97%A5%E5%BF%97"><span class="nav-number">2.1.</span> <span class="nav-text">使用 Canal 监听数据库记录操作日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%9A%84%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95"><span class="nav-number">2.2.</span> <span class="nav-text">通过日志文件的方式记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-LogUtil-%E7%9A%84%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97"><span class="nav-number">2.3.</span> <span class="nav-text">通过 LogUtil 的方式记录日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E6%93%8D%E4%BD%9C%E6%97%A5%E5%BF%97"><span class="nav-number">2.4.</span> <span class="nav-text">方法注解实现操作日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E9%9B%85%E5%9C%B0%E6%94%AF%E6%8C%81-AOP-%E7%94%9F%E6%88%90%E5%8A%A8%E6%80%81%E7%9A%84%E6%93%8D%E4%BD%9C%E6%97%A5%E5%BF%97"><span class="nav-number">3.</span> <span class="nav-text">优雅地支持 AOP 生成动态的操作日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.1.</span> <span class="nav-text">动态模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">代码实现解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">代码结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.2.</span> <span class="nav-text">模块介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AOP-%E6%8B%A6%E6%88%AA%E9%80%BB%E8%BE%91"><span class="nav-number">4.2.1.</span> <span class="nav-text">AOP 拦截逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E9%80%BB%E8%BE%91"><span class="nav-number">4.2.2.</span> <span class="nav-text">解析逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%8C%81%E4%B9%85%E5%8C%96%E9%80%BB%E8%BE%91"><span class="nav-number">4.2.3.</span> <span class="nav-text">日志持久化逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Starter-%E9%80%BB%E8%BE%91%E5%B0%81%E8%A3%85"><span class="nav-number">4.2.4.</span> <span class="nav-text">Starter 逻辑封装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E8%80%85%E7%AE%80%E4%BB%8B"><span class="nav-number">6.</span> <span class="nav-text">作者简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meadel"
+      src="/images/touxiang.jpeg">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">我的愿望，世界和平</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80MDE5NDcwMjQ0MjU4NTUyL3Bvc3Rz" title="掘金 → https:&#x2F;&#x2F;juejin.cn&#x2F;user&#x2F;4019470244258552&#x2F;posts"><i class="fa fa-share-alt fa-fw"></i>掘金</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZV9taW5k" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;xue_mind"><i class="fa fa-th-list fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">824k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">12:29</span>
+</div>
+  <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="js/canvas-ribbon.js"></script>
+  <script src="//lib.baomitu.com/animejs/3.2.1/anime.min.js"></script>
+  <script src="//lib.baomitu.com/next-theme-pjax/0.5.0/pjax.min.js"></script>
+  <script src="//lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//lib.baomitu.com/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+  <script src="https://lib.baomitu.com/lozad.js/1.16.0/lozad.min.js"></script>
+  <script src="https://lib.baomitu.com/pangu/4.0.7/pangu.min.js"></script>
+  <script src="//lib.baomitu.com/velocity/1.5.2/velocity.min.js"></script>
+  <script src="//lib.baomitu.com/velocity/1.5.2/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer src="js/three.min.js"></script>
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+  <script data-pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 34163,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://评论数.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://xuemingde.com/posts/2SZHQ52.html";
+    this.page.identifier = "posts/2SZHQ52.html";
+    this.page.title = "如何优雅地记录操作日志";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://评论数.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "留个脚印吧...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <div id="aplayer"></div>
+  <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+  <script type="text/javascript" src="/dist/music.js"></script>
+</body>
+</html>
