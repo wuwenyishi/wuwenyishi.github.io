@@ -285,10 +285,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Valine：</span>
+      <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="valine" href="/posts/HAXCJE.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/HAXCJE.html" itemprop="commentCount"></span>
+    <a title="disqus" href="/posts/HAXCJE.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/HAXCJE.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -299,10 +299,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Disqus：</span>
+      <span class="post-meta-item-text">Valine：</span>
     
-    <a title="disqus" href="/posts/HAXCJE.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/HAXCJE.html" itemprop="commentCount"></span>
+    <a title="valine" href="/posts/HAXCJE.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/HAXCJE.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -371,10 +371,10 @@
       <div class="popular-posts-title"><a href="/posts/N8AQ70.html" rel="bookmark">SpringBoot 内置工具类</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2GN96QM.html" rel="bookmark">谈谈你对 JVM 方法区的理解</a></div>
+      <div class="popular-posts-title"><a href="/posts/2SZHQ52.html" rel="bookmark">如何优雅地记录操作日志</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1HT8JDQ.html" rel="bookmark">C++学习笔记2</a></div>
+      <div class="popular-posts-title"><a href="/posts/2ZZM48T.html" rel="bookmark">Column注解解析</a></div>
     </li>
   </ul>
 
@@ -462,13 +462,10 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-valine">valine</a></li>
             <li class="tab"><a href="#comment-disqus">disqus</a></li>
+            <li class="tab"><a href="#comment-valine">valine</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
@@ -477,6 +474,9 @@
     </div>
   </div>
   
+            </div>
+            <div class="tab-pane valine" id="comment-valine">
+              <div class="comments" id="valine-comments"></div>
             </div>
         </div>
       </div>
@@ -835,36 +835,6 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
   
 
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el         : '#valine-comments',
-      verify     : false,
-      notify     : false,
-      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
-      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
-      placeholder: "留个脚印吧...",
-      avatar     : 'monsterid',
-      meta       : guest,
-      pageSize   : '10' || 10,
-      visitor    : true,
-      lang       : 'zh-cn' || 'zh-cn',
-      path       : location.pathname,
-      recordIP   : true,
-      serverURLs : '',
-      requiredFields : ['nick','mail']
-    });
-  }, window.Valine);
-});
-</script>
-
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -894,6 +864,36 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       (d.head || d.body).appendChild(s);
     }
   });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "留个脚印吧...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
 </script>
 
     </div>

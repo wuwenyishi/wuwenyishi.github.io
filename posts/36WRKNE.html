@@ -81,9 +81,9 @@
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="GC">
 <meta property="article:tag" content="事务">
-<meta property="article:tag" content="分布式">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="MQ">
+<meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/others/image-20210310095052994.png">
 
@@ -326,10 +326,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Valine：</span>
+      <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="valine" href="/posts/36WRKNE.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/36WRKNE.html" itemprop="commentCount"></span>
+    <a title="disqus" href="/posts/36WRKNE.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/36WRKNE.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -340,10 +340,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Disqus：</span>
+      <span class="post-meta-item-text">Valine：</span>
     
-    <a title="disqus" href="/posts/36WRKNE.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/36WRKNE.html" itemprop="commentCount"></span>
+    <a title="valine" href="/posts/36WRKNE.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/36WRKNE.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -525,9 +525,9 @@
               <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
               <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
               <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
               <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
               <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
           </div>
 
         
@@ -564,13 +564,10 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-valine">valine</a></li>
             <li class="tab"><a href="#comment-disqus">disqus</a></li>
+            <li class="tab"><a href="#comment-valine">valine</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
@@ -579,6 +576,9 @@
     </div>
   </div>
   
+            </div>
+            <div class="tab-pane valine" id="comment-valine">
+              <div class="comments" id="valine-comments"></div>
             </div>
         </div>
       </div>
@@ -938,36 +938,6 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
   
 
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el         : '#valine-comments',
-      verify     : false,
-      notify     : false,
-      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
-      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
-      placeholder: "留个脚印吧...",
-      avatar     : 'monsterid',
-      meta       : guest,
-      pageSize   : '10' || 10,
-      visitor    : true,
-      lang       : 'zh-cn' || 'zh-cn',
-      path       : location.pathname,
-      recordIP   : true,
-      serverURLs : '',
-      requiredFields : ['nick','mail']
-    });
-  }, window.Valine);
-});
-</script>
-
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -997,6 +967,36 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       (d.head || d.body).appendChild(s);
     }
   });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "留个脚印吧...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
 </script>
 
     </div>

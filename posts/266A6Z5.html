@@ -41,9 +41,9 @@
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="堆">
 <meta property="article:tag" content="栈">
+<meta property="article:tag" content="变量">
 <meta property="article:tag" content="数组">
 <meta property="article:tag" content="锁">
-<meta property="article:tag" content="变量">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://xuemingde.com/posts/266A6Z5.html">
@@ -285,10 +285,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Valine：</span>
+      <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="valine" href="/posts/266A6Z5.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/266A6Z5.html" itemprop="commentCount"></span>
+    <a title="disqus" href="/posts/266A6Z5.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/266A6Z5.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -299,10 +299,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Disqus：</span>
+      <span class="post-meta-item-text">Valine：</span>
     
-    <a title="disqus" href="/posts/266A6Z5.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/266A6Z5.html" itemprop="commentCount"></span>
+    <a title="valine" href="/posts/266A6Z5.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/266A6Z5.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -480,7 +480,7 @@
       <div class="popular-posts-title"><a href="/posts/2GN96QM.html" rel="bookmark">谈谈你对 JVM 方法区的理解</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
+      <div class="popular-posts-title"><a href="/posts/D7TEMP.html" rel="bookmark">java锁面试题</a></div>
     </li>
   </ul>
 
@@ -533,9 +533,9 @@
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
               <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
+              <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
               <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
-              <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
           </div>
 
         
@@ -572,13 +572,10 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-valine">valine</a></li>
             <li class="tab"><a href="#comment-disqus">disqus</a></li>
+            <li class="tab"><a href="#comment-valine">valine</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
@@ -587,6 +584,9 @@
     </div>
   </div>
   
+            </div>
+            <div class="tab-pane valine" id="comment-valine">
+              <div class="comments" id="valine-comments"></div>
             </div>
         </div>
       </div>
@@ -946,36 +946,6 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
   
 
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el         : '#valine-comments',
-      verify     : false,
-      notify     : false,
-      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
-      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
-      placeholder: "留个脚印吧...",
-      avatar     : 'monsterid',
-      meta       : guest,
-      pageSize   : '10' || 10,
-      visitor    : true,
-      lang       : 'zh-cn' || 'zh-cn',
-      path       : location.pathname,
-      recordIP   : true,
-      serverURLs : '',
-      requiredFields : ['nick','mail']
-    });
-  }, window.Valine);
-});
-</script>
-
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -1005,6 +975,36 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       (d.head || d.body).appendChild(s);
     }
   });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "留个脚印吧...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
 </script>
 
     </div>
