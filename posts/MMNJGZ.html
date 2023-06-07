@@ -47,8 +47,8 @@
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="Spring">
 <meta property="article:tag" content="linux">
+<meta property="article:tag" content="Spring">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg">
@@ -292,20 +292,6 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/posts/MMNJGZ.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/MMNJGZ.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
       <span class="post-meta-item-text">Valine：</span>
     
     <a title="valine" href="/posts/MMNJGZ.html#valine-comments" itemprop="discussionUrl">
@@ -440,13 +426,13 @@
   <div class="popular-posts-header">相关热门文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3XAT60D.html" rel="bookmark">C++学习笔记1</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/3V4Q1GY.html" rel="bookmark">springBoot项目打成的jar包无法获取resources下文件</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/HRQWG9.html" rel="bookmark">Transactional 注解失效的3种原因及解决办法 </a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3XAT60D.html" rel="bookmark">C++学习笔记1</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/2SZHQ52.html" rel="bookmark">如何优雅地记录操作日志</a></div>
@@ -499,8 +485,8 @@
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
-              <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
               <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+              <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
           </div>
 
@@ -536,26 +522,7 @@
            </div>
           </div>
           
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">disqus</a></li>
-            <li class="tab"><a href="#comment-valine">valine</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane disqus" id="comment-disqus">
-              
-  <div class="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
-        </div>
-      </div>
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -912,43 +879,12 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
   
 
-<script>
-  function loadCount() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://评论数.disqus.com/count.js';
-    s.id = 'dsq-count-scr';
-    (d.head || d.body).appendChild(s);
-  }
-  // defer loading until the whole page loading is completed
-  window.addEventListener('load', loadCount, false);
-</script>
-<script>
-  var disqus_config = function() {
-    this.page.url = "https://xuemingde.com/posts/MMNJGZ.html";
-    this.page.identifier = "posts/MMNJGZ.html";
-    this.page.title = "撸一下Nacos";
-    };
-  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
-    if (window.DISQUS) {
-      DISQUS.reset({
-        reload: true,
-        config: disqus_config
-      });
-    } else {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://评论数.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', '' + +new Date());
-      (d.head || d.body).appendChild(s);
-    }
-  });
-</script>
-
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail';
+    var guest = '';
     guest = guest.split(',').filter(item => {
       return GUEST.includes(item);
     });
@@ -958,7 +894,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       notify     : false,
       appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
       appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
-      placeholder: "留个脚印吧...",
+      placeholder: "吐槽一下...",
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,

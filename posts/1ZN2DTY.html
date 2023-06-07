@@ -60,10 +60,10 @@
 <meta property="article:modified_time" content="2022-08-13T08:46:48.944Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
-<meta property="article:tag" content="Java">
-<meta property="article:tag" content="JVM">
 <meta property="article:tag" content="内存">
+<meta property="article:tag" content="Java">
 <meta property="article:tag" content="CPU">
+<meta property="article:tag" content="JVM">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary">
@@ -308,20 +308,6 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/posts/1ZN2DTY.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/1ZN2DTY.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
       <span class="post-meta-item-text">Valine：</span>
     
     <a title="valine" href="/posts/1ZN2DTY.html#valine-comments" itemprop="discussionUrl">
@@ -473,10 +459,10 @@
           
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
-              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
-              <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
               <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
+              <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
           </div>
@@ -513,26 +499,7 @@
            </div>
           </div>
           
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">disqus</a></li>
-            <li class="tab"><a href="#comment-valine">valine</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane disqus" id="comment-disqus">
-              
-  <div class="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
-        </div>
-      </div>
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -889,43 +856,12 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
   
 
-<script>
-  function loadCount() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://评论数.disqus.com/count.js';
-    s.id = 'dsq-count-scr';
-    (d.head || d.body).appendChild(s);
-  }
-  // defer loading until the whole page loading is completed
-  window.addEventListener('load', loadCount, false);
-</script>
-<script>
-  var disqus_config = function() {
-    this.page.url = "https://xuemingde.com/posts/1ZN2DTY.html";
-    this.page.identifier = "posts/1ZN2DTY.html";
-    this.page.title = "面试题集合三";
-    };
-  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
-    if (window.DISQUS) {
-      DISQUS.reset({
-        reload: true,
-        config: disqus_config
-      });
-    } else {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://评论数.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', '' + +new Date());
-      (d.head || d.body).appendChild(s);
-    }
-  });
-</script>
-
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail';
+    var guest = '';
     guest = guest.split(',').filter(item => {
       return GUEST.includes(item);
     });
@@ -935,7 +871,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       notify     : false,
       appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
       appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
-      placeholder: "留个脚印吧...",
+      placeholder: "吐槽一下...",
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,
