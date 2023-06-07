@@ -25,10 +25,12 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="Java8 Stream 先贴上几个案例，水平高超的同学可以挑战一下：">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Java8 Stream玩转集合的筛选、归约、分组、聚合">
 <meta property="og:url" content="https://xuemingde.com/posts/1HVJ8ZX.html">
 <meta property="og:site_name" content="Middle&#39;s blog">
+<meta property="og:description" content="Java8 Stream 先贴上几个案例，水平高超的同学可以挑战一下：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b175706d834a4a6b8162c330d9fafbae~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6b95747bffc745699900d4b3c3c39a0a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image">
@@ -44,15 +46,15 @@
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1cb30e7ac2e44747b3f58917c06fee16~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e621d1cded84c75874a5753bb7500ef~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image">
 <meta property="article:published_time" content="2022-03-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-08-13T08:46:48.943Z">
+<meta property="article:modified_time" content="2023-06-07T01:06:24.530Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="集合">
 <meta property="article:tag" content="函数">
-<meta property="article:tag" content="数组">
 <meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="数组">
 <meta property="article:tag" content="容器">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
@@ -264,7 +266,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-13 16:46:48" itemprop="dateModified" datetime="2022-08-13T16:46:48+08:00">2022-08-13</time>
+                <time title="修改时间：2023-06-07 09:06:24" itemprop="dateModified" datetime="2023-06-07T09:06:24+08:00">2023-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -343,8 +345,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p><img data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b175706d834a4a6b8162c330d9fafbae~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image" alt="MarkerHub">Java8 Stream</p>
+        <p><img data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b175706d834a4a6b8162c330d9fafbae~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image" alt="MarkerHub">Java8 Stream</p>
 <p>先贴上几个案例，水平高超的同学可以挑战一下：</p>
 <ol>
 <li>从员工集合中筛选出salary大于8000的员工，并放置到新的集合里。</li>
@@ -664,8 +665,8 @@
               <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
               <a href="/tags/%E9%9B%86%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 集合</a>
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
-              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
               <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
+              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
               <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
               <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
           </div>
@@ -797,7 +798,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-count">152</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
