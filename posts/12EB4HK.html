@@ -25,12 +25,10 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="JDK 1.7数据结构：是由 Segment 数组、HashEntry 组成，和 HashMap 一样，仍然是数组加链表。  Segment 是 ConcurrentHashMap 的一个内部类。    如何保证线程安全：Segment的分段锁。    JDK 1.8数据结构：整体结构与HashMap别无二致，都是使用哈希表+红黑树结构如何保证线程安全：采用了 CAS + synchronized">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="ConcurrentHashMap的理解">
 <meta property="og:url" content="https://xuemingde.com/posts/12EB4HK.html">
 <meta property="og:site_name" content="Middle&#39;s blog">
-<meta property="og:description" content="JDK 1.7数据结构：是由 Segment 数组、HashEntry 组成，和 HashMap 一样，仍然是数组加链表。  Segment 是 ConcurrentHashMap 的一个内部类。    如何保证线程安全：Segment的分段锁。    JDK 1.8数据结构：整体结构与HashMap别无二致，都是使用哈希表+红黑树结构如何保证线程安全：采用了 CAS + synchronized">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-10T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-06-07T01:06:19.981Z">
@@ -349,10 +347,10 @@
       <div class="popular-posts-title"><a href="/posts/3RHZNJS.html" rel="bookmark">synchronized 实现原理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/ZNDDGW.html" rel="bookmark">HashMap集合详解</a></div>
+      <div class="popular-posts-title"><a href="/posts/Q62E85.html" rel="bookmark">面试题集合五</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3WWPT6W.html" rel="bookmark">聊聊ConcurrentHashMap</a></div>
+      <div class="popular-posts-title"><a href="/posts/ZNDDGW.html" rel="bookmark">HashMap集合详解</a></div>
     </li>
   </ul>
 
@@ -413,12 +411,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/Q62E85.html" rel="prev" title="面试题集合五">
-      <i class="fa fa-chevron-left"></i> 面试题集合五
+    <a href="/posts/R5RB64.html" rel="prev" title="SpringBoot-Rabbitmq实现延迟队列">
+      <i class="fa fa-chevron-left"></i> SpringBoot-Rabbitmq实现延迟队列
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/WTSYSE.html" rel="next" title="Java并发常见知识点&面试题总结_进阶篇">
-      Java并发常见知识点&面试题总结_进阶篇 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/Q62E85.html" rel="next" title="面试题集合五">
+      面试题集合五 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

@@ -25,12 +25,10 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="单例，双重检查锁 new 一个对象氛围三步 申请内存，设默认值 0  设置初始值  建立关联  new 对象的时候会有一个问题，就是指令重排序 可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障  volatile 是JVM的关键字有两个作用，一个是禁止指令重排序，一个是线程可见性。    一些面试问题 线程的原子性 为了保证线程的原子性，需要加锁，一个线程">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="面试题集合三">
 <meta property="og:url" content="https://xuemingde.com/posts/1ZN2DTY.html">
 <meta property="og:site_name" content="Middle&#39;s blog">
-<meta property="og:description" content="单例，双重检查锁 new 一个对象氛围三步 申请内存，设默认值 0  设置初始值  建立关联  new 对象的时候会有一个问题，就是指令重排序 可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障  volatile 是JVM的关键字有两个作用，一个是禁止指令重排序，一个是线程可见性。    一些面试问题 线程的原子性 为了保证线程的原子性，需要加锁，一个线程">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xuemingde.com/pages/image/others/20210226094709.png">
 <meta property="og:image" content="https://xuemingde.com/pages/image/others/20210226095658.png">
@@ -63,8 +61,8 @@
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="JVM">
 <meta property="article:tag" content="内存">
-<meta property="article:tag" content="CPU">
 <meta property="article:tag" content="面试">
+<meta property="article:tag" content="CPU">
 <meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/others/20210226094709.png">
@@ -413,7 +411,7 @@
       <div class="popular-posts-title"><a href="/posts/D7TEMP.html" rel="bookmark">java锁面试题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+      <div class="popular-posts-title"><a href="/posts/2P9AR21.html" rel="bookmark">Kafka面试连环炮-下</a></div>
     </li>
   </ul>
 
@@ -462,8 +460,8 @@
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
               <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
-              <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+              <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
           </div>
 

@@ -25,12 +25,10 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文主要有三个议题：高性能、一致性、高可用。 秒杀大家都不陌生。自2011年首次出现以来，无论是双十一购物还是 12306 抢票，秒杀场景已随处可见。简单来说，秒杀就是在同一时刻大量请求争抢购买同一商品并完成交易的过程。从架构视角来看，秒杀系统本质是一个高性能、高一致、高可用的三高系统。而打造并维护一个超大流量的秒杀系统需要进行哪些关注，就是本文讨论的话题。 整体思考秒杀存在的问题对于一个日常平稳">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="如何设计一个秒杀系统">
 <meta property="og:url" content="https://xuemingde.com/posts/1J88EXM.html">
 <meta property="og:site_name" content="Middle&#39;s blog">
-<meta property="og:description" content="本文主要有三个议题：高性能、一致性、高可用。 秒杀大家都不陌生。自2011年首次出现以来，无论是双十一购物还是 12306 抢票，秒杀场景已随处可见。简单来说，秒杀就是在同一时刻大量请求争抢购买同一商品并完成交易的过程。从架构视角来看，秒杀系统本质是一个高性能、高一致、高可用的三高系统。而打造并维护一个超大流量的秒杀系统需要进行哪些关注，就是本文讨论的话题。 整体思考秒杀存在的问题对于一个日常平稳">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/12/0921-5SVE4Q.png">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/12/0924-FjO5V0.png">
@@ -48,10 +46,10 @@
 <meta property="article:tag" content="堆">
 <meta property="article:tag" content="栈">
 <meta property="article:tag" content="函数">
-<meta property="article:tag" content="CPU">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="线程池">
+<meta property="article:tag" content="CPU">
 <meta property="article:tag" content="锁">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="分布式">
@@ -593,10 +591,10 @@
               <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
               <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
-              <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
               <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+              <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
               <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>

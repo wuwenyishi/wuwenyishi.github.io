@@ -25,12 +25,10 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="原文：Redis 高可用集群原理和实践 - 掘金  Redis 集群是 Redis 提供的分布式数据库方案，集群痛殴分片（sharding）来进行数据共享，并提供复制和故障转移能力。  集群环境搭建Redis 集群最少需要 3 个 master 节点，这里我们搭建 3 个master 节点，3 个 slave 及节点（由于我机器配置受限，直接通过端口的方式模拟集群搭建，本处只是实验方便，生产环境">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="Redis高可用集群原理和实践">
 <meta property="og:url" content="https://xuemingde.com/posts/39ZYWX3.html">
 <meta property="og:site_name" content="Middle&#39;s blog">
-<meta property="og:description" content="原文：Redis 高可用集群原理和实践 - 掘金  Redis 集群是 Redis 提供的分布式数据库方案，集群痛殴分片（sharding）来进行数据共享，并提供复制和故障转移能力。  集群环境搭建Redis 集群最少需要 3 个 master 节点，这里我们搭建 3 个master 节点，3 个 slave 及节点（由于我机器配置受限，直接通过端口的方式模拟集群搭建，本处只是实验方便，生产环境">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/05/31104759.jpg">
 <meta property="og:image" content="https://xuemingde.com/pages/image/2022/05/31104954.png">

@@ -304,41 +304,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="支持的数据结构"><a href="#支持的数据结构" class="headerlink" title="支持的数据结构"></a>支持的数据结构</h3><ol>
-<li>String字符串  </li>
-</ol>
-<p>存储的String数据是二进制安全的，是最进本的数据类型，一个键最大存储512M。</p>
-<p>应用场景：很常见的场景用于统计网站访问数量，当前在线人数等（incr命令自增。decr命令自减）</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605594981645-3560373a-80a8-4ed9-b098-bbd07f7a6daf.png" alt="image"></p>
-<ol>
-<li>Hash</li>
-</ol>
-<p>Redis中的散列可以看成具有String key和String value的map容器，可以将多个key-value存储到一个key中。每一个Hash可以存储4294967295个键值对。</p>
-<p>应用场景：例如存储、读取、修改用户属性（name，age，pwd等）</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605594999435-52838f6c-a296-482f-bbe3-0458bc1d69dd.png" alt="image"></p>
-<ol>
-<li>List</li>
-</ol>
-<p>Redis的列表允许用户从序列的两端推入或者弹出元素，列表由多个字符串值组成的有序可重复的序列，是链表结构，所以向列表两端添加元素的时间复杂度为0(1)，获取越接近两端的元素速度就越快。List中可以包含的最大元素数量是4294967295。</p>
-<p>应用场景：1.最新消息排行榜。2.消息队列，以完成多程序之间的消息交换。可以用push操作将任务存在list中（生产者），然后线程在用pop操作将任务取出进行执行。（消费者）</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605594989795-94de03ed-d934-447d-8503-0e9bea7b42f0.png" alt="image"></p>
-<ol>
-<li>集合Set</li>
-</ol>
-<p>Redis的集合是无序不可重复的，和列表一样，在执行插入和删除和判断是否存在某元素时，效率是很高的。集合最大的优势在于可以进行交集并集差集操作。Set可包含的最大元素数量是4294967295。</p>
-<p>应用场景：1.利用交集求共同好友。2.利用唯一性，可以统计访问网站的所有独立IP。3.好友推荐的时候根据tag求交集，大于某个threshold（临界值的）就可以推荐。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605595010088-ed456003-9a56-4631-9ccd-666d4527287b.png" alt="image"></p>
-<ol>
-<li>有序集合sorted set</li>
-</ol>
-<p>和set很像，都是字符串的集合，都不允许重复的成员出现在一个set中。他们之间差别在于有序集合中每一个成员都会有一个分数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。尽管有序集合中的成员必须是卫衣的，但是分数(score)却可以重复。</p>
-<p>应用场景：可以用于一个大型在线游戏的积分排行榜，每当玩家的分数发生变化时，可以执行zadd更新玩家分数(score)，此后在通过zrange获取几分top ten的用户信息。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605595082580-7b4529d5-6260-4901-97cb-3542fc6c48a3.png" alt="image"></p>
-<blockquote>
-<p>最后，还有个对key的通用操作，所有的数据类型都可以使用的</p>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605595240335-fef65e1b-6f04-432d-b59b-d3275920d741.png" alt="image"></p>
-
+          
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/2PVT91G.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
    <div>
@@ -580,17 +554,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RpYW55YWxlaXhpYW93dS9hcnRpY2xlL2RldGFpbHMvOTAwMzYxODA=">Springboot使用分布式锁（基于redisson）<i class="fa fa-external-link-alt"></i></span>， </p>
-</blockquote>
-<h2 id="常见的分布式锁实现方案"><a href="#常见的分布式锁实现方案" class="headerlink" title="常见的分布式锁实现方案"></a><strong>常见的分布式锁实现方案</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt="image.png"> </p>
-<h2 id="Redisson原理分析图解"><a href="#Redisson原理分析图解" class="headerlink" title="Redisson原理分析图解"></a>Redisson原理分析图解</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt="image"></p>
-<h3 id="加锁机制"><a href="#加锁机制" class="headerlink" title="加锁机制"></a>加锁机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt="image.png"></p>
-<h3 id="watch-dog自动延期机制"><a href="#watch-dog自动延期机制" class="headerlink" title="watch dog自动延期机制"></a>watch dog自动延期机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt="image.png"></p>
-<h3 id="为啥要用lua脚本呢"><a href="#为啥要用lua脚本呢" class="headerlink" title="为啥要用lua脚本呢"></a>为啥要用lua脚本呢</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt="image.png"></p>
-<h3 id="可重入加锁机制"><a href="#可重入加锁机制" class="headerlink" title="可重入加锁机制"></a>可重入加锁机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt="image.png"></p>
-<h2 id="Redis分布式锁的缺点"><a href="#Redis分布式锁的缺点" class="headerlink" title="Redis分布式锁的缺点"></a>Redis分布式锁的缺点</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt="image.png"></p>
-
+          
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/2AGZ1Y7.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
    <div>
@@ -709,27 +681,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
-</blockquote>
-<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
-<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
-<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
-<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
-<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
-<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
-<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
-<blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
-</blockquote>
-
+          
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/12VZ51X.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
    <div>
@@ -848,23 +808,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="你们公司生产环境用的是什么消息中间件？"><a href="#你们公司生产环境用的是什么消息中间件？" class="headerlink" title="你们公司生产环境用的是什么消息中间件？"></a>你们公司生产环境用的是什么消息中间件？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963827333-90292131-d863-4697-be3c-76cb14e89560.png" alt="image.png"></p>
-<h2 id="消息的重复问题"><a href="#消息的重复问题" class="headerlink" title="消息的重复问题"></a><strong>消息的重复问题</strong></h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964526920-75a7c395-7b8e-476f-9077-873c7aa990f9.png" alt="image.png"></p>
-<h2 id="消息队列Kafka、RocketMQ、RabbitMQ的选择"><a href="#消息队列Kafka、RocketMQ、RabbitMQ的选择" class="headerlink" title="消息队列Kafka、RocketMQ、RabbitMQ的选择"></a>消息队列Kafka、RocketMQ、RabbitMQ的选择</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615962984036-416ef0f2-2c69-4a18-a76b-250354e6d8d4.jpeg" alt="image"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963003485-633ef8ce-4f9a-41c4-9909-f96aff77f3d6.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963014165-e1772ed0-3df6-4d69-9488-927dc60d9c53.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963057530-92a0d024-244d-48fc-b512-1b348de7dcf8.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963100182-3bbdf65e-9570-4123-915b-75fcf7b65b79.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963142096-6433cf7c-2d01-49a9-8dc6-f4be3795c6be.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615963393063-c9869bc4-f32a-46de-ac2d-627f425f1649.png" alt="image.png"></p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？"><a href="#如何确保消息正确地发送至-RabbitMQ？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？"></a>如何确保消息正确地发送至 RabbitMQ？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615963649216-cc648c58-d318-47fc-8d35-d74a1c03ed47.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1615964728815-7fd6fb2a-aee5-4a51-88b2-e6f25c7effe4.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964620500-fb42c3de-cb6e-4e9f-9f34-5659945c8ef9.png" alt="image.png"></p>
-<h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p><img data-src="https://xuemingde.com/pages/image/others/1615964775696-738f85a6-f39f-42db-855b-0a7d18be418f.png" alt="image.png"></p>
-<blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vY2Fzb25vbC9pbnRlcnZpZXdfbm90ZXMvYmxvYi9tYXN0ZXIv5raI5oGv6Zif5YiXUmFiYml0TVHpnaLor5UyMDIwLm1k">文章一<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMmZkY2I5ZTg3ODQ=">如何保证消息按顺序执行<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-
+          
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/11RZTJV.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
    <div>

@@ -300,40 +300,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThHUi16U0hqQ0YtUWc5OGF1NnpmYUE=">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA<i class="fa fa-external-link-alt"></i></span> 提取码: n9fk </p>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304163758.png" alt="image-20210304163751931"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210304163845.png" alt="image-20210304163843821"></p>
-<p>访问：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>账户密码默认：nacos/nacos </p>
-<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304164000.png" alt="image-20210304163959764"></p>
-<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
-<li><p>新建  命名空间</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092814.png" alt="image-20210305092812721"></p>
-</li>
-</ol>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092920.png" alt="image-20210305092919689"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092945.png" alt="image-20210305092944790"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093109.png" alt="image-20210305093108311"></p>
-<p>新建配置</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093324.png" alt="image-20210305093323554"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093506.png" alt="image-20210305093505015"></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093731.png" alt="image-20210305093729513"></p>
-<p>与服务端配置对比</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094240.png" alt="image-20210305094238911"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094354.png" alt="image-20210305094353139"></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094646.png" alt="image-20210305094645537"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094636.png" alt="image-20210305094635853"></p>
-<p>测试获取配置信息：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094745.png" alt="image-20210305094744176"></p>
-<p>测试：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305095010.png" alt="image-20210305095009444"></p>
-
+          
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/3MH3EJ1.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
    <div>
@@ -817,50 +792,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <div style="text-align: center;"></div>
-
-
-<h4 id="单例，双重检查锁"><a href="#单例，双重检查锁" class="headerlink" title="单例，双重检查锁"></a>单例，双重检查锁</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226094709.png" alt=""></p>
-<h4 id="new-一个对象氛围三步"><a href="#new-一个对象氛围三步" class="headerlink" title="new 一个对象氛围三步"></a>new 一个对象氛围三步</h4><ol>
-<li>申请内存，设默认值 0 </li>
-<li>设置初始值 </li>
-<li>建立关联</li>
-</ol>
-<h4 id="new-对象的时候会有一个问题，就是指令重排序"><a href="#new-对象的时候会有一个问题，就是指令重排序" class="headerlink" title="new 对象的时候会有一个问题，就是指令重排序"></a>new 对象的时候会有一个问题，就是指令重排序</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226095658.png" alt=""></p>
-<p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226100612.png" alt=""></p>
-<h4 id="volatile-是JVM的关键字"><a href="#volatile-是JVM的关键字" class="headerlink" title="volatile 是JVM的关键字"></a>volatile 是JVM的关键字</h4><p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226101428.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226102705.png" alt="image-20210226102702495"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226102800.png" alt="image-20210226102757830"></p>
-<h4 id="一些面试问题"><a href="#一些面试问题" class="headerlink" title="一些面试问题"></a>一些面试问题</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226103831.png" alt="image-20210226103830233"></p>
-<h4 id="线程的原子性"><a href="#线程的原子性" class="headerlink" title="线程的原子性"></a>线程的原子性</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226111409.png" alt="image-20210226111407167"></p>
-<p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226111719.png" alt="image-20210226111718278"></p>
-<h4 id="java对象的内存布局"><a href="#java对象的内存布局" class="headerlink" title="java对象的内存布局"></a>java对象的内存布局</h4><p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
-<p>没有加锁的对象与加锁的对象的内存布局对比</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226112221.png" alt="image-20210226112218624"></p>
-<h4 id="轻量级锁的种类"><a href="#轻量级锁的种类" class="headerlink" title="轻量级锁的种类"></a>轻量级锁的种类</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226113106.png" alt="image-20210226113105033"></p>
-<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226114604.png" alt="image-20210226114602603"></p>
-<p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
-<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
-<h4 id="CAS存在的问题"><a href="#CAS存在的问题" class="headerlink" title="CAS存在的问题"></a>CAS存在的问题</h4><p>ABA 问题</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226134646.png" alt="image-20210226134644249"></p>
-<p>解决：加版本号</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226135543.png" alt="image-20210226135541370"></p>
-<h4 id="synchronized-与-reentrantlock-的共同点"><a href="#synchronized-与-reentrantlock-的共同点" class="headerlink" title="synchronized 与 reentrantlock 的共同点"></a>synchronized 与 reentrantlock 的共同点</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226141427.png" alt="image-20210226141426173"></p>
-<h4 id="synchronized-与-reentrantlock-的区别"><a href="#synchronized-与-reentrantlock-的区别" class="headerlink" title="synchronized 与 reentrantlock 的区别"></a>synchronized 与 reentrantlock 的区别</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210226141654.png" alt="image-20210226141652907"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226141850.png" alt="image-20210226141849362"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226142156.png" alt="image-20210226142154906"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226142315.png" alt="image-20210226142314198"></p>
-<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226145644.png" alt="image-20210226145643215"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150103.png" alt="image-20210226150102063"></p>
-<p> 如何让第二个线程先执行</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150342.png" alt="image-20210226150339682"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150748.png" alt="image-20210226150746706"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150827.png" alt="image-20210226150826706"> </p>
-
+          
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/1ZN2DTY.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
    <div>
