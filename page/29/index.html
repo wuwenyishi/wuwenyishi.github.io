@@ -304,14 +304,77 @@
 <p>文章来源：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xODM3NTM3NzQ=">https://zhuanlan.zhihu.com/p/183753774<i class="fa fa-external-link-alt"></i></span>   、<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHl6Y3MvcC8xMzc4MDY2OC5odG1s">https://www.cnblogs.com/dyzcs/p/13780668.html<i class="fa fa-external-link-alt"></i></span>  、 </p>
 <p>具体不多讲，详情看文章来源</p>
 </blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/36WRKNE.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310095052994.png" alt="image-20210310095052994"></p>
+<h3 id="分布式事务产生的情景"><a href="#分布式事务产生的情景" class="headerlink" title="分布式事务产生的情景"></a>分布式事务产生的情景</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111105762.png" alt="image-20210310111105762"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111122121.png" alt="image-20210310111122121"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111135604.png" alt="image-20210310111135604"></p>
+<h3 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111713208.png" alt="image-20210310111713208"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111823153.png" alt="image-20210310111823153"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111839653.png" alt="image-20210310111839653"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112230088.png" alt="image-20210310112230088"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112245668.png" alt="image-20210310112245668"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112305735.png" alt="image-20210310112305735"></p>
+<p><strong>重点 </strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112443572.png" alt="image-20210310112443572"></p>
+<p><strong>CPA的组合方式</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112909937.png" alt="image-20210310112909937"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112932874.png" alt="image-20210310112932874"></p>
+<p>总结</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113100211.png" alt="image-20210310113100211"></p>
+<p><strong>几个分布式架构CPA</strong></p>
+<ul>
+<li><p>zookeeper（Dubbo）：CP</p>
+</li>
+<li><p>eureka（springcloud  - netflix）：AP</p>
+</li>
+<li><p>nacos：（Springcloud  - alibaba）：AP</p>
+</li>
+<li><p>redis集群：AP</p>
+</li>
+</ul>
+<h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113839296.png" alt="image-20210310113839296"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113947118.png" alt="image-20210310113947118"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114211959.png" alt="image-20210310114211959"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114558794.png" alt="image-20210310114558794"></p>
+<p>ACID 和 BASE 的区别与联系ACID 和 BASE 的区别与联系</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114325451.png" alt="image-20210310114325451"></p>
+<p>CAP 与 BASE 关系</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114440621.png" alt="image-20210310114440621"></p>
+<h3 id="分布式事务解决方案"><a href="#分布式事务解决方案" class="headerlink" title="分布式事务解决方案"></a>分布式事务解决方案</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310095942828.png" alt="image-20210310095942828"></p>
+<h4 id="2PC-两阶段提交"><a href="#2PC-两阶段提交" class="headerlink" title="2PC   两阶段提交"></a><strong>2PC </strong>  两阶段提交</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310100845788.png" alt="image-20210310100845788"></p>
+<p>假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310103855011.png" alt="image-20210310103855011"></p>
+<p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310103910529.png" alt="image-20210310103910529"></p>
+<p>如果第二阶段提交失败会如何？</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104040403.png" alt="image-20210310104040403"></p>
+<p>协调者故障</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104139596.png" alt="image-20210310104139596"></p>
+<p>总结</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104522151.png" alt="image-20210310104522151"></p>
+<h4 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104742475.png" alt="image-20210310104742475"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/v2-885daf4ba34102d6e1047b0b67910652_r.jpg" alt="img"></p>
+<p>总结</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105402382.png" alt="image-20210310105402382"></p>
+<h4 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105753937.png" alt="image-20210310105753937"></p>
+<p>流程</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105851289.png" alt="image-20210310105851289"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110112096.png" alt="image-20210310110112096"></p>
+<blockquote>
+<p><strong>幂等性：就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用</strong></p>
+</blockquote>
+<h4 id="本地消息列表"><a href="#本地消息列表" class="headerlink" title="本地消息列表"></a>本地消息列表</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110342821.png" alt="image-20210310110342821"></p>
+<h4 id="消息事务"><a href="#消息事务" class="headerlink" title="消息事务"></a>消息事务</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110553662.png" alt="image-20210310110553662"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/v2-72ba7bed684e855606c44ddda185987d_720w.jpg" alt="img"></p>
+<p>可以看到消息事务实现的也是最终一致性。</p>
+<h4 id="最大努力通知-（MQ就是一种）"><a href="#最大努力通知-（MQ就是一种）" class="headerlink" title="最大努力通知 （MQ就是一种）"></a>最大努力通知 （MQ就是一种）</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114807940.png" alt="image-20210310114807940"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114822848.png" alt="image-20210310114822848"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114907740.png" alt="image-20210310114907740"></p>
+<p>总结</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310115019855.png" alt="image-20210310115019855"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310115109923.png" alt="image-20210310115109923"></p>
+
       
     </div>
    <div>

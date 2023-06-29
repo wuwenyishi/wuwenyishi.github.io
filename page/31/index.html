@@ -304,15 +304,44 @@
 
 
 
-<h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/YGV8AK.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<h4 id="堆内存逻辑分区-不适用不分代垃圾收集器"><a href="#堆内存逻辑分区-不适用不分代垃圾收集器" class="headerlink" title="堆内存逻辑分区(不适用不分代垃圾收集器)"></a>堆内存逻辑分区(不适用不分代垃圾收集器)</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301144548.png" alt=""></p>
+<h4 id="jvm-内存空间"><a href="#jvm-内存空间" class="headerlink" title="jvm 内存空间"></a>jvm 内存空间</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301145713.png" alt=""></p>
+<p> 注意：</p>
+<p><strong>一个进程都有一套方法区和堆</strong><br><strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
+<h4 id="各空间详解"><a href="#各空间详解" class="headerlink" title="各空间详解"></a>各空间详解</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301150550.png" alt="image-20210301150548679"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150843.png" alt="image-20210301150841856"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150951.webp" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151013.png" alt="image-20210301151012040"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150727.png" alt="image-20210301150713776"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151201.png" alt="image-20210301151159632"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151627.png" alt="image-20210301151625877"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151826.png" alt="image-20210301151821164"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301152826.png" alt="image-20210301152825611"></p>
+<h4 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301154851.png" alt="image-20210301154850520"></p>
+<p>title: java锁、JVM等  </p>
+<h4 id="TLAB-（指针碰撞的解决思路）"><a href="#TLAB-（指针碰撞的解决思路）" class="headerlink" title="TLAB   （指针碰撞的解决思路）"></a>TLAB   （指针碰撞的解决思路）</h4><p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301155427.png" alt="image-20210301155425935"></p>
+<h4 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a><strong>逃逸分析</strong></h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301160619.png" alt="image-20210301160618259"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301160710.png" alt="image-20210301160709230"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301160801.png" alt="img"></p>
+<h4 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301163759.png" alt=""></p>
+<h4 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301165936.png" alt="image-20210301165930817"></p>
+<h4 id="同步消除"><a href="#同步消除" class="headerlink" title="同步消除"></a>同步消除</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301170028.png" alt="image-20210301170027420"></p>
+<h4 id="对象创建过程，在jvm层面的内存分配；流程图"><a href="#对象创建过程，在jvm层面的内存分配；流程图" class="headerlink" title="对象创建过程，在jvm层面的内存分配；流程图"></a>对象创建过程，在jvm层面的内存分配；流程图</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301170547.png" alt="image-20210301170545945"></p>
+<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种"><a href="#只要是分代模型，一定是成对出现，常见的组合有3种" class="headerlink" title="只要是分代模型，一定是成对出现，常见的组合有3种"></a>只要是分代模型，一定是成对出现，常见的组合有3种</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301172948.png" alt=""></p>
+<h4 id="jdk1-8可用分代模型，也可不用分代模型"><a href="#jdk1-8可用分代模型，也可不用分代模型" class="headerlink" title="jdk1.8可用分代模型，也可不用分代模型"></a>jdk1.8可用分代模型，也可不用分代模型</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301173045.png" alt="image-20210301171243283"></p>
+<h4 id="Serial-（-SWT）"><a href="#Serial-（-SWT）" class="headerlink" title="Serial     （ SWT）"></a>Serial     （ SWT）</h4><p>属于单线程回收</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301173053.png" alt="image-20210301171615192"></p>
+<p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
+<h4 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h4><p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301173058.png" alt="image-20210301172618386"></p>
+<h4 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h4><p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
+<p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301175352.png" alt="image-20210301175351245"></p>
+<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）"><a href="#CMS-（concurrent-mark-sweep-并发标记清除）" class="headerlink" title="CMS （concurrent mark sweep  并发标记清除）"></a>CMS （concurrent mark sweep  并发标记清除）</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210301175844.png" alt="image-20210301175842829"></p>
+<p>工作线程与回收线程同时进行</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301180541.png" alt="image-20210301180538636"></p>
+
       
     </div>
    <div>
@@ -431,15 +460,22 @@
 
 
 
-<h4 id="CMS-—-浮动垃圾"><a href="#CMS-—-浮动垃圾" class="headerlink" title="CMS  — 浮动垃圾"></a>CMS  — 浮动垃圾</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/38V3ZT.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<h4 id="CMS-—-浮动垃圾"><a href="#CMS-—-浮动垃圾" class="headerlink" title="CMS  — 浮动垃圾"></a>CMS  — 浮动垃圾</h4><p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
+<h4 id="CMS-—-错标"><a href="#CMS-—-错标" class="headerlink" title="CMS — 错标"></a>CMS — 错标</h4><p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
+<h4 id="CMS-—-重新标记"><a href="#CMS-—-重新标记" class="headerlink" title="CMS — 重新标记"></a>CMS — 重新标记</h4><p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
+<p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
+<h4 id="CMS-从线程角度"><a href="#CMS-从线程角度" class="headerlink" title="CMS 从线程角度"></a>CMS 从线程角度</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210302095208.png" alt="image-20210302095206722"></p>
+<p>过程简述：</p>
+<p> 先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<p>再经过并发标记，在标记过程中可能会产生错标</p>
+<p>重新标记会对错标进行修正</p>
+<p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
+<h4 id="什么情况下才选择使用CMS收集器呢"><a href="#什么情况下才选择使用CMS收集器呢" class="headerlink" title="什么情况下才选择使用CMS收集器呢"></a>什么情况下才选择使用CMS收集器呢</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210302144948.png" alt="image-20210302144947618"></p>
+<h4 id="CMS的调优"><a href="#CMS的调优" class="headerlink" title="CMS的调优"></a><strong>CMS的调优</strong></h4><p><img data-src="https://xuemingde.com/pages/image/others/20210302145158.png" alt="image-20210302145157004"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302145245.png" alt="image-20210302145243983"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302145257.png" alt="image-20210302145256194"></p>
+<h4 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h4><p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
+
       
     </div>
    <div>
