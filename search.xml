@@ -19,6 +19,34 @@
       </tags>
   </entry>
   <entry>
+    <title>springBoot项目打成的jar包无法获取resources下文件</title>
+    <url>/posts/3V4Q1GY.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220217-springBoot%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90%E7%9A%84jar%E5%8C%85%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96resources%E4%B8%8B%E6%96%87%E4%BB%B6.md) 
+</div><br><span id="more"></span><br>错误：</p>
+<blockquote>
+<p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U  </p>
+</blockquote>
+<p>spring boot项目打成的 jar包无法获取src/main/resources下文件  </p>
+<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>打成Jar后<br><img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7">  </p>
+<p>获取resources下的文件<br><img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k">  </p>
+<pre><code class="lang-java"> ClassPathResource classPathResource = new ClassPathResource(&quot;img/tofflon-logo.png&quot;);
+ URL url = classPathResource.getURL();
+ Image image = Image.getInstance(url);
+</code></pre>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>SpringBoot</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Seata-server启动闪退问题</title>
     <url>/posts/39AKQ95.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>第一步：查看错误日志</p>
@@ -67,34 +95,6 @@
       </tags>
   </entry>
   <entry>
-    <title>springBoot项目打成的jar包无法获取resources下文件</title>
-    <url>/posts/3V4Q1GY.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220217-springBoot%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90%E7%9A%84jar%E5%8C%85%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96resources%E4%B8%8B%E6%96%87%E4%BB%B6.md) 
-</div><br><span id="more"></span><br>错误：</p>
-<blockquote>
-<p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U  </p>
-</blockquote>
-<p>spring boot项目打成的 jar包无法获取src/main/resources下文件  </p>
-<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>打成Jar后<br><img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7">  </p>
-<p>获取resources下的文件<br><img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k">  </p>
-<pre><code class="lang-java"> ClassPathResource classPathResource = new ClassPathResource(&quot;img/tofflon-logo.png&quot;);
- URL url = classPathResource.getURL();
- Image image = Image.getInstance(url);
-</code></pre>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>easypoi导入Excel表格报错</title>
     <url>/posts/HAXCJE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
@@ -122,6 +122,30 @@
         <tag>集合</tag>
         <tag>GC</tag>
         <tag>const</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mapstruct使用报错</title>
+    <url>/posts/RQ90BT.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
+[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220308-mapstruct%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.md) 
+</div><br><span id="more"></span></p>
+<p>使用mapstruct 请求报错</p>
+<p>Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: </p>
+<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/el10mD.png" alt=""></p>
+<p>解决：</p>
+<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/mwqlOu.png" alt=""></p>
+<p>Mapper 引用的包错误。</p>
+<p>错误的：import org.apache.ibatis.annotations.Mapper;</p>
+<p>正确的：import org.mapstruct.Mapper;</p>
+]]></content>
+      <categories>
+        <category>BUG</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Java</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -207,30 +231,6 @@
         <tag>堆</tag>
         <tag>栈</tag>
         <tag>函数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mapstruct使用报错</title>
-    <url>/posts/RQ90BT.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;">
-[Gitee原文](https://gitee.com/meader/hexo-blog/blob/blog/source/_posts/BUG/20220308-mapstruct%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.md) 
-</div><br><span id="more"></span></p>
-<p>使用mapstruct 请求报错</p>
-<p>Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: </p>
-<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/el10mD.png" alt=""></p>
-<p>解决：</p>
-<p> <img data-src="https://xuemingde.com/pages/image/2022/03/08/mwqlOu.png" alt=""></p>
-<p>Mapper 引用的包错误。</p>
-<p>错误的：import org.apache.ibatis.annotations.Mapper;</p>
-<p>正确的：import org.mapstruct.Mapper;</p>
-]]></content>
-      <categories>
-        <category>BUG</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Java</tag>
-        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -807,8 +807,8 @@
       <tags>
         <tag>C</tag>
         <tag>Java</tag>
-        <tag>内存</tag>
         <tag>bug</tag>
+        <tag>内存</tag>
         <tag>const</tag>
         <tag>堆</tag>
         <tag>栈</tag>
@@ -1120,47 +1120,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java对象布局</title>
-    <url>/posts/28DG2WP.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<p>一个新 new 出来的对象，分为四部分：</p>
-<ul>
-<li>mark word  </li>
-<li>klass point </li>
-<li>Instance Data</li>
-<li>Padding</li>
-</ul>
-<p>可使用JOL类库查看</p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
-<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
-<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
-<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
-<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
-<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
-<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
-<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
-<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
-<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
-<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
-<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
-<blockquote>
-<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>指针</tag>
-        <tag>变量</tag>
-        <tag>面试</tag>
-        <tag>锁</tag>
-        <tag>Qt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>内存泄漏和内存溢出</title>
     <url>/posts/266A6Z5.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -1298,6 +1257,47 @@
         <tag>数组</tag>
         <tag>变量</tag>
         <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java对象布局</title>
+    <url>/posts/28DG2WP.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<p>一个新 new 出来的对象，分为四部分：</p>
+<ul>
+<li>mark word  </li>
+<li>klass point </li>
+<li>Instance Data</li>
+<li>Padding</li>
+</ul>
+<p>可使用JOL类库查看</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/thitTa.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
+<p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
+<p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
+<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p> <img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
+<p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
+<p>  <img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
+<p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
+<h2 id="klass-point"><a href="#klass-point" class="headerlink" title="klass point"></a>klass point</h2><p> <img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
+<p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
+<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p> <img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
+<p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
+<blockquote>
+<p>对其的意思就是，mark word 所占用的字节 和  klass point所占用的字节 加起来能不能被8整除，如果不能，则需要补齐，能够被8整除。 是为了提高效率。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>指针</tag>
+        <tag>变量</tag>
+        <tag>面试</tag>
+        <tag>锁</tag>
+        <tag>Qt</tag>
       </tags>
   </entry>
   <entry>
@@ -1525,52 +1525,6 @@
       </tags>
   </entry>
   <entry>
-    <title>springboot整合nacos</title>
-    <url>/posts/3MH3EJ1.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThHUi16U0hqQ0YtUWc5OGF1NnpmYUE=">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA<i class="fa fa-external-link-alt"></i></span> 提取码: n9fk </p>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304163758.png" alt="image-20210304163751931"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210304163845.png" alt="image-20210304163843821"></p>
-<p>访问：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>账户密码默认：nacos/nacos </p>
-<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304164000.png" alt="image-20210304163959764"></p>
-<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
-<li><p>新建  命名空间</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092814.png" alt="image-20210305092812721"></p>
-</li>
-</ol>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092920.png" alt="image-20210305092919689"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305092945.png" alt="image-20210305092944790"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093109.png" alt="image-20210305093108311"></p>
-<p>新建配置</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093324.png" alt="image-20210305093323554"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093506.png" alt="image-20210305093505015"></p>
-<p>代码配置</p>
-<p>maven引用</p>
-<!--nacos组件-->
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>新建 bootstrap.yml 文件，内容如下：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305093731.png" alt="image-20210305093729513"></p>
-<p>与服务端配置对比</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094240.png" alt="image-20210305094238911"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094354.png" alt="image-20210305094353139"></p>
-<p>新建获取配置信息文件，示例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094646.png" alt="image-20210305094645537"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094636.png" alt="image-20210305094635853"></p>
-<p>测试获取配置信息：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305094745.png" alt="image-20210305094744176"></p>
-<p>测试：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210305095010.png" alt="image-20210305095009444"></p>
-]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Spring</tag>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式事务</title>
     <url>/posts/36WRKNE.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
@@ -1662,28 +1616,41 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式事务_JTA</title>
-    <url>/posts/12G3J8V.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
-<p>文章来源：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
-<blockquote>
-<ul>
-<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
-<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
-</ul>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
+    <title>springboot整合nacos</title>
+    <url>/posts/3MH3EJ1.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="下载服务端压缩包"><a href="#下载服务端压缩包" class="headerlink" title="下载服务端压缩包"></a>下载服务端压缩包</h4><p>下载地址：链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThHUi16U0hqQ0YtUWc5OGF1NnpmYUE=">https://pan.baidu.com/s/18GR-zSHjCF-Qg98au6zfaA<i class="fa fa-external-link-alt"></i></span> 提取码: n9fk </p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304163758.png" alt="image-20210304163751931"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210304163845.png" alt="image-20210304163843821"></p>
+<p>访问：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>账户密码默认：nacos/nacos </p>
+<h4 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h4><p><img data-src="https://xuemingde.com/pages/image/others/20210304164000.png" alt="image-20210304163959764"></p>
+<h4 id="客户端设置与代码实现-（Springboot-项目）"><a href="#客户端设置与代码实现-（Springboot-项目）" class="headerlink" title="客户端设置与代码实现 （Springboot 项目）"></a>客户端设置与代码实现 （Springboot 项目）</h4><ol>
+<li><p>新建  命名空间</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305092814.png" alt="image-20210305092812721"></p>
+</li>
+</ol>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305092920.png" alt="image-20210305092919689"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305092945.png" alt="image-20210305092944790"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093109.png" alt="image-20210305093108311"></p>
+<p>新建配置</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093324.png" alt="image-20210305093323554"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093506.png" alt="image-20210305093505015"></p>
+<p>代码配置</p>
+<p>maven引用</p>
+<!--nacos组件-->
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>新建 bootstrap.yml 文件，内容如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305093731.png" alt="image-20210305093729513"></p>
+<p>与服务端配置对比</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094240.png" alt="image-20210305094238911"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094354.png" alt="image-20210305094353139"></p>
+<p>新建获取配置信息文件，示例：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094646.png" alt="image-20210305094645537"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094636.png" alt="image-20210305094635853"></p>
+<p>测试获取配置信息：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305094745.png" alt="image-20210305094744176"></p>
+<p>测试：</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210305095010.png" alt="image-20210305095009444"></p>
 ]]></content>
       <categories>
         <category>分布式</category>
@@ -1691,8 +1658,7 @@
       <tags>
         <tag>C</tag>
         <tag>Spring</tag>
-        <tag>事务</tag>
-        <tag>分布式</tag>
+        <tag>SpringBoot</tag>
       </tags>
   </entry>
   <entry>
@@ -1736,6 +1702,40 @@
       </categories>
       <tags>
         <tag>C</tag>
+        <tag>事务</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式事务_JTA</title>
+    <url>/posts/12G3J8V.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+<p>文章来源：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjY2MjczNDg0ODE0">https://juejin.cn/post/6844903666273484814<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</blockquote>
+<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<blockquote>
+<ul>
+<li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
+<li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
+</ul>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
+<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Spring</tag>
         <tag>事务</tag>
         <tag>分布式</tag>
       </tags>
@@ -1893,6 +1893,28 @@
       </tags>
   </entry>
   <entry>
+    <title>sentinel工作原理</title>
+    <url>/posts/2DNYERW.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误！！" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="cbf81d490c4c1297ad80f14f25dfc3c39f68f934cb350ac5479eac2fe81bf795">6e9d7ca9294f2dfe030bce02e69a0643d3374ac3279d2c953140fc5b462fa95768a0575d8ee19f8eaabafefa0ce24d080f3c6db31bc839a25ec96924a2ee2138925fdedf97f04cbbd35a7cb5448a06b483fd142a79f5e768b7a2dd62d64ea7ff8bc1f2f3b0569e187c4e93982cefd734f3ff0587f4315b73092b42e6533cc1a7eb3eeca96e455e8e2c1f2e23efbf619c1ca96c106fcb79a4fc03ed712f2bca4a773e4c9b39acafb235ddcd955a24c02aecd2111c9f357ff85acb2ea97ec05ffa7aef084f4742475648d7e2cacbe00140428e395592a92c4b19de0ed535279f898b1ba5cb456b72e36191bd419a07eae9b4e9bfd505895a58599d3ed29638db7ccbe9bf16a689951723106485b73dc908d501187dcdd67eade1e9af31bbeb25295daf52823658a9c9dfca0745c5af7ae2c3ee0c87682ac21ed59457d4a1168fa77bd7a6c810d13d6d337193c86d731d17af358d658357e4d47ba49074c432ffbd3183c0e80848a3e0eb6e8ee1d2a47eb7231c173896361ae0a2832ad9ea0af31ec77967b17114c70ec39ad5df5c9696857a42b10a27fe80139bd4230329e8262f</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">未完结，暂不开放</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redisson 分布式锁</title>
     <url>/posts/2AGZ1Y7.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -1916,28 +1938,6 @@
         <tag>锁</tag>
         <tag>Redis</tag>
         <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sentinel工作原理</title>
-    <url>/posts/2DNYERW.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误！！" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="cbf81d490c4c1297ad80f14f25dfc3c39f68f934cb350ac5479eac2fe81bf795">6e9d7ca9294f2dfe030bce02e69a0643d3374ac3279d2c953140fc5b462fa95768a0575d8ee19f8eaabafefa0ce24d080f3c6db31bc839a25ec96924a2ee2138925fdedf97f04cbbd35a7cb5448a06b483fd142a79f5e768b7a2dd62d64ea7ff8bc1f2f3b0569e187c4e93982cefd734f3ff0587f4315b73092b42e6533cc1a7eb3eeca96e455e8e2c1f2e23efbf619c1ca96c106fcb79a4fc03ed712f2bca4a773e4c9b39acafb235ddcd955a24c02aecd2111c9f357ff85acb2ea97ec05ffa7aef084f4742475648d7e2cacbe00140428e395592a92c4b19de0ed535279f898b1ba5cb456b72e36191bd419a07eae9b4e9bfd505895a58599d3ed29638db7ccbe9bf16a689951723106485b73dc908d501187dcdd67eade1e9af31bbeb25295daf52823658a9c9dfca0745c5af7ae2c3ee0c87682ac21ed59457d4a1168fa77bd7a6c810d13d6d337193c86d731d17af358d658357e4d47ba49074c432ffbd3183c0e80848a3e0eb6e8ee1d2a47eb7231c173896361ae0a2832ad9ea0af31ec77967b17114c70ec39ad5df5c9696857a42b10a27fe80139bd4230329e8262f</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">未完结，暂不开放</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -3240,20 +3240,6 @@
       </tags>
   </entry>
   <entry>
-    <title>图解Java中那18 把锁</title>
-    <url>/posts/33GA963.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MveHZ0SzRTQkV5bUM=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">https://mp.weixin.qq.com/s/2jxzNnyGWDFol4Q9R2a_Yg<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>并发与多线程</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java锁面试题</title>
     <url>/posts/D7TEMP.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p> <img data-src="https://xuemingde.com/pages/image/others/1607395612436-12737bf6-516f-49fb-b00f-41287fe5cbe8.png" alt=""></p>
@@ -3432,6 +3418,20 @@
         <tag>算法</tag>
         <tag>多线程</tag>
         <tag>Widget</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图解Java中那18 把锁</title>
+    <url>/posts/33GA963.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MveHZ0SzRTQkV5bUM=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvMmp4ek5ueUdXREZvbDRROVIyYV9ZZw==">https://mp.weixin.qq.com/s/2jxzNnyGWDFol4Q9R2a_Yg<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>并发与多线程</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -3873,9 +3873,9 @@
       <tags>
         <tag>C</tag>
         <tag>Java</tag>
+        <tag>Spring</tag>
         <tag>JVM</tag>
         <tag>内存</tag>
-        <tag>Spring</tag>
         <tag>GC</tag>
         <tag>数据库</tag>
         <tag>堆</tag>
@@ -6293,6 +6293,41 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
+    <title>HashMap与HashTable的区别</title>
+    <url>/posts/MVEJAK.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ul>
+<li>HashTable 线程同步（线程安全），HashMap非线程同步（线程不安全）。</li>
+<li>HashTable 不允许键和值有空值，HashMap允许键和值有空值。</li>
+<li>HashTable使用Enumeration,HashMap使用iterator。</li>
+<li>HashTable的默认大小是11，扩容方式是old * 2 +1，HashMap的默认大小是16，扩容方式是2的指数倍。</li>
+<li>HashTable继承于Dictionary类，HashMap继承于AbstractMap类。</li>
+</ul>
+<h2 id="HashMap有哪些线程安全的方式"><a href="#HashMap有哪些线程安全的方式" class="headerlink" title="HashMap有哪些线程安全的方式"></a>HashMap有哪些线程安全的方式</h2><h3 id="Conllections-synchronizedMap"><a href="#Conllections-synchronizedMap" class="headerlink" title="Conllections.synchronizedMap"></a>Conllections.synchronizedMap</h3><p>此方法返回一个新的Map，这个新的Map就是线程安全的。<br>特点：<br>通过Conllections.synchronizedMap来封装所有不安全的HashMap方法，就连toString，hashCode都进行了封装，封装的关键点有：</p>
+<ul>
+<li>使用了synchronized来进行互斥</li>
+<li>使用代理模式new一个新的类，这个类同样实现了Map接口。</li>
+</ul>
+<p>在HashMap上面，synchronized锁住的是对象，所以第一个申请的得到锁，其他线程将进入阻塞，等到唤醒。</p>
+<p>优点：<br>代码实现简单。</p>
+<p>缺点：<br>从锁的角度来看，上来就加锁，基本上锁住了尽可能大的代码块，性能比较差。</p>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>特点<br>重新写了HashMap，比较大的改变有以下几点：</p>
+<ul>
+<li>使用了新的锁机制，把Hashmap进行了拆分，拆分成了多个独立的块，这样在高并发的情况下减少了锁冲突的可能。</li>
+<li>使用的是NonfairSync，这个特性调用的是CAS指令来确保原子性与互斥性，当如果多个线程恰好操作到同一个segment上面，那么只会有一个线程能够运行。</li>
+</ul>
+<p>优点：<br>需要互斥的代码段比较少，性能也好，ConcurrentHashMap 把整个Map切分成多个块，发生锁碰撞的几率大大降低了，性能会比较好。</p>
+<p>缺点：<br>代码繁琐。</p>
+]]></content>
+      <categories>
+        <category>集合数组</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>锁</tag>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java8 Stream玩转集合的筛选、归约、分组、聚合</title>
     <url>/posts/1HVJ8ZX.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b175706d834a4a6b8162c330d9fafbae~tplv-k3u1fbpfcp-zoom-in-crop-mark:1956:0:0:0.image" alt="MarkerHub">Java8 Stream</p>
@@ -6549,41 +6584,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>Mysql</tag>
         <tag>容器</tag>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HashMap与HashTable的区别</title>
-    <url>/posts/MVEJAK.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ul>
-<li>HashTable 线程同步（线程安全），HashMap非线程同步（线程不安全）。</li>
-<li>HashTable 不允许键和值有空值，HashMap允许键和值有空值。</li>
-<li>HashTable使用Enumeration,HashMap使用iterator。</li>
-<li>HashTable的默认大小是11，扩容方式是old * 2 +1，HashMap的默认大小是16，扩容方式是2的指数倍。</li>
-<li>HashTable继承于Dictionary类，HashMap继承于AbstractMap类。</li>
-</ul>
-<h2 id="HashMap有哪些线程安全的方式"><a href="#HashMap有哪些线程安全的方式" class="headerlink" title="HashMap有哪些线程安全的方式"></a>HashMap有哪些线程安全的方式</h2><h3 id="Conllections-synchronizedMap"><a href="#Conllections-synchronizedMap" class="headerlink" title="Conllections.synchronizedMap"></a>Conllections.synchronizedMap</h3><p>此方法返回一个新的Map，这个新的Map就是线程安全的。<br>特点：<br>通过Conllections.synchronizedMap来封装所有不安全的HashMap方法，就连toString，hashCode都进行了封装，封装的关键点有：</p>
-<ul>
-<li>使用了synchronized来进行互斥</li>
-<li>使用代理模式new一个新的类，这个类同样实现了Map接口。</li>
-</ul>
-<p>在HashMap上面，synchronized锁住的是对象，所以第一个申请的得到锁，其他线程将进入阻塞，等到唤醒。</p>
-<p>优点：<br>代码实现简单。</p>
-<p>缺点：<br>从锁的角度来看，上来就加锁，基本上锁住了尽可能大的代码块，性能比较差。</p>
-<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>特点<br>重新写了HashMap，比较大的改变有以下几点：</p>
-<ul>
-<li>使用了新的锁机制，把Hashmap进行了拆分，拆分成了多个独立的块，这样在高并发的情况下减少了锁冲突的可能。</li>
-<li>使用的是NonfairSync，这个特性调用的是CAS指令来确保原子性与互斥性，当如果多个线程恰好操作到同一个segment上面，那么只会有一个线程能够运行。</li>
-</ul>
-<p>优点：<br>需要互斥的代码段比较少，性能也好，ConcurrentHashMap 把整个Map切分成多个块，发生锁碰撞的几率大大降低了，性能会比较好。</p>
-<p>缺点：<br>代码繁琐。</p>
-]]></content>
-      <categories>
-        <category>集合数组</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>锁</tag>
-        <tag>并发</tag>
       </tags>
   </entry>
   <entry>
@@ -7873,48 +7873,6 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot-Rabbitmq实现延迟队列</title>
-    <url>/posts/R5RB64.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="MAC-系统"><a href="#MAC-系统" class="headerlink" title="MAC 系统"></a>MAC 系统</h2><p>安装命令：brew install rabbitmq<br>​</p>
-<p>安装的路径是 /usr/local/Cellar/rabbitmq/3.8.3，具体情况要视版本而定，我安装的版本是 3.8.3。<br>​</p>
-<p>接下来就可以启动了，进入安装目录，执行命令：./sbin/rabbitmq-server </p>
-<p>接下来可以在浏览器打开 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDoxNTY3Mu+8jOWPr+S7peeci+WIsA==">http://localhost:15672，可以看到<i class="fa fa-external-link-alt"></i></span> RabbitMQ 的管理页面。<br>​</p>
-<p>登录账号密码：guest/guest</p>
-<h2 id="导入-Maven-依赖"><a href="#导入-Maven-依赖" class="headerlink" title="导入 Maven 依赖"></a>导入 Maven 依赖</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">&lt;/dependency</span><br></pre></td></tr></table></figure>
-<h2 id="TTL-方式"><a href="#TTL-方式" class="headerlink" title="TTL 方式"></a>TTL 方式</h2><h3 id="application-properties-配置信息"><a href="#application-properties-配置信息" class="headerlink" title="application.properties 配置信息"></a>application.properties 配置信息</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 应用名称</span></span><br><span class="line"><span class="string">spring.application.name=rabbitMq</span></span><br><span class="line"><span class="comment"># 应用服务 WEB 访问端口</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">spring.rabbitmq.host=127.0.0.1</span></span><br><span class="line"><span class="string">spring.rabbitmq.port=5672</span></span><br><span class="line"><span class="string">spring.rabbitmq.username=guest</span></span><br><span class="line"><span class="string">spring.rabbitmq.password=guest</span></span><br><span class="line"><span class="comment"># 开启消息确认机制 confirm 异步</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-confirm-type=correlated</span></span><br><span class="line"><span class="comment"># 之前的旧版本 开启消息确认机制的方式</span></span><br><span class="line"><span class="comment"># spring.rabbitmq.publisher-confirms=true</span></span><br><span class="line"><span class="comment"># 开启return机制</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-returns=true</span></span><br><span class="line"><span class="comment"># 消息开启手动确认</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.direct.acknowledge-mode=manual</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.acknowledge-mode=manual</span></span><br><span class="line"><span class="comment"># 消费者每次从队列获取的消息数量。此属性当不设置时为：轮询分发，设置为1为：公平分发</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.prefetch=1</span></span><br><span class="line"><span class="comment"># 是否支持重试</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.retry.enabled=true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#消费者最小数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.concurrency=1</span></span><br><span class="line"><span class="comment">#消费之最大数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.max-concurrency=10</span></span><br></pre></td></tr></table></figure>
-<h3 id="RabbitmqConfig-配置信息"><a href="#RabbitmqConfig-配置信息" class="headerlink" title="RabbitmqConfig 配置信息"></a>RabbitmqConfig 配置信息</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bean.springcloudproduct.config;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span> //TODO</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span> huangwb</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitmqConfig</span> </span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderDelayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.delay_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderDelayQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-exchange&quot;</span>, <span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-routing-key&quot;</span>, <span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.delay_queue&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, map);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 给死信队列绑定交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderDelayBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderDelayQueue()).to(userOrderDelayExchange()).with(<span class="string">&quot;user.order.delay_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderReceiveExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderReceiveQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.receive_queue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机绑定消费队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderReceiveBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderReceiveQueue()).to(userOrderReceiveExchange()).with(<span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderServiceImpl</span> <span class="keyword">implements</span> <span class="title">DeadLetterSenderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            <span class="comment">//在这里也可以设置超时时间,也可以设置x-message-ttl</span></span><br><span class="line">            message.getMessageProperties().setExpiration(<span class="string">&quot;5000&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line">        rabbitTemplate.setReturnCallback(returnCallback);</span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;user.order.delay_exchange&quot;</span>, <span class="string">&quot;user.order.delay_key&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 confirm 机制</span></span><br><span class="line"><span class="comment">     * 交换机错误出发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ConfirmCallback confirmCallback = <span class="keyword">new</span> RabbitTemplate.ConfirmCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> correlationData 消息相关的数据，一般用于获取 唯一标识 id</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> b true 消息确认成功，false 失败</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 确认失败的原因</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">confirm</span><span class="params">(CorrelationData correlationData, <span class="keyword">boolean</span> b, String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (b) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认成功...&quot;</span> + correlationData.getId() + <span class="keyword">new</span> Date());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认失败...&quot;</span> + correlationData.getId() + <span class="string">&quot; cause: &quot;</span> + s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 return 消息机制</span></span><br><span class="line"><span class="comment">     * 找不到路由才会触发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ReturnCallback returnCallback = <span class="keyword">new</span> RabbitTemplate.ReturnCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  return 的回调方法（找不到路由才会触发）</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> message 消息的相关信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> i 错误状态码</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 错误状态码对应的文本信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s1 交换机的名字</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s2 路由的key</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">returnedMessage</span><span class="params">(Message message, <span class="keyword">int</span> i, String s, String s1, String s2)</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;消息：&quot;</span> + message);</span><br><span class="line">            System.out.println(<span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">            System.out.println(<span class="string">&quot;回应码：&quot;</span> + i);</span><br><span class="line">            System.out.println(<span class="string">&quot;回应信息：&quot;</span> + s);</span><br><span class="line">            System.out.println(<span class="string">&quot;交换机：&quot;</span> + s1);</span><br><span class="line">            System.out.println(<span class="string">&quot;路由键：&quot;</span> + s2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Slf4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 延迟队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Author</span> jxb</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Date</span> 2019-04-04 16:34:28</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">            <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">            <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">            <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">            <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">            channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">                <span class="comment">// 拒绝消息</span></span><br><span class="line">                <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">                <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="DLX"><a href="#DLX" class="headerlink" title="DLX"></a>DLX</h2><blockquote>
-<p>首先我们需要下载并安装 RabbitMQ 的延迟插件。</p>
-</blockquote>
-<p>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JhYmJpdG1xL3JhYmJpdG1xLWRlbGF5ZWQtbWVzc2FnZS1leGNoYW5nZS9yZWxlYXNlcw==">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases<i class="fa fa-external-link-alt"></i></span><br>​</p>
-<p>将插件文件复制到 RabbitMQ 安装目录的 plugins 目录下；<br>​</p>
-<p>进入 RabbitMQ 安装目录的 sbin 目录下，使用如下命令启用延迟插件</p>
-<blockquote>
-<p>rabbitmq-plugins enable rabbitmq_delayed_message_exchange</p>
-</blockquote>
-<p>代码实现：<br>​</p>
-<h3 id="配置文件："><a href="#配置文件：" class="headerlink" title="配置文件："></a>配置文件：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列交换机 DLX方式</span></span><br><span class="line"><span class="comment"> * 注意这里的交换机类型：CustomExchange</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CustomExchange <span class="title">delayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Object&gt; args = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">    args.put(<span class="string">&quot;x-delayed-type&quot;</span>, <span class="string">&quot;direct&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CustomExchange(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;x-delayed-message&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列</span></span><br><span class="line"><span class="comment"> *  DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Queue <span class="title">immediateQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 第一个参数是创建的queue的名字，第二个参数是是否支持持久化</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;queue.xdelay.immediate&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给延时队列绑定交换机</span></span><br><span class="line"><span class="comment"> *   DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Binding <span class="title">bindingNotify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BindingBuilder.bind(immediateQueue()).to(delayExchange()).with(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>).noargs();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="生产者-1"><a href="#生产者-1" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterDLXSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            message.getMessageProperties().setDelay(<span class="number">5000</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line"><span class="comment">//        rabbitTemplate.setReturnCallback(returnCallback);</span></span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;exchange.xdelay.delayed&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="消费者-1"><a href="#消费者-1" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * DLX方式</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> channel</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLXMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">          <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">          <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">          <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">          <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">          channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">              <span class="comment">// 拒绝消息</span></span><br><span class="line">              <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">              <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3ODkyOTU3L2FydGljbGUvZGV0YWlscy84OTI5NjE1Nw==">https://blog.csdn.net/qq_37892957/article/details/89296157<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>中间件</category>
-        <category>消息队列</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>Java</tag>
-        <tag>Spring</tag>
-        <tag>GC</tag>
-        <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka面试连环炮-上</title>
     <url>/posts/3DS4M6Q.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Kafka-是什么-适应场景有哪些"><a href="#Kafka-是什么-适应场景有哪些" class="headerlink" title="Kafka 是什么, 适应场景有哪些"></a>Kafka 是什么, 适应场景有哪些</h2><p>Kafka 是一个分布式的流式处理平台，用于实时构建流处理应用。主要应用在大数据实时处理领域。Kafka 凭借「<strong>高性能</strong>」、「<strong>高吞吐</strong>」、「<strong>高可用</strong>」、「<strong>低延迟</strong>」、「<strong>可伸缩</strong>」几大特性，成为「<strong>消息队列」</strong>的首选。</p>
@@ -8529,6 +8487,48 @@ O(nlog_2n)</script><figure class="highlight java"><table><tr><td class="code"><p
         <tag>并发</tag>
         <tag>算法</tag>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot-Rabbitmq实现延迟队列</title>
+    <url>/posts/R5RB64.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="MAC-系统"><a href="#MAC-系统" class="headerlink" title="MAC 系统"></a>MAC 系统</h2><p>安装命令：brew install rabbitmq<br>​</p>
+<p>安装的路径是 /usr/local/Cellar/rabbitmq/3.8.3，具体情况要视版本而定，我安装的版本是 3.8.3。<br>​</p>
+<p>接下来就可以启动了，进入安装目录，执行命令：./sbin/rabbitmq-server </p>
+<p>接下来可以在浏览器打开 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDoxNTY3Mu+8jOWPr+S7peeci+WIsA==">http://localhost:15672，可以看到<i class="fa fa-external-link-alt"></i></span> RabbitMQ 的管理页面。<br>​</p>
+<p>登录账号密码：guest/guest</p>
+<h2 id="导入-Maven-依赖"><a href="#导入-Maven-依赖" class="headerlink" title="导入 Maven 依赖"></a>导入 Maven 依赖</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">&lt;/dependency</span><br></pre></td></tr></table></figure>
+<h2 id="TTL-方式"><a href="#TTL-方式" class="headerlink" title="TTL 方式"></a>TTL 方式</h2><h3 id="application-properties-配置信息"><a href="#application-properties-配置信息" class="headerlink" title="application.properties 配置信息"></a>application.properties 配置信息</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 应用名称</span></span><br><span class="line"><span class="string">spring.application.name=rabbitMq</span></span><br><span class="line"><span class="comment"># 应用服务 WEB 访问端口</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">spring.rabbitmq.host=127.0.0.1</span></span><br><span class="line"><span class="string">spring.rabbitmq.port=5672</span></span><br><span class="line"><span class="string">spring.rabbitmq.username=guest</span></span><br><span class="line"><span class="string">spring.rabbitmq.password=guest</span></span><br><span class="line"><span class="comment"># 开启消息确认机制 confirm 异步</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-confirm-type=correlated</span></span><br><span class="line"><span class="comment"># 之前的旧版本 开启消息确认机制的方式</span></span><br><span class="line"><span class="comment"># spring.rabbitmq.publisher-confirms=true</span></span><br><span class="line"><span class="comment"># 开启return机制</span></span><br><span class="line"><span class="string">spring.rabbitmq.publisher-returns=true</span></span><br><span class="line"><span class="comment"># 消息开启手动确认</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.direct.acknowledge-mode=manual</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.acknowledge-mode=manual</span></span><br><span class="line"><span class="comment"># 消费者每次从队列获取的消息数量。此属性当不设置时为：轮询分发，设置为1为：公平分发</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.prefetch=1</span></span><br><span class="line"><span class="comment"># 是否支持重试</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.retry.enabled=true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#消费者最小数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.concurrency=1</span></span><br><span class="line"><span class="comment">#消费之最大数量</span></span><br><span class="line"><span class="string">spring.rabbitmq.listener.simple.max-concurrency=10</span></span><br></pre></td></tr></table></figure>
+<h3 id="RabbitmqConfig-配置信息"><a href="#RabbitmqConfig-配置信息" class="headerlink" title="RabbitmqConfig 配置信息"></a>RabbitmqConfig 配置信息</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bean.springcloudproduct.config;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span> //TODO</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span> huangwb</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitmqConfig</span> </span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderDelayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.delay_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderDelayQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-exchange&quot;</span>, <span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;x-dead-letter-routing-key&quot;</span>, <span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.delay_queue&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, map);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 给死信队列绑定交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderDelayBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderDelayQueue()).to(userOrderDelayExchange()).with(<span class="string">&quot;user.order.delay_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收交换机</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> DirectExchange <span class="title">userOrderReceiveExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DirectExchange(<span class="string">&quot;user.order.receive_exchange&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信接收队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">userOrderReceiveQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;user.order.receive_queue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 死信交换机绑定消费队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">userOrderReceiveBinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(userOrderReceiveQueue()).to(userOrderReceiveExchange()).with(<span class="string">&quot;user.order.receive_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderServiceImpl</span> <span class="keyword">implements</span> <span class="title">DeadLetterSenderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            <span class="comment">//在这里也可以设置超时时间,也可以设置x-message-ttl</span></span><br><span class="line">            message.getMessageProperties().setExpiration(<span class="string">&quot;5000&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line">        rabbitTemplate.setReturnCallback(returnCallback);</span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;user.order.delay_exchange&quot;</span>, <span class="string">&quot;user.order.delay_key&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 confirm 机制</span></span><br><span class="line"><span class="comment">     * 交换机错误出发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ConfirmCallback confirmCallback = <span class="keyword">new</span> RabbitTemplate.ConfirmCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> correlationData 消息相关的数据，一般用于获取 唯一标识 id</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> b true 消息确认成功，false 失败</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 确认失败的原因</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">confirm</span><span class="params">(CorrelationData correlationData, <span class="keyword">boolean</span> b, String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (b) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认成功...&quot;</span> + correlationData.getId() + <span class="keyword">new</span> Date());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;confirm 消息确认失败...&quot;</span> + correlationData.getId() + <span class="string">&quot; cause: &quot;</span> + s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置 return 消息机制</span></span><br><span class="line"><span class="comment">     * 找不到路由才会触发</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate.ReturnCallback returnCallback = <span class="keyword">new</span> RabbitTemplate.ReturnCallback() &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  return 的回调方法（找不到路由才会触发）</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> message 消息的相关信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> i 错误状态码</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s 错误状态码对应的文本信息</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s1 交换机的名字</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> s2 路由的key</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">returnedMessage</span><span class="params">(Message message, <span class="keyword">int</span> i, String s, String s1, String s2)</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;消息：&quot;</span> + message);</span><br><span class="line">            System.out.println(<span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">            System.out.println(<span class="string">&quot;回应码：&quot;</span> + i);</span><br><span class="line">            System.out.println(<span class="string">&quot;回应信息：&quot;</span> + s);</span><br><span class="line">            System.out.println(<span class="string">&quot;交换机：&quot;</span> + s1);</span><br><span class="line">            System.out.println(<span class="string">&quot;路由键：&quot;</span> + s2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Slf4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLetterSenderListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 延迟队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Author</span> jxb</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Date</span> 2019-04-04 16:34:28</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">            <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">            <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">            <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">            <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">            channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">                <span class="comment">// 拒绝消息</span></span><br><span class="line">                <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">                <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">                <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">                <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">                <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">                channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="DLX"><a href="#DLX" class="headerlink" title="DLX"></a>DLX</h2><blockquote>
+<p>首先我们需要下载并安装 RabbitMQ 的延迟插件。</p>
+</blockquote>
+<p>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JhYmJpdG1xL3JhYmJpdG1xLWRlbGF5ZWQtbWVzc2FnZS1leGNoYW5nZS9yZWxlYXNlcw==">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases<i class="fa fa-external-link-alt"></i></span><br>​</p>
+<p>将插件文件复制到 RabbitMQ 安装目录的 plugins 目录下；<br>​</p>
+<p>进入 RabbitMQ 安装目录的 sbin 目录下，使用如下命令启用延迟插件</p>
+<blockquote>
+<p>rabbitmq-plugins enable rabbitmq_delayed_message_exchange</p>
+</blockquote>
+<p>代码实现：<br>​</p>
+<h3 id="配置文件："><a href="#配置文件：" class="headerlink" title="配置文件："></a>配置文件：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列交换机 DLX方式</span></span><br><span class="line"><span class="comment"> * 注意这里的交换机类型：CustomExchange</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CustomExchange <span class="title">delayExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Object&gt; args = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">    args.put(<span class="string">&quot;x-delayed-type&quot;</span>, <span class="string">&quot;direct&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CustomExchange(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;x-delayed-message&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 延时队列</span></span><br><span class="line"><span class="comment"> *  DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Queue <span class="title">immediateQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 第一个参数是创建的queue的名字，第二个参数是是否支持持久化</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">&quot;queue.xdelay.immediate&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给延时队列绑定交换机</span></span><br><span class="line"><span class="comment"> *   DLX方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Binding <span class="title">bindingNotify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BindingBuilder.bind(immediateQueue()).to(delayExchange()).with(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>).noargs();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生产者-1"><a href="#生产者-1" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLetterDLXSenderMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">&quot;confirm&quot;</span>, <span class="string">&quot;confirm123456&quot;</span>);</span><br><span class="line">        MessagePostProcessor postProcessor = message -&gt; &#123;</span><br><span class="line">            message.getMessageProperties().setDelay(<span class="number">5000</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;;</span><br><span class="line">        rabbitTemplate.setMandatory(<span class="keyword">true</span>);</span><br><span class="line">        rabbitTemplate.setConfirmCallback(confirmCallback);</span><br><span class="line"><span class="comment">//        rabbitTemplate.setReturnCallback(returnCallback);</span></span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(<span class="string">&quot;confirm-&quot;</span> + System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">this</span>.rabbitTemplate.convertAndSend(<span class="string">&quot;exchange.xdelay.delayed&quot;</span>, <span class="string">&quot;exchange.xdelay.delayed&quot;</span>, user, postProcessor, correlationData);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="消费者-1"><a href="#消费者-1" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * DLX方式</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> channel</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDLXMessage</span><span class="params">(User user, Channel channel, Message message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列参数数据 ： &quot;</span> + user +  <span class="keyword">new</span> Date());</span><br><span class="line">          <span class="comment">//basicAck:表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。</span></span><br><span class="line">          <span class="comment">//deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。</span></span><br><span class="line">          <span class="comment">//multiple(false/true)：是否批量确认，false只确认当前consumer一个消息收到,值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。</span></span><br><span class="line">          <span class="comment">//举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认。</span></span><br><span class="line">          channel.basicAck(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          System.out.println(<span class="string">&quot;DLX延迟队列接受到的消息为:&quot;</span> + <span class="keyword">new</span> String(message.getBody()));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          <span class="keyword">if</span> (message.getMessageProperties().getRedelivered()) &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息已重复处理失败,拒绝再次接收...&quot;</span>);</span><br><span class="line">              <span class="comment">// 拒绝消息</span></span><br><span class="line">              <span class="comment">//basicReject：拒绝消息，与basicNack区别在于不能进行批量操作，其他用法很相似。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicReject(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              log.error(<span class="string">&quot;DLX延迟队列消息即将再次返回队列处理...&quot;</span>);</span><br><span class="line">              <span class="comment">//basicNack ：表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列。</span></span><br><span class="line">              <span class="comment">//deliveryTag：表示消息投递序号。</span></span><br><span class="line">              <span class="comment">//multiple：是否批量确认。</span></span><br><span class="line">              <span class="comment">//requeue：值为 true 消息将重新入队列。</span></span><br><span class="line">              channel.basicNack(message.getMessageProperties().getDeliveryTag(), <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参考文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3ODkyOTU3L2FydGljbGUvZGV0YWlscy84OTI5NjE1Nw==">https://blog.csdn.net/qq_37892957/article/details/89296157<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>GC</tag>
+        <tag>MQ</tag>
       </tags>
   </entry>
   <entry>
@@ -9323,8 +9323,8 @@ QObject::connect () 本身是线程安全的。
       </categories>
       <tags>
         <tag>C</tag>
-        <tag>内存</tag>
         <tag>bug</tag>
+        <tag>内存</tag>
         <tag>sql</tag>
         <tag>集合</tag>
         <tag>const</tag>
@@ -9934,33 +9934,6 @@ QObject::connect () 本身是线程安全的。
       </tags>
   </entry>
   <entry>
-    <title>Mysql复制插入数据</title>
-    <url>/posts/1H0J6ZZ.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
-<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>主键设为自增</p>
-<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
-<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
-<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
-<p>将ID中的a替换成b  </p>
-<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
-<p>create_time 为返回值，在原来的时间上加一个月。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Mysql</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>sql</tag>
-        <tag>函数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>InnoDB与MYISAM的区别</title>
     <url>/posts/3R3HSKP.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误！！" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -9987,6 +9960,33 @@ QObject::connect () 本身是线程安全的。
         <tag>Mysql</tag>
         <tag>锁</tag>
         <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql复制插入数据</title>
+    <url>/posts/1H0J6ZZ.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
+<h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主键设为自增</p>
+<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">&#x27;c&#x27;</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">&#x27;d&#x27;</span>); </span><br></pre></td></tr></table></figure>
+<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
+<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></table></figure>
+<p>将ID中的a替换成b  </p>
+<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></table></figure>
+<p>create_time 为返回值，在原来的时间上加一个月。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>sql</tag>
+        <tag>函数</tag>
       </tags>
   </entry>
   <entry>
@@ -10614,8 +10614,8 @@ QObject::connect () 本身是线程安全的。
       <tags>
         <tag>C</tag>
         <tag>Java</tag>
-        <tag>内存</tag>
         <tag>bug</tag>
+        <tag>内存</tag>
         <tag>sql</tag>
         <tag>数据库</tag>
         <tag>函数</tag>
@@ -11086,8 +11086,8 @@ QObject::connect () 本身是线程安全的。
       </categories>
       <tags>
         <tag>C</tag>
-        <tag>内存</tag>
         <tag>bug</tag>
+        <tag>内存</tag>
         <tag>sql</tag>
         <tag>事务</tag>
         <tag>数据库</tag>
@@ -11146,55 +11146,6 @@ QObject::connect () 本身是线程安全的。
         <tag>函数</tag>
         <tag>CPU</tag>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis面试题</title>
-    <url>/posts/2PVT91G.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="支持的数据结构"><a href="#支持的数据结构" class="headerlink" title="支持的数据结构"></a>支持的数据结构</h3><ol>
-<li>String字符串  </li>
-</ol>
-<p>存储的String数据是二进制安全的，是最进本的数据类型，一个键最大存储512M。</p>
-<p>应用场景：很常见的场景用于统计网站访问数量，当前在线人数等（incr命令自增。decr命令自减）</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605594981645-3560373a-80a8-4ed9-b098-bbd07f7a6daf.png" alt="image"></p>
-<ol>
-<li>Hash</li>
-</ol>
-<p>Redis中的散列可以看成具有String key和String value的map容器，可以将多个key-value存储到一个key中。每一个Hash可以存储4294967295个键值对。</p>
-<p>应用场景：例如存储、读取、修改用户属性（name，age，pwd等）</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605594999435-52838f6c-a296-482f-bbe3-0458bc1d69dd.png" alt="image"></p>
-<ol>
-<li>List</li>
-</ol>
-<p>Redis的列表允许用户从序列的两端推入或者弹出元素，列表由多个字符串值组成的有序可重复的序列，是链表结构，所以向列表两端添加元素的时间复杂度为0(1)，获取越接近两端的元素速度就越快。List中可以包含的最大元素数量是4294967295。</p>
-<p>应用场景：1.最新消息排行榜。2.消息队列，以完成多程序之间的消息交换。可以用push操作将任务存在list中（生产者），然后线程在用pop操作将任务取出进行执行。（消费者）</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605594989795-94de03ed-d934-447d-8503-0e9bea7b42f0.png" alt="image"></p>
-<ol>
-<li>集合Set</li>
-</ol>
-<p>Redis的集合是无序不可重复的，和列表一样，在执行插入和删除和判断是否存在某元素时，效率是很高的。集合最大的优势在于可以进行交集并集差集操作。Set可包含的最大元素数量是4294967295。</p>
-<p>应用场景：1.利用交集求共同好友。2.利用唯一性，可以统计访问网站的所有独立IP。3.好友推荐的时候根据tag求交集，大于某个threshold（临界值的）就可以推荐。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605595010088-ed456003-9a56-4631-9ccd-666d4527287b.png" alt="image"></p>
-<ol>
-<li>有序集合sorted set</li>
-</ol>
-<p>和set很像，都是字符串的集合，都不允许重复的成员出现在一个set中。他们之间差别在于有序集合中每一个成员都会有一个分数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。尽管有序集合中的成员必须是卫衣的，但是分数(score)却可以重复。</p>
-<p>应用场景：可以用于一个大型在线游戏的积分排行榜，每当玩家的分数发生变化时，可以执行zadd更新玩家分数(score)，此后在通过zrange获取几分top ten的用户信息。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605595082580-7b4529d5-6260-4901-97cb-3542fc6c48a3.png" alt="image"></p>
-<blockquote>
-<p>最后，还有个对key的通用操作，所有的数据类型都可以使用的</p>
-</blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/1605595240335-fef65e1b-6f04-432d-b59b-d3275920d741.png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>集合</tag>
-        <tag>Redis</tag>
-        <tag>容器</tag>
       </tags>
   </entry>
   <entry>
@@ -11262,6 +11213,55 @@ QObject::connect () 本身是线程安全的。
         <tag>内存</tag>
         <tag>Redis</tag>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis面试题</title>
+    <url>/posts/2PVT91G.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="支持的数据结构"><a href="#支持的数据结构" class="headerlink" title="支持的数据结构"></a>支持的数据结构</h3><ol>
+<li>String字符串  </li>
+</ol>
+<p>存储的String数据是二进制安全的，是最进本的数据类型，一个键最大存储512M。</p>
+<p>应用场景：很常见的场景用于统计网站访问数量，当前在线人数等（incr命令自增。decr命令自减）</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1605594981645-3560373a-80a8-4ed9-b098-bbd07f7a6daf.png" alt="image"></p>
+<ol>
+<li>Hash</li>
+</ol>
+<p>Redis中的散列可以看成具有String key和String value的map容器，可以将多个key-value存储到一个key中。每一个Hash可以存储4294967295个键值对。</p>
+<p>应用场景：例如存储、读取、修改用户属性（name，age，pwd等）</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1605594999435-52838f6c-a296-482f-bbe3-0458bc1d69dd.png" alt="image"></p>
+<ol>
+<li>List</li>
+</ol>
+<p>Redis的列表允许用户从序列的两端推入或者弹出元素，列表由多个字符串值组成的有序可重复的序列，是链表结构，所以向列表两端添加元素的时间复杂度为0(1)，获取越接近两端的元素速度就越快。List中可以包含的最大元素数量是4294967295。</p>
+<p>应用场景：1.最新消息排行榜。2.消息队列，以完成多程序之间的消息交换。可以用push操作将任务存在list中（生产者），然后线程在用pop操作将任务取出进行执行。（消费者）</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1605594989795-94de03ed-d934-447d-8503-0e9bea7b42f0.png" alt="image"></p>
+<ol>
+<li>集合Set</li>
+</ol>
+<p>Redis的集合是无序不可重复的，和列表一样，在执行插入和删除和判断是否存在某元素时，效率是很高的。集合最大的优势在于可以进行交集并集差集操作。Set可包含的最大元素数量是4294967295。</p>
+<p>应用场景：1.利用交集求共同好友。2.利用唯一性，可以统计访问网站的所有独立IP。3.好友推荐的时候根据tag求交集，大于某个threshold（临界值的）就可以推荐。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1605595010088-ed456003-9a56-4631-9ccd-666d4527287b.png" alt="image"></p>
+<ol>
+<li>有序集合sorted set</li>
+</ol>
+<p>和set很像，都是字符串的集合，都不允许重复的成员出现在一个set中。他们之间差别在于有序集合中每一个成员都会有一个分数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。尽管有序集合中的成员必须是卫衣的，但是分数(score)却可以重复。</p>
+<p>应用场景：可以用于一个大型在线游戏的积分排行榜，每当玩家的分数发生变化时，可以执行zadd更新玩家分数(score)，此后在通过zrange获取几分top ten的用户信息。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1605595082580-7b4529d5-6260-4901-97cb-3542fc6c48a3.png" alt="image"></p>
+<blockquote>
+<p>最后，还有个对key的通用操作，所有的数据类型都可以使用的</p>
+</blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/others/1605595240335-fef65e1b-6f04-432d-b59b-d3275920d741.png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>集合</tag>
+        <tag>Redis</tag>
+        <tag>容器</tag>
       </tags>
   </entry>
   <entry>
@@ -11985,31 +11985,6 @@ QObject::connect () 本身是线程安全的。
       </tags>
   </entry>
   <entry>
-    <title>OR与AND一起的用法</title>
-    <url>/posts/1BED9D0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
-<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
-<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
-<p>查询  </p>
-<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
-SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
-</code></pre>
-<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
-<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
-<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文详解SQL关联子查询</title>
     <url>/posts/33P1FY8.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span></p>
@@ -12208,22 +12183,48 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </tags>
   </entry>
   <entry>
-    <title>Spring系列(上)</title>
-    <url>/posts/DE2A8E.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvR1h6cURLQUV3Qm4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+    <title>OR与AND一起的用法</title>
+    <url>/posts/1BED9D0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><div style="text-align: center;"></div><br><span id="more"></span>  </p>
+<p>数据1<br><img data-src="https://xuemingde.com/pages/image/2022/23/150612.jpg" alt="150612"></p>
+<p>查询<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询结果是id = 2且age = 20或者id=1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">AND</span> age <span class="operator">=</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure><br>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/150837.jpg" alt="150837"></p>
+<p>查询  </p>
+<pre><code class="lang-sql">-- 查询结果是 id=1或id=2 且age = 20
+SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
+</code></pre>
+<p>返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151058.jpg" alt="151058">  </p>
+<p>数据2。<br><img data-src="https://xuemingde.com/pages/image/2022/23/151502.jpg" alt="151502">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151536.jpg" alt="151536">  </p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151700.jpg" alt="151700"></p>
+<p>查询返回结果<br><img data-src="https://xuemingde.com/pages/image/2022/23/151721.jpg" alt="151721"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MybatisPlus自动生成主键策略</title>
+    <url>/posts/9P9EMN.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1617185015632-98ebebc3-0fc9-4502-aa98-2ba9ee508b26.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1617185033768-20f85bfc-7299-4260-bbb4-b9978e341d78.png" alt="image.png"></p>
 ]]></content>
       <categories>
         <category>框架</category>
-        <category>Spring</category>
+        <category>MyBatis</category>
       </categories>
       <tags>
         <tag>C</tag>
       </tags>
   </entry>
   <entry>
-    <title>Spring系列(下)</title>
-    <url>/posts/1ZM62F.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+    <title>Spring系列(上)</title>
+    <url>/posts/DE2A8E.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvR1h6cURLQUV3Qm4=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
         <category>框架</category>
@@ -12368,6 +12369,19 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
       </tags>
   </entry>
   <entry>
+    <title>Spring系列(下)</title>
+    <url>/posts/1ZM62F.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在线查看：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxpeXVuZHJpdmUuY29tL3MvOHEyam1uMU1QcVk=">阿里云盘<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>框架</category>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot 内置工具类</title>
     <url>/posts/N8AQ70.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h1><p>SpringBoot 中提供了 Assert 断言工具类，通常用于数据合法性检查</p>
@@ -12433,20 +12447,6 @@ SELECT * from student WHERE (id = 1 or id = 2 ) AND age = 20;
         <tag>数组</tag>
         <tag>索引</tag>
         <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MybatisPlus自动生成主键策略</title>
-    <url>/posts/9P9EMN.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img data-src="https://xuemingde.com/pages/image/others/1617185015632-98ebebc3-0fc9-4502-aa98-2ba9ee508b26.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1617185033768-20f85bfc-7299-4260-bbb4-b9978e341d78.png" alt="image.png"></p>
-]]></content>
-      <categories>
-        <category>框架</category>
-        <category>MyBatis</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
