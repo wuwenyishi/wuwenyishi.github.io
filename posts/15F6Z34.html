@@ -25,20 +25,21 @@
     var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="备忘录">
-<meta property="og:url" content="https://xuemingde.com/posts/KX756A.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="C++ modbus数据转换">
+<meta property="og:url" content="https://xuemingde.com/posts/15F6Z34.html">
 <meta property="og:site_name" content="东夕月少年">
-<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-03T05:54:04.138Z">
+<meta property="article:published_time" content="2023-09-01T06:34:19.042Z">
+<meta property="article:modified_time" content="2023-09-05T11:42:12.489Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="数组">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://xuemingde.com/posts/KX756A.html">
+<link rel="canonical" href="https://xuemingde.com/posts/15F6Z34.html">
 
 
 <script id="page-configurations">
@@ -51,7 +52,7 @@
   };
 </script>
 
-  <title>备忘录 | 东夕月少年</title>
+  <title>C++ modbus数据转换 | 东夕月少年</title>
   
 
 
@@ -214,7 +215,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/KX756A.html">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/15F6Z34.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpeg">
@@ -227,7 +228,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          备忘录<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy/np4HmnIkvMjAyMDAyMDItREZMMDEubWQ=" title="编辑"><i class="fa fa-pencil-alt"></i></span>
+          C++ modbus数据转换<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy/ltYzlhaXlvI8vUXQvQysrIG1vZGJ1c+aVsOaNrui9rOaNoi5tZA==" title="编辑"><i class="fa fa-pencil-alt"></i></span>
         </h1>
 
         <div class="post-meta">
@@ -237,14 +238,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-02-02 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-02T00:00:00+08:00">2020-02-02</time>
+              <time title="创建时间：2023-09-01 14:34:19" itemprop="dateCreated datePublished" datetime="2023-09-01T14:34:19+08:00">2023-09-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-03 13:54:04" itemprop="dateModified" datetime="2023-04-03T13:54:04+08:00">2023-04-03</time>
+                <time title="修改时间：2023-09-05 19:42:12" itemprop="dateModified" datetime="2023-09-05T19:42:12+08:00">2023-09-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,12 +253,16 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A7%81%E6%9C%89/" itemprop="url" rel="index"><span itemprop="name">私有</span></a>
+                  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/Qt/" itemprop="url" rel="index"><span itemprop="name">Qt</span></a>
                 </span>
             </span>
 
           
-            <span id="/posts/KX756A.html" class="post-meta-item leancloud_visitors" data-flag-title="备忘录" title="阅读次数">
+            <span id="/posts/15F6Z34.html" class="post-meta-item leancloud_visitors" data-flag-title="C++ modbus数据转换" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -272,20 +277,32 @@
               <span id="busuanzi_value_page_pv"></span>
             </span>
   
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/15F6Z34.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/15F6Z34.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
   <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>43</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -297,18 +314,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="你确定我很帅吗？" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="f8713840e59e063e726dd303e0d4d838eabb19951cb059ebff914e2d12cf4c5b">e7b1e7aba8f3ccc4a91cc7b394458fb72f006e09c2f7cddedf378cf47f7c5feb82d1bd10c98775eb9a3c4b3b376f4a288dc6aa674c59522e747ee25f081b211eaa56189d00d768e47ebe2f98364491bfd809062c7415295547ddc545e738e7b97e73e3260d6095f18033b49ab2fa96df88328b4e9c7fc752b0958f7e6bab6b4cbb0ca6960a04eea077f94825d73cfbfb</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">暗号</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+        <h4 id="C-将浮点数转为modbus需要的两个无符号短整数"><a href="#C-将浮点数转为modbus需要的两个无符号短整数" class="headerlink" title="C++ 将浮点数转为modbus需要的两个无符号短整数"></a>C++ 将浮点数转为modbus需要的两个无符号短整数</h4><p>以下是一个使用C++将浮点数转换为Modbus需要的两个无符号短整数的示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdint&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 浮点数转换为Modbus无符号短整数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">floatToModbus</span><span class="params">(<span class="keyword">float</span> f, <span class="keyword">uint16_t</span>&amp; highByte, <span class="keyword">uint16_t</span>&amp; lowByte)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">        <span class="keyword">float</span> floatValue;</span><br><span class="line">        <span class="keyword">uint16_t</span> ushortValue[<span class="number">2</span>];</span><br><span class="line">    &#125; converter;</span><br><span class="line"></span><br><span class="line">    converter.floatValue = f;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 高字节在前，低字节在后</span></span><br><span class="line">    highByte = converter.ushortValue[<span class="number">0</span>];</span><br><span class="line">    lowByte = converter.ushortValue[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> floatNumber = <span class="number">3.1415</span>;</span><br><span class="line">    <span class="keyword">uint16_t</span> highByte, lowByte;</span><br><span class="line">    floatToModbus(floatNumber, highByte, lowByte);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;High Byte: &quot;</span> &lt;&lt; highByte &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Low Byte: &quot;</span> &lt;&lt; lowByte &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在上述示例代码中，我们通过传入引用的方式，将高字节和低字节的值作为参数返回给调用者。在<code>floatToModbus</code>函数中，我们按照之前的方法使用联合体进行浮点数和无符号短整数之间的类型转换。</p>
+<p>将浮点数赋值给<code>floatValue</code>，然后通过<code>ushortValue</code>读取高字节和低字节的值，并分别将它们赋值给<code>highByte</code>和<code>lowByte</code>。</p>
+<p>最后，我们在主函数中输出高字节和低字节的值，以验证转换结果。</p>
+<p>请注意，在实际应用中，你需要根据具体的Modbus协议规范，确定高字节和低字节的顺序，并进行相应的操作。这里的示例代码只是一个简单的演示，并可能需要根据实际情况进行调整。</p>
+<h4 id="Modbus的两个无符号短整数转浮点数"><a href="#Modbus的两个无符号短整数转浮点数" class="headerlink" title="Modbus的两个无符号短整数转浮点数"></a>Modbus的两个无符号短整数转浮点数</h4><p>以下是一个使用C++将Modbus的两个无符号短整数转换为浮点数的示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdint&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Modbus无符号短整数转换为浮点数</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">modbusToFloat</span><span class="params">(<span class="keyword">uint16_t</span> highByte, <span class="keyword">uint16_t</span> lowByte)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">        <span class="keyword">float</span> floatValue;</span><br><span class="line">        <span class="keyword">uint16_t</span> ushortValue[<span class="number">2</span>];</span><br><span class="line">    &#125; converter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将高字节和低字节合并</span></span><br><span class="line">    converter.ushortValue[<span class="number">0</span>] = highByte;</span><br><span class="line">    converter.ushortValue[<span class="number">1</span>] = lowByte;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> converter.floatValue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uint16_t</span> highByte = <span class="number">0x4000</span>;  <span class="comment">// 示例高字节</span></span><br><span class="line">    <span class="keyword">uint16_t</span> lowByte = <span class="number">0xC000</span>;   <span class="comment">// 示例低字节</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">float</span> convertedFloat = modbusToFloat(highByte, lowByte);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Converted Float: &quot;</span> &lt;&lt; convertedFloat &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在上述示例代码中，我们定义了一个函数<code>modbusToFloat</code>来进行Modbus的两个无符号短整数转换为浮点数的操作。</p>
+<p>首先，我们使用一个联合体来实现无符号短整数和浮点数之间的类型转换。联合体中包含一个浮点数类型的成员<code>floatValue</code>和一个无符号短整数类型的数组成员<code>ushortValue</code>。</p>
+<p>然后，我们将Modbus的高字节和低字节分别赋值给联合体的<code>ushortValue[0]</code>和<code>ushortValue[1]</code>。</p>
+<p>最后，我们通过联合体的<code>floatValue</code>成员来获取转换后的浮点数值。</p>
+<p>在主函数中，我们给出了示例的高字节和低字节的数值，并输出转换后的浮点数结果。</p>
+<p>请注意，在实际应用中，你需要根据具体的Modbus协议规范，确定高字节和低字节的顺序，并进行相应的操作。这里的示例代码只是一个简单的演示，并可能需要根据实际情况进行调整。</p>
+
     </div>
    <div>
         
@@ -326,19 +346,19 @@
   <div class="popular-posts-header">相关热门文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/32Z7N4H.html" rel="bookmark">Hexo 打包报错</a></div>
+      <div class="popular-posts-title"><a href="/posts/3XAT60D.html" rel="bookmark">C++学习笔记1</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/39AKQ95.html" rel="bookmark">Seata-server启动闪退问题</a></div>
+      <div class="popular-posts-title"><a href="/posts/WTSYSE.html" rel="bookmark">Java并发常见知识点&面试题总结_进阶篇</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3V4Q1GY.html" rel="bookmark">springBoot项目打成的jar包无法获取resources下文件</a></div>
+      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/HAXCJE.html" rel="bookmark">easypoi导入Excel表格报错</a></div>
+      <div class="popular-posts-title"><a href="/posts/YQ8Q9R.html" rel="bookmark">Qt开发笔记01</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/RQ90BT.html" rel="bookmark">mapstruct使用报错</a></div>
+      <div class="popular-posts-title"><a href="/posts/1HT8JDQ.html" rel="bookmark">C++学习笔记2</a></div>
     </li>
   </ul>
 
@@ -371,7 +391,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://xuemingde.com/posts/KX756A.html" title="备忘录">https://xuemingde.com/posts/KX756A.html</a>
+    <a href="https://xuemingde.com/posts/15F6Z34.html" title="C++ modbus数据转换">https://xuemingde.com/posts/15F6Z34.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -384,6 +404,9 @@
           
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
           </div>
 
         
@@ -396,11 +419,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/posts/32Z7N4H.html" rel="next" title="Hexo 打包报错">
-      Hexo 打包报错 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/2PQ961R.html" rel="prev" title="Qt中使用ModbusTcp ">
+      <i class="fa fa-chevron-left"></i> Qt中使用ModbusTcp 
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -415,6 +438,7 @@
            </div>
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -439,6 +463,18 @@
 </script>
 
           
+<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container-1',
+        blogId: '29491-1649429697615-963',
+        name: '不闻一时',
+        qrcode: 'https://xuemingde.com/pages/image/2022/05/31093822.png',
+        keyword: 'meadel',
+    });
+</script>
+
         </div>
           
   
@@ -462,6 +498,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%B0%86%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BD%AC%E4%B8%BAmodbus%E9%9C%80%E8%A6%81%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9F%AD%E6%95%B4%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">C++ 将浮点数转为modbus需要的两个无符号短整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modbus%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9F%AD%E6%95%B4%E6%95%B0%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">Modbus的两个无符号短整数转浮点数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -477,14 +514,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -537,7 +574,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">855k</span>
+    <span title="站点总字数">854k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
