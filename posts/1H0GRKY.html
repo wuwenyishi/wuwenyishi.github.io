@@ -14,11 +14,11 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://cdn.baomitu.com/index/fonts/css?family=Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Noto Sans Simplified Chinese:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="//lib.baomitu.com/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
-  <script src="//lib.baomitu.com/pace/1.0.2/pace.min.js"></script>
+  <link rel="stylesheet" href="js/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="js/pace-theme-minimal.min.css">
+  <script src="js/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -136,11 +136,6 @@
         <li class="menu-item menu-item-categories">
 
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -339,10 +334,10 @@
       <div class="popular-posts-title"><a href="/posts/1F4BTHB.html" rel="bookmark">搞懂 Nginx 高性能网络工作原理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1Z9HSDW.html" rel="bookmark">Kafka面试连环炮-中</a></div>
+      <div class="popular-posts-title"><a href="/posts/2P9AR21.html" rel="bookmark">Kafka面试连环炮-下</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2P9AR21.html" rel="bookmark">Kafka面试连环炮-下</a></div>
+      <div class="popular-posts-title"><a href="/posts/1Z9HSDW.html" rel="bookmark">Kafka面试连环炮-中</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&C++面试题</a></div>
@@ -385,35 +380,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="https://blog.csdn.net/xue_mind">
-            <span class="icon">
-              <i class="fa fa-th-list"></i>
-            </span>
-
-            <span class="label">CSDN</span>
-          </a>
-        </div>
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="https://www.yuque.com/meadel">
-            <span class="icon">
-              <i class="fa fa-th-list"></i>
-            </span>
-
-            <span class="label">语雀</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -543,7 +509,6 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-          
         <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -635,15 +600,15 @@
 
   
   <script size="300" alpha="0.6" zIndex="-1" src="js/canvas-ribbon.js"></script>
-  <script src="//lib.baomitu.com/animejs/3.2.1/anime.min.js"></script>
-  <script src="//lib.baomitu.com/next-theme-pjax/0.5.0/pjax.min.js"></script>
-  <script src="//lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-  <script src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-  <script src="//lib.baomitu.com/medium-zoom/1.0.6/medium-zoom.min.js"></script>
-  <script src="https://lib.baomitu.com/lozad.js/1.16.0/lozad.min.js"></script>
-  <script src="https://lib.baomitu.com/pangu/4.0.7/pangu.min.js"></script>
-  <script src="//lib.baomitu.com/velocity/1.5.2/velocity.min.js"></script>
-  <script src="//lib.baomitu.com/velocity/1.5.2/velocity.ui.min.js"></script>
+  <script src="js/anime.min.js"></script>
+  <script src="js/pjax.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/medium-zoom.min.js"></script>
+  <script src="js/lozad.min.js"></script>
+  <script src="js/pangu.min.js"></script>
+  <script src="js/velocity.min.js"></script>
+  <script src="js/velocity.ui.min.js"></script>
 
 <script src="/js/utils.js"></script>
 
@@ -815,7 +780,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//lib.baomitu.com/valine/1.4.17/Valine.min.js', () => {
+  NexT.utils.getScript('js/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick';
     guest = guest.split(',').filter(item => {
