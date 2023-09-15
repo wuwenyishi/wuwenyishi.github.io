@@ -15,10 +15,10 @@
 <link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="js/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="js/pace-theme-minimal.min.css">
-  <script src="js/pace.min.js"></script>
+<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../js/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="../js/pace-theme-minimal.min.css">
+  <script src="../js/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -379,6 +379,16 @@
   </div>
 
 
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLw==" title="https:&#x2F;&#x2F;tech.meituan.com&#x2F;">美团团队</span>
+        </li>
+    </ul>
+  </div>
 
       </div>
         <div class="back-to-top motion-element">
@@ -456,16 +466,16 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="js/canvas-ribbon.js"></script>
-  <script src="js/anime.min.js"></script>
-  <script src="js/pjax.min.js"></script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
-  <script src="js/medium-zoom.min.js"></script>
-  <script src="js/lozad.min.js"></script>
-  <script src="js/pangu.min.js"></script>
-  <script src="js/velocity.min.js"></script>
-  <script src="js/velocity.ui.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="../js/canvas-ribbon.js"></script>
+  <script src="../js/anime.min.js"></script>
+  <script src="../js/pjax.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/jquery.fancybox.min.js"></script>
+  <script src="../js/medium-zoom.min.js"></script>
+  <script src="../js/lozad.min.js"></script>
+  <script src="../js/pangu.min.js"></script>
+  <script src="../js/velocity.min.js"></script>
+  <script src="../js/velocity.ui.min.js"></script>
 
 <script src="/js/utils.js"></script>
 
@@ -539,10 +549,10 @@ window.addEventListener('pjax:success', () => {
 </script>
 
 
-  <script defer src="js/three.min.js"></script>
-    <script defer src="js/three-waves.min.js"></script>
-    <script defer src="js/canvas_lines.min.js"></script>
-    <script defer src="js/canvas_sphere.min.js"></script>
+  <script defer src="../js/three.min.js"></script>
+    <script defer src="../js/three-waves.min.js"></script>
+    <script defer src="../js/canvas_lines.min.js"></script>
+    <script defer src="../js/canvas_sphere.min.js"></script>
 
 
   
@@ -630,7 +640,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 <script data-pjax>
 if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('js/mermaid.min.js', () => {
+  NexT.utils.getScript('../js/mermaid.min.js', () => {
     mermaid.initialize({
       theme    : 'forest',
       logLevel : 3,
@@ -673,7 +683,7 @@ darkmode.showWidget();
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('js/Valine.min.js', () => {
+  NexT.utils.getScript('../js/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick,mail';
     guest = guest.split(',').filter(item => {
