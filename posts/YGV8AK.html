@@ -116,7 +116,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -331,60 +335,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h4 id="堆内存逻辑分区不适用不分代垃圾收集器"><a class="markdownIt-Anchor" href="#堆内存逻辑分区不适用不分代垃圾收集器"></a> 堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h4 id="堆内存逻辑分区-不适用不分代垃圾收集器">堆内存逻辑分区(不适用不分代垃圾收集器)</h4>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210301144548.png" alt=""></p>
-<h4 id="jvm-内存空间"><a class="markdownIt-Anchor" href="#jvm-内存空间"></a> jvm 内存空间</h4>
+<h4 id="jvm-内存空间">jvm 内存空间</h4>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210301145713.png" alt=""></p>
 <p>注意：</p>
 <p><strong>一个进程都有一套方法区和堆</strong><br>
 <strong>一个线程都有一套Java虚拟机栈和程序计数器</strong></p>
-<h4 id="各空间详解"><a class="markdownIt-Anchor" href="#各空间详解"></a> 各空间详解</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301150550.png" alt="image-20210301150548679"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301150843.png" alt="image-20210301150841856"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301150951.webp" alt="img"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301151013.png" alt="image-20210301151012040"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301150727.png" alt="image-20210301150713776"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301151201.png" alt="image-20210301151159632"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301151627.png" alt="image-20210301151625877"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301151826.png" alt="image-20210301151821164"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301152826.png" alt="image-20210301152825611"></p>
-<h4 id="指针碰撞"><a class="markdownIt-Anchor" href="#指针碰撞"></a> 指针碰撞</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301154851.png" alt="image-20210301154850520"></p>
+<h4 id="各空间详解">各空间详解</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150550.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150843.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150951.webp" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151013.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301150727.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151201.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151627.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301151826.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301152826.png" alt=""></p>
+<h4 id="指针碰撞">指针碰撞</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301154851.png" alt=""></p>
 <p>title: java锁、JVM等</p>
-<h4 id="tlab-指针碰撞的解决思路"><a class="markdownIt-Anchor" href="#tlab-指针碰撞的解决思路"></a> TLAB   （指针碰撞的解决思路）</h4>
+<h4 id="TLAB-（指针碰撞的解决思路）">TLAB   （指针碰撞的解决思路）</h4>
 <p>TLAB的全称是Thread Local Allocation Buffe，线程本地分配缓存区。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301155427.png" alt="image-20210301155425935"></p>
-<h4 id="逃逸分析"><a class="markdownIt-Anchor" href="#逃逸分析"></a> <strong>逃逸分析</strong></h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301160619.png" alt="image-20210301160618259"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301160710.png" alt="image-20210301160709230"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301160801.png" alt="img"></p>
-<h4 id="标量替换"><a class="markdownIt-Anchor" href="#标量替换"></a> 标量替换</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301155427.png" alt=""></p>
+<h4 id="逃逸分析"><strong>逃逸分析</strong></h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301160619.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301160710.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301160801.png" alt=""></p>
+<h4 id="标量替换">标量替换</h4>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210301163759.png" alt=""></p>
-<h4 id="栈上分配"><a class="markdownIt-Anchor" href="#栈上分配"></a> 栈上分配</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301165936.png" alt="image-20210301165930817"></p>
-<h4 id="同步消除"><a class="markdownIt-Anchor" href="#同步消除"></a> 同步消除</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301170028.png" alt="image-20210301170027420"></p>
-<h4 id="对象创建过程在jvm层面的内存分配流程图"><a class="markdownIt-Anchor" href="#对象创建过程在jvm层面的内存分配流程图"></a> 对象创建过程，在jvm层面的内存分配；流程图</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301170547.png" alt="image-20210301170545945"></p>
-<h4 id="只要是分代模型一定是成对出现常见的组合有3种"><a class="markdownIt-Anchor" href="#只要是分代模型一定是成对出现常见的组合有3种"></a> 只要是分代模型，一定是成对出现，常见的组合有3种</h4>
+<h4 id="栈上分配">栈上分配</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301165936.png" alt=""></p>
+<h4 id="同步消除">同步消除</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301170028.png" alt=""></p>
+<h4 id="对象创建过程，在jvm层面的内存分配；流程图">对象创建过程，在jvm层面的内存分配；流程图</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301170547.png" alt=""></p>
+<h4 id="只要是分代模型，一定是成对出现，常见的组合有3种">只要是分代模型，一定是成对出现，常见的组合有3种</h4>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210301172948.png" alt=""></p>
-<h4 id="jdk18可用分代模型也可不用分代模型"><a class="markdownIt-Anchor" href="#jdk18可用分代模型也可不用分代模型"></a> jdk1.8可用分代模型，也可不用分代模型</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301173045.png" alt="image-20210301171243283"></p>
-<h4 id="serial-swt"><a class="markdownIt-Anchor" href="#serial-swt"></a> Serial     （ SWT）</h4>
+<h4 id="jdk1-8可用分代模型，也可不用分代模型">jdk1.8可用分代模型，也可不用分代模型</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301173045.png" alt=""></p>
+<h4 id="Serial-（-SWT）">Serial     （ SWT）</h4>
 <p>属于单线程回收</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301173053.png" alt="image-20210301171615192"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301173053.png" alt=""></p>
 <p>会造成卡顿的现象，是因为业务线程被暂停，垃圾回收线程在工作。JVM调优应该极力避免的现象。</p>
-<h4 id="parallel-scavenge"><a class="markdownIt-Anchor" href="#parallel-scavenge"></a> Parallel Scavenge</h4>
+<h4 id="Parallel-Scavenge">Parallel Scavenge</h4>
 <p>单线程回收不够的情况下，可以使用Parallel Scavenge，属于多线程回收</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301173058.png" alt="image-20210301172618386"></p>
-<h4 id="parnew"><a class="markdownIt-Anchor" href="#parnew"></a> ParNew</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301173058.png" alt=""></p>
+<h4 id="ParNew">ParNew</h4>
 <p>为了配合CMS的使用，对Parallel Scavenge做了一些改进，就是ParNew</p>
 <p>使用多个GC线程的复制收集器来自“ Parallel Scavenge”，因为它具有增强功能，可用于例如，“ ParNew”执行所需的同步，以便它可以在CMS的并发阶段运行。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301175352.png" alt="image-20210301175351245"></p>
-<h4 id="cms-concurrent-mark-sweep-并发标记清除"><a class="markdownIt-Anchor" href="#cms-concurrent-mark-sweep-并发标记清除"></a> CMS （concurrent mark sweep  并发标记清除）</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301175844.png" alt="image-20210301175842829"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301175352.png" alt=""></p>
+<h4 id="CMS-（concurrent-mark-sweep-并发标记清除）">CMS （concurrent mark sweep  并发标记清除）</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301175844.png" alt=""></p>
 <p>工作线程与回收线程同时进行</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210301180541.png" alt="image-20210301180538636"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210301180541.png" alt=""></p>
 
     </div>
    <div>
@@ -565,7 +569,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%86%85%E5%AD%98%E9%80%BB%E8%BE%91%E5%88%86%E5%8C%BA%E4%B8%8D%E9%80%82%E7%94%A8%E4%B8%8D%E5%88%86%E4%BB%A3%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text"> 堆内存逻辑分区(不适用不分代垃圾收集器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jvm-%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text"> jvm 内存空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text"> 各空间详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E"><span class="nav-number">4.</span> <span class="nav-text"> 指针碰撞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tlab-%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text"> TLAB   （指针碰撞的解决思路）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text"> 逃逸分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">7.</span> <span class="nav-text"> 标量替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D"><span class="nav-number">8.</span> <span class="nav-text"> 栈上分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%B6%88%E9%99%A4"><span class="nav-number">9.</span> <span class="nav-text"> 同步消除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%E5%9C%A8jvm%E5%B1%82%E9%9D%A2%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">10.</span> <span class="nav-text"> 对象创建过程，在jvm层面的内存分配；流程图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AA%E8%A6%81%E6%98%AF%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%E4%B8%80%E5%AE%9A%E6%98%AF%E6%88%90%E5%AF%B9%E5%87%BA%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E5%90%88%E6%9C%893%E7%A7%8D"><span class="nav-number">11.</span> <span class="nav-text"> 只要是分代模型，一定是成对出现，常见的组合有3种</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk18%E5%8F%AF%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%E4%B9%9F%E5%8F%AF%E4%B8%8D%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B"><span class="nav-number">12.</span> <span class="nav-text"> jdk1.8可用分代模型，也可不用分代模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#serial-swt"><span class="nav-number">13.</span> <span class="nav-text"> Serial     （ SWT）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parallel-scavenge"><span class="nav-number">14.</span> <span class="nav-text"> Parallel Scavenge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parnew"><span class="nav-number">15.</span> <span class="nav-text"> ParNew</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cms-concurrent-mark-sweep-%E5%B9%B6%E5%8F%91%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4"><span class="nav-number">16.</span> <span class="nav-text"> CMS （concurrent mark sweep  并发标记清除）</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%86%85%E5%AD%98%E9%80%BB%E8%BE%91%E5%88%86%E5%8C%BA-%E4%B8%8D%E9%80%82%E7%94%A8%E4%B8%8D%E5%88%86%E4%BB%A3%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">堆内存逻辑分区(不适用不分代垃圾收集器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jvm-%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">jvm 内存空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">各空间详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E"><span class="nav-number">4.</span> <span class="nav-text">指针碰撞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TLAB-%EF%BC%88%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">TLAB   （指针碰撞的解决思路）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">逃逸分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">7.</span> <span class="nav-text">标量替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D"><span class="nav-number">8.</span> <span class="nav-text">栈上分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%B6%88%E9%99%A4"><span class="nav-number">9.</span> <span class="nav-text">同步消除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%EF%BC%8C%E5%9C%A8jvm%E5%B1%82%E9%9D%A2%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%EF%BC%9B%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">10.</span> <span class="nav-text">对象创建过程，在jvm层面的内存分配；流程图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AA%E8%A6%81%E6%98%AF%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%80%E5%AE%9A%E6%98%AF%E6%88%90%E5%AF%B9%E5%87%BA%E7%8E%B0%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E5%90%88%E6%9C%893%E7%A7%8D"><span class="nav-number">11.</span> <span class="nav-text">只要是分代模型，一定是成对出现，常见的组合有3种</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk1-8%E5%8F%AF%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%B8%8D%E7%94%A8%E5%88%86%E4%BB%A3%E6%A8%A1%E5%9E%8B"><span class="nav-number">12.</span> <span class="nav-text">jdk1.8可用分代模型，也可不用分代模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Serial-%EF%BC%88-SWT%EF%BC%89"><span class="nav-number">13.</span> <span class="nav-text">Serial     （ SWT）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-Scavenge"><span class="nav-number">14.</span> <span class="nav-text">Parallel Scavenge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ParNew"><span class="nav-number">15.</span> <span class="nav-text">ParNew</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-%EF%BC%88concurrent-mark-sweep-%E5%B9%B6%E5%8F%91%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%EF%BC%89"><span class="nav-number">16.</span> <span class="nav-text">CMS （concurrent mark sweep  并发标记清除）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

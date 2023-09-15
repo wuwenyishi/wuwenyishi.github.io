@@ -78,7 +78,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -302,14 +306,14 @@
 </blockquote>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVhbnlpZmVuZy5jb20vYmxvZy8yMDE0LzA1L29hdXRoXzJfMC5odG1s">OAuth 2.0<i class="fa fa-external-link-alt"></i></span> 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。</p>
 <p>这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。</p>
-<h2 id="快递员问题"><a class="markdownIt-Anchor" href="#快递员问题"></a> 快递员问题</h2>
+<h2 id="快递员问题">快递员问题</h2>
 <p>我住在一个大型的居民小区。</p>
 <p>小区有门禁系统。</p>
 <p>进入的时候需要输入密码。</p>
 <p>我经常网购和外卖，每天都有快递员来送货。我必须找到一个办法，让快递员通过门禁系统，进入小区。</p>
 <p>如果我把自己的密码，告诉快递员，他就拥有了与我同样的权限，这样好像不太合适。万一我想取消他进入小区的权力，也很麻烦，我自己的密码也得跟着改了，还得通知其他的快递员。</p>
 <p>有没有一种办法，让快递员能够自由进入小区，又不必知道小区居民的密码，而且他的唯一权限就是送货，其他需要密码的场合，他都没有权限？</p>
-<h2 id="授权机制的设计"><a class="markdownIt-Anchor" href="#授权机制的设计"></a> 授权机制的设计</h2>
+<h2 id="授权机制的设计">授权机制的设计</h2>
 <p>于是，我设计了一套授权机制。</p>
 <p>第一步，门禁系统的密码输入器下面，增加一个按钮，叫做"获取授权"。快递员需要首先按这个按钮，去申请授权。</p>
 <p>第二步，他按下按钮以后，屋主（也就是我）的手机就会跳出对话框：有人正在要求授权。系统还会显示该快递员的姓名、工号和所属的快递公司。</p>
@@ -317,13 +321,13 @@
 <p>第三步，门禁系统得到我的确认以后，向快递员显示一个进入小区的令牌（access token）。令牌就是类似密码的一串数字，只在短期内（比如七天）有效。</p>
 <p>第四步，快递员向门禁系统输入令牌，进入小区。</p>
 <p>有人可能会问，为什么不是远程为快递员开门，而要为他单独生成一个令牌？这是因为快递员可能每天都会来送货，第二天他还可以复用这个令牌。另外，有的小区有多重门禁，快递员可以使用同一个令牌通过它们。</p>
-<h2 id="互联网场景"><a class="markdownIt-Anchor" href="#互联网场景"></a> 互联网场景</h2>
+<h2 id="互联网场景">互联网场景</h2>
 <p>我们把上面的例子搬到互联网，就是 OAuth 的设计了。</p>
 <p>首先，居民小区就是储存用户数据的网络服务。比如，微信储存了我的好友信息，获取这些信息，就必须经过微信的"门禁系统"。</p>
 <p>其次，快递员（或者说快递公司）就是第三方应用，想要穿过门禁系统，进入小区。</p>
 <p>最后，我就是用户本人，同意授权第三方应用进入小区，获取我的数据。</p>
 <p><strong>简单说，OAuth 就是一种授权机制。数据的所有者告诉系统，同意授权第三方应用进入系统，获取这些数据。系统从而产生一个短期的进入令牌（token），用来代替密码，供第三方应用使用。</strong></p>
-<h2 id="令牌与密码"><a class="markdownIt-Anchor" href="#令牌与密码"></a> 令牌与密码</h2>
+<h2 id="令牌与密码">令牌与密码</h2>
 <p>令牌（token）与密码（password）的作用是一样的，都可以进入系统，但是有三点差异。</p>
 <p>（1）令牌是短期的，到期会自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。</p>
 <p>（2）令牌可以被数据所有者撤销，会立即失效。以上例而言，屋主可以随时取消快递员的令牌。密码一般不允许被他人撤销。</p>
@@ -502,7 +506,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%92%E5%91%98%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text"> 快递员问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text"> 授权机制的设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%9C%BA%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text"> 互联网场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E4%B8%8E%E5%AF%86%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text"> 令牌与密码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%92%E5%91%98%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">快递员问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">授权机制的设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%9C%BA%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">互联网场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E4%B8%8E%E5%AF%86%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">令牌与密码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

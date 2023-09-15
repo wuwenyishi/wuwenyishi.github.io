@@ -109,7 +109,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -324,60 +328,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h4 id="单例双重检查锁"><a class="markdownIt-Anchor" href="#单例双重检查锁"></a> 单例，双重检查锁</h4>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h4 id="单例，双重检查锁">单例，双重检查锁</h4>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210226094709.png" alt=""></p>
-<h4 id="new-一个对象氛围三步"><a class="markdownIt-Anchor" href="#new-一个对象氛围三步"></a> new 一个对象氛围三步</h4>
+<h4 id="new-一个对象氛围三步">new 一个对象氛围三步</h4>
 <ol>
 <li>申请内存，设默认值 0</li>
 <li>设置初始值</li>
 <li>建立关联</li>
 </ol>
-<h4 id="new-对象的时候会有一个问题就是指令重排序"><a class="markdownIt-Anchor" href="#new-对象的时候会有一个问题就是指令重排序"></a> new 对象的时候会有一个问题，就是指令重排序</h4>
+<h4 id="new-对象的时候会有一个问题，就是指令重排序">new 对象的时候会有一个问题，就是指令重排序</h4>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210226095658.png" alt=""></p>
 <p>可以加volatile，volatile的一个作用就是禁止指令重排序，因为有内存屏障</p>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210226100612.png" alt=""></p>
-<h4 id="volatile-是jvm的关键字"><a class="markdownIt-Anchor" href="#volatile-是jvm的关键字"></a> volatile 是JVM的关键字</h4>
+<h4 id="volatile-是JVM的关键字">volatile 是JVM的关键字</h4>
 <p>有两个作用，一个是禁止指令重排序，一个是线程可见性。</p>
 <p><img data-src="https://xuemingde.com/pages/image/others/20210226101428.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226102705.png" alt="image-20210226102702495"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226102800.png" alt="image-20210226102757830"></p>
-<h4 id="一些面试问题"><a class="markdownIt-Anchor" href="#一些面试问题"></a> 一些面试问题</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226103831.png" alt="image-20210226103830233"></p>
-<h4 id="线程的原子性"><a class="markdownIt-Anchor" href="#线程的原子性"></a> 线程的原子性</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226111409.png" alt="image-20210226111407167"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226102705.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226102800.png" alt=""></p>
+<h4 id="一些面试问题">一些面试问题</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226103831.png" alt=""></p>
+<h4 id="线程的原子性">线程的原子性</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226111409.png" alt=""></p>
 <p>为了保证线程的原子性，需要加锁，一个线程执行完，才允许下一个线程的操作</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226111719.png" alt="image-20210226111718278"></p>
-<h4 id="java对象的内存布局"><a class="markdownIt-Anchor" href="#java对象的内存布局"></a> java对象的内存布局</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226111719.png" alt=""></p>
+<h4 id="java对象的内存布局">java对象的内存布局</h4>
 <p>分为头信息和补全信息，头信息里面有锁信息等，如果头信息的字节不够被8整除，就会被补全到让8能够整除。</p>
 <p>没有加锁的对象与加锁的对象的内存布局对比</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226112221.png" alt="image-20210226112218624"></p>
-<h4 id="轻量级锁的种类"><a class="markdownIt-Anchor" href="#轻量级锁的种类"></a> 轻量级锁的种类</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226113106.png" alt="image-20210226113105033"></p>
-<h4 id="重量级锁"><a class="markdownIt-Anchor" href="#重量级锁"></a> 重量级锁</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226114604.png" alt="image-20210226114602603"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226112221.png" alt=""></p>
+<h4 id="轻量级锁的种类">轻量级锁的种类</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226113106.png" alt=""></p>
+<h4 id="重量级锁">重量级锁</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226114604.png" alt=""></p>
 <p>有一个线程持有着这把锁，其他想要获得锁的线程进入等待队列，等持有锁的线程释放锁后，操作系统会让一个等待线程获得锁。不消耗CPU资源。</p>
-<h4 id="轻量级锁"><a class="markdownIt-Anchor" href="#轻量级锁"></a> 轻量级锁</h4>
+<h4 id="轻量级锁">轻量级锁</h4>
 <p>有一个线程持有着这把锁，其他想要获得锁的线程就循环等待，等持有锁的线程释放锁后，其他等待锁的线程就是抢锁，谁抢到是谁的，会消耗CPU资源。</p>
-<h4 id="cas存在的问题"><a class="markdownIt-Anchor" href="#cas存在的问题"></a> CAS存在的问题</h4>
+<h4 id="CAS存在的问题">CAS存在的问题</h4>
 <p>ABA 问题</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226134646.png" alt="image-20210226134644249"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226134646.png" alt=""></p>
 <p>解决：加版本号</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226135543.png" alt="image-20210226135541370"></p>
-<h4 id="synchronized-与-reentrantlock-的共同点"><a class="markdownIt-Anchor" href="#synchronized-与-reentrantlock-的共同点"></a> synchronized 与 reentrantlock 的共同点</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226141427.png" alt="image-20210226141426173"></p>
-<h4 id="synchronized-与-reentrantlock-的区别"><a class="markdownIt-Anchor" href="#synchronized-与-reentrantlock-的区别"></a> synchronized 与 reentrantlock 的区别</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226141654.png" alt="image-20210226141652907"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226141850.png" alt="image-20210226141849362"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226142156.png" alt="image-20210226142154906"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226142315.png" alt="image-20210226142314198"></p>
-<h4 id="面试题"><a class="markdownIt-Anchor" href="#面试题"></a> 面试题</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226135543.png" alt=""></p>
+<h4 id="synchronized-与-reentrantlock-的共同点">synchronized 与 reentrantlock 的共同点</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226141427.png" alt=""></p>
+<h4 id="synchronized-与-reentrantlock-的区别">synchronized 与 reentrantlock 的区别</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226141654.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226141850.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226142156.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226142315.png" alt=""></p>
+<h4 id="面试题">面试题</h4>
 <p>用两个线程,一个输出字母,一个输出数字,交替输出1A2B3C4D…26Z</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226145644.png" alt="image-20210226145643215"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150103.png" alt="image-20210226150102063"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226145644.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226150103.png" alt=""></p>
 <p>如何让第二个线程先执行</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150342.png" alt="image-20210226150339682"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150748.png" alt="image-20210226150746706"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210226150827.png" alt="image-20210226150826706"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226150342.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226150748.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210226150827.png" alt=""></p>
 
     </div>
    <div>
@@ -554,7 +558,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text"> 单例，双重检查锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%B0%9B%E5%9B%B4%E4%B8%89%E6%AD%A5"><span class="nav-number">2.</span> <span class="nav-text"> new 一个对象氛围三步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E6%9C%89%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E5%B0%B1%E6%98%AF%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text"> new 对象的时候会有一个问题，就是指令重排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile-%E6%98%AFjvm%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text"> volatile 是JVM的关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text"> 一些面试问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text"> 线程的原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-number">7.</span> <span class="nav-text"> java对象的内存布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text"> 轻量级锁的种类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">9.</span> <span class="nav-text"> 重量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">10.</span> <span class="nav-text"> 轻量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cas%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text"> CAS存在的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-%E4%B8%8E-reentrantlock-%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9"><span class="nav-number">12.</span> <span class="nav-text"> synchronized 与 reentrantlock 的共同点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-%E4%B8%8E-reentrantlock-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text"> synchronized 与 reentrantlock 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text"> 面试题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%EF%BC%8C%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">单例，双重检查锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%B0%9B%E5%9B%B4%E4%B8%89%E6%AD%A5"><span class="nav-number">2.</span> <span class="nav-text">new 一个对象氛围三步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E6%9C%89%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">new 对象的时候会有一个问题，就是指令重排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile-%E6%98%AFJVM%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">volatile 是JVM的关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">一些面试问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">线程的原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-number">7.</span> <span class="nav-text">java对象的内存布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">轻量级锁的种类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">9.</span> <span class="nav-text">重量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">10.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CAS%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">CAS存在的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-%E4%B8%8E-reentrantlock-%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9"><span class="nav-number">12.</span> <span class="nav-text">synchronized 与 reentrantlock 的共同点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-%E4%B8%8E-reentrantlock-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">synchronized 与 reentrantlock 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text">面试题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

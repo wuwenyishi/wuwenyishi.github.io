@@ -94,7 +94,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -317,10 +321,10 @@
 <p>原文： <span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS8xMTQwYjQ4Y2I5YTFlN2RiZmNmODU1Njk4">Docker下RabbitMQ延时队列实战两部曲之一：极速体验<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg" alt=""></p>
-<h3 id="关于延时队列"><a class="markdownIt-Anchor" href="#关于延时队列"></a> 关于延时队列</h3>
+<h3 id="关于延时队列">关于延时队列</h3>
 <p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1106Vy0IMl.png" alt=""></p>
-<h3 id="延时的时长"><a class="markdownIt-Anchor" href="#延时的时长"></a> 延时的时长</h3>
+<h3 id="延时的时长">延时的时长</h3>
 <ul>
 <li>从上面的描述可以看出，延时时长就是消息的过期时间 TTL（Time To Live），这个参数可以通过以下两种方式设置：</li>
 </ul>
@@ -335,13 +339,13 @@
 <ul>
 <li>接下来的实战，我们将上述两种方式都体验一次；</li>
 </ul>
-<h3 id="环境信息"><a class="markdownIt-Anchor" href="#环境信息"></a> 环境信息</h3>
+<h3 id="环境信息">环境信息</h3>
 <ol>
 <li>操作系统：Ubuntu 16.04.3 LTS</li>
 <li>Docker：1.12.6</li>
 <li>RabbitMQ：3.7.5-rc.1</li>
 </ol>
-<h3 id="极速体验"><a class="markdownIt-Anchor" href="#极速体验"></a> 极速体验</h3>
+<h3 id="极速体验">极速体验</h3>
 <ul>
 <li>
 <p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
@@ -594,7 +598,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text"> 关于延时队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%B6%E6%97%B6%E7%9A%84%E6%97%B6%E9%95%BF"><span class="nav-number">2.</span> <span class="nav-text"> 延时的时长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text"> 环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E9%80%9F%E4%BD%93%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text"> 极速体验</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">关于延时队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%B6%E6%97%B6%E7%9A%84%E6%97%B6%E9%95%BF"><span class="nav-number">2.</span> <span class="nav-text">延时的时长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E9%80%9F%E4%BD%93%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">极速体验</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -107,7 +107,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -330,7 +334,7 @@
 <p>原文： <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vamFqaWFuL3AvMTEyMjM5OTIuaHRtbA==">Elasticsearch 技术分析（九）：全文搜索引擎Elasticsearch，这篇文章给讲透了！ - JaJian - 博客园<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p>由于近期在公司内部做了一次 Elasticsearch 的分享，所以本篇主要是做一个总结，希望通过这篇文章能让读者大致了解 Elasticsearch 是做什么的以及它的使用和基本原理。</p>
-<h2 id="生活中的数据"><a class="markdownIt-Anchor" href="#生活中的数据"></a> 生活中的数据</h2>
+<h2 id="生活中的数据">生活中的数据</h2>
 <p>搜索引擎是对数据的检索，所以我们先从生活中的数据说起。我们生活中的数据总体分为两种：</p>
 <blockquote>
 <ul>
@@ -363,7 +367,7 @@
 <p>将非结构化数据中的一部分信息提取出来，重新组织，使其变得有一定结构，然后对此有一定结构的数据进行搜索，从而达到搜索相对较快的目的。</p>
 <p>这种方式就构成了全文检索的基本思路。这部分从非结构化数据中提取出的然后重新组织的信息，我们称之为索引。</p>
 <p>这种方式的主要工作量在前期索引的创建，但是对于后期搜索却是快速高效的。</p>
-<h2 id="先说说-lucene"><a class="markdownIt-Anchor" href="#先说说-lucene"></a> 先说说 Lucene</h2>
+<h2 id="先说说-Lucene">先说说 Lucene</h2>
 <p>通过对生活中数据的类型作了一个简短了解之后，我们知道关系型数据库的 SQL 检索是处理不了这种非结构化数据的。</p>
 <p>这种非结构化数据的处理需要依赖全文搜索，而目前市场上开放源代码的最好全文检索引擎工具包就属于 Apache 的 Lucene了。</p>
 <p>但是 Lucene 只是一个工具包，它不是一个完整的全文检索引擎。Lucene 的目的是为软件开发人员提供一个简单易用的工具包，以方便的在目标系统中实现全文检索的功能，或者是以此为基础建立起完整的全文检索引擎。</p>
@@ -385,7 +389,7 @@
 <p>这种结构由文档中所有不重复词的列表构成，对于其中每个词都有一个文档列表与之关联。</p>
 <p>这种由属性值来确定记录的位置的结构就是倒排索引。带有倒排索引的文件我们称为倒排文件。</p>
 <p>我们将上面的内容转换为图的形式来说明倒排索引的结构信息，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1024-IMR8gD.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1024-IMR8gD.png" alt=""></p>
 <p>其中主要有如下几个核心术语需要理解：</p>
 <blockquote>
 <ul>
@@ -403,7 +407,7 @@
 </ul>
 </blockquote>
 <p>词典和倒排表是 Lucene 中很重要的两种数据结构，是实现快速检索的重要基石。词典和倒排文件是分两部分存储的，词典在内存中而倒排文件存储在磁盘上。</p>
-<h2 id="es-核心概念"><a class="markdownIt-Anchor" href="#es-核心概念"></a> ES 核心概念</h2>
+<h2 id="ES-核心概念">ES 核心概念</h2>
 <p>一些基础知识的铺垫之后我们正式进入今天的主角 Elasticsearch 的介绍。</p>
 <p>ES 是使用 Java 编写的一种开源搜索引擎，它在内部使用 Lucene 做索引与搜索，通过对 Lucene 的封装，隐藏了 Lucene 的复杂性，取而代之的提供一套简单一致的 RESTful API。</p>
 <p>然而，Elasticsearch 不仅仅是 Lucene，并且也不仅仅只是一个全文搜索引擎。</p>
@@ -417,12 +421,12 @@
 </blockquote>
 <p>官网对 Elasticsearch 的介绍是 Elasticsearch 是一个分布式、可扩展、近实时的搜索与数据分析引擎。</p>
 <p>我们通过一些核心概念来看下 Elasticsearch 是如何做到分布式，可扩展和近实时搜索的。</p>
-<h3 id="集群cluster"><a class="markdownIt-Anchor" href="#集群cluster"></a> 集群（Cluster）</h3>
+<h3 id="集群（Cluster）">集群（Cluster）</h3>
 <p>ES 的集群搭建很简单，不需要依赖第三方协调管理组件，自身内部就实现了集群的管理功能。</p>
 <p>ES 集群由一个或多个 Elasticsearch 节点组成，每个节点配置相同的 <span class="exturl" data-url="aHR0cDovL2NsdXN0ZXIubmFtZQ==">cluster.name<i class="fa fa-external-link-alt"></i></span> 即可加入集群，默认值为 “elasticsearch”。</p>
 <p>确保不同的环境中使用不同的集群名称，否则最终会导致节点加入错误的集群。</p>
 <p>一个 Elasticsearch 服务启动实例就是一个节点（Node）。节点通过 <span class="exturl" data-url="aHR0cDovL25vZGUubmFtZQ==">node.name<i class="fa fa-external-link-alt"></i></span> 来设置节点名称，如果不设置则在启动时给节点分配一个随机通用唯一标识符作为名称。</p>
-<h4 id="1发现机制"><a class="markdownIt-Anchor" href="#1发现机制"></a> ①发现机制</h4>
+<h4 id="①发现机制">①发现机制</h4>
 <p>那么有一个问题，ES 内部是如何通过一个相同的设置 <span class="exturl" data-url="aHR0cDovL2NsdXN0ZXIubmFtZQ==">cluster.name<i class="fa fa-external-link-alt"></i></span> 就能将不同的节点连接到同一个集群的？答案是 Zen Discovery。</p>
 <p>Zen Discovery 是 Elasticsearch 的内置默认发现模块（发现模块的职责是发现集群中的节点以及选举 Master 节点）。</p>
 <p>它提供单播和基于文件的发现，并且可以扩展为通过插件支持云环境和其他形式的发现。</p>
@@ -445,21 +449,21 @@
 <p>但分布式系统的问题就出在信息不对等的情况，这时候很容易出现脑裂（Split-Brain）的问题。</p>
 <p>大多数解决方案就是设置一个 Quorum 值，要求可用节点必须大于 Quorum（一般是超过半数节点），才能对外提供服务。</p>
 <p>而 Elasticsearch 中，这个 Quorum 的配置就是 <code>discovery.zen.minimum_master_nodes</code> 。</p>
-<h4 id="2节点的角色"><a class="markdownIt-Anchor" href="#2节点的角色"></a> ②节点的角色</h4>
+<h4 id="②节点的角色">②节点的角色</h4>
 <p>每个节点既可以是候选主节点也可以是数据节点，通过在配置文件 …/config/elasticsearch.yml 中设置即可，默认都为 true。</p>
 <figure class="highlight kotlin"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: <span class="literal">true</span>  <span class="comment">//是否候选主节点  </span></span><br><span class="line">node.<span class="keyword">data</span>: <span class="literal">true</span>    <span class="comment">//是否数据节点  </span></span><br></pre></td></tr></tbody></table></figure>
 <p>数据节点负责数据的存储和相关的操作，例如对数据进行增、删、改、查和聚合等操作，所以数据节点（Data 节点）对机器配置要求比较高，对 CPU、内存和 I/O 的消耗很大。</p>
 <p>通常随着集群的扩大，需要增加更多的数据节点来提高性能和可用性。</p>
 <p>候选主节点可以被选举为主节点（Master 节点），集群中只有候选主节点才有选举权和被选举权，其他节点不参与选举的工作。</p>
 <p>主节点负责创建索引、删除索引、跟踪哪些节点是群集的一部分，并决定哪些分片分配给相关的节点、追踪集群中节点的状态等，稳定的主节点对集群的健康是非常重要的。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1100-aOqGch.jpeg" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1100-aOqGch.jpeg" alt=""></p>
 <p>一个节点既可以是候选主节点也可以是数据节点，但是由于数据节点对 CPU、内存核 I/O 消耗都很大。</p>
 <p>所以如果某个节点既是数据节点又是主节点，那么可能会对主节点产生影响从而对整个集群的状态产生影响。</p>
 <p>因此为了提高集群的健康性，我们应该对 Elasticsearch 集群中的节点做好角色上的划分和隔离。可以使用几个配置较低的机器群作为候选主节点群。</p>
 <p>主节点和其他节点之间通过 Ping 的方式互检查，主节点负责 Ping 所有其他节点，判断是否有节点已经挂掉。其他节点也通过 Ping 的方式判断主节点是否处于可用状态。</p>
 <p>虽然对节点做了角色区分，但是用户的请求可以发往任何一个节点，并由该节点负责分发请求、收集结果等操作，而不需要主节点转发。</p>
 <p>这种节点可称之为协调节点，协调节点是不需要指定和配置的，集群中的任何节点都可以充当协调节点的角色。</p>
-<h4 id="3脑裂现象"><a class="markdownIt-Anchor" href="#3脑裂现象"></a> ③脑裂现象</h4>
+<h4 id="③脑裂现象">③脑裂现象</h4>
 <p>同时如果由于网络或其他原因导致集群中选举出多个 Master 节点，使得数据更新时出现不一致，这种现象称之为脑裂，即集群中不同的节点对于 Master 的选择出现了分歧，出现了多个 Master 竞争。</p>
 <p>“脑裂”问题可能有以下几个原因造成：</p>
 <ul>
@@ -481,20 +485,20 @@
 <ul>
 <li><strong>角色分离。</strong> 即是上面我们提到的候选主节点和数据节点进行角色分离，这样可以减轻主节点的负担，防止主节点的假死状态发生，减少对主节点“已死”的误判。</li>
 </ul>
-<h3 id="分片shards"><a class="markdownIt-Anchor" href="#分片shards"></a> 分片（Shards）</h3>
+<h3 id="分片（Shards）">分片（Shards）</h3>
 <p>ES 支持 PB 级全文搜索，当索引上的数据量太大的时候，ES 通过水平拆分的方式将一个索引上的数据拆分出来分配到不同的数据块上，拆分出来的数据库块称之为一个分片。</p>
 <p>这类似于 MySQL 的分库分表，只不过 MySQL 分库分表需要借助第三方组件而 ES 内部自身实现了此功能。</p>
 <p>在一个多分片的索引中写入数据时，通过路由来确定具体写入哪一个分片中，所以在创建索引的时候需要指定分片的数量，并且分片的数量一旦确定就不能修改。</p>
 <p>分片的数量和下面介绍的副本数量都是可以通过创建索引时的 Settings 来配置，ES 默认为一个索引创建 5 个主分片, 并分别为每个分片创建一个副本。</p>
 <figure class="highlight ada"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PUT /myIndex  </span><br><span class="line">{  </span><br><span class="line">   <span class="string">"settings"</span> : {  </span><br><span class="line">      <span class="string">"number_of_shards"</span> : 5,  </span><br><span class="line">      <span class="string">"number_of_replicas"</span> : 1  </span><br><span class="line">   }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
 <p>ES 通过分片的功能使得索引在规模上和性能上都得到提升，每个分片都是 Lucene 中的一个索引文件，每个分片必须有一个主分片和零到多个副本。</p>
-<h3 id="副本replicas"><a class="markdownIt-Anchor" href="#副本replicas"></a> 副本（Replicas）</h3>
+<h3 id="副本（Replicas）">副本（Replicas）</h3>
 <p>副本就是对分片的 Copy，每个主分片都有一个或多个副本分片，当主分片异常时，副本可以提供数据的查询等操作。</p>
 <p>主分片和对应的副本分片是不会在同一个节点上的，所以副本分片数的最大值是 N-1（其中 N 为节点数）。</p>
 <p>对文档的新建、索引和删除请求都是写操作，必须在主分片上面完成之后才能被复制到相关的副本分片。</p>
 <p>ES 为了提高写入的能力这个过程是并发写的，同时为了解决并发写的过程中数据冲突的问题，ES 通过乐观锁的方式控制，每个文档都有一个<code> _version</code> （版本）号，当文档被修改时版本号递增。</p>
 <p>一旦所有的副本分片都报告写成功才会向协调节点报告成功，协调节点向客户端报告成功。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1101-yqpKgY.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1101-yqpKgY.png" alt=""></p>
 <p>从上图可以看出为了达到高可用，Master 节点会避免将主分片和副本分片放在同一个节点上。</p>
 <p>假设这时节点 Node1 服务宕机了或者网络不可用了，那么主节点上主分片 S0 也就不可用了。</p>
 <p>幸运的是还存在另外两个节点能正常工作，这时 ES 会重新选举新的主节点，而且这两个节点上存在我们所需要的 S0 的所有数据。</p>
@@ -503,19 +507,19 @@
 <p>如果我们同样关闭了 Node2 ，我们的程序依然可以保持在不丢失任何数据的情况下运行，因为 Node3 为每一个分片都保留着一份副本。</p>
 <p>如果我们重新启动 Node1 ，集群可以将缺失的副本分片再次进行分配，那么集群的状态又将恢复到原来的正常状态。</p>
 <p>如果 Node1 依然拥有着之前的分片，它将尝试去重用它们，只不过这时 Node1 节点上的分片不再是主分片而是副本分片了，如果期间有更改的数据只需要从主分片上复制修改的数据文件即可。</p>
-<h4 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结：</h4>
+<h4 id="小结：">小结：</h4>
 <ul>
 <li>将数据分片是为了提高可处理数据的容量和易于进行水平扩展，为分片做副本是为了提高集群的稳定性和提高并发量。</li>
 <li>副本是乘法，越多消耗越大，但也越保险。分片是除法，分片越多，单分片数据就越少也越分散。</li>
 <li>副本越多，集群的可用性就越高，但是由于每个分片都相当于一个 Lucene 的索引文件，会占用一定的文件句柄、内存及 CPU。并且分片间的数据同步也会占用一定的网络带宽，所以索引的分片数和副本数也不是越多越好。</li>
 </ul>
-<h3 id="映射mapping"><a class="markdownIt-Anchor" href="#映射mapping"></a> 映射（Mapping）</h3>
+<h3 id="映射（Mapping）">映射（Mapping）</h3>
 <p>映射是用于定义 ES 对索引中字段的存储类型、分词方式和是否存储等信息，就像数据库中的 Schema ，描述了文档可能具有的字段或属性、每个字段的数据类型。</p>
 <p>只不过关系型数据库建表时必须指定字段类型，而 ES 对于字段类型可以不指定然后动态对字段类型猜测，也可以在创建索引时具体指定字段的类型。</p>
 <p>对字段类型根据数据格式自动识别的映射称之为动态映射（Dynamic Mapping），我们创建索引时具体定义字段类型的映射称之为静态映射或显示映射（Explicit Mapping）。</p>
 <p>在讲解动态映射和静态映射的使用前，我们先来了解下 ES 中的数据有哪些字段类型？之后我们再讲解为什么我们创建索引时需要建立静态映射而不使用动态映射。</p>
 <p>ES（v6.8）中字段数据类型主要有以下几类：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1101-aQjEet.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1101-aQjEet.png" alt=""></p>
 <p>Text 用于索引全文值的字段，例如电子邮件正文或产品说明。这些字段是被分词的，它们通过分词器传递 ，以在被索引之前将字符串转换为单个术语的列表。</p>
 <p>分析过程允许 Elasticsearch 搜索单个单词中每个完整的文本字段。文本字段不用于排序，很少用于聚合。</p>
 <p>Keyword 用于索引结构化内容的字段，例如电子邮件地址，主机名，状态代码，邮政编码或标签。它们通常用于过滤，排序，和聚合。Keyword 字段只能按其确切值进行搜索。</p>
@@ -523,7 +527,7 @@
 <p>如果采用动态映射是不能精确做到这些的，自动识别常常会与我们期望的有些差异。</p>
 <p>所以创建索引的时候一个完整的格式应该是指定分片和副本数以及 Mapping 的定义，如下：</p>
 <figure class="highlight ada"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">PUT my_index   </span><br><span class="line">{  </span><br><span class="line">   <span class="string">"settings"</span> : {  </span><br><span class="line">      <span class="string">"number_of_shards"</span> : 5,  </span><br><span class="line">      <span class="string">"number_of_replicas"</span> : 1  </span><br><span class="line">   }  </span><br><span class="line">  <span class="string">"mappings"</span>: {  </span><br><span class="line">    <span class="string">"_doc"</span>: {   </span><br><span class="line">      <span class="string">"properties"</span>: {   </span><br><span class="line">        <span class="string">"title"</span>:    { <span class="string">"type"</span>: <span class="string">"text"</span>  },   </span><br><span class="line">        <span class="string">"name"</span>:     { <span class="string">"type"</span>: <span class="string">"text"</span>  },   </span><br><span class="line">        <span class="string">"age"</span>:      { <span class="string">"type"</span>: <span class="string">"integer"</span> },    </span><br><span class="line">        <span class="string">"created"</span>:  {  </span><br><span class="line">          <span class="string">"type"</span>:   <span class="string">"date"</span>,   </span><br><span class="line">          <span class="string">"format"</span>: <span class="string">"strict_date_optional_time||epoch_millis"</span>  </span><br><span class="line">        }  </span><br><span class="line">      }  </span><br><span class="line">    }  </span><br><span class="line">  }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
-<h2 id="es-的基本使用"><a class="markdownIt-Anchor" href="#es-的基本使用"></a> ES 的基本使用</h2>
+<h2 id="ES-的基本使用">ES 的基本使用</h2>
 <p>在决定使用 Elasticsearch 的时候首先要考虑的是版本问题，Elasticsearch （排除 0.x 和 1.x）目前有如下常用的稳定的主版本：2.x，5.x，6.x，7.x（current）。</p>
 <p>你可能会发现没有 3.x 和 4.x，ES 从 2.4.6 直接跳到了 5.0.0。其实是为了 ELK（ElasticSearch，Logstash，Kibana）技术栈的版本统一，免的给用户带来混乱。</p>
 <p>在 Elasticsearch 是 2.x （2.x 的最后一版 2.4.6 的发布时间是 July 25, 2017） 的情况下，Kibana 已经是 4.x（Kibana 4.6.5 的发布时间是 July 25, 2017）。</p>
@@ -531,8 +535,8 @@
 <p>统一之后，我们选版本就不会犹豫困惑了，我们选定 Elasticsearch 的版本后再选择相同版本的 Kibana 就行了，不用担忧版本不兼容的问题。</p>
 <p>Elasticsearch 是使用 Java 构建，所以除了注意 ELK 技术的版本统一，我们在选择 Elasticsearch 的版本的时候还需要注意 JDK 的版本。</p>
 <p>因为每个大版本所依赖的 JDK 版本也不同，目前 7.2 版本已经可以支持 JDK11。</p>
-<h3 id="安装使用"><a class="markdownIt-Anchor" href="#安装使用"></a> 安装使用</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1103-zUwx70.png" alt="图片"></p>
+<h3 id="安装使用">安装使用</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1103-zUwx70.png" alt=""></p>
 <p>①下载和解压 Elasticsearch，无需安装解压后即可用，解压后目录如上图：</p>
 <blockquote>
 <ul>
@@ -548,7 +552,7 @@
 <p>②安装目录下运行 <code>bin/elasticsearch</code> 来启动 ES。</p>
 <p>③默认在 9200 端口运行，请求 curl <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAwLw==">http://localhost:9200/<i class="fa fa-external-link-alt"></i></span> 或者浏览器输入 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAw">http://localhost:9200<i class="fa fa-external-link-alt"></i></span>，得到一个 JSON 对象，其中包含当前节点、集群、版本等信息。</p>
 <figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">{  </span><br><span class="line">  <span class="attr">"name"</span> : <span class="string">"U7fp3O9"</span>,  </span><br><span class="line">  <span class="attr">"cluster_name"</span> : <span class="string">"elasticsearch"</span>,  </span><br><span class="line">  <span class="attr">"cluster_uuid"</span> : <span class="string">"-Rj8jGQvRIelGd9ckicUOA"</span>,  </span><br><span class="line">  <span class="attr">"version"</span> : {  </span><br><span class="line">    <span class="attr">"number"</span> : <span class="string">"6.8.1"</span>,  </span><br><span class="line">    <span class="attr">"build_flavor"</span> : <span class="string">"default"</span>,  </span><br><span class="line">    <span class="attr">"build_type"</span> : <span class="string">"zip"</span>,  </span><br><span class="line">    <span class="attr">"build_hash"</span> : <span class="string">"1fad4e1"</span>,  </span><br><span class="line">    <span class="attr">"build_date"</span> : <span class="string">"2019-06-18T13:16:52.517138Z"</span>,  </span><br><span class="line">    <span class="attr">"build_snapshot"</span> : <span class="literal">false</span>,  </span><br><span class="line">    <span class="attr">"lucene_version"</span> : <span class="string">"7.7.0"</span>,  </span><br><span class="line">    <span class="attr">"minimum_wire_compatibility_version"</span> : <span class="string">"5.6.0"</span>,  </span><br><span class="line">    <span class="attr">"minimum_index_compatibility_version"</span> : <span class="string">"5.0.0"</span>  </span><br><span class="line">  },  </span><br><span class="line">  <span class="attr">"tagline"</span> : <span class="string">"You Know, for Search"</span>  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
-<h3 id="集群健康状态"><a class="markdownIt-Anchor" href="#集群健康状态"></a> 集群健康状态</h3>
+<h3 id="集群健康状态">集群健康状态</h3>
 <p>要检查群集运行状况，我们可以在 Kibana 控制台中运行以下命令 GET /_cluster/health，得到如下信息：</p>
 <figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">{  </span><br><span class="line">  <span class="attr">"cluster_name"</span> : <span class="string">"wujiajian"</span>,  </span><br><span class="line">  <span class="attr">"status"</span> : <span class="string">"yellow"</span>,  </span><br><span class="line">  <span class="attr">"timed_out"</span> : <span class="literal">false</span>,  </span><br><span class="line">  <span class="attr">"number_of_nodes"</span> : <span class="number">1</span>,  </span><br><span class="line">  <span class="attr">"number_of_data_nodes"</span> : <span class="number">1</span>,  </span><br><span class="line">  <span class="attr">"active_primary_shards"</span> : <span class="number">9</span>,  </span><br><span class="line">  <span class="attr">"active_shards"</span> : <span class="number">9</span>,  </span><br><span class="line">  <span class="attr">"relocating_shards"</span> : <span class="number">0</span>,  </span><br><span class="line">  <span class="attr">"initializing_shards"</span> : <span class="number">0</span>,  </span><br><span class="line">  <span class="attr">"unassigned_shards"</span> : <span class="number">5</span>,  </span><br><span class="line">  <span class="attr">"delayed_unassigned_shards"</span> : <span class="number">0</span>,  </span><br><span class="line">  <span class="attr">"number_of_pending_tasks"</span> : <span class="number">0</span>,  </span><br><span class="line">  <span class="attr">"number_of_in_flight_fetch"</span> : <span class="number">0</span>,  </span><br><span class="line">  <span class="attr">"task_max_waiting_in_queue_millis"</span> : <span class="number">0</span>,  </span><br><span class="line">  <span class="attr">"active_shards_percent_as_number"</span> : <span class="number">64.28571428571429</span>  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
 <p>集群状态通过 绿，黄，红 来标识：</p>
@@ -560,7 +564,7 @@
 </ul>
 </blockquote>
 <p>当集群状态为红色时，它将会继续从可用的分片提供搜索请求服务，但是你需要尽快修复那些未分配的分片。</p>
-<h2 id="es-机制原理"><a class="markdownIt-Anchor" href="#es-机制原理"></a> ES 机制原理</h2>
+<h2 id="ES-机制原理">ES 机制原理</h2>
 <p>ES 的基本概念和基本操作介绍完了之后，我们可能还有很多疑惑：</p>
 <blockquote>
 <ul>
@@ -574,9 +578,9 @@
 </ul>
 </blockquote>
 <p>带着这些疑问我们进入接下来的内容。</p>
-<h3 id="写索引原理"><a class="markdownIt-Anchor" href="#写索引原理"></a> 写索引原理</h3>
+<h3 id="写索引原理">写索引原理</h3>
 <p>下图描述了 3 个节点的集群，共拥有 12 个分片，其中有 4 个主分片（S0、S1、S2、S3）和 8 个副本分片（R0、R1、R2、R3），每个主分片对应两个副本分片，节点 1 是主节点（Master 节点）负责整个集群的状态。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1104-dX9QIi.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1104-dX9QIi.png" alt=""></p>
 <p>写索引是只能写在主分片上，然后同步到副本分片。这里有四个主分片，一条数据 ES 是根据什么规则写到特定分片上的呢？</p>
 <p>这条索引数据为什么被写到 S0 上而不写到 S1 或 S2 上？那条数据为什么又被写到 S3 上而不写到 S0 上了？</p>
 <p>首先这肯定不会是随机的，否则将来要获取文档的时候我们就不知道从何处寻找了。</p>
@@ -588,7 +592,7 @@
 <p>这就解释了为什么我们要在创建索引的时候就确定好主分片的数量并且永远不会改变这个数量：因为如果数量变化了，那么所有之前路由的值都会无效，文档也再也找不到了。</p>
 <p>由于在 ES 集群中每个节点通过上面的计算公式都知道集群中的文档的存放位置，所以每个节点都有处理读写请求的能力。</p>
 <p>在一个写请求被发送到某个节点后，该节点即为前面说过的协调节点，协调节点会根据路由公式计算出需要写到哪个分片上，再将请求转发到该分片的主分片节点上。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1104-FD6fKO.jpeg" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1104-FD6fKO.jpeg" alt=""></p>
 <p>假如此时数据通过路由计算公式取余后得到的值是 <code>shard=hash(routing)%4=0</code>。</p>
 <p>则具体流程如下：</p>
 <blockquote>
@@ -598,12 +602,12 @@
 <li>并发将数据复制到两个副本分片 R0 上，其中通过乐观并发控制数据的冲突。一旦所有的副本分片都报告成功，则节点 ES3 将向协调节点报告成功，协调节点向客户端报告成功。</li>
 </ul>
 </blockquote>
-<h3 id="存储原理"><a class="markdownIt-Anchor" href="#存储原理"></a> 存储原理</h3>
+<h3 id="存储原理">存储原理</h3>
 <p>上面介绍了在 ES 内部索引的写处理流程，这个流程是在 ES 的内存中执行的，数据被分配到特定的分片和副本上之后，最终是存储到磁盘上的，这样在断电的时候就不会丢失数据。</p>
 <p>具体的存储路径可在配置文件 <code>../config/elasticsearch.yml </code>中进行设置，默认存储在安装目录的 Data 文件夹下。</p>
 <p>建议不要使用默认值，因为若 ES 进行了升级，则有可能导致数据全部丢失：</p>
 <figure class="highlight xl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">path</span>.<span class="keyword">data</span>: /<span class="built_in">path</span>/to/<span class="keyword">data</span>  <span class="comment">//索引数据  </span></span><br><span class="line"><span class="built_in">path</span>.logs: /<span class="built_in">path</span>/to/logs  <span class="comment">//日志记录  </span></span><br></pre></td></tr></tbody></table></figure>
-<h4 id="1分段存储"><a class="markdownIt-Anchor" href="#1分段存储"></a> ①分段存储</h4>
+<h4 id="①分段存储">①分段存储</h4>
 <p>索引文档以段的形式存储在磁盘上，何为段？索引文件被拆分为多个子文件，则每个子文件叫作段，每一个段本身都是一个倒排索引，并且段具有不变性，一旦索引的数据被写入硬盘，就不可再修改。</p>
 <p>在底层采用了分段的存储模式，使它在读写时几乎完全避免了锁的出现，大大提升了读写性能。</p>
 <p>段被写入到磁盘后会生成一个提交点，提交点是一个用来记录所有提交后段信息的文件。</p>
@@ -636,7 +640,7 @@
 <li>在查询的结果中包含所有的结果集，需要排除被标记删除的旧数据，这增加了查询的负担。</li>
 </ul>
 </blockquote>
-<h4 id="2延迟写策略"><a class="markdownIt-Anchor" href="#2延迟写策略"></a> ②延迟写策略</h4>
+<h4 id="②延迟写策略">②延迟写策略</h4>
 <p>介绍完了存储的形式，那么索引写入到磁盘的过程是怎样的？是否是直接调 Fsync 物理性地写入磁盘？</p>
 <p>答案是显而易见的，如果是直接写入到磁盘上，磁盘的 I/O 消耗上会严重影响性能。</p>
 <p>那么当写数据量大的时候会造成 ES 停顿卡死，查询也无法做到快速响应。如果真是这样 ES 也就不会称之为近实时全文搜索引擎了。</p>
@@ -654,7 +658,7 @@
 <p>这时可以在创建索引时在 Settings 中通过调大 <code>refresh_interval = "30s" </code>的值 ， 降低每个索引的刷新频率，设值时需要注意后面带上时间单位，否则默认是毫秒。当 <code>refresh_interval=-1</code> 时表示关闭索引的自动刷新。</p>
 <p>虽然通过延时写的策略可以减少数据往磁盘上写的次数提升了整体的写入能力，但是我们知道文件缓存系统也是内存空间，属于操作系统的内存，只要是内存都存在断电或异常情况下丢失数据的危险。</p>
 <p>为了避免丢失数据，Elasticsearch 添加了事务日志（Translog），事务日志记录了所有还没有持久化到磁盘的数据。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1105-gr8og8.jpeg" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1105-gr8og8.jpeg" alt=""></p>
 <p>添加了事务日志后整个写索引的流程如上图所示：</p>
 <blockquote>
 <ul>
@@ -677,13 +681,13 @@
 <p>每一个段都会消耗文件句柄、内存和 CPU 运行周期。更重要的是，每个搜索请求都必须轮流检查每个段然后合并查询结果，所以段越多，搜索也就越慢。</p>
 <p>Elasticsearch 通过在后台定期进行段合并来解决这个问题。小的段被合并到大的段，然后这些大的段再被合并到更大的段。</p>
 <p>段合并的时候会将那些旧的已删除文档从文件系统中清除。被删除的文档不会被拷贝到新的大段中。合并的过程中不会中断索引和搜索。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1105-VeGjfe.png" alt="图片">图片</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1105-VeGjfe.png" alt="">图片</p>
 <p>段合并在进行索引和搜索时会自动进行，合并进程选择一小部分大小相似的段，并且在后台将它们合并到更大的段中，这些段既可以是未提交的也可以是已提交的。</p>
 <p>合并结束后老的段会被删除，新的段被 Flush 到磁盘，同时写入一个包含新段且排除旧的和较小的段的新提交点，新的段被打开可以用来搜索。</p>
 <p>段合并的计算量庞大， 而且还要吃掉大量磁盘 I/O，段合并会拖累写入速率，如果任其发展会影响搜索性能。</p>
 <p>Elasticsearch 在默认情况下会对合并流程进行资源限制，所以搜索仍然有足够的资源很好地执行。</p>
-<h2 id="性能优化"><a class="markdownIt-Anchor" href="#性能优化"></a> 性能优化</h2>
-<h3 id="存储设备"><a class="markdownIt-Anchor" href="#存储设备"></a> 存储设备</h3>
+<h2 id="性能优化">性能优化</h2>
+<h3 id="存储设备">存储设备</h3>
 <p>磁盘在现代服务器上通常都是瓶颈。Elasticsearch 重度使用磁盘，你的磁盘能处理的吞吐量越大，你的节点就越稳定。</p>
 <p>这里有一些优化磁盘 I/O 的技巧：</p>
 <blockquote>
@@ -695,15 +699,15 @@
 <li>如果你用的是 EC2，当心 EBS。即便是基于 SSD 的 EBS，通常也比本地实例的存储要慢。</li>
 </ul>
 </blockquote>
-<h3 id="内部索引优化"><a class="markdownIt-Anchor" href="#内部索引优化"></a> 内部索引优化</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1106-4LKvYu.jpeg" alt="图片">图片</p>
+<h3 id="内部索引优化">内部索引优化</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1106-4LKvYu.jpeg" alt="">图片</p>
 <p>Elasticsearch 为了能快速找到某个 Term，先将所有的 Term 排个序，然后根据二分法查找 Term，时间复杂度为 logN，就像通过字典查找一样，这就是 Term Dictionary。</p>
 <p>现在再看起来，似乎和传统数据库通过 B-Tree 的方式类似。但是如果 Term 太多，Term Dictionary 也会很大，放内存不现实，于是有了 Term Index。</p>
 <p>就像字典里的索引页一样，A 开头的有哪些 Term，分别在哪页，可以理解 Term Index是一棵树。</p>
 <p>这棵树不会包含所有的 Term，它包含的是 Term 的一些前缀。通过 Term Index 可以快速地定位到 Term Dictionary 的某个 Offset，然后从这个位置再往后顺序查找。</p>
 <p>在内存中用 FST 方式压缩 Term Index，FST 以字节的方式存储所有的 Term，这种压缩方式可以有效的缩减存储空间，使得 Term Index 足以放进内存，但这种方式也会导致查找时需要更多的 CPU 资源。</p>
 <p>对于存储在磁盘上的倒排表同样也采用了压缩技术减少存储所占用的空间。</p>
-<h3 id="调整配置参数"><a class="markdownIt-Anchor" href="#调整配置参数"></a> 调整配置参数</h3>
+<h3 id="调整配置参数">调整配置参数</h3>
 <p>调整配置参数建议如下：</p>
 <blockquote>
 <ul>
@@ -732,7 +736,7 @@
 </li>
 </ul>
 </blockquote>
-<h3 id="jvm-调优"><a class="markdownIt-Anchor" href="#jvm-调优"></a> JVM 调优</h3>
+<h3 id="JVM-调优">JVM 调优</h3>
 <p>JVM 调优建议如下：</p>
 <blockquote>
 <ul>
@@ -933,7 +937,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%B4%BB%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text"> 生活中的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E8%AF%B4%E8%AF%B4-lucene"><span class="nav-number">2.</span> <span class="nav-text"> 先说说 Lucene</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#es-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text"> ES 核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4cluster"><span class="nav-number">3.1.</span> <span class="nav-text"> 集群（Cluster）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E5%8F%91%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.1.</span> <span class="nav-text"> ①发现机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E8%8A%82%E7%82%B9%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">3.1.2.</span> <span class="nav-text"> ②节点的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E8%84%91%E8%A3%82%E7%8E%B0%E8%B1%A1"><span class="nav-number">3.1.3.</span> <span class="nav-text"> ③脑裂现象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87shards"><span class="nav-number">3.2.</span> <span class="nav-text"> 分片（Shards）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E6%9C%ACreplicas"><span class="nav-number">3.3.</span> <span class="nav-text"> 副本（Replicas）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.3.1.</span> <span class="nav-text"> 小结：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84mapping"><span class="nav-number">3.4.</span> <span class="nav-text"> 映射（Mapping）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#es-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text"> ES 的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8"><span class="nav-number">4.1.</span> <span class="nav-text"> 安装使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%81%A5%E5%BA%B7%E7%8A%B6%E6%80%81"><span class="nav-number">4.2.</span> <span class="nav-text"> 集群健康状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#es-%E6%9C%BA%E5%88%B6%E5%8E%9F%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text"> ES 机制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text"> 写索引原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%8E%9F%E7%90%86"><span class="nav-number">5.2.</span> <span class="nav-text"> 存储原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E5%88%86%E6%AE%B5%E5%AD%98%E5%82%A8"><span class="nav-number">5.2.1.</span> <span class="nav-text"> ①分段存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E5%BB%B6%E8%BF%9F%E5%86%99%E7%AD%96%E7%95%A5"><span class="nav-number">5.2.2.</span> <span class="nav-text"> ②延迟写策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text"> 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87"><span class="nav-number">6.1.</span> <span class="nav-text"> 存储设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text"> 内部索引优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">6.3.</span> <span class="nav-text"> 调整配置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jvm-%E8%B0%83%E4%BC%98"><span class="nav-number">6.4.</span> <span class="nav-text"> JVM 调优</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%B4%BB%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text">生活中的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E8%AF%B4%E8%AF%B4-Lucene"><span class="nav-number">2.</span> <span class="nav-text">先说说 Lucene</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">ES 核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%EF%BC%88Cluster%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">集群（Cluster）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A0%E5%8F%91%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.1.</span> <span class="nav-text">①发现机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A1%E8%8A%82%E7%82%B9%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">3.1.2.</span> <span class="nav-text">②节点的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A2%E8%84%91%E8%A3%82%E7%8E%B0%E8%B1%A1"><span class="nav-number">3.1.3.</span> <span class="nav-text">③脑裂现象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%EF%BC%88Shards%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">分片（Shards）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%EF%BC%88Replicas%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">副本（Replicas）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%EF%BC%9A"><span class="nav-number">3.3.1.</span> <span class="nav-text">小结：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%EF%BC%88Mapping%EF%BC%89"><span class="nav-number">3.4.</span> <span class="nav-text">映射（Mapping）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">ES 的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8"><span class="nav-number">4.1.</span> <span class="nav-text">安装使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%81%A5%E5%BA%B7%E7%8A%B6%E6%80%81"><span class="nav-number">4.2.</span> <span class="nav-text">集群健康状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES-%E6%9C%BA%E5%88%B6%E5%8E%9F%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">ES 机制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">写索引原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%8E%9F%E7%90%86"><span class="nav-number">5.2.</span> <span class="nav-text">存储原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A0%E5%88%86%E6%AE%B5%E5%AD%98%E5%82%A8"><span class="nav-number">5.2.1.</span> <span class="nav-text">①分段存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A1%E5%BB%B6%E8%BF%9F%E5%86%99%E7%AD%96%E7%95%A5"><span class="nav-number">5.2.2.</span> <span class="nav-text">②延迟写策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87"><span class="nav-number">6.1.</span> <span class="nav-text">存储设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">内部索引优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">6.3.</span> <span class="nav-text">调整配置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM-%E8%B0%83%E4%BC%98"><span class="nav-number">6.4.</span> <span class="nav-text">JVM 调优</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

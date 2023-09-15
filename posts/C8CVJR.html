@@ -126,7 +126,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -348,7 +352,7 @@
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><blockquote>
 <p><strong>转载标注来源</strong></p>
 </blockquote>
-<h1 id="modelview结构"><a class="markdownIt-Anchor" href="#modelview结构"></a> Model/View结构</h1>
+<h1>Model/View结构</h1>
 <p>GUI应用程序的一个很重要的功能是由用户在界面上编辑和修改数据，典型的如数据库应用程序。数据库应用程序中，用户在界面上执行各种操作，实际上是修改了界面组件所关联的数据库内的数据。</p>
 <p>将界面组件与所编辑的数据分离开来，又通过数据源的方式连接起来，是处理界面与数据的一种较好的方式。Qt使用Model/View结构来处理这种关系，Model/View的基本结构如下图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/082402wojM1B.png" alt=""></p>
@@ -363,25 +367,25 @@ QStringListModel可作为StringList的数据模型，QSqlTableModel可以作为�
 <p>在Model/View结构中，还提供了代理(Delegate)功能，代理功能可以让用户定制数据的界面显示和编辑方式。在标准的视图组件中，代理功能显示一个数据，当数据被编辑时，代理通过模型索引与数据模型通信，并为编辑数据提供一个编辑器，一般是一个QLineEdit组件。</p>
 <p>模型、视图和代理之间使用信号和槽通信。当源数据发生变化时，数据模型发射信号通知视<br>
 图组件：当用户在界面上操作数据时，视图组件发射信号表示这些操作信息：当编辑数据时，代理发射信号告知数据模型和视图组件编辑器的状态。</p>
-<h2 id="数据模型"><a class="markdownIt-Anchor" href="#数据模型"></a> 数据模型</h2>
+<h2 id="数据模型">数据模型</h2>
 <p>所有的基于项数据(item data)的数据模型(Model)都是基于QAbstractItemModel类的，这个类定义了视图组件和代理存取数据的接口。数据无需存储在数据模型里，数据可以是其他类、文件、数据库或任何数据源。Qt中与数据模型相关的几个主要的类的层次结构如下图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/0835352cqGoy.png" alt=""></p>
 <p>抽象类是不能直接使用的，需要由子类继承来实现一些纯虚函数。Qt提供了一些模型类用于项数据处理</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/083834yEqMCj.png" alt=""></p>
-<h2 id="视图组件"><a class="markdownIt-Anchor" href="#视图组件"></a> 视图组件</h2>
+<h2 id="视图组件">视图组件</h2>
 <p>视图组件(Viw)就是显示数据模型的数据的界面组件，Qt提供的视图组件如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/085954mU2zht.png" alt=""></p>
 <p>视图组件在显示数据时，只需调用视图类的setModelO)函数，为视图组件设置一个数据模型就可以实现视图组件与数据模型之间的关联，在视图组件上的修改将自动保存到关联的数据模型    里，一个数据模型可以同时在多个视图组件里显示数据。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/093401rPeKsF.png" alt=""></p>
-<h2 id="代理"><a class="markdownIt-Anchor" href="#代理"></a> 代理</h2>
+<h2 id="代理">代理</h2>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/095156feona9.png" alt=""></p>
-<h2 id="modelview结构的一些概念"><a class="markdownIt-Anchor" href="#modelview结构的一些概念"></a> Model/View结构的一些概念</h2>
+<h2 id="Model-View结构的一些概念">Model/View结构的一些概念</h2>
 <ul>
 <li>
 <p>Model/View的基本结构</p>
 <p>在Model/View结构中，数据模型为视图组件和代理提供存取数据的标准接口。在Qt中，所有的数据模型类都从QAbstractItemModel继承而来，不管底层的数据结构是如何组织数据的，QAbstractItemModel的子类都以表格的层次结构表示数据，视图组件通过这种规则来存取模型中的数据，但是表现给用户的形式不一样。</p>
 <p>不管数据模型的表现形式是怎么样的，数据模型中存储数据的基本单元都是项(item),每个项有一个行号、一个列号，还有一个父项(parent item)。在列表和表格模式下，所有的项都有一个相同的顶层项(root item):在树状结构中，行号、列号、父项稍微复杂一点，但是由这3个参数完全可以定义一个项的位置，从而存取项的数据。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/102147PnzkHH.png" alt="数据模型的几种表现形式"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/102147PnzkHH.png" alt=""></p>
 </li>
 <li>
 <p>模型索引</p>
@@ -406,8 +410,8 @@ QModelIndex表示模型索引的类。模型索引提供数据存取的一个临
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/07/1031319WqTac.png" alt=""></p>
 </li>
 </ul>
-<h1 id="qfilesystemmodel"><a class="markdownIt-Anchor" href="#qfilesystemmodel"></a> QFileSystemModel</h1>
-<h2 id="qfilesystemmodel类的基本功能"><a class="markdownIt-Anchor" href="#qfilesystemmodel类的基本功能"></a> QFileSystemModel类的基本功能</h2>
+<h1>QFileSystemModel</h1>
+<h2 id="QFileSystemModel类的基本功能">QFileSystemModel类的基本功能</h2>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/09/100420SVKram.png" alt=""></p>
 <p>这里还有另一种写法：</p>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(ui-&gt;treeView,&amp;QTreeView::clicked,[=](){</span><br><span class="line">        ui-&gt;listView-&gt;<span class="built_in">setRootIndex</span>(ui-&gt;treeView-&gt;<span class="built_in">currentIndex</span>());</span><br><span class="line">    });</span><br></pre></td></tr></tbody></table></figure>
@@ -417,7 +421,7 @@ QModelIndex表示模型索引的类。模型索引提供数据存取的一个临
 <p>效果：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/09/103249D16Bsq.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/09/105740C8J2Dy.png" alt=""></p>
-<h1 id="qstringlistmodel"><a class="markdownIt-Anchor" href="#qstringlistmodel"></a> QStringListModel</h1>
+<h1>QStringListModel</h1>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/09/183521tBWnRT.png" alt=""></p>
 <p>效果：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/09/183545q9rSK8.png" alt=""></p>
@@ -442,7 +446,7 @@ QModelIndex表示模型索引的类。模型索引提供数据存取的一个临
 </li>
 <li>
 <p>删除当前项</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/111038azaY5z.png" alt="3"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/111038azaY5z.png" alt=""></p>
 </li>
 <li>
 <p>删除列表</p>
@@ -451,13 +455,13 @@ QModelIndex表示模型索引的类。模型索引提供数据存取的一个临
 </ul>
 </li>
 </ul>
-<h1 id="qstandarditemmodel"><a class="markdownIt-Anchor" href="#qstandarditemmodel"></a> QStandardItemModel</h1>
+<h1>QStandardItemModel</h1>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/12/112938j6j7Og.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/12/113039bAKVg1.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/12/113054sNjWey.png" alt=""></p>
-<h2 id="界面设计与主窗口类定义"><a class="markdownIt-Anchor" href="#界面设计与主窗口类定义"></a> 界面设计与主窗口类定义</h2>
+<h2 id="界面设计与主窗口类定义">界面设计与主窗口类定义</h2>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/12/142405JugDU5.png" alt=""></p>
-<h2 id="qstandarditemmodel的使用"><a class="markdownIt-Anchor" href="#qstandarditemmodel的使用"></a> QStandardItemModel的使用</h2>
+<h2 id="QStandardItemModel的使用">QStandardItemModel的使用</h2>
 <ul>
 <li>
 <p>从文本文件导入数据</p>
@@ -493,13 +497,13 @@ QModelIndex表示模型索引的类。模型索引提供数据存取的一个临
 <figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void MainWindow::on_actSave_triggered()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//保存为文件</span></span><br><span class="line">    QString curPath = QCoreApplication::applicationDirPath();</span><br><span class="line">    QString aFileName = QFileDialog::getSaveFileName(this,<span class="string">"选择一个文件"</span>,curPath,<span class="string">"冰鞋数据文件(*.txt);;所有文件(*.*)"</span>);</span><br><span class="line">    <span class="keyword">if</span>(aFileName.isEmpty()){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    QFile aFile(aFileName);</span><br><span class="line">    <span class="keyword">if</span>(!(aFile.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate))){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    QTextStream aStream(&amp;aFile);</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    int i,j;</span><br><span class="line">    QString  <span class="built_in">str</span>;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;clear();</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; theModel-&gt;columnCount();i++) {</span><br><span class="line">        aItem = theModel-&gt;horizontalHeaderItem(i);</span><br><span class="line">        <span class="built_in">str</span> = <span class="built_in">str</span> + aItem-&gt;text() + <span class="string">"\t\t"</span>;</span><br><span class="line">    }</span><br><span class="line">    aStream &lt;&lt; <span class="built_in">str</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;appendPlainText(<span class="built_in">str</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; theModel-&gt;rowCount();i++) {</span><br><span class="line">        <span class="built_in">str</span> = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>;j &lt; theModel-&gt;columnCount() - <span class="number">1</span>;j++) {</span><br><span class="line">            aItem = theModel-&gt;item(i,j);</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + aItem-&gt;text() + QString::asprintf(<span class="string">"\t\t"</span>);</span><br><span class="line">        }</span><br><span class="line">        aItem = theModel-&gt;item(i,j);</span><br><span class="line">        <span class="keyword">if</span>(aItem-&gt;checkState() == Qt::Checked){</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + <span class="string">"1"</span>;</span><br><span class="line">        }<span class="keyword">else</span> {</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + <span class="string">"0"</span>;</span><br><span class="line">        }</span><br><span class="line">        ui-&gt;plainTextEdit-&gt;appendPlainText(<span class="built_in">str</span>);</span><br><span class="line">        aStream &lt;&lt; <span class="built_in">str</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h1 id="自定义代理"><a class="markdownIt-Anchor" href="#自定义代理"></a> 自定义代理</h1>
+<h1>自定义代理</h1>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/104007KqpcoX.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/104626Yr83DR.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112452vHeaH7.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112532Z5XE0K.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112547GUReEO.png" alt=""></p>
-<h2 id="自定义代理类的使用"><a class="markdownIt-Anchor" href="#自定义代理类的使用"></a> 自定义代理类的使用</h2>
+<h2 id="自定义代理类的使用">自定义代理类的使用</h2>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112733txJk7V.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112753FU4yNR.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112824xZCIWr.png" alt=""></p>
@@ -684,7 +688,7 @@ QModelIndex表示模型索引的类。模型索引提供数据存取的一个临
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#modelview%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text"> Model/View结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text"> 数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text"> 视图组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text"> 代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modelview%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.</span> <span class="nav-text"> Model/View结构的一些概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qfilesystemmodel"><span class="nav-number">2.</span> <span class="nav-text"> QFileSystemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qfilesystemmodel%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text"> QFileSystemModel类的基本功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qstringlistmodel"><span class="nav-number">3.</span> <span class="nav-text"> QStringListModel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qstandarditemmodel"><span class="nav-number">4.</span> <span class="nav-text"> QStandardItemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text"> 界面设计与主窗口类定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qstandarditemmodel%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.</span> <span class="nav-text"> QStandardItemModel的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text"> 自定义代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%90%86%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text"> 自定义代理类的使用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Model/View结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">视图组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-View%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.</span> <span class="nav-text">Model/View结构的一些概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">QFileSystemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#QFileSystemModel%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">QFileSystemModel类的基本功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">QStringListModel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">QStandardItemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">界面设计与主窗口类定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QStandardItemModel%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.</span> <span class="nav-text">QStandardItemModel的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">自定义代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%90%86%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text">自定义代理类的使用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

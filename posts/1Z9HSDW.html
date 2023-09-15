@@ -136,7 +136,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -355,13 +359,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="谈谈你对-kafka-的集群架构是如何理解的"><a class="markdownIt-Anchor" href="#谈谈你对-kafka-的集群架构是如何理解的"></a> 谈谈你对 kafka 的集群架构是如何理解的</h2>
-<h3 id="kafka-整体架构图"><a class="markdownIt-Anchor" href="#kafka-整体架构图"></a> Kafka 整体架构图</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1102-jB6bMF.png" alt="图片"></p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="谈谈你对-kafka-的集群架构是如何理解的">谈谈你对 kafka 的集群架构是如何理解的</h2>
+<h3 id="Kafka-整体架构图">Kafka 整体架构图</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1102-jB6bMF.png" alt=""></p>
 <p>一个典型的 Kafka 集群中包含若干 Producer，若干 Broker「<code>Kafka支持水平扩展，一般 Broker 数量越多，集群吞吐率越高</code>」，若干 Consumer Group，以及一个 Zookeeper集群。</p>
 <p>Kafka 通过 Zookeeper 管理集群配置，选举 Leader，以及在 Consumer Group 发生变化时进行  Rebalance。Producer 使用 push 模式将消息发布到 Broker，Consumer使用 pull 模式从 Broker  订阅并消费消息。</p>
-<h3 id="kafka-存储机制"><a class="markdownIt-Anchor" href="#kafka-存储机制"></a> Kafka 存储机制</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1104-3TFhEL.png" alt="图片"></p>
+<h3 id="Kafka-存储机制">Kafka 存储机制</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1104-3TFhEL.png" alt=""></p>
 <p>Producer 端生产的消息会不断追加到 log 文件末尾，这样文件就会越来越大, 为了防止 log 文件过大导致数据定位效率低下，Kafka 采取了分片和索引机制。</p>
 <p>它将每个 Partition 分为多个 Segment每个 Segment 对应3个文件：</p>
 <blockquote>
@@ -370,17 +374,17 @@
 <p>3）.timeindex 时间索引文件</p>
 </blockquote>
 <p>这些文件都位于同一文件夹下面，该文件夹的命名规则为：<code>topic 名称-分区号</code>。</p>
-<h3 id="kafka-副本机制"><a class="markdownIt-Anchor" href="#kafka-副本机制"></a> Kafka 副本机制</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1106-LIXgWy.png" alt="图片"></p>
+<h3 id="Kafka-副本机制">Kafka 副本机制</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1106-LIXgWy.png" alt=""></p>
 <p>Kafka中的 Partition 为了保证数据安全，每个 Partition 可以设置多个副本。此时我们对分区0,1,2分别设置3个副本。而且每个副本都是有「<code>角色</code>」之分的，<code>它们会选取一个副本作为 Leader 副本，而其他的作为 Follower 副本</code>，我们的 Producer 端在发送数据的时候，只能发送到Leader Partition 里面 ，然后 Follower Partition 会去  Leader Partition 自行同步数据, Consumer 消费数据的时候，也只能从 Leader 副本那去消费数据的。</p>
-<h3 id="kafka-网络模型"><a class="markdownIt-Anchor" href="#kafka-网络模型"></a> Kafka 网络模型</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1108-cuVayj.png" alt="图片"></p>
+<h3 id="Kafka-网络模型">Kafka 网络模型</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1108-cuVayj.png" alt=""></p>
 <p>Kafka 采用多路复用方案，Reactor 设计模式，并引用 Java NIO 的方式更好的解决网络超高并发请求问题。</p>
-<h2 id="谈谈kafka客户端如何巧妙解决jvm-gc问题"><a class="markdownIt-Anchor" href="#谈谈kafka客户端如何巧妙解决jvm-gc问题"></a> 谈谈Kafka客户端如何巧妙解决JVM GC问题</h2>
-<h3 id="kafka-客户端缓冲机制"><a class="markdownIt-Anchor" href="#kafka-客户端缓冲机制"></a> Kafka 客户端缓冲机制</h3>
+<h2 id="谈谈Kafka客户端如何巧妙解决JVM-GC问题">谈谈Kafka客户端如何巧妙解决JVM GC问题</h2>
+<h3 id="Kafka-客户端缓冲机制">Kafka 客户端缓冲机制</h3>
 <p>首先，大家知道的就是在客户端发送消息给 Kafka 服务端的时候，存在一个「<code>内存缓冲池机制</code>」 的。即消息会先写入一个内存缓冲池中，然后直到多条消息组成了一个 Batch，达到一定条件才会一次网络通信把 Batch 发送过去。</p>
 <p>整个发送过程图如下所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1109-hKDJ5D.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1109-hKDJ5D.png" alt=""></p>
 <p><strong>Kafka Producer 发送消息流程如下</strong>：</p>
 <blockquote>
 <p>1）进行 Producer 初始化，加载配置参数，开启网络线程。</p>
@@ -393,31 +397,31 @@
 <p>8）与服务端不同的 Broker 建立网络连接，将对应 Broker 待发送的消息 List 发送出去。</p>
 <p>9）批次发送的条件为: 缓冲区数据大小达到 batch.size 或者 <span class="exturl" data-url="aHR0cDovL2xpbmdlci5tcw==">linger.ms<i class="fa fa-external-link-alt"></i></span> 达到上限，哪个先达到就算哪个。</p>
 </blockquote>
-<h3 id="内存缓冲造成的频繁gc问题"><a class="markdownIt-Anchor" href="#内存缓冲造成的频繁gc问题"></a> 内存缓冲造成的频繁GC问题</h3>
+<h3 id="内存缓冲造成的频繁GC问题">内存缓冲造成的频繁GC问题</h3>
 <p>内存缓冲机制说白了，其实就是<code>把多条消息组成一个Batch，一次网络请求就是一个Batch 或者多个 Batch</code>。这样避免了一条消息一次网络请求，从而提升了吞吐量。</p>
 <p>那么问题来了，试想一下一个 Batch 中的数据取出来封装到网络包里，通过网络发送到达 Kafka 服务端。**此时****这个 Batch 里的数据都发送过去了，里面的数据该怎么处理？**这些 Batch 里的数据还存在客户端的 JVM 的内存里！那么一定要避免任何变量去引用 Batch 对应的数据，然后尝试触发 JVM 自动回收掉这些内存垃圾。这样不断的让 JVM 进行垃圾回收，就可以不断的腾出来新的内存空间让后面新的数据来使用。</p>
 <p>想法是挺好，但<code>实际生产运行的时候最大的问题，就是 JVM Full GC 问题</code>。JVM GC 在回收内存垃圾的时候，会有一个「<code>Stop the World</code>」的过程，即垃圾回收线程运行的时候，会导致其他工作线程短暂的停顿，这样可以踏踏实实的回收内存垃圾。</p>
 <p><code>试想一下，在回收内存垃圾的时候，工作线程还在不断的往内存里写数据，那如何让JVM 回收垃圾呢？</code>我们看看下面这张图就更加清楚了：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1112-t0PQaN.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1112-t0PQaN.png" alt=""></p>
 <p>虽然现在 JVM GC 演进越来越先进，从 CMS 垃圾回收器到 G1 垃圾回收器，<code>核心的目标之一就是不断的缩减垃圾回收的时候，导致其他工作线程停顿的时间</code>。但是再先进的垃圾回收器这个停顿的时间还是存在的。</p>
 <p>因此，如何尽可能在设计上避免 JVM 频繁的 Full GC 就是一个非常考验其设计水平了。</p>
-<h3 id="kafka-实现的缓冲机制"><a class="markdownIt-Anchor" href="#kafka-实现的缓冲机制"></a> Kafka 实现的缓冲机制</h3>
+<h3 id="Kafka-实现的缓冲机制">Kafka 实现的缓冲机制</h3>
 <p>在 Kafka 客户端内部，针对这个问题实现了一个非常优秀的机制，就是「<code>缓冲池机制</code>」。即每个 Batch 底层都对应一块内存空间，这个内存空间就是专门用来存放写进去的消息。</p>
 <p>当一个 Batch 数据被发送到了 kafka 服务端，这个 Batch 的内存空间不再使用了。<code>此时这个 Batch 底层的内存空间先不交给 JVM 去垃圾回收，而是把这块内存空间给放入一个缓冲池里</code>。</p>
 <p>这个缓冲池里存放了很多块内存空间，下次如果有一个新的 Batch 数据了，那么直接从缓冲池获取一块内存空间是不是就可以了？然后如果一个 Batch 数据发送出去了之后，再把内存空间还回来是不是就可以了？以此类推，循环往复。</p>
 <p>我们看看下面这张图就更加清楚了：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1116-5yWo2x.png" alt="图片"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1117-j0gteO.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1116-5yWo2x.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1117-j0gteO.png" alt=""></p>
 <p>一旦使用了这个缓冲池机制之后，就不涉及到频繁的大量内存的 GC 问题了。</p>
 <p><code>初始化分配固定的内存，即32MB。然后把 32MB 划分为 N 多个内存块，一个内存块默认是16KB，这样缓冲池里就会有很多的内存块</code>。然后如果需要创建一个新的 Batch，就从缓冲池里取一个 16KB 的内存块就可以了。</p>
 <p>接着如果 Batch 数据被发送到 Kafka 服务端了，此时 Batch  底层的内存块就直接还回缓冲池就可以了。这样循环往复就可以利用有限的内存，那么就不涉及到垃圾回收了。没有频繁的垃圾回收，自然就避免了频繁导致的工作线程的停顿了，JVM Full GC 问题是不是就得到了大幅度的优化？</p>
 <p><code>没错，正是这个设计思想让 Kafka 客户端的性能和吞吐量都非常的高，这里蕴含了大量的优秀的机制</code><strong>。</strong></p>
-<h2 id="谈谈你对-kafka-消息语义是如何理解的"><a class="markdownIt-Anchor" href="#谈谈你对-kafka-消息语义是如何理解的"></a> 谈谈你对 Kafka 消息语义是如何理解的</h2>
+<h2 id="谈谈你对-Kafka-消息语义是如何理解的">谈谈你对 Kafka 消息语义是如何理解的</h2>
 <p>对于 Kafka 来说，当消息从 Producer 到 Consumer，有许多因素来影响消息的消费，因此「<code>消息传递语义</code>」就是 Kafka 提供的 Producer 和 Consumer 之间的消息传递过程中消息传递的保证性。主要分为三种， 如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1118-eogRgs.jpeg" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1118-eogRgs.jpeg" alt=""></p>
 <p>对于这三种语义，我们来看一下可能出现的场景：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1118-2W86JT.png" alt="图片"></p>
-<h3 id="producer端"><a class="markdownIt-Anchor" href="#producer端"></a> Producer端</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1118-2W86JT.png" alt=""></p>
+<h3 id="Producer端">Producer端</h3>
 <p><strong>生产者发送语义</strong>：首先当 Producer 向 Broker 发送数据后，会进行消息提交，如果成功消息不会丢失。因此发送一条消息后，可能会有几种情况发生：</p>
 <blockquote>
 <p>1）遇到网络问题造成通信中断， 导致 Producer 端无法收到 ack，Producer 无法准确判断该消息是否已经被提交， 又重新发送消息，这就可能造成 「<strong>at least once</strong>」语义。</p>
@@ -428,9 +432,9 @@
 <p><strong>acks = 1</strong>：消息发送 Leader Parition 接收成功就表示发送成功，这时只要 Leader Partition 不 Crash 掉，就可以保证 Leader Partition 不丢数据，保证 「<strong>at least once</strong>」语义。</p>
 <p><strong>acks = -1 或者 all</strong>： 消息发送需要等待 ISR 中 Leader Partition 和 所有的 Follower Partition 都确认收到消息才算发送成功, 可靠性最高, 但也不能保证不丢数据,比如当 ISR 中只剩下 Leader Partition 了, 这样就变成 acks = 1 的情况了，保证 「<strong>at least once</strong>」语义。</p>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1121-kMQFze.png" alt="图片"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1121-jOqsh8.png" alt="图片"></p>
-<h3 id="consumer端"><a class="markdownIt-Anchor" href="#consumer端"></a> Consumer端</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1121-kMQFze.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1121-jOqsh8.png" alt=""></p>
+<h3 id="Consumer端">Consumer端</h3>
 <p><strong>消费者接收语义</strong>：从 Consumer 角度来剖析，我们知道 Offset 是由 Consumer 自己来维护的。</p>
 <p>Consumer 消费消息时，有以下2种选择:</p>
 <blockquote>
@@ -438,40 +442,40 @@
 <p>2）**读取消息 -&gt; 处理消息 -&gt; 提交offset：**如果此时消息处理成功，但保存 offset 失败，Consumer 又挂了，导致刚才消费的 offset 没有被成功提交，会发生 Reblance，新接管的 Consumer 将从上次保存的 offset 的下一条继续消费，导致消息重复消费，保证「<strong>at least once</strong>」语义。</p>
 </blockquote>
 <p><strong>总结</strong>：默认 Kafka 提供 「<strong>at least once</strong>」语义的消息传递，允许用户通过在处理消息之前保存 Offset 的方式提供 「<strong>at most once</strong>」 语义。如果我们可以自己实现消费幂等，理想情况下这个系统的消息传递就是严格的「<strong>exactly once</strong>」, 也就是保证不丢失、且只会被精确的处理一次，但是这样是很难做到的。</p>
-<h2 id="谈谈你对-kafka-副本机制是如何理解的"><a class="markdownIt-Anchor" href="#谈谈你对-kafka-副本机制是如何理解的"></a> 谈谈你对 Kafka 副本机制是如何理解的</h2>
+<h2 id="谈谈你对-Kafka-副本机制是如何理解的">谈谈你对 Kafka 副本机制是如何理解的</h2>
 <p>在上篇中，我们简单的分析了 Kafka 副本机制，这里我们再详细分析下 Kafka 的副本机制，说白了就是一个「<strong>数据备份机制</strong>」。</p>
 <p>保证集群中的某个节点发生故障时，该节点上的 Partition 数据不丢失，且 Kafka 仍然能够继续工作，提高了系统可用性和数据持久性。</p>
 <p><strong>同一个分区下的所有副本保存相同的消息数据，这些副本分散保存在不同的 Broker 上，保证了 Broker 的整体可用性</strong>。</p>
 <p>如下图所示：一个由 3 台 Broker 组成的 Kafka 集群上的副本分布情况。从这张图中，我们可以看到，主题 1 分区 1 的 3 个副本分散在 3 台 Broker 上，其他主题分区的副本也都散落在不同的 Broker 上，从而实现数据冗余。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1123-92qV6d.png" alt="图片"></p>
-<h3 id="副本同步机制"><a class="markdownIt-Anchor" href="#副本同步机制"></a> 副本同步机制</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1123-92qV6d.png" alt=""></p>
+<h3 id="副本同步机制">副本同步机制</h3>
 <p>既然所有副本的消息内容相同，我们该如何保证副本中所有的数据都是一致的呢？当 Producer 发送消息到某个 Topic 后，消息是如何同步到对应的所有副本 Replica 中的呢？Kafka 中 只有 Leader  副本才能对外进行读写服务，所以解决同步问题，Kafka 是采用基于 <strong>Leader</strong> 的副本机制来完成的。</p>
 <blockquote>
 <p>1）在 Kafka 中，一个 Topic 的每个 Partition 都有若干个副本，<strong>副本分成两类：领导者副本「Leader Replica」和追随者副本「Follower Replica」</strong>。每个分区在创建时都要选举一个副本作为领导者副本，其余的副本作为追随者副本。</p>
 <p>2）在 Kafka 中，Follower 副本是不对外提供服务的。也就是说，任何一个Follower 副本都不能响应客户端的读写请求。<strong>所有的读写请求都必须先发往 Leader 副本所在的 Broker，由该 Broker 负责处理。Follower 副本不处理客户端请求，它唯一的任务就是从 Leader 副本异步拉取消息，并写入到自己的提交日志中，从而实现与 Leader 副本的同步</strong>。</p>
 <p>3）在 Kafka 2.X 版本中，当 Leader 副本 所在的 Broker 宕机时，ZooKeeper 提供的监控功能能够实时感知到，并立即开启新一轮的 Leader 选举，从 ISR 副本集合中 Follower 副本中选一个作为新的 Leader ，当旧的 Leader 副本重启回来后，只能作为 Follower 副本加入到集群中。3.x 的选举后续会有单篇去介绍。</p>
 </blockquote>
-<h3 id="副本管理"><a class="markdownIt-Anchor" href="#副本管理"></a> 副本管理</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1125-A7BEEJ.png" alt="图片"></p>
+<h3 id="副本管理">副本管理</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1125-A7BEEJ.png" alt=""></p>
 <blockquote>
 <p>1）<strong>AR 副本集合</strong>: 分区 Partition 中的所有 Replica 组成 AR 副本集合。</p>
 <p>2）<strong>ISR 副本集合</strong>: 所有与 Leader 副本能保持一定程度同步的 Replica 组成 ISR 副本集合， 其中也包括 Leader 副本。</p>
 <p>3）<strong>OSR 副本集合</strong>: 与 Leader 副本同步滞后过多的 Replica 组成 OSR 副本集合。</p>
 </blockquote>
 <p>这里我们重点来分析下 <strong>ISR 副本集合。</strong></p>
-<h3 id="isr-副本集合"><a class="markdownIt-Anchor" href="#isr-副本集合"></a> ISR 副本集合</h3>
+<h3 id="ISR-副本集合">ISR 副本集合</h3>
 <p>上面强调过，Follower 副本不提供服务，只是定期地异步拉取 Leader 副本中的数据。既然是异步的，就一定会存在不能与 Leader 实时同步的情况出现。</p>
 <p>Kafka 为了解决这个问题， 引入了「 <strong>In-sync Replicas</strong>」机制，即 ISR 副本集合。要求 ISR 副本集合中的 Follower 副本都是与 Leader 同步的副本。</p>
 <p><strong>那么，到底什么样的副本能够进入到 ISR 副本集合中呢？</strong></p>
 <p>首先要明确的，Leader 副本天然就在 ISR 副本集合中。也就是说，ISR 不只是有 Follower 副本集合，它必然包括 Leader 副本。另外，能够进入到 ISR 副本集合的 Follower 副本要满足一定的条件。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1126-mBDiIQ.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1126-mBDiIQ.png" alt=""></p>
 <p>图中有 3 个副本：1 个 Leader 副本和 2 个 Follower 副本。Leader 副本当前写入了 6 条消息，Follower1  副本同步了其中的 4 条消息，而 Follower2 副本只同步了其中的 3 条消息。那么，对于这 2 个 Follower 副本，你觉得哪个  Follower 副本与 Leader 不同步？</p>
 <p>事实上，这2个 Follower 副本都有可能与 Leader 副本同步，但也可能不与 Leader 副本同步，这个完全依赖于<strong>Broker 端参数 <span class="exturl" data-url="aHR0cDovL3JlcGxpY2EubGFnLnRpbWUubWF4Lm1z">replica.lag.time.max.ms<i class="fa fa-external-link-alt"></i></span> 参数值</strong>。</p>
 <p>这个参数是指 <strong>Follower 副本能够落后 Leader 副本的最长时间间隔，当前默认值是 10 秒，从 2.5 版本开始，默认值从 10 秒增加到 30 秒</strong>。即只要一个 Follower 副本落后Leader 副本的时间不连续超过 30 秒，Kafka 就认为该 Follower 副本与 Leader 是同步的，即使 Follower 副本中保存的消息明显少于 Leader 副本中的消息。</p>
 <p>此时如果这个副本同步过程的速度持续慢于 Leader 副本的消息写入速度的时候，那么在 <span class="exturl" data-url="aHR0cDovL3JlcGxpY2EubGFnLnRpbWUubWF4Lm1z">replica.lag.time.max.ms<i class="fa fa-external-link-alt"></i></span> 时间后，该 Follower 副本就会被认为与 Leader 副本是不同步的，因此 Kafka 会自动收缩，将其踢出 ISR 副本集合中。后续如果该副本追上了 Leader 副本的进度的话，那么它是能够重新被加回 ISR副本集合的。</p>
 <p>在默认情况下，当 Leader 副本发生故障时，只有在 ISR 副本集合中的 Follower 副本才有资格被选举为新Leader，而 OSR 中副本集合的副本是没有机会的（可以通过<strong>unclean.leader.election.enable</strong> 进行配置执行脏选举）。</p>
 <p><strong>总结：ISR 副本集合是一个动态调整的集合。</strong></p>
-<h2 id="谈谈你对kafka-leader选举机制是如何理解"><a class="markdownIt-Anchor" href="#谈谈你对kafka-leader选举机制是如何理解"></a> 谈谈你对Kafka Leader选举机制是如何理解</h2>
+<h2 id="谈谈你对Kafka-Leader选举机制是如何理解">谈谈你对Kafka Leader选举机制是如何理解</h2>
 <p>这里所说的 Leader 选举是指分区 Leader 副本的选举，<strong>它是由 Kafka Controller 负责具体执行的，当创建分区或分区副本上线的时候都需要执行 Leader 的选举动作</strong>。</p>
 <p>有以下场景可能会触发选举：</p>
 <p>1）当 Controller 感知到分区 Leader 下线需要执行 Leader 选举。</p>
@@ -483,7 +487,7 @@
 <p>此时的选举策略是：<strong>从重分配的 AR 副本集合中找到第⼀个存活的副本，且这个副本在当前的 ISR 副本集合中。当发生优先副本的选举时，直接将优先副本设置为 Leader 即可，AR 副本集合中的第⼀个副本即为优先副本</strong>。</p>
 <p>3）当某节点执⾏ ControlledShutdown 被优雅地关闭时，位于这个节点上的 Leader 副本都会下线，所以与此对应的分区需要执行 Leader 的选举。</p>
 <p>此时的选举策略是：<strong>从 AR 副本集合中找到第⼀个存活的副本，且这个副本在当前的 ISR 副本集合中，同时还要确保这个副本不处于正在被关闭的节点上</strong>。</p>
-<h2 id="谈谈你对kafka控制器及选举机制是如何理解"><a class="markdownIt-Anchor" href="#谈谈你对kafka控制器及选举机制是如何理解"></a> 谈谈你对Kafka控制器及选举机制是如何理解</h2>
+<h2 id="谈谈你对Kafka控制器及选举机制是如何理解">谈谈你对Kafka控制器及选举机制是如何理解</h2>
 <p>所谓的控制器「<strong>Controller</strong>」就是通过 ZooKeeper 来管理和协调整个 Kafka 集群的组件。集群中任意一台 Broker 都可以充当控制器的角色，但是在正常运行过程中，只能有一个 Broker 成为控制器。</p>
 <p><strong>控制器的职责主要包括：</strong></p>
 <blockquote>
@@ -493,27 +497,27 @@
 <p>4）副本故障转移、 Leader 选举、ISR 变更。</p>
 <p>5）集群成员管理（通过 watch 机制自动检测新增 Broker、Broker 主动关闭、Broker 宕机等）。</p>
 </blockquote>
-<h3 id="控制器机制"><a class="markdownIt-Anchor" href="#控制器机制"></a> 控制器机制</h3>
+<h3 id="控制器机制">控制器机制</h3>
 <p>我们知道 Kafka 2.X 版本是依赖 Zookeeper 来维护集群成员的信息：</p>
 <blockquote>
 <p>1）Kafka 使用 Zookeeper 的临时节点来选举 Controller。</p>
 <p>2）Zookeeper 在 Broker 加入集群或退出集群时通知 Controller。</p>
 <p>3）Controller 负责在 Broker 加入或离开集群时进行分区 Leader 选举。</p>
 </blockquote>
-<h3 id="控制器数据分布"><a class="markdownIt-Anchor" href="#控制器数据分布"></a> 控制器数据分布</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1132-l7T1Os.png" alt="1132-XtrOlE"></p>
+<h3 id="控制器数据分布">控制器数据分布</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1132-l7T1Os.png" alt=""></p>
 <p>从上面表格可以看出,存储的大概有3大类:</p>
 <blockquote>
 <p>1）<strong>所有topic信息</strong>：包括具体的分区信息，比如 Leader 副本是谁，ISR 集合中有哪些副本等。</p>
 <p>2）<strong>所有 Broker 信息</strong>：包括当前都有哪些运行中的 Broker，哪些正在关闭中的 Broker 等。</p>
 <p>3）<strong>涉及运维任务的副本分区</strong>：包括当前正在进行 Leader 选举以及分区重分配的分区列表等。</p>
 </blockquote>
-<h3 id="控制器故障转移"><a class="markdownIt-Anchor" href="#控制器故障转移"></a> 控制器故障转移</h3>
+<h3 id="控制器故障转移">控制器故障转移</h3>
 <p>在 Kafka 集群运行过程中，只能有一台 Broker 充当控制器的角色，存在「<strong>单点故障</strong>」的风险，Kafka 如何应对单点故障呢？</p>
 <p>其实 Kafka 为控制器提供故障转移功能「<strong>Failover</strong>」。<strong>指当运行中的控制器突然宕机时，Kafka 能够快速地感知到，并立即启用备用控制器来代替之前失败控制器的过程</strong>。</p>
 <p>下面通过一张图来展示控制器故障转移的过程：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1133-yarAzV.png" alt="图片"></p>
-<h3 id="控制器触发选举场景"><a class="markdownIt-Anchor" href="#控制器触发选举场景"></a> 控制器触发选举场景</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1133-yarAzV.png" alt=""></p>
+<h3 id="控制器触发选举场景">控制器触发选举场景</h3>
 <p>至此你一定想知道控制器是如何被选出来的？前面说过，每台 Broker 都能充当控制器，当集群启动后，Kafka 是如何确认控制器在哪台 Broker 呢？</p>
 <p>实际上这个问题很简单，即 <strong>Broker 启动时， 会尝试去 ZooKeeper 中创建 /controller 节点， 第一个成功创建 /controller 节点的 Broker 会被选为控制器</strong>。</p>
 <p>接下来我们看下<strong>触发 Controller 选举的场景</strong>有哪些？</p>
@@ -535,14 +539,14 @@
 <p>1）假如 Broker 是 Controller，那么该 Broker 需要首先执「<strong>退位</strong>」操作，然后再尝试进行竞选 Controller。</p>
 <p>2）假如 Broker 不是 Controller，那么，该 Broker 直接去竞选新 Controller。</p>
 </blockquote>
-<h3 id="控制器选举机制"><a class="markdownIt-Anchor" href="#控制器选举机制"></a> 控制器选举机制</h3>
+<h3 id="控制器选举机制">控制器选举机制</h3>
 <p>其实选举最终都是通过调用底层的 elect 方法进行选举，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1136-lra2F8.png" alt="图片"></p>
-<h2 id="谈谈-kafka-的数据可靠性是怎么保证的"><a class="markdownIt-Anchor" href="#谈谈-kafka-的数据可靠性是怎么保证的"></a> 谈谈 kafka 的数据可靠性是怎么保证的</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1136-lra2F8.png" alt=""></p>
+<h2 id="谈谈-kafka-的数据可靠性是怎么保证的">谈谈 kafka 的数据可靠性是怎么保证的</h2>
 <p>开始数据可靠性之前先看几个重要的概念：AR、OSR、ISR、HW、LEO，前面已经讲了 AR、OSR、ISR。这里我们重点讲下 HW、LEO。</p>
 <p>**HW：**全称「<strong>Hign WaterMark</strong>」 ，即高水位，它标识了一个特定的消息偏移量 offset ，消费者只能拉取到这个水位 offset 之前的消息。</p>
 <p>**LEO：**全称「<strong>Log End Offset</strong>」，它标识当前日志文件中下一条待写入的消息的 offset，在 ISR 副本集合中的每个副本都会维护自身的LEO。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1137-xMwgU3.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1137-xMwgU3.png" alt=""></p>
 <p>从上图可以看出 HW 和 LEO 的作用：</p>
 <blockquote>
 <p><strong>HW 作用</strong>：</p>
@@ -552,7 +556,7 @@
 <p>1）如果 Follower 和 Leader 的 LEO 数据同步了, 那么 HW 就可以更新了。</p>
 <p>2）HW 之前的消息数据对消费者是可见的，属于 commited 状态, HW 之后的消息数据对消费者是不可见的。</p>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1137-JexxNf.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1137-JexxNf.png" alt=""></p>
 <p>**HW 更新是需要一轮额外的拉取请求才能实现，**Follower 副本要拉取 Leader 副本的数据，也就是说，Leader 副本 HW 更新和 Follower 副本 HW 更新在时间上是存在错配的。<strong>这种错配是很多“数据丢失”或“数据不一致”问题的根源</strong>。因此社区在 0.11 版本正式引入了 「<strong>Leader Epoch</strong>」 概念，来规避因 HW 更新错配导致的各种不一致问题。</p>
 <p>所谓 Leader Epoch，我们大致可以认为是 Leader 版本。它由两部分数据组成：</p>
 <blockquote>
@@ -562,26 +566,26 @@
 <p>Kafka Broker 会在<strong>内存中为每个分区都缓存 Leader Epoch 数据</strong>，同时它还会定期地将这些信息<strong>持久化到一个 checkpoint 文件</strong>中。当 Leader Partition 写入消息到磁盘时，Broker 会尝试更新这部分缓存。如果该 Leader 是首次写入消息，那么  Broker 会向缓存中增加一个 Leader Epoch 条目，否则就不做更新。这样，每次有 Leader 变更时，新的 Leader  副本会查询这部分缓存，取出对应的 Leader Epoch 的起始位移，以避免数据丢失和不一致的情况。</p>
 <p>严格来说，这个场景发生的前提是 <strong>Broker 端参数 min.insync.replicas 设置为 1</strong>。此时一旦消息被写入到 Leader 副本的磁盘，就会被认为是 commited 状态，但因存在时间错配问题导致 Follower 的 HW 更新是有滞后的。如果在这个短暂的滞后时间内，接连发生 Broker 宕机，那么这类数据的丢失就是无法避免的。</p>
 <p>接下来, 我们来看下如何利用 Leader Epoch 机制来规避这种数据丢失。如下图所示:</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1138-wdHb98.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1138-wdHb98.png" alt=""></p>
 <p>因此 Kafka 只对 「<strong>已提交</strong>」的消息做「<strong>最大限度的持久化保证不丢失</strong>」**。**由于篇幅详细请看：<span class="exturl" data-url="aHR0cDovL21wLndlaXhpbi5xcS5jb20vcz9fX2Jpej1NemczTVRjeE1EZ3hOQT09JmFtcDttaWQ9MjI0NzQ5MDQ4OSZhbXA7aWR4PTEmYW1wO3NuPTE3ODE3ZjZkOTgzN2FkNmE4ODIzMzYyZDVlZDM4Njg3JmFtcDtjaGtzbT1jZWZiMzI4OGY5OGNiYjllZGViNTY4ZTUxMTI3YzI1Y2FhOTBkYTZkZDA2NDkzNjU2MGE4NTFhOWM5ZTViODY1YmI0OWNhMDQzMTJkJmFtcDtzY2VuZT0yMSN3ZWNoYXRfcmVkaXJlY3Q=">刨根问底: Kafka 到底会不会丢数据<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="谈谈-kafka-消息分配策略都有哪些"><a class="markdownIt-Anchor" href="#谈谈-kafka-消息分配策略都有哪些"></a> 谈谈 Kafka 消息分配策略都有哪些</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1139-ygE1jr.png" alt="图片"></p>
+<h2 id="谈谈-Kafka-消息分配策略都有哪些">谈谈 Kafka 消息分配策略都有哪些</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1139-ygE1jr.png" alt=""></p>
 <p>这里主要说的是<strong>消费的分区分配策略</strong>，我们知道一个 Consumer Group 中有多个 Consumer，一个 Topic 也有多个 Partition，所以必然会有 Partition 分配问题「 <strong>确定哪个 Partition 由哪个 Consumer 来消费的问题</strong>」。</p>
 <p>Kafka 客户端提供了3 种分区分配策略：RangeAssignor、RoundRobinAssignor 和 StickyAssignor，前两种分配方案相对简单一些StickyAssignor 分配方案相对复杂一些。</p>
-<h3 id="rangeassignor"><a class="markdownIt-Anchor" href="#rangeassignor"></a> RangeAssignor</h3>
+<h3 id="RangeAssignor">RangeAssignor</h3>
 <p><strong>RangeAssignor 是 Kafka 默认的分区分配算法，它是按照 Topic 的维度进行分配的</strong>，首先对 每个Topic 的 Partition 按照分区ID进行排序，然后对订阅该 Topic 的 Consumer Group 的 Consumer 按名称字典进行排序，之后<strong>尽量均衡的按照范围区段将分区分配给 Consumer</strong>。此时也可能会造成先分配分区的 Consumer 任务过重（分区数无法被消费者数量整除）。</p>
 <p><strong>分区分配场景分析如下图所示（同一个消费者组下的多个 consumer）：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1141-HeOa2X.png" alt="图片"></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1141-WDb11i.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1141-HeOa2X.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1141-WDb11i.png" alt=""></p>
 <p><strong>总结：该分配方式明显的问题就是随着消费者订阅的Topic的数量的增加，不均衡的问题会越来越严重。</strong></p>
-<h3 id="roundrobinassignor"><a class="markdownIt-Anchor" href="#roundrobinassignor"></a> RoundRobinAssignor</h3>
+<h3 id="RoundRobinAssignor">RoundRobinAssignor</h3>
 <p>**该分区分配策略是将 Consumer Group 订阅的所有 Topic 的 Partition 及所有 Consumer 按照字典进行排序后尽量均衡的挨个进行分配。**如果 Consumer Group 内，每个 Consumer 订阅都订阅了相同的Topic，那么分配结果是均衡的。如果订阅 Topic 是不同的，那么分配结果是不保证「 <strong>尽量均衡</strong>」的，因为某些 Consumer 可能不参与一些 Topic 的分配。</p>
 <p><strong>分区分配场景分析如下图所示：</strong></p>
 <p><strong>1) 当组内每个 Consumer 订阅的相同 Topic ：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1142-VQUTaw.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1142-VQUTaw.png" alt=""></p>
 <p><strong>2) 当组内每个订阅的不同的 Topic ，这样就可能会造成分区订阅的倾斜:</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1143-4QBLYi.png" alt="图片"></p>
-<h3 id="stickyassignor"><a class="markdownIt-Anchor" href="#stickyassignor"></a> StickyAssignor</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1143-4QBLYi.png" alt=""></p>
+<h3 id="StickyAssignor">StickyAssignor</h3>
 <p>该分区分配算法是最复杂的一种，<code>可以通过 partition.assignment.strategy 参数去设置</code>，从 0.11 版本开始引入，目的就是在执行新分配时，尽量在上一次分配结果上少做调整，其主要实现了以下2个目标：</p>
 <blockquote>
 <p><strong>1、Topic Partition 的分配要尽量均衡。</strong></p>
@@ -591,28 +595,28 @@
 <p>下面我们看看该策略与RoundRobinAssignor策略的不同：</p>
 <p><strong>分区分配场景分析如下图所示：</strong></p>
 <p>1）组内每个 Consumer 订阅的相同的 Topic ，RoundRobinAssignor 跟StickyAssignor 分配一致：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1145-sl6JNK.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1145-sl6JNK.png" alt=""></p>
 <p><strong>当发生 Rebalance 情况后，可能分配会不太一样，假如这时候C1发生故障下线：</strong></p>
 <p><strong>RoundRobinAssignor：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1145-w3iSze.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1145-w3iSze.png" alt=""></p>
 <p><strong>StickyAssignor</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1146-woSiuw.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1146-woSiuw.png" alt=""></p>
 <p><strong>结论: 从上面 Rebalance 发生后的结果可以看出，虽然两种分配策略最后都是均匀分配的，但是 RoundRoubinAssignor 分区分配策略完全是重新分配了一遍，而 StickyAssignor则是在原先的基础上达到了均匀的状态。</strong></p>
 <p><strong>2) 当组内每个 Consumer 订阅的 Topic 是不同情况:</strong></p>
 <p><strong>RoundRobinAssignor：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1147-O04CtK.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1147-O04CtK.png" alt=""></p>
 <p><strong>StickyAssignor</strong>：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1148-4ceydf.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1148-4ceydf.png" alt=""></p>
 <p><strong>当发生 Rebalance 情况后，可能分配会不太一样，假如这时候C1发生故障下线：</strong></p>
 <p><strong>RoundRobinAssignor：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1148-b4AYOl.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1148-b4AYOl.png" alt=""></p>
 <p><strong>StickyAssignor：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1149-rLbj0n.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1149-rLbj0n.png" alt=""></p>
 <p>从上面结果可以看出，RoundRoubin 的分配策略在 Rebalance 之后造成了严重的分配倾斜。<strong>因此在生产环境上如果想要减少重分配带来的开销，可以选用 StickyAssignor 的分区分配策略。</strong></p>
-<h2 id="谈谈-kafka-消费者重平衡机制是怎样的"><a class="markdownIt-Anchor" href="#谈谈-kafka-消费者重平衡机制是怎样的"></a> 谈谈 Kafka 消费者重平衡机制是怎样的</h2>
+<h2 id="谈谈-Kafka-消费者重平衡机制是怎样的">谈谈 Kafka 消费者重平衡机制是怎样的</h2>
 <p><strong>所谓的消费者组的重平衡目的就是让组内所有的消费者实例对消费哪些主题分区达成一致。</strong></p>
 <p>对于 Consumer Group 来说，可能随时都会有 Consumer 加入或退出，那么 Consumer 列表的变化必定会引起 Partition 的重新分配。我们将这个分配过程叫做 Consumer Rebalance，但是<strong>这个分配过程需要借助 Broker 端的 Coordinator 协调者组件，在 Coordinator 的帮助下完成整个消费者组的分区重分配，也是通过监听ZooKeeper 的 /admin/reassign_partitions 节点触发的。</strong></p>
-<h3 id="rebalance-触发与通知"><a class="markdownIt-Anchor" href="#rebalance-触发与通知"></a> Rebalance 触发与通知</h3>
+<h3 id="Rebalance-触发与通知">Rebalance 触发与通知</h3>
 <p>Rebalance 的触发条件有三种:</p>
 <blockquote>
 <p>1）当 Consumer Group 组成员数量发生变化(主动加入或者主动离组，故障下线等)。</p>
@@ -623,7 +627,7 @@
 <blockquote>
 <p>Rebalance 的通知机制就是<strong>靠 Consumer 端的心跳线程</strong>，它会定期发送心跳请求到 Broker 端的 Coordinator 协调者组件,当协调者决定开启 Rebalance 后，它会将「<strong>REBALANCE_IN_PROGRESS</strong>」封装进心跳请求的响应中发送给 Consumer ,当 Consumer 发现心跳响应中包含了「<strong>REBALANCE_IN_PROGRESS</strong>」，就知道是 Rebalance 开始了。</p>
 </blockquote>
-<h3 id="rebalance-协议说明"><a class="markdownIt-Anchor" href="#rebalance-协议说明"></a> Rebalance 协议说明</h3>
+<h3 id="Rebalance-协议说明">Rebalance 协议说明</h3>
 <p>其实 Rebalance 本质上也是一组协议，Consumer Group 与 Coordinator 共同使用它来完成 Consumer Group 的 Rebalance。</p>
 <p>下面我看看这5种协议完成了什么功能：</p>
 <blockquote>
@@ -634,7 +638,7 @@
 <p>5）**DescribeGroup 请求：**显示组的所有信息，包括成员信息，协议名称，分配方案，订阅信息等。通常该请求是给管理员使用。</p>
 </blockquote>
 <p><strong>Coordinator 在 Rebalance 的时候主要用到了前面4种请求。</strong></p>
-<h3 id="consumer-group-状态机"><a class="markdownIt-Anchor" href="#consumer-group-状态机"></a> Consumer Group 状态机</h3>
+<h3 id="Consumer-Group-状态机">Consumer Group 状态机</h3>
 <p>如果 Rebalance 一旦发生，就会涉及到 Consumer Group 的状态流转，此时 Kafka 为我们设计了一套完整的状态机机制，来帮助 Broker Coordinator 完成整个重平衡流程。</p>
 <p>了解整个状态流转过程可以帮助我们深入理解 Consumer Group 的设计原理。5种状态，定义分别如下：</p>
 <blockquote>
@@ -645,35 +649,35 @@
 <p>5）<strong>Stable 状态</strong>：表示 Rebalance 已经完成， 组内 Consumer 可以开始消费了。</p>
 </blockquote>
 <p>5种状态流转图如下：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1153-gTWZRv.png" alt="图片"></p>
-<h3 id="rebalance-流程分析"><a class="markdownIt-Anchor" href="#rebalance-流程分析"></a> Rebalance 流程分析</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1153-gTWZRv.png" alt=""></p>
+<h3 id="Rebalance-流程分析">Rebalance 流程分析</h3>
 <p>通过上面5种状态可以看出，Rebalance 主要分为两个步骤：加入组「<strong>JoinGroup请求</strong>」和等待 Leader Consumer 分配方案「<strong>SyncGroup 请求</strong>」。</p>
 <p><strong>JoinGroup请求</strong></p>
 <p>组内所有成员向 Coordinator 发送 JoinGroup 请求，请求加入组，顺带会上报自己订阅的 Topic，这样 Coordinator  就能收集到所有成员的 JoinGroup 请求和订阅 Topic 信息，Coordinator 就会从这些成员中选择一个担任这个Consumer Group 的 Leader「<strong>一般情况下，第一个发送请求的 Consumer 会成为 Leader</strong>」。</p>
 <p>**这里说的 Leader 是指具体的某一个 Consumer，它的任务就是收集所有成员的订阅 Topic 信息，然后制定具体的消费分区分配方案。**待选出 Leader 后，Coordinator 会把 Consumer Group 的订阅 Topic 信息封装进 JoinGroup 请求的 Response 中，然后发给 Leader ，然后由 Leader 统一做出分配方案后，进入到下一步</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1154-gZhBei.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1154-gZhBei.png" alt=""></p>
 <p><strong>SyncGroup 请求</strong></p>
 <p>Leader 开始分配消费方案，<code>即哪个 Consumer 负责消费哪些 Topic 的哪些 Partition</code>。</p>
 <p>一旦完成分配，Leader 会将这个分配方案封装进 SyncGroup 请求中发给 Coordinator ，其他成员也会发 SyncGroup 请求，只是内容为空，待  Coordinator 接收到分配方案之后会把方案封装进 SyncGroup 的 Response 中发给组内各成员,  这样各自就知道应该消费哪些 Partition 了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1155-E4Jbcx.png" alt="图片"></p>
-<h3 id="rebalance-场景分析"><a class="markdownIt-Anchor" href="#rebalance-场景分析"></a> Rebalance 场景分析</h3>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1155-E4Jbcx.png" alt=""></p>
+<h3 id="Rebalance-场景分析">Rebalance 场景分析</h3>
 <p>刚刚详细的分析了关于 Rebalance 的状态流转，接下来我们通过时序图来重点分析几个场景来加深对 Rebalance 的理解。</p>
 <p><strong>场景一：新成员(c1)加入组</strong></p>
 <p>这里新成员加入组是指组处于 Stable 稳定状态后，有新成员加入的情况。当协调者收到新的 JoinGroup 请求后，它会通过心跳机制通知组内现有的所有成员，强制开启新一轮的重平衡。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1156-fR76r7.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1156-fR76r7.png" alt=""></p>
 <p><strong>场景二：成员(c2)主动离组</strong></p>
 <p>这里主动离组是指消费者所在线程或进程调用 close() 方法主动通知协调者它要退出。当协调者收到 LeaveGroup 请求后，依然会以心跳机制通知其他成员，强制开启新一轮的重平衡。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1156-tzCaWi.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1156-tzCaWi.png" alt=""></p>
 <p><strong>场景三：成员(c2)超时被踢出组</strong></p>
 <p>这里超时被踢出组是指消费者实例出现故障或者处理逻辑耗时过长导致的离组。此时离组是被动的，协调者需要等待一段时间才能感知到，<strong>一般是由消费者端参数 <span class="exturl" data-url="aHR0cDovL3Nlc3Npb24udGltZW91dC5tcw==">session.timeout.ms<i class="fa fa-external-link-alt"></i></span> 控制的</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1157-4FAVNu.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1157-4FAVNu.png" alt=""></p>
 <p><strong>场景四：成员(c2)提交位移数据</strong></p>
 <p>当重平衡开启时，协调者会要求组内成员必须在这段缓冲时间内快速地提交自己的位移信息，然后再开启正常的 JoinGroup/SyncGroup 请求发送。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1157-KbV0VC.png" alt="图片"></p>
-<h2 id="谈谈kafka线上大量消息积压你是如何处理的"><a class="markdownIt-Anchor" href="#谈谈kafka线上大量消息积压你是如何处理的"></a> 谈谈Kafka线上大量消息积压你是如何处理的</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/09/1157-KbV0VC.png" alt=""></p>
+<h2 id="谈谈Kafka线上大量消息积压你是如何处理的">谈谈Kafka线上大量消息积压你是如何处理的</h2>
 <p><code>消息大量积压这个问题，直接原因一定是某个环节出现了性能问题，来不及消费消息，才会导致消息积压。</code>接着就比较坑爹了，此时假如 Kafka 集群的磁盘都快写满了，都没有被消费，这个时候怎么办？或者消息积压了⼏个⼩时，这个时候怎么办？生产环境挺常⻅的问题，⼀般不出问题，而⼀出就是⼤事故。</p>
 <p>所以，我们先来分析下，在使用 Kafka 时如何来优化代码的性能，避免出现消息积压。如果你的线上 Kafka 系统出现了消息积压，该如何进行紧急处理，最大程度地避免消息积压对业务的影响。</p>
-<h3 id="优化性能来避免消息积压"><a class="markdownIt-Anchor" href="#优化性能来避免消息积压"></a> 优化性能来避免消息积压</h3>
+<h3 id="优化性能来避免消息积压">优化性能来避免消息积压</h3>
 <p>对于 Kafka 性能的优化，主要体现在生产者和消费者这两部分业务逻辑中。而 Kafka 本身不需要多关注的主要原因是，对于绝大多数使用Kafka 的业务来说，Kafka  本身的处理能力要远大于业务系统的处理能力。Kafka 单个节点，消息收发的性能可以达到每秒钟处理几十万条消息的水平，还可以通过水平扩展  Broker 的实例数成倍地提升处理能力。</p>
 <p>对于业务系统处理的业务逻辑要复杂一些，单个节点每秒钟处理几百到几千次请求，已经非常不错了，所以我们应该更关注的是消息的收发两端。</p>
 <p><strong>1. 发送端性能优化</strong></p>
@@ -693,7 +697,7 @@
 <p>要是消费速度一直比生产速度慢，时间长了系统就会出现问题，比如Kafka 的磁盘存储被写满无法提供服务，或者消息丢失，对于整个系统来说都是严重故障。</p>
 <p>所以我们在设计的时候，<strong>一定要保证消费端的消费性能要高于生产端的发送性能，这样的系统才能健康的持续运行</strong>。</p>
 <p>消费端的性能优化除了优化业务逻辑外，也可以通过水平扩容，增加消费端的并发数来提升总体的消费性能。需要注意的是，<strong>在扩容 Consumer 的实例数量的同时，必须同步扩容主题中的分区数量，确保 Consumer 的实例数和分区数量是相等的，如果 Consumer 的实例数量超过分区数量，这样的扩容实际上是没有效果的</strong>。</p>
-<h3 id="消息积压后如何处理"><a class="markdownIt-Anchor" href="#消息积压后如何处理"></a> 消息积压后如何处理</h3>
+<h3 id="消息积压后如何处理">消息积压后如何处理</h3>
 <p>日常系统正常时候，没有积压或者只有少量积压很快就消费掉了，但某时刻，突然开始积压消息且持续上涨。这种情况下需要你在短时间内找到消息积压的原因，迅速解决问题。</p>
 <p><strong>导致消息积压突然增加，只有两种：发送变快了或者消费变慢了。</strong></p>
 <p>假如赶上大促或者抢购时，短时间内不太可能优化消费端的代码来提升消费性能，<strong>此时唯一的办法是通过扩容消费端的实例数来提升总体的消费能力</strong>。如果短时间内没有足够的服务器资源进行扩容，只能降级一些不重要的业务，减少发送方发送的数据量，最低限度让系统还能正常运转，保证重要业务服务正常。</p>
@@ -893,7 +897,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9-kafka-%E7%9A%84%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text"> 谈谈你对 kafka 的集群架构是如何理解的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text"> Kafka 整体架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text"> Kafka 存储机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text"> Kafka 副本机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text"> Kafka 网络模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88kafka%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%A6%82%E4%BD%95%E5%B7%A7%E5%A6%99%E8%A7%A3%E5%86%B3jvm-gc%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text"> 谈谈Kafka客户端如何巧妙解决JVM GC问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%86%B2%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text"> Kafka 客户端缓冲机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BC%93%E5%86%B2%E9%80%A0%E6%88%90%E7%9A%84%E9%A2%91%E7%B9%81gc%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text"> 内存缓冲造成的频繁GC问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka-%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%BC%93%E5%86%B2%E6%9C%BA%E5%88%B6"><span class="nav-number">2.3.</span> <span class="nav-text"> Kafka 实现的缓冲机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9-kafka-%E6%B6%88%E6%81%AF%E8%AF%AD%E4%B9%89%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text"> 谈谈你对 Kafka 消息语义是如何理解的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#producer%E7%AB%AF"><span class="nav-number">3.1.</span> <span class="nav-text"> Producer端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#consumer%E7%AB%AF"><span class="nav-number">3.2.</span> <span class="nav-text"> Consumer端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9-kafka-%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text"> 谈谈你对 Kafka 副本机制是如何理解的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6"><span class="nav-number">4.1.</span> <span class="nav-text"> 副本同步机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text"> 副本管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isr-%E5%89%AF%E6%9C%AC%E9%9B%86%E5%90%88"><span class="nav-number">4.3.</span> <span class="nav-text"> ISR 副本集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9kafka-leader%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text"> 谈谈你对Kafka Leader选举机制是如何理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9kafka%E6%8E%A7%E5%88%B6%E5%99%A8%E5%8F%8A%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text"> 谈谈你对Kafka控制器及选举机制是如何理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">6.1.</span> <span class="nav-text"> 控制器机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83"><span class="nav-number">6.2.</span> <span class="nav-text"> 控制器数据分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB"><span class="nav-number">6.3.</span> <span class="nav-text"> 控制器故障转移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E8%A7%A6%E5%8F%91%E9%80%89%E4%B8%BE%E5%9C%BA%E6%99%AF"><span class="nav-number">6.4.</span> <span class="nav-text"> 控制器触发选举场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6"><span class="nav-number">6.5.</span> <span class="nav-text"> 控制器选举机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88-kafka-%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%98%AF%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E7%9A%84"><span class="nav-number">7.</span> <span class="nav-text"> 谈谈 kafka 的数据可靠性是怎么保证的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88-kafka-%E6%B6%88%E6%81%AF%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">8.</span> <span class="nav-text"> 谈谈 Kafka 消息分配策略都有哪些</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rangeassignor"><span class="nav-number">8.1.</span> <span class="nav-text"> RangeAssignor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roundrobinassignor"><span class="nav-number">8.2.</span> <span class="nav-text"> RoundRobinAssignor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stickyassignor"><span class="nav-number">8.3.</span> <span class="nav-text"> StickyAssignor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88-kafka-%E6%B6%88%E8%B4%B9%E8%80%85%E9%87%8D%E5%B9%B3%E8%A1%A1%E6%9C%BA%E5%88%B6%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84"><span class="nav-number">9.</span> <span class="nav-text"> 谈谈 Kafka 消费者重平衡机制是怎样的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rebalance-%E8%A7%A6%E5%8F%91%E4%B8%8E%E9%80%9A%E7%9F%A5"><span class="nav-number">9.1.</span> <span class="nav-text"> Rebalance 触发与通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rebalance-%E5%8D%8F%E8%AE%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">9.2.</span> <span class="nav-text"> Rebalance 协议说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#consumer-group-%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">9.3.</span> <span class="nav-text"> Consumer Group 状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rebalance-%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">9.4.</span> <span class="nav-text"> Rebalance 流程分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rebalance-%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">9.5.</span> <span class="nav-text"> Rebalance 场景分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88kafka%E7%BA%BF%E4%B8%8A%E5%A4%A7%E9%87%8F%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%9A%84"><span class="nav-number">10.</span> <span class="nav-text"> 谈谈Kafka线上大量消息积压你是如何处理的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD%E6%9D%A5%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B"><span class="nav-number">10.1.</span> <span class="nav-text"> 优化性能来避免消息积压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="nav-number">10.2.</span> <span class="nav-text"> 消息积压后如何处理</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9-kafka-%E7%9A%84%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">谈谈你对 kafka 的集群架构是如何理解的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">Kafka 整体架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">Kafka 存储机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">Kafka 副本机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">Kafka 网络模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88Kafka%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%A6%82%E4%BD%95%E5%B7%A7%E5%A6%99%E8%A7%A3%E5%86%B3JVM-GC%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">谈谈Kafka客户端如何巧妙解决JVM GC问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%86%B2%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">Kafka 客户端缓冲机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BC%93%E5%86%B2%E9%80%A0%E6%88%90%E7%9A%84%E9%A2%91%E7%B9%81GC%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">内存缓冲造成的频繁GC问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%BC%93%E5%86%B2%E6%9C%BA%E5%88%B6"><span class="nav-number">2.3.</span> <span class="nav-text">Kafka 实现的缓冲机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9-Kafka-%E6%B6%88%E6%81%AF%E8%AF%AD%E4%B9%89%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">谈谈你对 Kafka 消息语义是如何理解的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Producer%E7%AB%AF"><span class="nav-number">3.1.</span> <span class="nav-text">Producer端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumer%E7%AB%AF"><span class="nav-number">3.2.</span> <span class="nav-text">Consumer端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9-Kafka-%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">谈谈你对 Kafka 副本机制是如何理解的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6"><span class="nav-number">4.1.</span> <span class="nav-text">副本同步机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">副本管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ISR-%E5%89%AF%E6%9C%AC%E9%9B%86%E5%90%88"><span class="nav-number">4.3.</span> <span class="nav-text">ISR 副本集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9Kafka-Leader%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">谈谈你对Kafka Leader选举机制是如何理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9Kafka%E6%8E%A7%E5%88%B6%E5%99%A8%E5%8F%8A%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6%E6%98%AF%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">谈谈你对Kafka控制器及选举机制是如何理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">6.1.</span> <span class="nav-text">控制器机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83"><span class="nav-number">6.2.</span> <span class="nav-text">控制器数据分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB"><span class="nav-number">6.3.</span> <span class="nav-text">控制器故障转移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E8%A7%A6%E5%8F%91%E9%80%89%E4%B8%BE%E5%9C%BA%E6%99%AF"><span class="nav-number">6.4.</span> <span class="nav-text">控制器触发选举场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6"><span class="nav-number">6.5.</span> <span class="nav-text">控制器选举机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88-kafka-%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%98%AF%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E7%9A%84"><span class="nav-number">7.</span> <span class="nav-text">谈谈 kafka 的数据可靠性是怎么保证的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88-Kafka-%E6%B6%88%E6%81%AF%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">8.</span> <span class="nav-text">谈谈 Kafka 消息分配策略都有哪些</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RangeAssignor"><span class="nav-number">8.1.</span> <span class="nav-text">RangeAssignor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RoundRobinAssignor"><span class="nav-number">8.2.</span> <span class="nav-text">RoundRobinAssignor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StickyAssignor"><span class="nav-number">8.3.</span> <span class="nav-text">StickyAssignor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88-Kafka-%E6%B6%88%E8%B4%B9%E8%80%85%E9%87%8D%E5%B9%B3%E8%A1%A1%E6%9C%BA%E5%88%B6%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84"><span class="nav-number">9.</span> <span class="nav-text">谈谈 Kafka 消费者重平衡机制是怎样的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebalance-%E8%A7%A6%E5%8F%91%E4%B8%8E%E9%80%9A%E7%9F%A5"><span class="nav-number">9.1.</span> <span class="nav-text">Rebalance 触发与通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebalance-%E5%8D%8F%E8%AE%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">9.2.</span> <span class="nav-text">Rebalance 协议说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumer-Group-%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">9.3.</span> <span class="nav-text">Consumer Group 状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebalance-%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">9.4.</span> <span class="nav-text">Rebalance 流程分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebalance-%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">9.5.</span> <span class="nav-text">Rebalance 场景分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88Kafka%E7%BA%BF%E4%B8%8A%E5%A4%A7%E9%87%8F%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%9A%84"><span class="nav-number">10.</span> <span class="nav-text">谈谈Kafka线上大量消息积压你是如何处理的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD%E6%9D%A5%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B"><span class="nav-number">10.1.</span> <span class="nav-text">优化性能来避免消息积压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="nav-number">10.2.</span> <span class="nav-text">消息积压后如何处理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

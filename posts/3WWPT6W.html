@@ -105,7 +105,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -325,7 +329,7 @@
 </blockquote>
 <p>本文汇总了常考的 ConcurrentHashMap 面试题，面试 ConcurrentHashMap，看这一篇就够了！为帮助大家高效复习，专门用”★ “表示面试中出现的频率，”★ “越多，代表越高频！</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/10318bUq3E.png" alt=""></p>
-<h2 id="实现原理"><a class="markdownIt-Anchor" href="#实现原理"></a> 实现原理</h2>
+<h2 id="实现原理">实现原理</h2>
 <blockquote>
 <p>ConcurrentHashMap 的实现原理是什么？★★★★★</p>
 </blockquote>
@@ -351,7 +355,7 @@
 <li>在 JDK1.6 中，对 synchronized 锁的实现引入了大量的优化，并且 synchronized 有多种锁状态，会从无锁 -&gt; 偏向锁 -&gt; 轻量级锁 -&gt; 重量级锁一步步转换。</li>
 <li>减少内存开销 。假设使用可重入锁来获得同步支持，那么每个节点都需要通过继承 AQS 来获得同步支持。但并不是每个节点都需要获得同步支持的，只有链表的头节点（红黑树的根节点）需要同步，这无疑带来了巨大内存浪费。</li>
 </ul>
-<h2 id="存取"><a class="markdownIt-Anchor" href="#存取"></a> 存取</h2>
+<h2 id="存取">存取</h2>
 <blockquote>
 <p>ConcurrentHashMap  的 put 方法执行逻辑是什么？★★★★</p>
 </blockquote>
@@ -418,8 +422,8 @@
 <p>get 方法不需要加锁与 volatile 修饰的哈希桶数组有关吗？★★★</p>
 </blockquote>
 <p>没有关系。哈希桶数组<code>table</code>用 volatile 修饰主要是保证在数组扩容的时候保证可见性。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/1040RIFKvY.png" alt="图片"></p>
-<h2 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/1040RIFKvY.png" alt=""></p>
+<h2 id="其他">其他</h2>
 <blockquote>
 <p>ConcurrentHashMap  不支持 key 或者 value 为  null  的原因？★★★</p>
 </blockquote>
@@ -444,7 +448,7 @@
 <p>ConcurrentHashMap 的迭代器创建后，就会按照哈希表结构遍历每个元素，但在遍历过程中，内部元素可能会发生变化，如果变化发生在已遍历过的部分，迭代器就不会反映出来，而如果变化发生在未遍历过的部分，迭代器就会发现并反映出来，这就是弱一致性。</p>
 <p>这样迭代器线程可以使用原来老的数据，而写线程也可以并发的完成改变，更重要的，这保证了多个线程并发执行的连续性和扩展性，是性能提升的关键。想要深入了解的小伙伴，可以看这篇文章：<span class="exturl" data-url="aHR0cDovL2lmZXZlLmNvbS9Db25jdXJyZW50SGFzaE1hcC13ZWFrbHktY29uc2lzdGVudC8=">http://ifeve.com/ConcurrentHashMap-weakly-consistent/<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
-<h4 id="jdk17-与-jdk18-中concurrenthashmap-的区别"><a class="markdownIt-Anchor" href="#jdk17-与-jdk18-中concurrenthashmap-的区别"></a> JDK1.7 与 JDK1.8 中ConcurrentHashMap 的区别？★★★★★</h4>
+<h4 id="JDK1-7-与-JDK1-8-中ConcurrentHashMap-的区别？★★★★★">JDK1.7 与 JDK1.8 中ConcurrentHashMap 的区别？★★★★★</h4>
 </blockquote>
 <ul>
 <li>数据结构：取消了 Segment 分段锁的数据结构，取而代之的是数组+链表+红黑树的结构。</li>
@@ -650,7 +654,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text"> 实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text"> 存取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text"> 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk17-%E4%B8%8E-jdk18-%E4%B8%ADconcurrenthashmap-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.0.1.</span> <span class="nav-text"> JDK1.7 与 JDK1.8 中ConcurrentHashMap 的区别？★★★★★</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text">存取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK1-7-%E4%B8%8E-JDK1-8-%E4%B8%ADConcurrentHashMap-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85"><span class="nav-number">3.0.1.</span> <span class="nav-text">JDK1.7 与 JDK1.8 中ConcurrentHashMap 的区别？★★★★★</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

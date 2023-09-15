@@ -105,7 +105,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -320,51 +324,51 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="为什么用多线程"><a class="markdownIt-Anchor" href="#为什么用多线程"></a> 为什么用多线程</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616753915503-beba6051-7a3c-4800-888b-1c0e30b0d075.png" alt="image.png"></p>
-<h3 id="多线程难在哪里"><a class="markdownIt-Anchor" href="#多线程难在哪里"></a> 多线程难在哪里</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616753985651-23314499-41bb-4aee-8378-a93880a5b4ea.png" alt="image.png"></p>
-<h3 id="守护线程"><a class="markdownIt-Anchor" href="#守护线程"></a> 守护线程</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616754358431-3b693713-b77e-453e-a625-9fb19218cdb4.png" alt="image.png"></p>
-<h3 id="并发编程三要素线程三大特性"><a class="markdownIt-Anchor" href="#并发编程三要素线程三大特性"></a> 并发编程三要素(<strong>线程三大特性)</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt="image.png"></p>
-<h3 id="线程的状态"><a class="markdownIt-Anchor" href="#线程的状态"></a> 线程的状态</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt="image.png"></p>
-<h3 id="线程的实现方式"><a class="markdownIt-Anchor" href="#线程的实现方式"></a> 线程的实现方式</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt="image.png"></p>
-<h3 id="sleep-和-wait-有什么区别"><a class="markdownIt-Anchor" href="#sleep-和-wait-有什么区别"></a> sleep() 和 wait() 有什么区别</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt="image.png"></p>
-<h3 id="notify和-notifyall有什么区别"><a class="markdownIt-Anchor" href="#notify和-notifyall有什么区别"></a> notify()和 notifyAll()有什么区别</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt="image.png"></p>
-<h3 id="线程的-run-和-start-有什么区别"><a class="markdownIt-Anchor" href="#线程的-run-和-start-有什么区别"></a> 线程的 run() 和 start() 有什么区别</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt="image.png"></p>
-<h3 id="runnable接口和callable接口的区别"><a class="markdownIt-Anchor" href="#runnable接口和callable接口的区别"></a> Runnable接口和Callable接口的区别</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt="image.png"></p>
-<h3 id="是继承thread类好还是实现runnable接口好"><a class="markdownIt-Anchor" href="#是继承thread类好还是实现runnable接口好"></a> <strong>是继承Thread类好还是实现Runnable接口好</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt="image.png"></p>
-<h3 id="你在哪里用到了多线程"><a class="markdownIt-Anchor" href="#你在哪里用到了多线程"></a> <strong>你在哪里用到了多线程</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt="image.png"></p>
-<h3 id="什么是多线程安全"><a class="markdownIt-Anchor" href="#什么是多线程安全"></a> <strong>什么是多线程安全</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt="image.png"></p>
-<h3 id="如何解决多线程之间线程安全问题"><a class="markdownIt-Anchor" href="#如何解决多线程之间线程安全问题"></a> <strong>如何解决多线程之间线程安全问题</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt="image.png"></p>
-<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><a class="markdownIt-Anchor" href="#为什么使用线程同步或使用锁能解决线程安全问题呢"></a> <strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3>
-<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt="image.png"></strong></p>
-<h3 id="什么是多线程之间同步"><a class="markdownIt-Anchor" href="#什么是多线程之间同步"></a> <strong>什么是多线程之间同步</strong></h3>
-<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt="image.png"></strong></p>
-<h3 id="什么是守护线程"><a class="markdownIt-Anchor" href="#什么是守护线程"></a> <strong>什么是守护线程</strong></h3>
-<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt="image.png"></strong></p>
-<h3 id="多线程有什么用"><a class="markdownIt-Anchor" href="#多线程有什么用"></a> 多线程有什么用</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt="image.png"></p>
-<h3 id="synchronizedmap和concurrenthashmap有什么区别"><a class="markdownIt-Anchor" href="#synchronizedmap和concurrenthashmap有什么区别"></a> SynchronizedMap和ConcurrentHashMap有什么区别</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt="image.png"></p>
-<h3 id="什么是线程安全"><a class="markdownIt-Anchor" href="#什么是线程安全"></a> 什么是线程安全</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616756131905-064eeb18-999a-4591-92eb-1fa2ba9a552e.png" alt="image.png"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt="image.png"></p>
-<h3 id="线程安全的类一定所有的操作都线程安全吗"><a class="markdownIt-Anchor" href="#线程安全的类一定所有的操作都线程安全吗"></a> 线程安全的类一定所有的操作都线程安全吗</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616756345550-319c055c-1e72-434e-ad0e-87338c82014d.png" alt="image.png"></p>
-<h3 id="thread类中的yield方法有什么作用"><a class="markdownIt-Anchor" href="#thread类中的yield方法有什么作用"></a> Thread类中的yield方法有什么作用</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt="image.png"></p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="为什么用多线程">为什么用多线程</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616753915503-beba6051-7a3c-4800-888b-1c0e30b0d075.png" alt=""></p>
+<h3 id="多线程难在哪里">多线程难在哪里</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616753985651-23314499-41bb-4aee-8378-a93880a5b4ea.png" alt=""></p>
+<h3 id="守护线程">守护线程</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616754358431-3b693713-b77e-453e-a625-9fb19218cdb4.png" alt=""></p>
+<h3 id="并发编程三要素-线程三大特性">并发编程三要素(<strong>线程三大特性)</strong></h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616742879894-0c6a8553-ed51-47d9-b51b-5873a1dcff99.png" alt=""></p>
+<h3 id="线程的状态">线程的状态</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616742935797-7fd1f67d-2ed5-43d3-b002-3f7f0e445dae.png" alt=""></p>
+<h3 id="线程的实现方式">线程的实现方式</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743152283-9fe6dc0d-be88-4afb-890b-6ba41d8f7536.png" alt=""></p>
+<h3 id="sleep-和-wait-有什么区别">sleep() 和 wait() 有什么区别</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743263844-b9f0d7c1-2fe3-42a3-a223-2520310d3b72.png" alt=""></p>
+<h3 id="notify-和-notifyAll-有什么区别">notify()和 notifyAll()有什么区别</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743363073-f2ce093d-9516-458d-83e1-945a17fa402c.png" alt=""></p>
+<h3 id="线程的-run-和-start-有什么区别">线程的 run() 和 start() 有什么区别</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743427075-517036be-30d9-4740-9936-712af15c7dec.png" alt=""></p>
+<h3 id="Runnable接口和Callable接口的区别">Runnable接口和Callable接口的区别</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743922435-e652d3af-43cf-4fc9-a76f-8d860c690b97.png" alt=""></p>
+<h3 id="是继承Thread类好还是实现Runnable接口好"><strong>是继承Thread类好还是实现Runnable接口好</strong></h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743491031-d0b135be-0612-4b83-bdfe-e1604884203b.png" alt=""></p>
+<h3 id="你在哪里用到了多线程"><strong>你在哪里用到了多线程</strong></h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743535203-b009aa06-d60d-4882-aa43-ad6c520d8c17.png" alt=""></p>
+<h3 id="什么是多线程安全"><strong>什么是多线程安全</strong></h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743584207-ad80f7d1-9e52-4a98-98bf-c131a4cbe73d.png" alt=""></p>
+<h3 id="如何解决多线程之间线程安全问题"><strong>如何解决多线程之间线程安全问题</strong></h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743610784-a8182ec6-137b-43bc-bb85-b670aaee7822.png" alt=""></p>
+<h3 id="为什么使用线程同步或使用锁能解决线程安全问题呢"><strong>为什么使用线程同步或使用锁能解决线程安全问题呢</strong></h3>
+<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616743630368-d976d2aa-c92a-46eb-b641-bebf175eceb1.png" alt=""></strong></p>
+<h3 id="什么是多线程之间同步"><strong>什么是多线程之间同步</strong></h3>
+<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616743664618-143f085f-eedb-49f3-ac9f-1524694e78c6.png" alt=""></strong></p>
+<h3 id="什么是守护线程"><strong>什么是守护线程</strong></h3>
+<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616743763161-15013e3e-1da7-4a54-a5cd-c09b3668cb11.png" alt=""></strong></p>
+<h3 id="多线程有什么用">多线程有什么用</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616743875593-187d3c43-c445-4b8b-8382-5b0a8ff0c64b.png" alt=""></p>
+<h3 id="SynchronizedMap和ConcurrentHashMap有什么区别">SynchronizedMap和ConcurrentHashMap有什么区别</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616744623358-a86c68a3-0fc4-40c1-8a74-ccf59f3daa4f.png" alt=""></p>
+<h3 id="什么是线程安全">什么是线程安全</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616756131905-064eeb18-999a-4591-92eb-1fa2ba9a552e.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616744842066-01213030-08c0-4440-96ec-f956be4ddcd4.png" alt=""></p>
+<h3 id="线程安全的类一定所有的操作都线程安全吗">线程安全的类一定所有的操作都线程安全吗</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616756345550-319c055c-1e72-434e-ad0e-87338c82014d.png" alt=""></p>
+<h3 id="Thread类中的yield方法有什么作用">Thread类中的yield方法有什么作用</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616744930139-355d5f4c-cf41-43b0-8220-6787558c9269.png" alt=""></p>
 <blockquote>
 <p>相关文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS8xNDk3NTA3My8yNTkxMDI5">文章1<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
@@ -541,7 +545,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text"> 为什么用多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9A%BE%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="nav-number">2.</span> <span class="nav-text"> 多线程难在哪里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text"> 守护线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0%E7%BA%BF%E7%A8%8B%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text"> 并发编程三要素(线程三大特性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">5.</span> <span class="nav-text"> 线程的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text"> 线程的实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-%E5%92%8C-wait-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text"> sleep() 和 wait() 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#notify%E5%92%8C-notifyall%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text"> notify()和 notifyAll()有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84-run-%E5%92%8C-start-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text"> 线程的 run() 和 start() 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#runnable%E6%8E%A5%E5%8F%A3%E5%92%8Ccallable%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">10.</span> <span class="nav-text"> Runnable接口和Callable接口的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E7%BB%A7%E6%89%BFthread%E7%B1%BB%E5%A5%BD%E8%BF%98%E6%98%AF%E5%AE%9E%E7%8E%B0runnable%E6%8E%A5%E5%8F%A3%E5%A5%BD"><span class="nav-number">11.</span> <span class="nav-text"> 是继承Thread类好还是实现Runnable接口好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E5%9C%A8%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">12.</span> <span class="nav-text"> 你在哪里用到了多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">13.</span> <span class="nav-text"> 什么是多线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text"> 如何解决多线程之间线程安全问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%88%96%E4%BD%BF%E7%94%A8%E9%94%81%E8%83%BD%E8%A7%A3%E5%86%B3%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E5%91%A2"><span class="nav-number">15.</span> <span class="nav-text"> 为什么使用线程同步或使用锁能解决线程安全问题呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">16.</span> <span class="nav-text"> 什么是多线程之间同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="nav-number">17.</span> <span class="nav-text"> 什么是守护线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="nav-number">18.</span> <span class="nav-text"> 多线程有什么用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronizedmap%E5%92%8Cconcurrenthashmap%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">19.</span> <span class="nav-text"> SynchronizedMap和ConcurrentHashMap有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">20.</span> <span class="nav-text"> 什么是线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E7%B1%BB%E4%B8%80%E5%AE%9A%E6%89%80%E6%9C%89%E7%9A%84%E6%93%8D%E4%BD%9C%E9%83%BD%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E5%90%97"><span class="nav-number">21.</span> <span class="nav-text"> 线程安全的类一定所有的操作都线程安全吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#thread%E7%B1%BB%E4%B8%AD%E7%9A%84yield%E6%96%B9%E6%B3%95%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="nav-number">22.</span> <span class="nav-text"> Thread类中的yield方法有什么作用</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">为什么用多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9A%BE%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="nav-number">2.</span> <span class="nav-text">多线程难在哪里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">守护线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0-%E7%BA%BF%E7%A8%8B%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">并发编程三要素(线程三大特性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">5.</span> <span class="nav-text">线程的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">线程的实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-%E5%92%8C-wait-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text">sleep() 和 wait() 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#notify-%E5%92%8C-notifyAll-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">notify()和 notifyAll()有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84-run-%E5%92%8C-start-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">线程的 run() 和 start() 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Runnable%E6%8E%A5%E5%8F%A3%E5%92%8CCallable%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">10.</span> <span class="nav-text">Runnable接口和Callable接口的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E7%BB%A7%E6%89%BFThread%E7%B1%BB%E5%A5%BD%E8%BF%98%E6%98%AF%E5%AE%9E%E7%8E%B0Runnable%E6%8E%A5%E5%8F%A3%E5%A5%BD"><span class="nav-number">11.</span> <span class="nav-text">是继承Thread类好还是实现Runnable接口好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E5%9C%A8%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">12.</span> <span class="nav-text">你在哪里用到了多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">13.</span> <span class="nav-text">什么是多线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text">如何解决多线程之间线程安全问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%88%96%E4%BD%BF%E7%94%A8%E9%94%81%E8%83%BD%E8%A7%A3%E5%86%B3%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E5%91%A2"><span class="nav-number">15.</span> <span class="nav-text">为什么使用线程同步或使用锁能解决线程安全问题呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">16.</span> <span class="nav-text">什么是多线程之间同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="nav-number">17.</span> <span class="nav-text">什么是守护线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="nav-number">18.</span> <span class="nav-text">多线程有什么用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SynchronizedMap%E5%92%8CConcurrentHashMap%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">19.</span> <span class="nav-text">SynchronizedMap和ConcurrentHashMap有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">20.</span> <span class="nav-text">什么是线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E7%B1%BB%E4%B8%80%E5%AE%9A%E6%89%80%E6%9C%89%E7%9A%84%E6%93%8D%E4%BD%9C%E9%83%BD%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E5%90%97"><span class="nav-number">21.</span> <span class="nav-text">线程安全的类一定所有的操作都线程安全吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread%E7%B1%BB%E4%B8%AD%E7%9A%84yield%E6%96%B9%E6%B3%95%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="nav-number">22.</span> <span class="nav-text">Thread类中的yield方法有什么作用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

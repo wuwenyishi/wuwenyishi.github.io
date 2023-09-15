@@ -86,7 +86,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -301,7 +305,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="concurrenthashmap在jdk17和18的区别"><a class="markdownIt-Anchor" href="#concurrenthashmap在jdk17和18的区别"></a> ConcurrentHashMap在Jdk1.7和1.8的区别</h2>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="ConcurrentHashMap在Jdk1-7和1-8的区别">ConcurrentHashMap在Jdk1.7和1.8的区别</h2>
 <ul>
 <li>
 <p>数据结构<br>
@@ -315,13 +319,13 @@
 和 CAS 来操作。synchronized只锁定当前链表或红黑二叉树的首节点</p>
 </li>
 </ul>
-<h2 id="hashmap在jdk17和18的区别"><a class="markdownIt-Anchor" href="#hashmap在jdk17和18的区别"></a> HashMap在Jdk1.7和1.8的区别</h2>
+<h2 id="HashMap在Jdk1-7和1-8的区别">HashMap在Jdk1.7和1.8的区别</h2>
 <p>在jdk1.7之前HashMap是基于数组和链表实现的，而且采用头插法。</p>
 <p>而jdk1.8 之后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）<br>
 （将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。采用尾插法。</p>
 <p>HashMap默认的初始化大小为 16。当HashMap中的元素个数之和大于负载因子*当前容量的时候就要进行扩充，容量变为原来的 2 倍。<br>
 （这里注意不是数组中的个数，而且数组中和链/树中的所有元素个数之和！）</p>
-<h2 id="内存泄漏和内存溢出"><a class="markdownIt-Anchor" href="#内存泄漏和内存溢出"></a> 内存泄漏和内存溢出</h2>
+<h2 id="内存泄漏和内存溢出">内存泄漏和内存溢出</h2>
 <ul>
 <li>
 <p>内存泄漏<br>
@@ -332,7 +336,7 @@
 指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出，简单来说就是自己所需要使用的空间比我们拥有的内存大内存不够使用所造成的内存溢出。</p>
 </li>
 </ul>
-<h2 id="轻量级锁一定比重量级锁效率高吗"><a class="markdownIt-Anchor" href="#轻量级锁一定比重量级锁效率高吗"></a> 轻量级锁一定比重量级锁效率高吗？</h2>
+<h2 id="轻量级锁一定比重量级锁效率高吗？">轻量级锁一定比重量级锁效率高吗？</h2>
 <p>并不是。<br>
 在使用轻量级锁（CAS）的时候，当线程非常多的时候，比如1W条线程在竞争锁，这些线程循环的获取锁，这些线程的锁竞争是很消耗CPU资源的，很多内存都用到了线程切换上，从而效率很低。<br>
 在竞争锁的线程很多时，使用重量级锁，会把这些线程放在一个队列里，不会消耗CPU资源，需要操作系统调用来获取锁。</p>
@@ -514,7 +518,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#concurrenthashmap%E5%9C%A8jdk17%E5%92%8C18%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text"> ConcurrentHashMap在Jdk1.7和1.8的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashmap%E5%9C%A8jdk17%E5%92%8C18%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text"> HashMap在Jdk1.7和1.8的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%92%8C%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA"><span class="nav-number">3.</span> <span class="nav-text"> 内存泄漏和内存溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E4%B8%80%E5%AE%9A%E6%AF%94%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E6%95%88%E7%8E%87%E9%AB%98%E5%90%97"><span class="nav-number">4.</span> <span class="nav-text"> 轻量级锁一定比重量级锁效率高吗？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap%E5%9C%A8Jdk1-7%E5%92%8C1-8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">ConcurrentHashMap在Jdk1.7和1.8的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E5%9C%A8Jdk1-7%E5%92%8C1-8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">HashMap在Jdk1.7和1.8的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%92%8C%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA"><span class="nav-number">3.</span> <span class="nav-text">内存泄漏和内存溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E4%B8%80%E5%AE%9A%E6%AF%94%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E6%95%88%E7%8E%87%E9%AB%98%E5%90%97%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">轻量级锁一定比重量级锁效率高吗？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

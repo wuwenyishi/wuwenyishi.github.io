@@ -92,7 +92,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -310,7 +314,7 @@
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><blockquote>
 <p>来自：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzgxNjI3Mj9zcG09YTJjNmguMTI4NzM1ODEuMC5kQXJ0aWNsZTgxNjI3Mi4yNTg1MzlhMGIzeW1CYg==">阿里技术<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/193444.jpg" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/193444.jpg" alt=""></p>
 <blockquote>
 <p><strong>简介：</strong></p>
 <p>本文从钉钉实人认证场景的一例数据重复问题出发，分析了其原因是因为并发导致幂等失效，引出幂等的概念。针对并发场景下的幂等问题，提出了一种实现幂等可行的方法论，结合通讯录加人业务场景对数据库幂等问题进行了简单分析，就分布式锁实现幂等方法展开了详细讨论。分析了锁在分布式场景下存在的问题，包括单点故障、网络超时、错误释放他人锁、提前释放锁以及分布式锁单点故障等，提出了对应的解决方案，介绍了对应方案的具体实现。</p>
@@ -320,16 +324,16 @@
 <blockquote>
 <p>写在前面：本文讨论的幂等问题，均为并发场景下的幂等问题。即系统本存在幂等设计，但是在并发场景下失效了。</p>
 </blockquote>
-<h3 id="一-摘要"><a class="markdownIt-Anchor" href="#一-摘要"></a> 一  摘要</h3>
+<h3 id="一-摘要">一  摘要</h3>
 <p>本文从钉钉实人认证场景的一例数据重复问题出发，分析了其原因是因为并发导致幂等失效，引出幂等的概念。</p>
 <p>针对并发场景下的幂等问题，提出了一种实现幂等可行的方法论，结合通讯录加人业务场景对数据库幂等问题进行了简单分析，就分布式锁实现幂等方法展开了详细讨论。</p>
 <p>分析了锁在分布式场景下存在的问题，包括单点故障、网络超时、错误释放他人锁、提前释放锁以及分布式锁单点故障等，提出了对应的解决方案，介绍了对应方案的具体实现。</p>
-<h3 id="二-问题"><a class="markdownIt-Anchor" href="#二-问题"></a> 二  问题</h3>
+<h3 id="二-问题">二  问题</h3>
 <p>钉钉实人认证业务存在数据重复的问题。</p>
-<h4 id="1-问题现象"><a class="markdownIt-Anchor" href="#1-问题现象"></a> 1  问题现象</h4>
+<h4 id="1-问题现象">1  问题现象</h4>
 <p>正常情况下，数据库中应该只有一条实人认证成功记录，但是实际上某用户有多条。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/191340.jpg" alt="image.png"></p>
-<h4 id="2-问题原因"><a class="markdownIt-Anchor" href="#2-问题原因"></a> 2  问题原因</h4>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/191340.jpg" alt=""></p>
+<h4 id="2-问题原因">2  问题原因</h4>
 <p>并发导致了不幂等。</p>
 <p>我们先来回顾一下幂等的概念：</p>
 <blockquote>
@@ -342,11 +346,11 @@
 2）用户在钉钉移动端按照指示完成人脸比对；<br>
 3）比对完成后访问服务端修改数据库状态。</p>
 <p>在第3步中，在修改数据库状态之前，会判断「是否已经初始化」、「是否已经实人认证」以及「智科是否返回认证成功」以保证幂等。仅当请求首次访问服务端尝试修改数据库状态时，才能满足幂等的判断条件并修改数据库状态。其余任意次请求将直接返回，对数据库状态无影响。请求多次访问服务端所产生的结果，和请求首次访问服务端一致。因此，在实人认证成功的前提下，数据库应当有且仅有一条认证成功的记录。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/191425.jpg" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/191425.jpg" alt=""></p>
 <p>但是在实际过程中我们发现，同一个请求会多次修改数据库状态，系统并未按照我们预期的那样实现幂等。究其原因，是因为请求并发访问，在首次请求完成修改服务端状态前，并发的其他请求和首次请求都通过了幂等判断，对数据库状态进行了多次修改。</p>
 <p>并发导致了原幂等设计失效。</p>
 <p>并发导致了不幂等。</p>
-<h3 id="三-解决方案"><a class="markdownIt-Anchor" href="#三-解决方案"></a> 三  解决方案</h3>
+<h3 id="三-解决方案">三  解决方案</h3>
 <p>解决并发场景下幂等问题的关键，是找到唯一性约束，执行唯一性检查，相同的数据保存一次，相同的请求操作一次。</p>
 <p>一次访问服务端的请求，可能产生以下几种交互：</p>
 <ol>
@@ -359,7 +363,7 @@
 <p>钉钉通讯录加人就是通过数据库的唯一索引解决了幂等问题。以钉钉通讯录加人为例，在向数据库写数据之前，会先判断数据是否已经存在于数据库之中，如果不存在，加人请求最终会向数据库的员工表插入一条数据。大量相同的并发的通讯录加人请求让系统的幂等设计失效成为可能。在一次加人请求中，（组织ID，工号）可以唯一标记一个请求，在数据库中，也存在（组织ID，工号）的唯一索引。因此我们可以保证，多次相同的加人请求，只会修改一次数据库状态，即添加一条记录。</p>
 <p>如果所依赖的组件天然幂等，那么问题就简单了，但是实际情况往往更加复杂。并发场景下，如果系统依赖的组件无法幂等，我们就需要使用额外的手段实现幂等。</p>
 <p>一个常用的手段就是使用分布式锁。分布式锁的实现方式有很多，比较常用的是缓存式分布式锁。</p>
-<h3 id="四-分布式锁"><a class="markdownIt-Anchor" href="#四-分布式锁"></a> 四  分布式锁</h3>
+<h3 id="四-分布式锁">四  分布式锁</h3>
 <p>在What is a Java distributed lock?中有这样几段话：</p>
 <blockquote>
 <p>In computer science, locks are mechanisms in a multithreaded environment  to prevent different threads from operating on the same resource. When  using locking, a resource is “locked” for access by a specific thread,  and can only be accessed by a different thread once the resource has  been released. Locks have several benefits: they stop two threads from  doing the same work, and they prevent errors and data corruption when  two threads try to use the same resource simultaneously.</p>
@@ -383,7 +387,7 @@
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTryLock</span>(<span class="params"></span>)</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">//初始化工厂</span></span><br><span class="line">    MdbDistributeLockFactory mdbDistributeLockFactory = <span class="keyword">new</span> MdbDistributeLockFactory();</span><br><span class="line">    mdbDistributeLockFactory.setNamespace(<span class="number">603</span>);</span><br><span class="line">    mdbDistributeLockFactory.setMtairManager(<span class="keyword">new</span> MultiClusterTairManager());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获得锁</span></span><br><span class="line">    DistributeLock <span class="keyword">lock</span> = mdbDistributeLockFactory.getLock(<span class="string">"TestLock"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//上锁解锁操作</span></span><br><span class="line">    boolean locked = <span class="keyword">lock</span>.tryLock();</span><br><span class="line">    <span class="keyword">if</span> (!locked) {</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        <span class="comment">//do something </span></span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        <span class="keyword">lock</span>.unlock();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>该方案简单易用，但是问题也很明显。例如，释放锁的时候只是简单的将缓存中的key失效，所以存在错误释放他人已持有锁问题。所幸只要锁的租期设置的足够长，该问题出现几率就足够小。</p>
 <p>我们借用Martin Kleppmann在文章How to do distributed locking中的一张图说明该问题。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/191436.jpg" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/191436.jpg" alt=""></p>
 <p>设想一种情况，当占有锁的Client 1在释放锁之前，锁就已经到期了，Client 2将获取锁，此时锁被Client 2持有，但是Client  1可能会错误的将其释放。一个更优秀的方案，我们给每个锁都设置一个身份标识，在释放锁的时候，1）首先查询锁是否是自己的，2）如果是自己的则释放锁。受限于实现方式，步骤1和步骤2不是原子操作，在步骤1和步骤2之间，如果锁到期被其他客户端获取，此时也会错误的释放他人的锁。</p>
 <p><strong>方案二</strong></p>
 <p>借助Redis的Lua脚本，可以完美的解决存在错误释放他人已持有锁问题的。在Distributed locks with Redis这篇文章的 Correct implementation with a single instance  这一节中，我们可以得到我们想要的答案——如何实现一个分布式锁。</p>
@@ -520,8 +524,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/1F4JVMQ.html" rel="prev" title="一文搞懂redis">
-      <i class="fa fa-chevron-left"></i> 一文搞懂redis
+    <a href="/posts/33P1FY8.html" rel="prev" title="一文详解SQL关联子查询">
+      <i class="fa fa-chevron-left"></i> 一文详解SQL关联子查询
     </a></div>
       <div class="post-nav-item">
     <a href="/posts/3RHZNJS.html" rel="next" title="synchronized 实现原理">
@@ -601,7 +605,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text"> 一  摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text"> 二  问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text"> 1  问题现象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.2.</span> <span class="nav-text"> 2  问题原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text"> 三  解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">4.</span> <span class="nav-text"> 四  分布式锁</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">一  摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">二  问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">1  问题现象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.2.</span> <span class="nav-text">2  问题原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">三  解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">4.</span> <span class="nav-text">四  分布式锁</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

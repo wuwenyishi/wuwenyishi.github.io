@@ -84,7 +84,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -304,11 +308,11 @@
 <p>cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/U</p>
 </blockquote>
 <p>spring boot项目打成的 jar包无法获取src/main/resources下文件</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt="bdDMAq"><br>
+<p><img data-src="https://xuemingde.com/pages/image/others/bdDMAq.png" alt=""><br>
 打成Jar后<br>
-<img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt="yC8St7"></p>
+<img data-src="https://xuemingde.com/pages/image/others/yC8St7.png" alt=""></p>
 <p>获取resources下的文件<br>
-<img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt="et123k"></p>
+<img data-src="https://xuemingde.com/pages/image/others/et123k.png" alt=""></p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ClassPathResource classPathResource = <span class="keyword">new</span> ClassPathResource(<span class="string">"img/tofflon-logo.png"</span>);</span><br><span class="line">URL url = classPathResource.getURL();</span><br><span class="line">Image image = Image.getInstance(url);</span><br></pre></td></tr></tbody></table></figure>
 
     </div>

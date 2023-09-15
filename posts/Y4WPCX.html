@@ -86,7 +86,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -331,7 +335,7 @@
 </ol>
 <p>根据这个算法获取到快照读的可见数据。</p>
 <p>这里借鉴<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NuYWlsTWFubi9hcnRpY2xlL2RldGFpbHMvOTQ3MjQxOTc=">@SnailMann <i class="fa fa-external-link-alt"></i></span> 的一张流程图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/MnGVLF.jpg" alt="MnGVLF"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/MnGVLF.jpg" alt=""></p>
 <p>幻读，就是A事务读取表中某字段小于5的数据为3条，该事务没有提交，此时，B事务插入了一条符合A事务的查询条件的数据，并且提交了事务，A事务再次查询时会得到4条。这种情况在没有使用MVCC时会发生，如果使用了MVCC就不会发生。如果B事务提交后，A事务更新了该字段所有小于5的数据操作，之后再去获取该字段小于5的数据，还是会得到4条，所以，幻读问题又发生了。</p>
 <p>MVCC没有彻底解决掉脏读的问题，只有当前操作都是快照读时，才不会产生幻读的问题，如果既有快照读又有当前读，就会有幻读的问题。</p>
 <p>MVCC解决了快照读情况下的幻读问题，却没有解决当前读情况下的幻读问题。</p>

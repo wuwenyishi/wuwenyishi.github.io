@@ -94,7 +94,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -309,7 +313,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="using的三种用法详解"><a class="markdownIt-Anchor" href="#using的三种用法详解"></a> using的三种用法详解</h3>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="using的三种用法详解">using的三种用法详解</h3>
 <ol>
 <li>
 <p>using声明(引入单个名称)</p>
@@ -335,7 +339,7 @@
 <p>​</p>
 </li>
 </ol>
-<h3 id="数据类型"><a class="markdownIt-Anchor" href="#数据类型"></a> 数据类型</h3>
+<h3 id="数据类型">数据类型</h3>
 <ol>
 <li>
 <p>整数类型</p>
@@ -362,15 +366,15 @@
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; <span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">bool</span>) &lt;&lt; std::endl; <span class="comment">//占用1字节</span></span><br><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">std::cout &lt;&lt; flag &lt;&lt; std::endl; <span class="comment">// 1</span></span><br><span class="line">flag = <span class="literal">false</span>;</span><br><span class="line">std::cout &lt;&lt; flag &lt;&lt; std::endl; <span class="comment">// 0</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
-<h3 id="三元运算"><a class="markdownIt-Anchor" href="#三元运算"></a> 三元运算</h3>
+<h3 id="三元运算">三元运算</h3>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> c;</span><br><span class="line">c = b &gt; a ? b : a;</span><br><span class="line">std::cout &lt;&lt; c &lt;&lt; std::endl; <span class="comment">// c=20</span></span><br><span class="line"><span class="comment">////////////</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">(b &gt; a ? b : a) = <span class="number">100</span>;</span><br><span class="line">std::cout &lt;&lt; b &lt;&lt; std::endl; <span class="comment">// 100</span></span><br><span class="line">std::cout &lt;&lt; a &lt;&lt; std::endl; <span class="comment">// 10</span></span><br><span class="line"><span class="comment">////////////</span></span><br><span class="line">  </span><br><span class="line"> <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">(b &lt; a ? b : a) = <span class="number">100</span>;</span><br><span class="line">std::cout &lt;&lt; b &lt;&lt; std::endl; <span class="comment">// 20</span></span><br><span class="line">std::cout &lt;&lt; a &lt;&lt; std::endl; <span class="comment">// 100</span></span><br></pre></td></tr></tbody></table></figure>
-<h3 id="随机数"><a class="markdownIt-Anchor" href="#随机数"></a> 随机数</h3>
+<h3 id="随机数">随机数</h3>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 系统生成随机数 这样生成的随机数，每次都是一样的，是伪随机数</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="built_in">rand</span>() % <span class="number">100</span> + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加随机数种子， 作用是利用当前系统时间生成随机数，防止每次随机数都一样</span></span><br><span class="line"><span class="built_in">srand</span>((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="built_in">time</span>(<span class="literal">NULL</span>));</span><br><span class="line"><span class="comment">//这样生成的随机数，每次都不一样</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="built_in">rand</span>() % <span class="number">100</span> + <span class="number">1</span>;</span><br><span class="line">std::cout &lt;&lt; num &lt;&lt; std::endl;</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="goto"><a class="markdownIt-Anchor" href="#goto"></a> goto</h3>
+<h3 id="goto">goto</h3>
 <blockquote>
 <p>在程序中不建议使用 goto 语句，以免造成程序的混乱</p>
 </blockquote>
-<h3 id="数组"><a class="markdownIt-Anchor" href="#数组"></a> 数组</h3>
+<h3 id="数组">数组</h3>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[<span class="number">5</span>] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};</span><br><span class="line"><span class="comment">// 查看数组的内存大小</span></span><br><span class="line">std::cout &lt;&lt; <span class="built_in"><span class="keyword">sizeof</span></span>(arr) &lt;&lt; std::endl;<span class="comment">//20 int类型一个数字占4个字节，5个数字就占20个字节</span></span><br><span class="line"><span class="comment">//通过数组名查看数组地址</span></span><br><span class="line">std::cout &lt;&lt; &amp;arr &lt;&lt; std::endl; <span class="comment">//0x7ffee5434b70</span></span><br><span class="line"><span class="comment">//通过数组名查看数组第一个元素地址 （与数组地址一致）</span></span><br><span class="line">std::cout &lt;&lt; &amp;arr[<span class="number">0</span>] &lt;&lt; std::endl; <span class="comment">//0x7ffee5434b70</span></span><br><span class="line"><span class="comment">//通过数组名查看数组第二个元素地址</span></span><br><span class="line">std::cout &lt;&lt; &amp;arr[<span class="number">1</span>] &lt;&lt; std::endl; <span class="comment">//0x7ffee5434b7</span></span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li>冒泡排序</li>
@@ -392,7 +396,7 @@
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">}</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap2</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> temp = *a;</span><br><span class="line">    *a = *b;</span><br><span class="line">    *b = temp;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">////////////</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="comment">//值传递无法改变实参</span></span><br><span class="line"><span class="built_in">swap</span>(a, b);</span><br><span class="line">std::cout &lt;&lt; <span class="string">"a = "</span> &lt;&lt; a &lt;&lt; std::endl; <span class="comment">// 10</span></span><br><span class="line">std::cout &lt;&lt; <span class="string">"b = "</span> &lt;&lt; b &lt;&lt; std::endl;<span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//地址传递可法改变实参</span></span><br><span class="line"><span class="built_in">swap2</span>(&amp;a, &amp;b);</span><br><span class="line">std::cout &lt;&lt; <span class="string">"2a = "</span> &lt;&lt; a &lt;&lt; std::endl;<span class="comment">// 20</span></span><br><span class="line">std::cout &lt;&lt; <span class="string">"2b = "</span> &lt;&lt; b &lt;&lt; std::endl;<span class="comment">// 10</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
-<h3 id="结构体"><a class="markdownIt-Anchor" href="#结构体"></a> 结构体</h3>
+<h3 id="结构体">结构体</h3>
 <blockquote>
 <p>结构体属于用户自定义的数据类型，允许用户存储不同的数据类型</p>
 <p>(相当java中的实体类、DTO、VO等)</p>
@@ -430,7 +434,7 @@
 </blockquote>
 </li>
 </ol>
-<h3 id="c-内存分区模型"><a class="markdownIt-Anchor" href="#c-内存分区模型"></a> C++ 内存分区模型</h3>
+<h3 id="C-内存分区模型">C++ 内存分区模型</h3>
 <ul>
 <li>代码区：存放函数体的二进制代码，由操作系统管理</li>
 <li>全局区：存放全局变量和静态变量以及常量</li>
@@ -495,7 +499,7 @@
 <p>​</p>
 </li>
 </ol>
-<h3 id="引用"><a class="markdownIt-Anchor" href="#引用"></a> 引用</h3>
+<h3 id="引用">引用</h3>
 <blockquote>
 <p>作用：给变量起别名</p>
 </blockquote>
@@ -562,7 +566,7 @@
 <p>​</p>
 </li>
 </ul>
-<h3 id="函数提高"><a class="markdownIt-Anchor" href="#函数提高"></a> 函数提高</h3>
+<h3 id="函数提高">函数提高</h3>
 <ol>
 <li>函数默认参数</li>
 </ol>
@@ -798,7 +802,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#using%E7%9A%84%E4%B8%89%E7%A7%8D%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text"> using的三种用法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text"> 数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text"> 三元运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text"> 随机数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#goto"><span class="nav-number">5.</span> <span class="nav-text"> goto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">6.</span> <span class="nav-text"> 数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">7.</span> <span class="nav-text"> 结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text"> C++ 内存分区模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text"> 引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98"><span class="nav-number">10.</span> <span class="nav-text"> 函数提高</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#using%E7%9A%84%E4%B8%89%E7%A7%8D%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">using的三种用法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">三元运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">随机数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#goto"><span class="nav-number">5.</span> <span class="nav-text">goto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">6.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">7.</span> <span class="nav-text">结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">C++ 内存分区模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98"><span class="nav-number">10.</span> <span class="nav-text">函数提高</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

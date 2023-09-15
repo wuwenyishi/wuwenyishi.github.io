@@ -91,7 +91,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -309,20 +313,20 @@
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><blockquote>
 <p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RpYW55YWxlaXhpYW93dS9hcnRpY2xlL2RldGFpbHMvOTAwMzYxODA=">Springboot使用分布式锁（基于redisson）<i class="fa fa-external-link-alt"></i></span>，</p>
 </blockquote>
-<h2 id="常见的分布式锁实现方案"><a class="markdownIt-Anchor" href="#常见的分布式锁实现方案"></a> <strong>常见的分布式锁实现方案</strong></h2>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt="image.png"></p>
-<h2 id="redisson原理分析图解"><a class="markdownIt-Anchor" href="#redisson原理分析图解"></a> Redisson原理分析图解</h2>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt="image"></p>
-<h3 id="加锁机制"><a class="markdownIt-Anchor" href="#加锁机制"></a> 加锁机制</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt="image.png"></p>
-<h3 id="watch-dog自动延期机制"><a class="markdownIt-Anchor" href="#watch-dog自动延期机制"></a> watch dog自动延期机制</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt="image.png"></p>
-<h3 id="为啥要用lua脚本呢"><a class="markdownIt-Anchor" href="#为啥要用lua脚本呢"></a> 为啥要用lua脚本呢</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt="image.png"></p>
-<h3 id="可重入加锁机制"><a class="markdownIt-Anchor" href="#可重入加锁机制"></a> 可重入加锁机制</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt="image.png"></p>
-<h2 id="redis分布式锁的缺点"><a class="markdownIt-Anchor" href="#redis分布式锁的缺点"></a> Redis分布式锁的缺点</h2>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt="image.png"></p>
+<h2 id="常见的分布式锁实现方案"><strong>常见的分布式锁实现方案</strong></h2>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616407355479-40ffe6b9-5476-488a-a8a1-6970e53f9bbc.png" alt=""></p>
+<h2 id="Redisson原理分析图解">Redisson原理分析图解</h2>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616405735205-372355c1-5217-48da-a0e5-370c220d189b.jpeg" alt=""></p>
+<h3 id="加锁机制">加锁机制</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616405769058-8e6279e7-68bd-4f1e-bd15-8090693c9687.png" alt=""></p>
+<h3 id="watch-dog自动延期机制">watch dog自动延期机制</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616405802606-06d89d99-3382-4f4c-8432-40427e6f3fd8.png" alt=""></p>
+<h3 id="为啥要用lua脚本呢">为啥要用lua脚本呢</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616405833923-f3d5a659-b9a8-4f7c-b32e-3b42fbe3e21f.png" alt=""></p>
+<h3 id="可重入加锁机制">可重入加锁机制</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616405855881-10cb381d-4a17-415e-a61d-61e3724341fb.png" alt=""></p>
+<h2 id="Redis分布式锁的缺点">Redis分布式锁的缺点</h2>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616405899527-5f409d65-9559-4a54-8e44-1f573b0bfd08.png" alt=""></p>
 
     </div>
    <div>
@@ -498,7 +502,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text"> 常见的分布式锁实现方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redisson%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E5%9B%BE%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text"> Redisson原理分析图解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text"> 加锁机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch-dog%E8%87%AA%E5%8A%A8%E5%BB%B6%E6%9C%9F%E6%9C%BA%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text"> watch dog自动延期机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E8%A6%81%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%91%A2"><span class="nav-number">2.3.</span> <span class="nav-text"> 为啥要用lua脚本呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E5%8A%A0%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text"> 可重入加锁机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text"> Redis分布式锁的缺点</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">常见的分布式锁实现方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redisson%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E5%9B%BE%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">Redisson原理分析图解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">加锁机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch-dog%E8%87%AA%E5%8A%A8%E5%BB%B6%E6%9C%9F%E6%9C%BA%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">watch dog自动延期机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E8%A6%81%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%91%A2"><span class="nav-number">2.3.</span> <span class="nav-text">为啥要用lua脚本呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E5%8A%A0%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text">可重入加锁机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">Redis分布式锁的缺点</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

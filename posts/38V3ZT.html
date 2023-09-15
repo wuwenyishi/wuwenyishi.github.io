@@ -85,7 +85,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -300,27 +304,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h4 id="cms-浮动垃圾"><a class="markdownIt-Anchor" href="#cms-浮动垃圾"></a> CMS  – 浮动垃圾</h4>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h4 id="CMS-–-浮动垃圾">CMS  – 浮动垃圾</h4>
 <p>在垃圾回收过程中标记过程中产生的垃圾，被理解为浮动垃圾，这种垃圾没必要去在乎，影响不大，在下一次垃圾回收的时候会被垃圾回收器回收。</p>
-<h4 id="cms-错标"><a class="markdownIt-Anchor" href="#cms-错标"></a> CMS – 错标</h4>
+<h4 id="CMS-–-错标">CMS – 错标</h4>
 <p>一个资源在被标记为垃圾的时候，突然另一个资源与之相连，成为了有用的资源，如果资源被清除，会带了问题。</p>
-<h4 id="cms-重新标记"><a class="markdownIt-Anchor" href="#cms-重新标记"></a> CMS – 重新标记</h4>
+<h4 id="CMS-–-重新标记">CMS – 重新标记</h4>
 <p>在标记过程中，可能有些资源被错误标记，所以需要重新标记。这个过程属于STW。</p>
 <p>重新标记完成，下一步就是并发处理，把标记为垃圾的资源清楚，这个过程也有可能会产生浮动垃圾，但没有关系，下次标记清除的时候会被处理。</p>
-<h4 id="cms-从线程角度"><a class="markdownIt-Anchor" href="#cms-从线程角度"></a> CMS 从线程角度</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210302095208.png" alt="image-20210302095206722"></p>
+<h4 id="CMS-从线程角度">CMS 从线程角度</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302095208.png" alt=""></p>
 <p>过程简述：</p>
 <p>先经过初始标记，找到根对象，可能会产生浮动垃圾，但没影响，等待下次标记</p>
 <p>再经过并发标记，在标记过程中可能会产生错标</p>
 <p>重新标记会对错标进行修正</p>
 <p>修正好以后，进行并发处理，这时也有可能会产生浮动垃圾，但没影响，等待下次标记</p>
-<h4 id="什么情况下才选择使用cms收集器呢"><a class="markdownIt-Anchor" href="#什么情况下才选择使用cms收集器呢"></a> 什么情况下才选择使用CMS收集器呢</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210302144948.png" alt="image-20210302144947618"></p>
-<h4 id="cms的调优"><a class="markdownIt-Anchor" href="#cms的调优"></a> <strong>CMS的调优</strong></h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210302145158.png" alt="image-20210302145157004"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210302145245.png" alt="image-20210302145243983"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20210302145257.png" alt="image-20210302145256194"></p>
-<h4 id="jdk8默认垃圾回收器"><a class="markdownIt-Anchor" href="#jdk8默认垃圾回收器"></a> JDK8默认垃圾回收器</h4>
+<h4 id="什么情况下才选择使用CMS收集器呢">什么情况下才选择使用CMS收集器呢</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302144948.png" alt=""></p>
+<h4 id="CMS的调优"><strong>CMS的调优</strong></h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302145158.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302145245.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20210302145257.png" alt=""></p>
+<h4 id="JDK8默认垃圾回收器">JDK8默认垃圾回收器</h4>
 <p>jdk8环境下，默认使用 Parallel Scavenge（新生代）+ Serial Old（老年代）</p>
 
     </div>
@@ -493,7 +497,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cms-%E6%B5%AE%E5%8A%A8%E5%9E%83%E5%9C%BE"><span class="nav-number">1.</span> <span class="nav-text"> CMS  – 浮动垃圾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cms-%E9%94%99%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text"> CMS – 错标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cms-%E9%87%8D%E6%96%B0%E6%A0%87%E8%AE%B0"><span class="nav-number">3.</span> <span class="nav-text"> CMS – 重新标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cms-%E4%BB%8E%E7%BA%BF%E7%A8%8B%E8%A7%92%E5%BA%A6"><span class="nav-number">4.</span> <span class="nav-text"> CMS 从线程角度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E6%89%8D%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8cms%E6%94%B6%E9%9B%86%E5%99%A8%E5%91%A2"><span class="nav-number">5.</span> <span class="nav-text"> 什么情况下才选择使用CMS收集器呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cms%E7%9A%84%E8%B0%83%E4%BC%98"><span class="nav-number">6.</span> <span class="nav-text"> CMS的调优</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk8%E9%BB%98%E8%AE%A4%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text"> JDK8默认垃圾回收器</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-%E2%80%93-%E6%B5%AE%E5%8A%A8%E5%9E%83%E5%9C%BE"><span class="nav-number">1.</span> <span class="nav-text">CMS  – 浮动垃圾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-%E2%80%93-%E9%94%99%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">CMS – 错标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-%E2%80%93-%E9%87%8D%E6%96%B0%E6%A0%87%E8%AE%B0"><span class="nav-number">3.</span> <span class="nav-text">CMS – 重新标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-%E4%BB%8E%E7%BA%BF%E7%A8%8B%E8%A7%92%E5%BA%A6"><span class="nav-number">4.</span> <span class="nav-text">CMS 从线程角度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E6%89%8D%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8CMS%E6%94%B6%E9%9B%86%E5%99%A8%E5%91%A2"><span class="nav-number">5.</span> <span class="nav-text">什么情况下才选择使用CMS收集器呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS%E7%9A%84%E8%B0%83%E4%BC%98"><span class="nav-number">6.</span> <span class="nav-text">CMS的调优</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK8%E9%BB%98%E8%AE%A4%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">JDK8默认垃圾回收器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

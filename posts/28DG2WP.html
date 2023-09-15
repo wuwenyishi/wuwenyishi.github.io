@@ -91,7 +91,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -318,16 +322,16 @@
 <p><img data-src="https://xuemingde.com/pages/image/others/ah1qVo.png" alt=""></p>
 <p>Instance size ： new一个空对象，没有任何成员变量的时候，占用16个字节。</p>
 <p>面试室可能被问道：new 一个 Object 的时候占多少字节？ 16个字节。</p>
-<h2 id="mark-word"><a class="markdownIt-Anchor" href="#mark-word"></a> mark word</h2>
+<h2 id="mark-word">mark word</h2>
 <p><img data-src="https://xuemingde.com/pages/image/others/PvxWET.png" alt=""></p>
 <p><strong>如果给这个对象上把锁，会有什么效果？</strong></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/yjCWYI.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/others/aYzqtV.png" alt=""></p>
 <p><u><strong>上图可以看出，锁信息是放在mark word里面的</strong>。</u></p>
-<h2 id="klass-point"><a class="markdownIt-Anchor" href="#klass-point"></a> klass point</h2>
+<h2 id="klass-point">klass point</h2>
 <p><img data-src="https://xuemingde.com/pages/image/others/JUS6K3.png" alt=""></p>
 <p>这4个字节属于klass point，可以认为他是一个指针，是用来指向这个对象是属于哪个类的。</p>
-<h2 id="padding"><a class="markdownIt-Anchor" href="#padding"></a> Padding</h2>
+<h2 id="Padding">Padding</h2>
 <p><img data-src="https://xuemingde.com/pages/image/others/VryRBZ.png" alt=""></p>
 <p>这4个字节，如果有成员变量，里面装的就是成员变量，如果没有，则是对其的作用。</p>
 <blockquote>
@@ -508,7 +512,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mark-word"><span class="nav-number">1.</span> <span class="nav-text"> mark word</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#klass-point"><span class="nav-number">2.</span> <span class="nav-text"> klass point</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#padding"><span class="nav-number">3.</span> <span class="nav-text"> Padding</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mark-word"><span class="nav-number">1.</span> <span class="nav-text">mark word</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#klass-point"><span class="nav-number">2.</span> <span class="nav-text">klass point</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Padding"><span class="nav-number">3.</span> <span class="nav-text">Padding</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -90,7 +90,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -313,7 +317,7 @@
 <p>原文：<span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS81MDMwN2Q5Y2NmN2M1YTNmOWViYTZjYjdm">Docker下RabbitMQ延时队列实战两部曲之二：细说开发<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1124QWMauu.png" alt=""></p>
-<h3 id="本章涉及的脚本和源码下载"><a class="markdownIt-Anchor" href="#本章涉及的脚本和源码下载"></a> 本章涉及的脚本和源码下载</h3>
+<h3 id="本章涉及的脚本和源码下载">本章涉及的脚本和源码下载</h3>
 <p>本章会开发一个 yml 脚本，三个基于 SpringBoot 的应用，功能如下：</p>
 <ol>
 <li>docker-compose.yml：启动所有容器的 docker-compose 脚本；</li>
@@ -328,7 +332,7 @@
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1126if9cLf.png" alt=""></p>
 <p>docker-compose.yml 文件在 rabbitmq_docker_files 文件夹下面的 delaymq 文件夹下，如下图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1126iKUR8H.png" alt=""></p>
-<h3 id="环境信息"><a class="markdownIt-Anchor" href="#环境信息"></a> 环境信息</h3>
+<h3 id="环境信息">环境信息</h3>
 <ul>
 <li>操作系统：Ubuntu 16.04.3 LTS</li>
 <li>Docker：1.12.6</li>
@@ -337,7 +341,7 @@
 <li>SpringBoot：1.4.1.RELEASE</li>
 <li>Maven：3.5.0</li>
 </ul>
-<h3 id="开发步骤"><a class="markdownIt-Anchor" href="#开发步骤"></a> 开发步骤</h3>
+<h3 id="开发步骤">开发步骤</h3>
 <ul>
 <li>本次开发实战的步骤如下：</li>
 </ul>
@@ -347,7 +351,7 @@
 <li>开发 delayrabbitmqconsumer 应用，制作镜像；</li>
 <li>开发 docker-compose.yml 脚本；</li>
 </ol>
-<h3 id="messagettlproducer-应用"><a class="markdownIt-Anchor" href="#messagettlproducer-应用"></a> messagettlproducer 应用</h3>
+<h3 id="messagettlproducer-应用">messagettlproducer 应用</h3>
 <ul>
 <li>
 <p>messagettlproducer 是个基于 SpringBoot 的 web 工程，有一个 Controller 可以响应 web 请求，收到请求后发送一条带有过期时间的消息到 RabbitMQ 的 message.ttl.queue.source 队列；</p>
@@ -392,7 +396,7 @@
 <p>以上就是 messagettlproducer 应用的主要代码介绍，编码完毕后，在 pom.xml 文件所在目录执行 <strong>mvn clean package -U -DskipTests docker:build</strong>，即可编译、构建、制作 Docker 镜像；</p>
 </li>
 </ul>
-<h3 id="queuettlproducer-应用"><a class="markdownIt-Anchor" href="#queuettlproducer-应用"></a> queuettlproducer 应用</h3>
+<h3 id="queuettlproducer-应用">queuettlproducer 应用</h3>
 <ul>
 <li>
 <p>queuettlproducer 和 messagettlproducer 极为相似，都是接受 web 请求后向 RabbitMQ 发送消息，不同之处有以下两点：</p>
@@ -425,7 +429,7 @@
 <p>接下来我们看看消息消费者工程 delayrabbitmqconsumer 的源码；</p>
 </li>
 </ul>
-<h3 id="delayrabbitmqconsumer-应用"><a class="markdownIt-Anchor" href="#delayrabbitmqconsumer-应用"></a> delayrabbitmqconsumer 应用</h3>
+<h3 id="delayrabbitmqconsumer-应用">delayrabbitmqconsumer 应用</h3>
 <ul>
 <li>
 <p>delayrabbitmqconsumer 应用连接到消息队列，消费收到的每条消息；</p>
@@ -441,7 +445,7 @@
 <ul>
 <li>如上所示，只要用注解 RabbitListener 配置好队列的名称即可，编码完毕后，在 pom.xml 文件所在目录执行 <strong>mvn clean package -U -DskipTests docker:build</strong>，即可编译、构建、制作 Docker 镜像；</li>
 </ul>
-<h3 id="docker-composeyml-配置"><a class="markdownIt-Anchor" href="#docker-composeyml-配置"></a> docker-compose.yml 配置</h3>
+<h3 id="docker-compose-yml-配置">docker-compose.yml 配置</h3>
 <ul>
 <li>
 <p>最后我们看一下所有容器的配置文件 docker-compose.yml：</p>
@@ -640,7 +644,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E7%AB%A0%E6%B6%89%E5%8F%8A%E7%9A%84%E8%84%9A%E6%9C%AC%E5%92%8C%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text"> 本章涉及的脚本和源码下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text"> 环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text"> 开发步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#messagettlproducer-%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text"> messagettlproducer 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queuettlproducer-%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text"> queuettlproducer 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delayrabbitmqconsumer-%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text"> delayrabbitmqconsumer 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-composeyml-%E9%85%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text"> docker-compose.yml 配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E7%AB%A0%E6%B6%89%E5%8F%8A%E7%9A%84%E8%84%9A%E6%9C%AC%E5%92%8C%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">本章涉及的脚本和源码下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">开发步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#messagettlproducer-%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">messagettlproducer 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queuettlproducer-%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">queuettlproducer 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delayrabbitmqconsumer-%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">delayrabbitmqconsumer 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-yml-%E9%85%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">docker-compose.yml 配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -80,7 +80,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -295,7 +299,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="区别"><a class="markdownIt-Anchor" href="#区别"></a> 区别</h2>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="区别">区别</h2>
 <ul>
 <li>HashTable 线程同步（线程安全），HashMap非线程同步（线程不安全）。</li>
 <li>HashTable 不允许键和值有空值，HashMap允许键和值有空值。</li>
@@ -303,8 +307,8 @@
 <li>HashTable的默认大小是11，扩容方式是old * 2 +1，HashMap的默认大小是16，扩容方式是2的指数倍。</li>
 <li>HashTable继承于Dictionary类，HashMap继承于AbstractMap类。</li>
 </ul>
-<h2 id="hashmap有哪些线程安全的方式"><a class="markdownIt-Anchor" href="#hashmap有哪些线程安全的方式"></a> HashMap有哪些线程安全的方式</h2>
-<h3 id="conllectionssynchronizedmap"><a class="markdownIt-Anchor" href="#conllectionssynchronizedmap"></a> Conllections.synchronizedMap</h3>
+<h2 id="HashMap有哪些线程安全的方式">HashMap有哪些线程安全的方式</h2>
+<h3 id="Conllections-synchronizedMap">Conllections.synchronizedMap</h3>
 <p>此方法返回一个新的Map，这个新的Map就是线程安全的。<br>
 特点：<br>
 通过Conllections.synchronizedMap来封装所有不安全的HashMap方法，就连toString，hashCode都进行了封装，封装的关键点有：</p>
@@ -317,7 +321,7 @@
 代码实现简单。</p>
 <p>缺点：<br>
 从锁的角度来看，上来就加锁，基本上锁住了尽可能大的代码块，性能比较差。</p>
-<h3 id="concurrenthashmap"><a class="markdownIt-Anchor" href="#concurrenthashmap"></a> ConcurrentHashMap</h3>
+<h3 id="ConcurrentHashMap">ConcurrentHashMap</h3>
 <p>特点<br>
 重新写了HashMap，比较大的改变有以下几点：</p>
 <ul>
@@ -500,7 +504,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text"> 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashmap%E6%9C%89%E5%93%AA%E4%BA%9B%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text"> HashMap有哪些线程安全的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#conllectionssynchronizedmap"><span class="nav-number">2.1.</span> <span class="nav-text"> Conllections.synchronizedMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concurrenthashmap"><span class="nav-number">2.2.</span> <span class="nav-text"> ConcurrentHashMap</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E6%9C%89%E5%93%AA%E4%BA%9B%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">HashMap有哪些线程安全的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Conllections-synchronizedMap"><span class="nav-number">2.1.</span> <span class="nav-text">Conllections.synchronizedMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">2.2.</span> <span class="nav-text">ConcurrentHashMap</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

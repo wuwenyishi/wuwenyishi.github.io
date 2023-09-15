@@ -80,7 +80,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -295,14 +299,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1 id="原码"><a class="markdownIt-Anchor" href="#原码"></a> 原码</h1>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1>原码</h1>
 <blockquote>
 <p>原码：<strong>是最简单的机器数表示法，用最高位表示符号位（0正 1负），其他位存放该数的二进制的绝对值</strong>。</p>
 </blockquote>
 <p>以带符号位的四位二进制数为例：1010，最高位为1表示这是一个负数，其它三位010，即0 * 2^2 + 1 * 2^1 + 0 * 2^0 = 2，所以1010表示十进制数-2。</p>
 <p><strong>9</strong> 在8位二进制的表示为：00001001</p>
 <p><strong>-9</strong> 在8位二进制的表示为：10001001</p>
-<p><strong>这样用8个bit表示整数的取值范围是-27-1<sub>27-1，即-127</sub>127。</strong></p>
+<p><strong>这样用8个bit表示整数的取值范围是-27-1~27-1，即-127~127。</strong></p>
 <p>采用这种表示法，计算机做加法运算需要处理以下逻辑：</p>
 <ol>
 <li>如果两数符号位相同，就把它们的低7位相加，符号位不变。如果低7位相加时在最高位产生进位，说明结果的绝对值大于127，超出7位所能表示的数值范围，这称为溢出（Overflow)，这时通常把计算机中的一个标志位置1表示当前运算产生了溢出。</li>
@@ -331,7 +335,7 @@
 <blockquote>
 <p>​       利用原码进行两数相加运算时，首先要判别两数符号，若同号则做加法，若异号则做减法。在利用原码进行两数相减运算时，不仅要判别两数符号，使得同号相减，异号相加；还要判别两数绝对值的大小，用绝对值大的数减去绝对值小的数，取绝对值大的数的符号为结果的符号。可见，原码表示不便于实现加减运算。</p>
 </blockquote>
-<h1 id="反码"><a class="markdownIt-Anchor" href="#反码"></a> 反码</h1>
+<h1>反码</h1>
 <blockquote>
 <p>反码：<strong>正数的反码还是等于原码；负数的反码就是它的原码除符号位外，按位取反</strong>。</p>
 </blockquote>
@@ -350,7 +354,7 @@
 <li>反码的表示范围与原码的表示范围相同。</li>
 </ol>
 <p><strong>反码表示在计算机中往往作为数码变换的中间环节。并不会直接参与结算</strong></p>
-<h1 id="补码"><a class="markdownIt-Anchor" href="#补码"></a> 补码</h1>
+<h1>补码</h1>
 <blockquote>
 <p>补码：<strong>正数的补码等于它的原码；负数的补码等于反码+1</strong>（这只是一种算补码的方式，多数书对于补码就是这句话）。</p>
 </blockquote>
@@ -361,7 +365,7 @@
 <p>如果有兴趣了解补码的严格说法，建议可以看一下《计算机组成原理》，它会用“模”和“同余”的概念，严谨地解释补码。</p>
 </blockquote>
 <p>综上所述，正数的源码、反码、补码都是不变的，负数的反码、补码与源码都是不一致的，所以在计算时，只有负数需要进行反码或者补码。</p>
-<h1 id="两个正数的加法运算"><a class="markdownIt-Anchor" href="#两个正数的加法运算"></a> 两个正数的加法运算</h1>
+<h1>两个正数的加法运算</h1>
 <p>示例：16 + 5</p>
 <p>16的补码：00010000</p>
 <p>5的补码：  00000101</p>
@@ -373,7 +377,7 @@
 <p>01111110 + 00000010 = 10000000</p>
 <p>最高变成了1，就说明产生了溢出。</p>
 <p>所以，两个正数相加时，如果最高为变成了1，就说明了产生了溢出。</p>
-<h1 id="一正一负的运算"><a class="markdownIt-Anchor" href="#一正一负的运算"></a> 一正一负的运算</h1>
+<h1>一正一负的运算</h1>
 <p><strong>示例1</strong></p>
 <p>16 - 9 也可看做是16 + （-9）</p>
 <p>16的补码为：00010000</p>
@@ -561,7 +565,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text"> 原码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text"> 反码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text"> 补码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%AD%A3%E6%95%B0%E7%9A%84%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97"><span class="nav-number">4.</span> <span class="nav-text"> 两个正数的加法运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E6%AD%A3%E4%B8%80%E8%B4%9F%E7%9A%84%E8%BF%90%E7%AE%97"><span class="nav-number">5.</span> <span class="nav-text"> 一正一负的运算</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">原码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">反码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">补码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">两个正数的加法运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">一正一负的运算</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

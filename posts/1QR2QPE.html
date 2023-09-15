@@ -130,7 +130,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -349,10 +353,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1 id="常用界面设计组件"><a class="markdownIt-Anchor" href="#常用界面设计组件"></a> 常用界面设计组件</h1>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1>常用界面设计组件</h1>
 <p>Qt类库为应用程序设计提供了大量的类，本章主要介绍设计GUI应用程序常用的各种界面组件的使用，这些是设计GUI应用程序的基础。</p>
-<h2 id="字符串与输人输出"><a class="markdownIt-Anchor" href="#字符串与输人输出"></a> 字符串与输人输出</h2>
-<h3 id="字符串与数值之间的转换"><a class="markdownIt-Anchor" href="#字符串与数值之间的转换"></a> 字符串与数值之间的转换</h3>
+<h2 id="字符串与输人输出">字符串与输人输出</h2>
+<h3 id="字符串与数值之间的转换">字符串与数值之间的转换</h3>
 <p>QString类从字符串转换为整数的函数有：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/184855au1f62.png" alt=""></p>
 <p>这些函数如果不设置参数，缺省表示从十进制表示的字符串转换为整数：若指定整数基参数，<br>
@@ -365,7 +369,7 @@
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/190322otwcAX.png" alt=""></p>
 <p>下面是读取二进制字符串，然后转换为十进制和十六进制显示的按钮的槽函数代码。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/190511lILf3S.png" alt=""></p>
-<h3 id="qstring的常用功能"><a class="markdownIt-Anchor" href="#qstring的常用功能"></a> QString的常用功能</h3>
+<h3 id="QString的常用功能">QString的常用功能</h3>
 <p>QString是Qt编程中常用的类，除了用作数字量的输入输出之外，QString还有很多其他功能，熟悉这些常见的功能，有助于灵活地实现字符串处理功能。<br>
 QString存储字符串采用的是Unicode码，每一个字符是一个l6位的QChar,.而不是8位的char,所以QString处理中文字符没有问题，而且一个汉字算作是一个字符。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1913169zdmyV.png" alt=""></p>
@@ -378,17 +382,17 @@ QString存储字符串采用的是Unicode码，每一个字符是一个l6位的Q
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/191551iNS3DL.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/191606Fdxh83.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/191621CpGrO1.png" alt=""></p>
-<h2 id="spinbox的使用"><a class="markdownIt-Anchor" href="#spinbox的使用"></a> SpinBox的使用</h2>
+<h2 id="SpinBox的使用">SpinBox的使用</h2>
 <p>QSpinBox用于整数的显示和输入，一般显示十进制数，也可以显示二进制、十六进制的数，而且可以在显示框中增加前缀或后缀。<br>
 QDoubleSpinBox用于浮点数的显示和输入，可以设置显示小数位数，也可以设置显示的前缀和后缀。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/192935HBMCEz.png" alt=""></p>
-<h2 id="其他数值输人和显示组件"><a class="markdownIt-Anchor" href="#其他数值输人和显示组件"></a> 其他数值输人和显示组件</h2>
+<h2 id="其他数值输人和显示组件">其他数值输人和显示组件</h2>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/193803TLT3P4.png" alt=""></p>
-<h2 id="时间日期与定时器"><a class="markdownIt-Anchor" href="#时间日期与定时器"></a> 时间日期与定时器</h2>
-<h3 id="时间日期相关的类"><a class="markdownIt-Anchor" href="#时间日期相关的类"></a> 时间日期相关的类</h3>
+<h2 id="时间日期与定时器">时间日期与定时器</h2>
+<h3 id="时间日期相关的类">时间日期相关的类</h3>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/200634hBDAtp.png" alt=""></p>
 <p>Qt中的定时器类是QTimer,它直接从QObject类继承而来，不是界面组件类。</p>
-<h3 id="日期时间数据与字符串之间的转换"><a class="markdownIt-Anchor" href="#日期时间数据与字符串之间的转换"></a> 日期时间数据与字符串之间的转换</h3>
+<h3 id="日期时间数据与字符串之间的转换">日期时间数据与字符串之间的转换</h3>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/204225TRQc9N.png" alt=""></p>
 <p>时间格式转字符串：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/204656e0k0uH.png" alt=""></p>
@@ -397,27 +401,27 @@ QDoubleSpinBox用于浮点数的显示和输入，可以设置显示小数位数
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/204824MfJb98.png" alt=""></p>
 <p>静态函数QDateTime::fromString(将一个字符串按照格式转换为日期时间类型</p>
 <p>这里将字符串str按照格式"yyyy-MM-ddhh:mm:ss"转换为日期时间变量，格式是指字符串str所表示的日期时间的格式。</p>
-<h3 id="定时器的使用"><a class="markdownIt-Anchor" href="#定时器的使用"></a> 定时器的使用</h3>
+<h3 id="定时器的使用">定时器的使用</h3>
 <p>Qt中的定时器类是QTimer。QTimer不是一个可见的界面组件，在UI设计器的组件面板里找不到它。实例程序实现了一个计时器的功能，就是计算定时器开始到停止持续的时间长度，计时器是QTime类。</p>
 <p>QTimer主要的属性是interval,是定时中断的周期，单位毫秒。QTimer主要的信号是timeout(),在定时中断时发射此信号，要想在定时中断里做出响应，这就需要编写timeout()信号的槽函数。<br>
 <img data-src="https://xuemingde.com/pages/image/2022/12/01/205311MRWga8.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/205408gZ5kS3.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/205427dj3sov.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/210127f0loKk.png" alt=""></p>
-<h2 id="qcombobox-qplaintextedit"><a class="markdownIt-Anchor" href="#qcombobox-qplaintextedit"></a> QComboBox QPlainTextEdit</h2>
+<h2 id="QComboBox-QPlainTextEdit">QComboBox QPlainTextEdit</h2>
 <p>QComboBox是下拉列表框组件类，它提供一个下拉列表供用户选择，也可以直接当作一个QLineEdit用作输入。QComboBox除了显示可见下拉列表外，每个项(item,或称列表项)还可以关联一个QVariant类型的变量，用于存储一些不可见数据。</p>
 <p>QPlainTextEdit是一个多行文本编辑器，用于显示和编辑多行简单文本。</p>
-<h3 id="qcombobox"><a class="markdownIt-Anchor" href="#qcombobox"></a> QComboBox</h3>
+<h3 id="QComboBox">QComboBox</h3>
 <p>添加具有用户数据的项</p>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;comboBox-&gt;<span class="built_in">addItem</span>(<span class="string">"tes"</span>,<span class="string">"200"</span>);</span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QString zone = ui-&gt;comboBox-&gt;<span class="built_in">currentData</span>().<span class="built_in">toString</span>();</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="qplain-textedit的使用"><a class="markdownIt-Anchor" href="#qplain-textedit的使用"></a> QPlain TextEdit的使用</h3>
+<h3 id="QPlain-TextEdit的使用">QPlain TextEdit的使用</h3>
 <p>QPlainTextEdit是用于编辑多行文本的编辑器，可以编辑普通文本。另外，还有一个QTextEdit组件，是一个所见即所得的可以编辑带格式文本的组件，以HTML格式标记符定义文本格式。<br>
 从前面的代码已经看出，使用QPlainTextEdit:appendPlainText((const QString&amp;text)函数就可以向PlainTextEdit组件添加一行字符串。</p>
 <p>QPlainTextEdit提供cutO、copy()、paste()、undo()、redo()、clear()、selectAllO等标准编辑功能的槽函数，QPlainTextEdit还提供一个标准的右键快捷菜单。</p>
 <p>但是如果要逐行读取QPlainTextEdit组件里的字符串，则稍微麻烦一点。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/02/105305da3lcO.png" alt=""></p>
-<h3 id="创建右键快捷菜单"><a class="markdownIt-Anchor" href="#创建右键快捷菜单"></a> 创建右键快捷菜单</h3>
+<h3 id="创建右键快捷菜单">创建右键快捷菜单</h3>
 <ol>
 <li>
 <p>创建Action</p>
@@ -440,9 +444,9 @@ QDoubleSpinBox用于浮点数的显示和输入，可以设置显示小数位数
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/02/170325HAS886.png" alt=""></p>
 </li>
 </ol>
-<h3 id="工具栏显式图片和文字"><a class="markdownIt-Anchor" href="#工具栏显式图片和文字"></a> 工具栏显式图片和文字</h3>
+<h3 id="工具栏显式图片和文字">工具栏显式图片和文字</h3>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/05/102701OwKG3n.png" alt=""></p>
-<h3 id="qtablewidget操作"><a class="markdownIt-Anchor" href="#qtablewidget操作"></a> QTableWidget操作</h3>
+<h3 id="QTableWidget操作">QTableWidget操作</h3>
 <ul>
 <li>
 <p>设置表头</p>
@@ -682,7 +686,7 @@ QDoubleSpinBox用于浮点数的显示和输入，可以设置显示小数位数
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E7%BB%84%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text"> 常用界面设计组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E8%BE%93%E4%BA%BA%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.</span> <span class="nav-text"> 字符串与输人输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E5%80%BC%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 字符串与数值之间的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qstring%E7%9A%84%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text"> QString的常用功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spinbox%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text"> SpinBox的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E5%80%BC%E8%BE%93%E4%BA%BA%E5%92%8C%E6%98%BE%E7%A4%BA%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text"> 其他数值输人和显示组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E4%B8%8E%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text"> 时间日期与定时器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E7%9B%B8%E5%85%B3%E7%9A%84%E7%B1%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text"> 时间日期相关的类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.4.2.</span> <span class="nav-text"> 日期时间数据与字符串之间的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text"> 定时器的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qcombobox-qplaintextedit"><span class="nav-number">1.5.</span> <span class="nav-text"> QComboBox QPlainTextEdit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#qcombobox"><span class="nav-number">1.5.1.</span> <span class="nav-text"> QComboBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qplain-textedit%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.2.</span> <span class="nav-text"> QPlain TextEdit的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%8F%B3%E9%94%AE%E5%BF%AB%E6%8D%B7%E8%8F%9C%E5%8D%95"><span class="nav-number">1.5.3.</span> <span class="nav-text"> 创建右键快捷菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%A0%8F%E6%98%BE%E5%BC%8F%E5%9B%BE%E7%89%87%E5%92%8C%E6%96%87%E5%AD%97"><span class="nav-number">1.5.4.</span> <span class="nav-text"> 工具栏显式图片和文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qtablewidget%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.5.</span> <span class="nav-text"> QTableWidget操作</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">常用界面设计组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E8%BE%93%E4%BA%BA%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.</span> <span class="nav-text">字符串与输人输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E5%80%BC%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.1.1.</span> <span class="nav-text">字符串与数值之间的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QString%E7%9A%84%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text">QString的常用功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpinBox%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">SpinBox的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E5%80%BC%E8%BE%93%E4%BA%BA%E5%92%8C%E6%98%BE%E7%A4%BA%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">其他数值输人和显示组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E4%B8%8E%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">时间日期与定时器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E7%9B%B8%E5%85%B3%E7%9A%84%E7%B1%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text">时间日期相关的类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.4.2.</span> <span class="nav-text">日期时间数据与字符串之间的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">定时器的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QComboBox-QPlainTextEdit"><span class="nav-number">1.5.</span> <span class="nav-text">QComboBox QPlainTextEdit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#QComboBox"><span class="nav-number">1.5.1.</span> <span class="nav-text">QComboBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QPlain-TextEdit%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.2.</span> <span class="nav-text">QPlain TextEdit的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%8F%B3%E9%94%AE%E5%BF%AB%E6%8D%B7%E8%8F%9C%E5%8D%95"><span class="nav-number">1.5.3.</span> <span class="nav-text">创建右键快捷菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%A0%8F%E6%98%BE%E5%BC%8F%E5%9B%BE%E7%89%87%E5%92%8C%E6%96%87%E5%AD%97"><span class="nav-number">1.5.4.</span> <span class="nav-text">工具栏显式图片和文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QTableWidget%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.5.</span> <span class="nav-text">QTableWidget操作</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

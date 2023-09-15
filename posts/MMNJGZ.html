@@ -93,7 +93,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -320,16 +324,16 @@
 <p>Nacos Client 主要的作用是订阅获取服务实例信息以及配置信息。</p>
 <p><strong>数据模型</strong></p>
 <p>在 Nacos中最重要的就是服务，为了方便管理还引入了<strong>数据模型</strong>这个概念，数据模型主要分为<strong>命名空间</strong>、<strong>集群</strong>、<strong>服务</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141103.jpeg" alt=""></p>
 <p>数据模型主要作用是给服务分类，方便维护管理。如果觉得抽象，简单举个例子：假如你叫张三，生活在武汉，国籍是中国，在其他城市或者省也有张三这个人。</p>
-<h1 id="nacos-注册中心原理"><a class="markdownIt-Anchor" href="#nacos-注册中心原理"></a> Nacos 注册中心原理</h1>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt="图片"></p>
+<h1>Nacos 注册中心原理</h1>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141114.jpeg" alt=""></p>
 <p>服务注册成功后，为了向 Nacos Server 报告自己的健康状态，客户端每5秒向 Nacos server发送一次心跳，心跳带上了服务名，服务ip，服务端口等信息。当然 Nacos server 也会向 client 主动发起健康检查，支持tcp/http检查。</p>
 <p>如果15秒内无心跳且健康检查失败则会将该实例标记为不健康的状态，如果30秒内健康检查再次失败则会直接剔除实例。</p>
 <p>服务消费者订阅成功后，如果服务提供者的实例不健康或者被剔除掉了，Nacos Server 会发送变更通知。</p>
-<h1 id="小试牛刀nacos-服务注册发现功能体验"><a class="markdownIt-Anchor" href="#小试牛刀nacos-服务注册发现功能体验"></a> 小试牛刀：Nacos 服务注册发现功能体验</h1>
+<h1>小试牛刀：Nacos 服务注册发现功能体验</h1>
 <p>对理论知识稍加理解后，我们可以动动小手，把 Nacos真正用起来吧。</p>
-<h2 id="搭建运行-nacos-server"><a class="markdownIt-Anchor" href="#搭建运行-nacos-server"></a> 搭建运行 Nacos Server</h2>
+<h2 id="搭建运行-Nacos-Server">搭建运行 Nacos Server</h2>
 <p><strong>（1）下载 Nacos Server 安装包，启动 Nacos Server</strong></p>
 <p>进入 Github Nacos 下载主页：</p>
 <blockquote>
@@ -337,7 +341,7 @@
 <p>https://<em>github</em>.com/alibaba/nacos/releases</p>
 </blockquote>
 <p>目前最新的稳定版本是 2.0.4，直接下载 zip 包或者 tar.gz包即可，windows 和 Linux 均可运行。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141124.png" alt=""></p>
 <p>解压完毕，如果是 Linux 系统，执行以下命令，以单实例的方式运行：</p>
 <figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh </span>startup.<span class="keyword">sh </span>-m standalone</span><br></pre></td></tr></tbody></table></figure>
 <p>如果是 windows 系统，执行以下命令：</p>
@@ -353,47 +357,47 @@
 <blockquote>
 <p>这里需要说明下：grpc 的端口 = 主端口 + 偏移量1000，假如你的主端口是 8848，加上偏移量就是 9848</p>
 </blockquote>
-<h2 id="熟悉-nacos-server-控制台界面"><a class="markdownIt-Anchor" href="#熟悉-nacos-server-控制台界面"></a> 熟悉 Nacos Server 控制台界面</h2>
+<h2 id="熟悉-Nacos-Server-控制台界面">熟悉 Nacos Server 控制台界面</h2>
 <p>Nacos Server 运行成功后我们可以打开后台管理界面，查看其运行状态和管理信息。</p>
 <blockquote>
 <p>本地访问地址：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p>第一次打开默认进入后台登录界面，默认用户名和密码都是：<strong>nacos</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141137.png" alt=""></p>
 <p>登录成功后可以看到左侧的菜单栏，主要功能有：<strong>配置管理</strong>、<strong>服务管理</strong>、<strong>权限管理</strong>、<strong>命名空间</strong>、<strong>集群管理</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141149.png" alt=""></p>
 <p><strong>（1）服务管理</strong></p>
 <p>Nacos 的主要功能分为两块：<strong>配置管理</strong>和<strong>服务管理</strong>，这次主要展开讲解服务管理。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141200.png" alt=""></p>
 <p>展开菜单后，有<strong>服务列表</strong>和<strong>订阅者列表</strong>两块，服务列表会显示所有注册到 Nacos Server 的服务，包括实例数、实例健康状态等信息。</p>
 <p><strong>订阅者列表</strong>会显示某个服务下有哪些客户端订阅了，以及包括客户端的版本信息等。</p>
 <p><strong>（2）权限控制</strong></p>
 <p>权限控制主要的作用是维护管理后台系统的用户角色和权限，一般的系统都有这个功能，这里不再赘述了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141212.png" alt=""></p>
 <p><strong>（3）命名空间</strong></p>
 <p>命名空间比较好理解，比如同样一个服务ServiceA可能会在研发环境、集成测试环境、生产环境各自部署一套，那如何区分它们呢？命名空间可以起这个作用，在下图中，我新建了好几个命名空间，用于将服务的注册订阅信息在逻辑上隔离开来。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141223.png" alt=""></p>
 <p><strong>（4）集群管理</strong></p>
 <p>Nacos Server可以是集群部署的也可以是单机部署，在实际生产环境中为了防止单点故障我们肯定不可能部署一个节点，为了方便测试演示，我在本地只启动了一个节点，下图中可以看到这个节点的ip、状态等信息。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt="图片"></p>
-<h2 id="学习使用-nacos-client-sdk"><a class="markdownIt-Anchor" href="#学习使用-nacos-client-sdk"></a> 学习使用 Nacos Client SDK</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141236.png" alt=""></p>
+<h2 id="学习使用-Nacos-Client-SDK">学习使用 Nacos Client SDK</h2>
 <p>目前官网只推出了 Java 版的 SDK，其他语言版本暂时靠社区自行贡献。</p>
 <p>我们拿 Java 版本 SDK 为例进行说明。</p>
 <p>新建一个 Java Maven 工程，引入nacos-client 依赖：</p>
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>上面讲过 Nacos 主要分为两块大的功能：<strong>配置中心</strong>、<strong>注册中心</strong>，为了方便使用，Nacos-client 提供了三个工厂类：<code>NacosFactory</code>、<code>ConfigFactory</code>、<code>NamingFactory</code>，使用这些工厂类很容易生成对应实例对象。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/31/141256.jpeg" alt=""></p>
 <p>NacosFactory 包含了 ConfigFactory 和 NamingFactory的所有功能，如果你想创建一个注册中心功能的实例，你可以使用：</p>
 <figure class="highlight reasonml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">NacosFactory</span>.</span></span>create<span class="constructor">NamingService()</span>` 或者使用 `<span class="module-access"><span class="module"><span class="identifier">NamingFactory</span>.</span></span>create<span class="constructor">NamingFactory()</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="使用-nacos-client-注册实例"><a class="markdownIt-Anchor" href="#使用-nacos-client-注册实例"></a> 使用 Nacos Client 注册实例</h2>
+<h2 id="使用-Nacos-Client-注册实例">使用 Nacos Client 注册实例</h2>
 <p>Nacos Client SDK 代码非常简单，基本一看就能学会怎么用，下面直接贴代码，可以运行的那种代码。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务提供者注册服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>{</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">"127.0.0.1:8848"</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.println(<span class="string">"server status: "</span> + naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 模拟注册当前服务实例，传入参数：服务名、ip 地址、端口</span></span><br><span class="line">        naming.registerInstance(<span class="string">"com.leixiaoshuai.rpc.provider"</span>, <span class="string">"11.11.11.11"</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>看完 demo 之后有没有同学比较好奇，Nacos Client 是通过什么协议与 Nacos Server通信的？简单看下源码就可以得到答案：Google grpc</p>
 <p>这里需要特别说明一下：在 Nacos 1.x 时代是使用 HTTP RESTful 接口与Nacos Server交互的，后面 2.x 时候为了提升效率改成了 grpc。</p>
-<h2 id="使用-nacos-client-消费实例"><a class="markdownIt-Anchor" href="#使用-nacos-client-消费实例"></a> 使用 Nacos Client 消费实例</h2>
+<h2 id="使用-Nacos-Client-消费实例">使用 Nacos Client 消费实例</h2>
 <p>假如服务 A 需要调用服务 B 的接口，首先得知道服务 B 实例的 ip 和端口，在这个场景下服务 A 就是服务消费者了，通过简单的代码很容易获取到服务实例信息，为了方便感知服务实例变化，Nacos 还提供了事件通知能力。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.exception.NacosException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.NamingService;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.Event;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.EventListener;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.nacos.api.naming.listener.NamingEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟服务消费者订阅服务实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NacosException </span>{</span><br><span class="line">        <span class="comment">// 使用工厂类创建注册中心对象，构造参数为 Nacos Server 的 ip 地址，连接 Nacos 服务器</span></span><br><span class="line">        NamingService naming = NamingFactory.createNamingService(<span class="string">"127.0.0.1:8848"</span>);</span><br><span class="line">        <span class="comment">// 打印 Nacos Server 的运行状态</span></span><br><span class="line">        System.out.printf(<span class="string">"server status: %s"</span>, naming.getServerStatus());</span><br><span class="line">        <span class="comment">// 获取指定服务所有的实例列表</span></span><br><span class="line">        System.out.println(naming.getAllInstances(<span class="string">"com.leixiaoshuai.rpc.provider"</span>));</span><br><span class="line">        <span class="comment">// 订阅指定服务，并注册回调接口</span></span><br><span class="line">        naming.subscribe(<span class="string">"com.leixiaoshuai.rpc.provider"</span>, <span class="keyword">new</span> EventListener() {</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event event)</span> </span>{</span><br><span class="line">                <span class="comment">// 服务实例有变动就自动收到通知</span></span><br><span class="line">                System.out.println(<span class="string">"~~event start"</span>);</span><br><span class="line">                System.out.println(((NamingEvent) event).getServiceName());</span><br><span class="line">                System.out.println(((NamingEvent) event).getInstances());</span><br><span class="line">                System.out.println(<span class="string">"~~event end"</span>);</span><br><span class="line">            }</span><br><span class="line">        });</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟当前进程不退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {}</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h1>
+<h1>小结</h1>
 <p>Nacos 是阿里巴巴开源的一款中间件，常用于分布式微服务场景，主要功能包括两大块：服务注册发现、服务配置。</p>
 <p>Nacos 分为 server 和 client，可以在官网下载安装包在本地运行，运行成功后通过后台管理界面对 Nacos Server 进行管理和维护；</p>
 <p>Client 端的接入方式有 SDK 和 HTTP RESTful 两种方式，功能都是一样的。</p>
@@ -574,7 +578,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nacos-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text"> Nacos 注册中心原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80nacos-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%8F%91%E7%8E%B0%E5%8A%9F%E8%83%BD%E4%BD%93%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text"> 小试牛刀：Nacos 服务注册发现功能体验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E8%BF%90%E8%A1%8C-nacos-server"><span class="nav-number">2.1.</span> <span class="nav-text"> 搭建运行 Nacos Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%86%9F%E6%82%89-nacos-server-%E6%8E%A7%E5%88%B6%E5%8F%B0%E7%95%8C%E9%9D%A2"><span class="nav-number">2.2.</span> <span class="nav-text"> 熟悉 Nacos Server 控制台界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8-nacos-client-sdk"><span class="nav-number">2.3.</span> <span class="nav-text"> 学习使用 Nacos Client SDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-nacos-client-%E6%B3%A8%E5%86%8C%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text"> 使用 Nacos Client 注册实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-nacos-client-%E6%B6%88%E8%B4%B9%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text"> 使用 Nacos Client 消费实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text"> 小结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Nacos 注册中心原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">小试牛刀：Nacos 服务注册发现功能体验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E8%BF%90%E8%A1%8C-Nacos-Server"><span class="nav-number">2.1.</span> <span class="nav-text">搭建运行 Nacos Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%86%9F%E6%82%89-Nacos-Server-%E6%8E%A7%E5%88%B6%E5%8F%B0%E7%95%8C%E9%9D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">熟悉 Nacos Server 控制台界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8-Nacos-Client-SDK"><span class="nav-number">2.3.</span> <span class="nav-text">学习使用 Nacos Client SDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Nacos-Client-%E6%B3%A8%E5%86%8C%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">使用 Nacos Client 注册实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Nacos-Client-%E6%B6%88%E8%B4%B9%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text">使用 Nacos Client 消费实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
