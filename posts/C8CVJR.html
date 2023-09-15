@@ -1,0 +1,1067 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext">
+<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../js/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="../js/pace-theme-minimal.min.css">
+  <script src="../js/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Qt基础学习笔记03">
+<meta property="og:url" content="https://xuemingde.com/posts/C8CVJR.html">
+<meta property="og:site_name" content="东夕月少年">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/082402wojM1B.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/0835352cqGoy.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/083834yEqMCj.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/085954mU2zht.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/093401rPeKsF.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/095156feona9.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/102147PnzkHH.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/102729JGl4Sy.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/102908jnDyQG.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/07/1031319WqTac.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/09/100420SVKram.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/09/101417A0rxzX.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/09/103249D16Bsq.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/09/105740C8J2Dy.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/09/183521tBWnRT.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/09/183545q9rSK8.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/110212zDyJkZ.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/110242eck0hT.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/110648qdrVQ0.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/111038azaY5z.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/1110540PKO6q.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/112938j6j7Og.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/113039bAKVg1.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/113054sNjWey.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/12/142405JugDU5.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/103502Uu5L5a.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/110953kGYwSa.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/13/163228hEV094.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/104007KqpcoX.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/104626Yr83DR.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/112452vHeaH7.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/112532Z5XE0K.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/112547GUReEO.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/112733txJk7V.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/112753FU4yNR.png">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/12/14/112824xZCIWr.png">
+<meta property="article:published_time" content="2022-12-07T00:17:16.041Z">
+<meta property="article:modified_time" content="2022-12-14T03:28:31.645Z">
+<meta property="article:author" content="meadel">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="内存">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="const">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="数组">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="指针">
+<meta property="article:tag" content="Qt">
+<meta property="article:tag" content="索引">
+<meta property="article:tag" content="Widget">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/12/07/082402wojM1B.png">
+
+<link rel="canonical" href="https://xuemingde.com/posts/C8CVJR.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Qt基础学习笔记03 | 东夕月少年</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">东夕月少年</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一位程序员的成长之路</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源库</a>
+
+  </li>
+        <li class="menu-item menu-item-collect">
+
+    <a href="/collect/" rel="section"><i class="fa fa-star fa-fw"></i>收藏夹</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+           <div id="container-1">
+            <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/C8CVJR.html">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="我的愿望，世界和平">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="东夕月少年">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Qt基础学习笔记03<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy/ltYzlhaXlvI8vUXQvUXTln7rnoYDlrabkuaDnrJTorrAwMy5tZA==" title="编辑"><i class="fa fa-pencil-alt"></i></span>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-07 08:17:16" itemprop="dateCreated datePublished" datetime="2022-12-07T08:17:16+08:00">2022-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-14 11:28:31" itemprop="dateModified" datetime="2022-12-14T11:28:31+08:00">2022-12-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/Qt/" itemprop="url" rel="index"><span itemprop="name">Qt</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/C8CVJR.html" class="post-meta-item leancloud_visitors" data-flag-title="Qt基础学习笔记03" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/C8CVJR.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/C8CVJR.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><blockquote>
+<p><strong>转载标注来源</strong></p>
+</blockquote>
+<h1 id="modelview结构"><a class="markdownIt-Anchor" href="#modelview结构"></a> Model/View结构</h1>
+<p>GUI应用程序的一个很重要的功能是由用户在界面上编辑和修改数据，典型的如数据库应用程序。数据库应用程序中，用户在界面上执行各种操作，实际上是修改了界面组件所关联的数据库内的数据。</p>
+<p>将界面组件与所编辑的数据分离开来，又通过数据源的方式连接起来，是处理界面与数据的一种较好的方式。Qt使用Model/View结构来处理这种关系，Model/View的基本结构如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/082402wojM1B.png" alt=""></p>
+<ul>
+<li>数据(Data)是实际的数据，如数据库的一个数据表或SQL查询结果，内存中的一个StringList,或磁盘文件结构等。</li>
+<li>视图或视图组件(View)是屏幕上的界面组件，视图从数据模型获得每个数据项的模型索引(model index),通过模型索引获取数据，然后为界面组件提供显示数据。Qt提供一些现成的数据视图组件，如QListView、QTree View和QTable View等。</li>
+<li>模型或数据模型(Modl)与实际数据通信，并为视图组件提供数据接口。它从原始数据提取需要的内容，用于视图组件进行显示和编辑。Q中有一些预定义的数据模型，如<br>
+QStringListModel可作为StringList的数据模型，QSqlTableModel可以作为数据库中一个数据表的数据模型。</li>
+</ul>
+<p>由于数据源与显示界面通过Mode/View结构分离开来，因此可以将一个数据模型在不同的视<br>
+图中显示，也可以在不修改数据模型的情况下，设计特殊的视图组件。</p>
+<p>在Model/View结构中，还提供了代理(Delegate)功能，代理功能可以让用户定制数据的界面显示和编辑方式。在标准的视图组件中，代理功能显示一个数据，当数据被编辑时，代理通过模型索引与数据模型通信，并为编辑数据提供一个编辑器，一般是一个QLineEdit组件。</p>
+<p>模型、视图和代理之间使用信号和槽通信。当源数据发生变化时，数据模型发射信号通知视<br>
+图组件：当用户在界面上操作数据时，视图组件发射信号表示这些操作信息：当编辑数据时，代理发射信号告知数据模型和视图组件编辑器的状态。</p>
+<h2 id="数据模型"><a class="markdownIt-Anchor" href="#数据模型"></a> 数据模型</h2>
+<p>所有的基于项数据(item data)的数据模型(Model)都是基于QAbstractItemModel类的，这个类定义了视图组件和代理存取数据的接口。数据无需存储在数据模型里，数据可以是其他类、文件、数据库或任何数据源。Qt中与数据模型相关的几个主要的类的层次结构如下图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/0835352cqGoy.png" alt=""></p>
+<p>抽象类是不能直接使用的，需要由子类继承来实现一些纯虚函数。Qt提供了一些模型类用于项数据处理</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/083834yEqMCj.png" alt=""></p>
+<h2 id="视图组件"><a class="markdownIt-Anchor" href="#视图组件"></a> 视图组件</h2>
+<p>视图组件(Viw)就是显示数据模型的数据的界面组件，Qt提供的视图组件如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/085954mU2zht.png" alt=""></p>
+<p>视图组件在显示数据时，只需调用视图类的setModelO)函数，为视图组件设置一个数据模型就可以实现视图组件与数据模型之间的关联，在视图组件上的修改将自动保存到关联的数据模型    里，一个数据模型可以同时在多个视图组件里显示数据。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/093401rPeKsF.png" alt=""></p>
+<h2 id="代理"><a class="markdownIt-Anchor" href="#代理"></a> 代理</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/095156feona9.png" alt=""></p>
+<h2 id="modelview结构的一些概念"><a class="markdownIt-Anchor" href="#modelview结构的一些概念"></a> Model/View结构的一些概念</h2>
+<ul>
+<li>
+<p>Model/View的基本结构</p>
+<p>在Model/View结构中，数据模型为视图组件和代理提供存取数据的标准接口。在Qt中，所有的数据模型类都从QAbstractItemModel继承而来，不管底层的数据结构是如何组织数据的，QAbstractItemModel的子类都以表格的层次结构表示数据，视图组件通过这种规则来存取模型中的数据，但是表现给用户的形式不一样。</p>
+<p>不管数据模型的表现形式是怎么样的，数据模型中存储数据的基本单元都是项(item),每个项有一个行号、一个列号，还有一个父项(parent item)。在列表和表格模式下，所有的项都有一个相同的顶层项(root item):在树状结构中，行号、列号、父项稍微复杂一点，但是由这3个参数完全可以定义一个项的位置，从而存取项的数据。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/102147PnzkHH.png" alt="数据模型的几种表现形式"></p>
+</li>
+<li>
+<p>模型索引</p>
+<p>为了保证数据的表示与数据存取方式隔离，数据模型中引入了模型索引(model index)的概念。通过数据模型存取的每个数据都有一个模型索引，视图组件和代理都通过模型索引来获<br>
+取数据。<br>
+QModelIndex表示模型索引的类。模型索引提供数据存取的一个临时指针，用于通过数据模型提取或修改数据。因为模型内部组织数据的结构随时可能改变，所以模型索引是临时的。如果需要使用持久性的模型索引，则要使用QPersistentModelIndex类。</p>
+</li>
+<li>
+<p>行号和列号</p>
+<p>数据模型的基本形式是用行和列定义的表格数据，但这并不意味着底层的数据是用二维数组存储的，使用行和列只是为了组件之间交互方便的一种规定。通过模型索引的行号和列号就可以存取数据。<br>
+要获得一个模型索引，必须提供3个参数：行号、列号、父项的模型索引。例如，对于如上图中的表格数据模型中的3个数据项A、B、C,获取其模型索引的代码是：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/102729JGl4Sy.png" alt=""></p>
+<p>在创建模型索引的函数中需要传递行号、列号和父项的模型索引。对于列表和表格模式的数据模型，顶层节点总是用QModelIndex()表示。</p>
+</li>
+<li>
+<p>父项</p>
+<p>当数据模型是列表或表格时，使用行号、列号存储数据比较直观，所有数据项的父项(parent itm)就是顶层项：当数据模型是树状结构时，情况比较复杂（树状结构中，项一般习惯于称为节点)，一个节点可以有父节点，也可以是其他节点的父节点，在构造数据项的模型索引时，必须指定正确的行号、列号和父节点。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/102908jnDyQG.png" alt=""></p>
+</li>
+<li>
+<p>项的角色</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/07/1031319WqTac.png" alt=""></p>
+</li>
+</ul>
+<h1 id="qfilesystemmodel"><a class="markdownIt-Anchor" href="#qfilesystemmodel"></a> QFileSystemModel</h1>
+<h2 id="qfilesystemmodel类的基本功能"><a class="markdownIt-Anchor" href="#qfilesystemmodel类的基本功能"></a> QFileSystemModel类的基本功能</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/09/100420SVKram.png" alt=""></p>
+<p>这里还有另一种写法：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(ui-&gt;treeView,&amp;QTreeView::clicked,[=](){</span><br><span class="line">        ui-&gt;listView-&gt;<span class="built_in">setRootIndex</span>(ui-&gt;treeView-&gt;<span class="built_in">currentIndex</span>());</span><br><span class="line">    });</span><br></pre></td></tr></tbody></table></figure>
+<p>效果：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/09/101417A0rxzX.png" alt=""></p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_treeView_clicked</span><span class="params">(<span class="keyword">const</span> QModelIndex &amp;index)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ui-&gt;chkIsDir-&gt;<span class="built_in">setChecked</span>(model-&gt;<span class="built_in">isDir</span>(index));</span><br><span class="line">    ui-&gt;LabPath-&gt;<span class="built_in">setText</span>(model-&gt;<span class="built_in">filePath</span>(index));</span><br><span class="line">    ui-&gt;LabType-&gt;<span class="built_in">setText</span>(model-&gt;<span class="built_in">type</span>(index));</span><br><span class="line">    ui-&gt;LabFileName-&gt;<span class="built_in">setText</span>(model-&gt;<span class="built_in">fileName</span>(index));</span><br><span class="line">    <span class="keyword">int</span> sz = model-&gt;<span class="built_in">size</span>(index) / <span class="number">1024</span>;</span><br><span class="line">    <span class="keyword">if</span>(sz &lt; <span class="number">1024</span>){</span><br><span class="line">        ui-&gt;LabFileSize-&gt;<span class="built_in">setText</span>(<span class="built_in">QString</span>(<span class="string">"%1 KB"</span>).<span class="built_in">arg</span>(sz));</span><br><span class="line">    }<span class="keyword">else</span> {</span><br><span class="line">        ui-&gt;LabFileSize-&gt;<span class="built_in">setText</span>(QString::<span class="built_in">asprintf</span>(<span class="string">"%.1f MB"</span>,sz / <span class="number">1024.0</span>));</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>效果：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/09/103249D16Bsq.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/09/105740C8J2Dy.png" alt=""></p>
+<h1 id="qstringlistmodel"><a class="markdownIt-Anchor" href="#qstringlistmodel"></a> QStringListModel</h1>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/09/183521tBWnRT.png" alt=""></p>
+<p>效果：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/09/183545q9rSK8.png" alt=""></p>
+<ul>
+<li>
+<p>编辑、添加、删除项的操作</p>
+<ul>
+<li>
+<p>编辑</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;listView-&gt;<span class="built_in">setEditTriggers</span>(QAbstractItemView::DoubleClicked | QAbstractItemView::SelectedClicked);<span class="comment">// 表示在双击，或选择并单击列表项后，就进入编辑状态。</span></span><br><span class="line"><span class="comment">//setEditTrigger函数设置QListView是否可编辑，以及进入编辑状态。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//若要设置为不可编辑，则可以设置为：</span></span><br><span class="line">ui-&gt;listView-&gt;<span class="built_in">setEditTriggers</span>(QAbstractItemView::NoEditTriggers);</span><br></pre></td></tr></tbody></table></figure>
+<p>​</p>
+</li>
+<li>
+<p>添加项</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::on_btnListAppend_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    theModel-&gt;<span class="built_in">insertRow</span>(theModel-&gt;<span class="built_in">rowCount</span>());</span><br><span class="line">    QModelIndex index = theModel-&gt;<span class="built_in">index</span>(theModel-&gt;<span class="built_in">rowCount</span>() - <span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    theModel-&gt;<span class="built_in">setData</span>(index,<span class="string">"new item"</span>,Qt::DisplayRole);</span><br><span class="line">    ui-&gt;listView-&gt;<span class="built_in">setCurrentIndex</span>(index);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/110212zDyJkZ.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/110242eck0hT.png" alt=""></p>
+</li>
+<li>
+<p>插入项</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/110648qdrVQ0.png" alt=""></p>
+</li>
+<li>
+<p>删除当前项</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/111038azaY5z.png" alt="3"></p>
+</li>
+<li>
+<p>删除列表</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/1110540PKO6q.png" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="qstandarditemmodel"><a class="markdownIt-Anchor" href="#qstandarditemmodel"></a> QStandardItemModel</h1>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/112938j6j7Og.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/113039bAKVg1.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/113054sNjWey.png" alt=""></p>
+<h2 id="界面设计与主窗口类定义"><a class="markdownIt-Anchor" href="#界面设计与主窗口类定义"></a> 界面设计与主窗口类定义</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/12/142405JugDU5.png" alt=""></p>
+<h2 id="qstandarditemmodel的使用"><a class="markdownIt-Anchor" href="#qstandarditemmodel的使用"></a> QStandardItemModel的使用</h2>
+<ul>
+<li>
+<p>从文本文件导入数据</p>
+<p>QStandardltemModel 是标准的基于项数据的数据模型，以类似于二维数组的形式管理内部数据，适合于处理表格型数据，其显示一般采用QTableView。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">MainWindow::<span class="built_in">MainWindow</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QMainWindow</span>(parent)</span><br><span class="line">    , <span class="built_in">ui</span>(<span class="keyword">new</span> Ui::MainWindow)</span><br><span class="line">{</span><br><span class="line">    ui-&gt;<span class="built_in">setupUi</span>(<span class="keyword">this</span>);</span><br><span class="line">    <span class="built_in">setCentralWidget</span>(ui-&gt;splitter);</span><br><span class="line">    theModel = <span class="keyword">new</span> <span class="built_in">QStandardItemModel</span>(<span class="number">1</span>,FixedColumuCount,<span class="keyword">this</span>); <span class="comment">// 数据模型</span></span><br><span class="line">    theSelection = <span class="keyword">new</span> <span class="built_in">QItemSelectionModel</span>(theModel);</span><br><span class="line">    <span class="built_in">connect</span>(ui-&gt;tableView,&amp;QTableView::clicked,[=](){</span><br><span class="line">       QModelIndex curindex = theSelection-&gt;<span class="built_in">currentIndex</span>();</span><br><span class="line">       <span class="built_in">on_currentChanged</span>(curindex);</span><br><span class="line">    });</span><br><span class="line">    ui-&gt;tableView-&gt;<span class="built_in">setModel</span>(theModel);</span><br><span class="line">    ui-&gt;tableView-&gt;<span class="built_in">setSelectionModel</span>(theSelection);</span><br><span class="line">    ui-&gt;tableView-&gt;<span class="built_in">setSelectionMode</span>(QAbstractItemView::ExtendedSelection);</span><br><span class="line">    ui-&gt;tableView-&gt;<span class="built_in">setSelectionBehavior</span>(QAbstractItemView::SelectItems);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">MainWindow::~<span class="built_in">MainWindow</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_currentChanged</span><span class="params">(<span class="keyword">const</span> QModelIndex &amp;current)</span></span>{</span><br><span class="line">    <span class="keyword">if</span>(current.<span class="built_in">isValid</span>()){</span><br><span class="line">        ui-&gt;labCellPos-&gt;<span class="built_in">setText</span>(QString::<span class="built_in">asprintf</span>(<span class="string">"当前单元格：%d行，%d列"</span>,current.<span class="built_in">row</span>() + <span class="number">1</span>,current.<span class="built_in">column</span>()+ <span class="number">1</span>));</span><br><span class="line">        QStandardItem *aItem = theModel-&gt;<span class="built_in">itemFromIndex</span>(current);</span><br><span class="line">        ui-&gt;labCellText-&gt;<span class="built_in">setText</span>(<span class="string">"单元格内容："</span> + aItem-&gt;<span class="built_in">text</span>());</span><br><span class="line">        QFont font = aItem-&gt;<span class="built_in">font</span>();</span><br><span class="line">        ui-&gt;actFontBold-&gt;<span class="built_in">setChecked</span>(font.<span class="built_in">bold</span>());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actOpen_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    QString curPath = QCoreApplication::<span class="built_in">applicationDirPath</span>();</span><br><span class="line">    QString aFileName = QFileDialog::<span class="built_in">getOpenFileName</span>(<span class="keyword">this</span>,<span class="string">"打开一个文件"</span>,curPath,<span class="string">"井数据文件(*.txt);;所有文件(*.*)"</span>);</span><br><span class="line">    <span class="keyword">if</span>(aFileName.<span class="built_in">isEmpty</span>()){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    QStringList fFileCoentent;</span><br><span class="line">    <span class="function">QFile <span class="title">aFile</span><span class="params">(aFileName)</span></span>;</span><br><span class="line">    <span class="keyword">if</span>(aFile.<span class="built_in">open</span>(QIODevice::ReadOnly | QIODevice::Text)){</span><br><span class="line">        <span class="function">QTextStream <span class="title">aStream</span><span class="params">(&amp;aFile)</span></span>;</span><br><span class="line">        ui-&gt;plainTextEdit-&gt;<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">while</span> (!aStream.<span class="built_in">atEnd</span>()) {</span><br><span class="line">            QString str = aStream.<span class="built_in">readLine</span>();</span><br><span class="line">            ui-&gt;plainTextEdit-&gt;<span class="built_in">appendPlainText</span>(str);</span><br><span class="line">            fFileCoentent.<span class="built_in">append</span>(str);</span><br><span class="line">        }</span><br><span class="line">        aFile.<span class="built_in">close</span>();</span><br><span class="line">        ui-&gt;labCurFile-&gt;<span class="built_in">setText</span>(<span class="string">"当前文件："</span> + aFileName);</span><br><span class="line">        <span class="built_in">iniModelFormStringList</span>(fFileCoentent);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::iniModelFormStringList</span><span class="params">(QStringList &amp; aFileCoentent)</span></span>{</span><br><span class="line">    <span class="keyword">int</span> rowCnt = aFileCoentent.<span class="built_in">count</span>();</span><br><span class="line">    theModel-&gt;<span class="built_in">setRowCount</span>(rowCnt - <span class="number">1</span>);</span><br><span class="line">    QString header = aFileCoentent.<span class="built_in">at</span>(<span class="number">0</span>);</span><br><span class="line">    QStringList headerList = header.<span class="built_in">split</span>(<span class="built_in">QRegExp</span>(<span class="string">"\\s+"</span>),QString::SkipEmptyParts);</span><br><span class="line">    theModel-&gt;<span class="built_in">setHorizontalHeaderLabels</span>(headerList);</span><br><span class="line"></span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    QStringList tmpList;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; rowCnt; i++) {</span><br><span class="line">        QString aLineText = aFileCoentent.<span class="built_in">at</span>(i);</span><br><span class="line">        tmpList = aLineText.<span class="built_in">split</span>(<span class="built_in">QRegExp</span>(<span class="string">"\\s+"</span>),QString::SkipEmptyParts);</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>;j &lt; FixedColumuCount - <span class="number">1</span>; j++) {</span><br><span class="line">            aItem = <span class="keyword">new</span> <span class="built_in">QStandardItem</span>(tmpList.<span class="built_in">at</span>(j));</span><br><span class="line">            theModel-&gt;<span class="built_in">setItem</span>(i - <span class="number">1</span>,j,aItem);</span><br><span class="line">        }</span><br><span class="line">        aItem = <span class="keyword">new</span> <span class="built_in">QStandardItem</span>(tmpList.<span class="built_in">at</span>(j));</span><br><span class="line">        aItem-&gt;<span class="built_in">setCheckable</span>(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">if</span>(tmpList.<span class="built_in">at</span>(j) == <span class="string">"0"</span>){</span><br><span class="line">            aItem-&gt;<span class="built_in">setCheckState</span>(Qt::Unchecked);</span><br><span class="line">        }<span class="keyword">else</span> {</span><br><span class="line">            aItem-&gt;<span class="built_in">setCheckState</span>(Qt::Checked);</span><br><span class="line">        }</span><br><span class="line">        theModel-&gt;<span class="built_in">setItem</span>(i - <span class="number">1</span>,j,aItem);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/13/103502Uu5L5a.png" alt=""></p>
+<p><code> theModel-&gt;setHorizontalHeaderLabels(headerList);</code>函数：设置表头标题。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/13/110953kGYwSa.png" alt=""></p>
+<ul>
+<li>
+<p>添加行</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actAppend_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    QList&lt;QStandardItem*&gt; aItemList;</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; FixedColumuCount - <span class="number">1</span>; i++) {</span><br><span class="line">        aItem = <span class="keyword">new</span> <span class="built_in">QStandardItem</span>(<span class="string">"0"</span>);</span><br><span class="line">        aItemList &lt;&lt; aItem;</span><br><span class="line">    }</span><br><span class="line">    QString str = theModel-&gt;<span class="built_in">headerData</span>(theModel-&gt;<span class="built_in">columnCount</span>() - <span class="number">1</span>,Qt::Horizontal,Qt::DisplayRole).<span class="built_in">toString</span>();</span><br><span class="line">    aItem = <span class="keyword">new</span> <span class="built_in">QStandardItem</span>(str);</span><br><span class="line">    aItem-&gt;<span class="built_in">setCheckable</span>(<span class="literal">true</span>);</span><br><span class="line">    aItemList &lt;&lt; aItem;</span><br><span class="line"></span><br><span class="line">    theModel-&gt;<span class="built_in">insertRow</span>(theModel-&gt;<span class="built_in">rowCount</span>(), aItemList);</span><br><span class="line">    QModelIndex curindex = theModel-&gt;<span class="built_in">index</span>(theModel-&gt;<span class="built_in">rowCount</span>() - <span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    theSelection-&gt;<span class="built_in">clearSelection</span>();</span><br><span class="line">    theSelection-&gt;<span class="built_in">setCurrentIndex</span>(curindex,QItemSelectionModel::Select);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/13/163228hEV094.png" alt=""></p>
+</li>
+<li>
+<p>插入行</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actInsert_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    QList&lt;QStandardItem*&gt; aItemList;</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; FixedColumuCount - <span class="number">1</span>; i++) {</span><br><span class="line">        aItem = <span class="keyword">new</span> <span class="built_in">QStandardItem</span>(<span class="string">"0"</span>);</span><br><span class="line">        aItemList &lt;&lt; aItem;</span><br><span class="line">    }</span><br><span class="line">    QString str = theModel-&gt;<span class="built_in">headerData</span>(theModel-&gt;<span class="built_in">columnCount</span>() - <span class="number">1</span>,Qt::Horizontal,Qt::DisplayRole).<span class="built_in">toString</span>();</span><br><span class="line">    aItem = <span class="keyword">new</span> <span class="built_in">QStandardItem</span>(str);</span><br><span class="line">    aItem-&gt;<span class="built_in">setCheckable</span>(<span class="literal">true</span>);</span><br><span class="line">    aItemList &lt;&lt; aItem;</span><br><span class="line"></span><br><span class="line">    QModelIndex index = theSelection-&gt;<span class="built_in">currentIndex</span>();</span><br><span class="line">    theModel-&gt;<span class="built_in">insertRow</span>(index.<span class="built_in">row</span>(), aItemList);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>​</p>
+</li>
+<li>
+<p>删除行</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actDelete_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    QModelIndex curIndex = theSelection-&gt;<span class="built_in">currentIndex</span>();</span><br><span class="line">    <span class="keyword">if</span>(curIndex.<span class="built_in">row</span>() == theModel-&gt;<span class="built_in">rowCount</span>() - <span class="number">1</span>){</span><br><span class="line">        theModel-&gt;<span class="built_in">removeRow</span>(curIndex.<span class="built_in">row</span>());<span class="comment">//删除最后一行</span></span><br><span class="line">    }<span class="keyword">else</span> {</span><br><span class="line">        theModel-&gt;<span class="built_in">removeRow</span>(curIndex.<span class="built_in">row</span>());</span><br><span class="line">        <span class="comment">//当前选择行</span></span><br><span class="line">        theSelection-&gt;<span class="built_in">setCurrentIndex</span>(curIndex,QItemSelectionModel::Select);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p>单元格格式设置</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//左对齐</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actAlignLeft_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">if</span>(!theSelection-&gt;<span class="built_in">hasSelection</span>()){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    QModelIndexList selectIndex = theSelection-&gt;<span class="built_in">selectedIndexes</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; selectIndex.<span class="built_in">count</span>();i++) {</span><br><span class="line">        QModelIndex aIndex = selectIndex.<span class="built_in">at</span>(i);</span><br><span class="line">        QStandardItem *aItem = theModel-&gt;<span class="built_in">itemFromIndex</span>(aIndex);</span><br><span class="line">        aItem-&gt;<span class="built_in">setTextAlignment</span>(Qt::AlignLeft);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加粗</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::on_actFontBold_triggered</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">if</span>(!theSelection-&gt;<span class="built_in">hasSelection</span>()){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    QModelIndexList selectIndex = theSelection-&gt;<span class="built_in">selectedIndexes</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; selectIndex.<span class="built_in">count</span>();i++) {</span><br><span class="line">        QModelIndex aIndex = selectIndex.<span class="built_in">at</span>(i);</span><br><span class="line">        QStandardItem *aItem = theModel-&gt;<span class="built_in">itemFromIndex</span>(aIndex);</span><br><span class="line">        QFont font = aItem-&gt;<span class="built_in">font</span>();</span><br><span class="line">        font.<span class="built_in">setBold</span>(<span class="literal">true</span>);</span><br><span class="line">        aItem-&gt;<span class="built_in">setFont</span>(font);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p>数据另存为文件</p>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void MainWindow::on_actSave_triggered()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//保存为文件</span></span><br><span class="line">    QString curPath = QCoreApplication::applicationDirPath();</span><br><span class="line">    QString aFileName = QFileDialog::getSaveFileName(this,<span class="string">"选择一个文件"</span>,curPath,<span class="string">"冰鞋数据文件(*.txt);;所有文件(*.*)"</span>);</span><br><span class="line">    <span class="keyword">if</span>(aFileName.isEmpty()){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    QFile aFile(aFileName);</span><br><span class="line">    <span class="keyword">if</span>(!(aFile.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate))){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    QTextStream aStream(&amp;aFile);</span><br><span class="line">    QStandardItem *aItem;</span><br><span class="line">    int i,j;</span><br><span class="line">    QString  <span class="built_in">str</span>;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;clear();</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; theModel-&gt;columnCount();i++) {</span><br><span class="line">        aItem = theModel-&gt;horizontalHeaderItem(i);</span><br><span class="line">        <span class="built_in">str</span> = <span class="built_in">str</span> + aItem-&gt;text() + <span class="string">"\t\t"</span>;</span><br><span class="line">    }</span><br><span class="line">    aStream &lt;&lt; <span class="built_in">str</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    ui-&gt;plainTextEdit-&gt;appendPlainText(<span class="built_in">str</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; theModel-&gt;rowCount();i++) {</span><br><span class="line">        <span class="built_in">str</span> = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>;j &lt; theModel-&gt;columnCount() - <span class="number">1</span>;j++) {</span><br><span class="line">            aItem = theModel-&gt;item(i,j);</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + aItem-&gt;text() + QString::asprintf(<span class="string">"\t\t"</span>);</span><br><span class="line">        }</span><br><span class="line">        aItem = theModel-&gt;item(i,j);</span><br><span class="line">        <span class="keyword">if</span>(aItem-&gt;checkState() == Qt::Checked){</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + <span class="string">"1"</span>;</span><br><span class="line">        }<span class="keyword">else</span> {</span><br><span class="line">            <span class="built_in">str</span> = <span class="built_in">str</span> + <span class="string">"0"</span>;</span><br><span class="line">        }</span><br><span class="line">        ui-&gt;plainTextEdit-&gt;appendPlainText(<span class="built_in">str</span>);</span><br><span class="line">        aStream &lt;&lt; <span class="built_in">str</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+</ul>
+<h1 id="自定义代理"><a class="markdownIt-Anchor" href="#自定义代理"></a> 自定义代理</h1>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/104007KqpcoX.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/104626Yr83DR.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112452vHeaH7.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112532Z5XE0K.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112547GUReEO.png" alt=""></p>
+<h2 id="自定义代理类的使用"><a class="markdownIt-Anchor" href="#自定义代理类的使用"></a> 自定义代理类的使用</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112733txJk7V.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112753FU4yNR.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/12/14/112824xZCIWr.png" alt=""></p>
+
+    </div>
+   <div>
+        
+            <div style="text-align:left;font-size:14px;">
+    <p style="text-align:center;color: #ccc;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</p>
+            </div>
+        
+    </div>
+
+   
+    
+    
+    
+      
+  <div class="popular-posts-header">相关热门文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/6251YR.html" rel="bookmark">Qt开发学习笔记01</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/2AJQNK2.html" rel="bookmark">Qt开发学习笔记02</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/2HNBAGV.html" rel="bookmark">基于代价的慢查询优化建议</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1F4JVMQ.html" rel="bookmark">一文搞懂redis</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wexinPay.jpeg" alt="meadel 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/zhifubaoPay.jpeg" alt="meadel 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuemingde.com/posts/C8CVJR.html" title="Qt基础学习笔记03">https://xuemingde.com/posts/C8CVJR.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
+              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/const/" rel="tag"><i class="fa fa-tag"></i> const</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
+              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+              <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i> 指针</a>
+              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
+              <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
+              <a href="/tags/Widget/" rel="tag"><i class="fa fa-tag"></i> Widget</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/1QR2QPE.html" rel="prev" title="Qt基础学习笔记02">
+      <i class="fa fa-chevron-left"></i> Qt基础学习笔记02
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/23E5YZV.html" rel="next" title="Qt基础学习笔记04">
+      Qt基础学习笔记04 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+
+  </article>
+  
+  
+  
+
+
+
+           </div>
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+          
+<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container-1',
+        blogId: '29491-1649429697615-963',
+        name: '不闻一时',
+        qrcode: 'https://xuemingde.com/pages/image/2022/05/31093822.png',
+        keyword: 'meadel',
+    });
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#modelview%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text"> Model/View结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text"> 数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text"> 视图组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text"> 代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modelview%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.</span> <span class="nav-text"> Model/View结构的一些概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qfilesystemmodel"><span class="nav-number">2.</span> <span class="nav-text"> QFileSystemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qfilesystemmodel%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text"> QFileSystemModel类的基本功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qstringlistmodel"><span class="nav-number">3.</span> <span class="nav-text"> QStringListModel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qstandarditemmodel"><span class="nav-number">4.</span> <span class="nav-text"> QStandardItemModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text"> 界面设计与主窗口类定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qstandarditemmodel%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.</span> <span class="nav-text"> QStandardItemModel的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text"> 自定义代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%90%86%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text"> 自定义代理类的使用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meadel" src="/images/touxiang.jpeg">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">我的愿望，世界和平</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80MDE5NDcwMjQ0MjU4NTUyL3Bvc3Rz" title="掘金 → https://juejin.cn/user/4019470244258552/posts"><i class="fa fa-share-alt fa-fw"></i>掘金</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZV9taW5k" title="CSDN → https://blog.csdn.net/xue_mind"><i class="fa fa-th-list fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLw==" title="https://tech.meituan.com/">美团团队</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  © 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">874k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 ≈</span>
+    <span title="站点阅读时长">13:14</span>
+</div>
+  <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zindex="-1" src="../js/canvas-ribbon.js"></script>
+  <script src="../js/anime.min.js"></script>
+  <script src="../js/pjax.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/jquery.fancybox.min.js"></script>
+  <script src="../js/medium-zoom.min.js"></script>
+  <script src="../js/lozad.min.js"></script>
+  <script src="../js/pangu.min.js"></script>
+  <script src="../js/velocity.min.js"></script>
+  <script src="../js/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer="" src="../js/three.min.js"></script>
+    <script defer="" src="../js/three-waves.min.js"></script>
+    <script defer="" src="../js/canvas_lines.min.js"></script>
+    <script defer="" src="../js/canvas_sphere.min.js"></script>
+
+
+  
+  <script data-pjax="">
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+  <script data-pjax="">
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 34163,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax="">
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script data-pjax="">
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('../js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('../js/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "吐槽一下...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <div id="aplayer"></div>
+  <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+  <script type="text/javascript" src="/dist/music.js"></script>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/lazyload-plugin/lazyload.intersectionObserver.min.js"></script></body></html>

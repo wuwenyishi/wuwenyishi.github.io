@@ -1,0 +1,1018 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext">
+<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../js/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="../js/pace-theme-minimal.min.css">
+  <script src="../js/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Innodb的MVCC实现原理">
+<meta property="og:url" content="https://xuemingde.com/posts/VQ077V.html">
+<meta property="og:site_name" content="东夕月少年">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1014-pZjl2q.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1017-gKgh48.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1017-C85dvp.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1017-S1wPS3.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1018-WDgWpW.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1018-1vklPX.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1018-O8GlSP.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1019-GRx57G.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1019-YvOauz.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1019-x1NF8M.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1019-EwbKQo.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1020-iIrKAA.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1020-8492ES.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1020-iUMz8J.jpg">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/07/1021-hFAdty.jpg">
+<meta property="article:published_time" content="2022-04-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-05T11:48:45.610Z">
+<meta property="article:author" content="meadel">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="集合">
+<meta property="article:tag" content="事务">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="指针">
+<meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="锁">
+<meta property="article:tag" content="索引">
+<meta property="article:tag" content="并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/04/07/1014-pZjl2q.jpg">
+
+<link rel="canonical" href="https://xuemingde.com/posts/VQ077V.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Innodb的MVCC实现原理 | 东夕月少年</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">东夕月少年</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一位程序员的成长之路</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源库</a>
+
+  </li>
+        <li class="menu-item menu-item-collect">
+
+    <a href="/collect/" rel="section"><i class="fa fa-star fa-fw"></i>收藏夹</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+           <div id="container-1">
+            <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/VQ077V.html">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="我的愿望，世界和平">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="东夕月少年">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Innodb的MVCC实现原理<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy/mlbDmja7lupMvTXlzcWwvMjAyMjA0MDctSW5ub2Ri55qETVZDQ+WunueOsOWOn+eQhi5tZA==" title="编辑"><i class="fa fa-pencil-alt"></i></span>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-07T00:00:00+08:00">2022-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-05 19:48:45" itemprop="dateModified" datetime="2023-09-05T19:48:45+08:00">2023-09-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/" itemprop="url" rel="index"><span itemprop="name">Mysql</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/VQ077V.html" class="post-meta-item leancloud_visitors" data-flag-title="Innodb的MVCC实现原理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/VQ077V.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/VQ077V.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p>理解MVCC之前，我们需要回顾了解一下数据库的一些其他相关知识点</p>
+<p>（1）数据库为什么要有事务？</p>
+<p>为了保证数据最终的一致性。</p>
+<p>（2）事务包括哪几个特性？</p>
+<p>原子性、隔离性、一致性、持久性。</p>
+<p>（3）事务的并发引起了哪些问题？</p>
+<p>事务并发会引起脏读、重复读、幻读问题。</p>
+<p>（4）怎么解决事务并发出现的问题？</p>
+<p>设置事务隔离级别，读未提交，读提交，重复读，序列化</p>
+<p>（5）数据库通过什么方式保证了事务的隔离性？</p>
+<p>通过加锁来实现事务的隔离性。</p>
+<p>（6）频繁的加锁会带来什么问题？</p>
+<p>读数据的时候没办法修改。修改数据的时候没办法读取，极大的降低了数据库性能。</p>
+<p>（7）数据库是如何解决加锁后的性能问题的？</p>
+<p>MVCC 多版本控制实现读取数据不用加锁， 可以让读取数据同时修改。修改数据时同时可读取。</p>
+<h2 id="一-什么是mvcc"><a class="markdownIt-Anchor" href="#一-什么是mvcc"></a> 一、什么是MVCC？</h2>
+<p>MVCC是在并发访问数据库时，通过对数据做多版本管理，避免因为写锁的阻塞而造成读数据的并发阻塞问题。</p>
+<p>通俗的讲就是MVCC通过保存数据的历史版本，根据比较版本号来处理数据的是否显示，从而达到读取数据的时候不需要加锁就可以保证事务隔离性的效果</p>
+<h2 id="二-innodb-mvcc实现的核心知识点"><a class="markdownIt-Anchor" href="#二-innodb-mvcc实现的核心知识点"></a> 二、Innodb MVCC实现的核心知识点</h2>
+<p>1、事务版本号</p>
+<p>2、表的隐藏列。</p>
+<p>3、undo log</p>
+<p>4、 read view</p>
+<h3 id="2-1-事务版本号"><a class="markdownIt-Anchor" href="#2-1-事务版本号"></a> 2-1、事务版本号</h3>
+<p>每次事务开启前都会从数据库获得一个自增长的事务ID，可以从事务ID判断事务的执行先后顺序。</p>
+<h3 id="2-2-表格的隐藏列"><a class="markdownIt-Anchor" href="#2-2-表格的隐藏列"></a> 2-2、表格的隐藏列</h3>
+<p><strong>DB_TRX_ID:</strong>        记录操作该数据事务的事务ID；</p>
+<p>**DB_ROLL_PTR：**指向上一个版本数据在undo log 里的位置指针；</p>
+<p><strong>DB_ROW_ID:</strong>      隐藏ID ，当创建表没有合适的索引作为聚集索引时，会用该隐藏ID创建聚集索引;</p>
+<h3 id="2-3-undo-log"><a class="markdownIt-Anchor" href="#2-3-undo-log"></a> 2-3、Undo log</h3>
+<p>Undo log 主要用于记录数据被修改之前的日志，在表信息修改之前先会把数据拷贝到undo log 里，当事务进行回滚时可以通过undo log 里的日志进行数据还原。</p>
+<p><strong>Undo log 的用途</strong></p>
+<p>（1）保证事务进行rollback时的原子性和一致性，当事务进行回滚的时候可以用undo log的数据进行恢复。</p>
+<p>（2）用于MVCC快照读的数据，在MVCC多版本控制中，通过读取undo log的历史版本数据可以实现不同事务版本号都拥有自己独立的快照数据版本。</p>
+<h3 id="2-4-事务版本号-表格的隐藏列-undo-log的关系"><a class="markdownIt-Anchor" href="#2-4-事务版本号-表格的隐藏列-undo-log的关系"></a> 2-4、事务版本号、表格的隐藏列、undo log的关系</h3>
+<p>我们模拟一次数据修改的过程来让我们了解下事务版本号、表格隐藏的列和undo log他们之间的使用关系。</p>
+<p><strong>（1）首先准备一张原始原始数据表</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1014-pZjl2q.jpg" alt="1014-F3zJiu"></p>
+<p>（2）开启一个事务A： 对user_info表执行 update  user_info set name =“李四”where id=1 会进行如下流程操作</p>
+<p>1、首先获得一个事务编号 104</p>
+<p>2、把user_info表修改前的数据拷贝到undo log</p>
+<p>3、修改user_info表 id=1的数据</p>
+<p>4、把修改后的数据事务版本号改成 当前事务版本号，并把DB_ROLL_PTR 地址指向undo log数据地址。</p>
+<p>（3）最后执行完结果如图：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-gKgh48.jpg" alt="img"></p>
+<h3 id="2-5-read-view"><a class="markdownIt-Anchor" href="#2-5-read-view"></a> 2-5、Read view</h3>
+<p>在innodb 中每个事务开启后都会得到一个read_view。副本主要保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号，其实简单的说这个副本中保存的是系统中当前不应该被本事务看到的其他事务id列表。</p>
+<h3 id="read-view-的几个重要属性"><a class="markdownIt-Anchor" href="#read-view-的几个重要属性"></a> Read view 的几个重要属性</h3>
+<p><strong>trx_ids:</strong>       当前系统活跃(未提交)事务版本号集合。</p>
+<p><strong>low_limit_id:</strong>   创建当前read view 时“当前系统最大<strong>事务版本号</strong>+1”。</p>
+<p><strong>up_limit_id:</strong>    创建当前read view 时“系统正处于<strong>活跃事务</strong>最小版本号”</p>
+<p><strong>creator_trx_id:</strong>  创建当前read view的事务版本号；</p>
+<h3 id="read-view-匹配条件"><a class="markdownIt-Anchor" href="#read-view-匹配条件"></a> Read view 匹配条件</h3>
+<p>（1）数据事务ID &lt;up_limit_id 则显示</p>
+<p>如果数据事务ID小于read view中的最小活跃事务ID，则可以肯定该数据是在当前事务启之前就已经存在了的,所以可以显示。</p>
+<p>（2）数据事务ID&gt;=low_limit_id 则不显示</p>
+<p>如果数据事务ID大于read view 中的当前系统的最大事务ID，则说明该数据是在当前read view 创建之后才产生的，所以数据不予显示。</p>
+<p>（3） up_limit_id &lt;=<strong>数据事务ID&lt;<strong>low_limit_id  则与活跃事务集合</strong>trx_ids</strong>里匹配</p>
+<p>如果数据的事务ID大于最小的活跃事务ID,同时又小于等于系统最大的事务ID，这种情况就说明这个数据有可能是在当前事务开始的时候还没有提交的。</p>
+<p>所以这时候我们需要把数据的事务ID与当前read view 中的活跃事务集合trx_ids 匹配:</p>
+<p><strong>情况1:</strong>    如果事务ID不存在于trx_ids 集合（则说明read view产生的时候事务已经commit了），这种情况数据则可以显示。</p>
+<p><strong>情况2：</strong>  如果事务ID存在trx_ids则说明read view产生的时候数据还没有提交，但是如果数据的事务ID等于creator_trx_id ，那么说明这个数据就是当前事务自己生成的，自己生成的数据自己当然能看见，所以这种情况下此数据也是可以显示的。</p>
+<p><strong>情况3：</strong>  如果事务ID既存在trx_ids而且又不等于creator_trx_id那就说明read view产生的时候数据还没有提交，又不是自己生成的，所以这种情况下此数据不能显示。</p>
+<p>（4）不满足read view条件时候，从undo log里面获取数据</p>
+<p>当数据的事务ID不满足read view条件时候，从undo log里面获取数据的历史版本，然后数据历史版本事务号回头再来和read view 条件匹配 ，直到找到一条满足条件的历史数据，或者找不到则返回空结果；</p>
+<h2 id="三-innodb实现mcc的原理"><a class="markdownIt-Anchor" href="#三-innodb实现mcc的原理"></a> 三、Innodb实现MCC的原理</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-C85dvp.jpg" alt="img"></p>
+<h3 id="3-1-模拟mvcc实现流程"><a class="markdownIt-Anchor" href="#3-1-模拟mvcc实现流程"></a> 3-1、模拟MVCC实现流程</h3>
+<p>下面我们通过开启两个同时进行的事务来模拟MVCC的工作流程。</p>
+<p><strong>（1）创建user_info表，插入一条初始化数据</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-S1wPS3.jpg" alt="img"></p>
+<p><strong>（2）事务A和事务B同时对user_info进行修改和查询操作</strong></p>
+<p>事务A：update user_info set name =”李四”</p>
+<p>事务B：select * fom user_info where id=1</p>
+<p><strong>问题：</strong></p>
+<p>先开启事务A ，在事务A修改数据后但未进行commit，此时执行事B。最后返回结果如何。</p>
+<p><strong>执行流程如下图：</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-WDgWpW.jpg" alt="img"></p>
+<p><strong>执行流程说明：</strong></p>
+<p><strong>（1）事务A：开启事务，首先得到一个事务编号102；</strong></p>
+<p><strong>（2）事务B：开启事务，得到事务编号103；</strong></p>
+<p><strong>（3）事务A：进行修改操作，首先把原数据拷贝到undolog,然后对数据进行修改，标记事务编号和上一个数据版本在undo log的地址。</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-1vklPX.jpg" alt="img"></p>
+<p><strong>（4）事务B： 此时事务B获得一个read view ，read view对应的值如下</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-O8GlSP.jpg" alt="1018-OSba8r"></p>
+<p><strong>（5）事务B： 执行查询语句，此时得到的是事务A修改后的数据</strong></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-GRx57G.jpg" alt="img"></p>
+<p><strong>（6）事务B： 把数据与read view进行匹配，</strong></p>
+<p>数据事务ID为102 等于up_limit_id （这里不小于up_limit_id）</p>
+<p>数据事务ID为102  小于low_limit_id</p>
+<p>数据事务ID为102存在于  trx_ids，</p>
+<p>数据事务ID为102不等于creator_trx_id</p>
+<p>发现不满足read view显示条件，所以从undo lo获取历史版本的数据再和read view进行匹配，最后返回数据如下。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-YvOauz.jpg" alt="img"></p>
+<h2 id="四-补充"><a class="markdownIt-Anchor" href="#四-补充"></a> 四、补充</h2>
+<h3 id="各种事务隔离级别下的read-view-工作方式"><a class="markdownIt-Anchor" href="#各种事务隔离级别下的read-view-工作方式"></a> 各种事务隔离级别下的Read view 工作方式</h3>
+<p>RC(read commit) 级别下同一个事务里面的每一次查询都会获得一个新的read view副本。这样就可能造成同一个事务里前后读取数据可能不一致的问题（重复读）</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-x1NF8M.jpg" alt="img"></p>
+<p>RR(重复读)级别下的一个事务里只会获取一次read view副本，从而保证每次查询的数据都是一样的。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-EwbKQo.jpg" alt="img"></p>
+<p>READ_UNCOMMITTED 级别的事务不会获取read view 副本。</p>
+<h3 id="快照读和当前读"><a class="markdownIt-Anchor" href="#快照读和当前读"></a> 快照读和当前读</h3>
+<p><strong>快照读</strong></p>
+<p>快照读是指读取数据时不是读取最新版本的数据，而是基于历史版本读取的一个快照信息（mysql读取undo log历史版本) ，快照读可以使普通的SELECT 读取数据时不用对表数据进行加锁，从而解决了因为对数据库表的加锁而导致的两个如下问题</p>
+<p>1、解决了因加锁导致的修改数据时无法对数据读取问题;</p>
+<p>2、解决了因加锁导致读取数据时无法对数据进行修改的问题;</p>
+<p><strong>当前读</strong></p>
+<p>当前读是读取的数据库最新的数据，当前读和快照读不同，因为要读取最新的数据而且要保证事务的隔离性，所以当前读是需要对数据进行加锁的（Update    delete    insert   select …lock in share mode   select for update 为当前读）</p>
+<h2 id="五-讨论"><a class="markdownIt-Anchor" href="#五-讨论"></a> 五、讨论</h2>
+<h3 id="mvcc是否有解决幻读问题"><a class="markdownIt-Anchor" href="#mvcc是否有解决幻读问题"></a> MVCC是否有解决幻读问题？</h3>
+<p>看到有很多网友对这个话题有讨论，这里补充一下和大家理一理这个问题，首先我通过验证得出来的结论是MVCC不存在幻读问题的，但也并不是说MVCC解决了幻读的问题，经过理论的推断和验证得到的结论是在<strong>快照读的情况下可以避免幻读问题，在当前读的情况下则需要使用间隙锁来解决幻读问题的</strong>。</p>
+<h3 id="mvcc不存在幻读问题rr级别的情况下"><a class="markdownIt-Anchor" href="#mvcc不存在幻读问题rr级别的情况下"></a> MVCC不存在幻读问题（RR级别的情况下）</h3>
+<p>首先确认一点MVCC属于快照读的，在进行快照读的情况下是不会对数据进行加锁，而是基于事务版本号和undo历史版本读取数据，其实上面的文章已经说得很清楚了，我们根据上面的MVCC流程来推导，无论如何在MVCC的情况下都是不会出现幻读的问题的，如下图。</p>
+<p>1、开启事务1，获得事务ID为1。</p>
+<p>2、事务1执行查询，得到readview。</p>
+<p>3、开始事务2。</p>
+<p>4、执行insert。</p>
+<p>5、提交事务2。</p>
+<p>6、执行事务1的第二次查询 (因为这里是RR级别，所以不会再去获得readview,还是使用第一次获得的readview)</p>
+<p>7、最后得到的结果是，插入的数据不会显示，因为插入的数据事务ID大于等于 readview里的最大活跃事务ID。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-iIrKAA.jpg" alt="img"></p>
+<p><strong>实际案例：</strong></p>
+<p>首先关闭数据库的自动提交事务功能。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-8492ES.jpg" alt="img"></p>
+<p>然后使用手动提交事务的方式，进行一次快照读，但是不提交事务，然后启动插入数据的事务，进行数据插入 commit，结果我发现在使用快照读的时候，数据是可以插入成功的，那这也就说明了一个问题，<strong>快照读的时候就根本没加锁，否则的话数据是不可能插入成功的，而且在插入数据提交成功后，我们执行第二条查询 语句是读取不到中间插入的这条数据的，这也就说明在没有加锁的情况下，基于历史版本的MVCC快照读是可以避免幻读问题的</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-iUMz8J.jpg" alt="1020-gEDxYX"></p>
+<h3 id="当前读存的幻读问题解决方案"><a class="markdownIt-Anchor" href="#当前读存的幻读问题解决方案"></a> 当前读存的幻读问题解决方案</h3>
+<p>上面我们已经论证了在RR级别快照读的情况下，是不存在幻读问题的。  因为会基于历史版本读取数据，但是当前读的话就不同了，当前读每次都会读取最新的数据。所以两次读取中间如果可以插入数据，那么就肯定会造成幻读问题，所以在当前读的情况下就必须通过一种方式来解决幻读问题，而这种方式就是采用加锁来解决。</p>
+<p><strong>实际案例：</strong></p>
+<p>首先关闭数据库的自动提交事务功能，  使用当前读的方式演示和上面一样的流程，结果发现在当前读的时候没有提交事务之前是根本无法进行数据插入的，所以这也就说明了，使用当前读的时候会对这个范围内的数据进行加锁，所以无法在查询的范围内进行数据插入，这无疑也证明了在当前读的情况下mysql是使用锁的机制来避免出现重复读和幻读问题的。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1021-hFAdty.jpg" alt="img"></p>
+<blockquote>
+<p>原文： <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81Mjk3Nzg2Mg==">数据库基础（四）Innodb MVCC实现原理 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+   <div>
+        
+            <div style="text-align:left;font-size:14px;">
+    <p style="text-align:center;color: #ccc;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</p>
+            </div>
+        
+    </div>
+
+   
+    
+    
+    
+      
+  <div class="popular-posts-header">相关热门文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1F4JVMQ.html" rel="bookmark">一文搞懂redis</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/J71QTX.html" rel="bookmark">秒杀系统设计</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3K8NATX.html" rel="bookmark">Mysql里的锁</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wexinPay.jpeg" alt="meadel 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/zhifubaoPay.jpeg" alt="meadel 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuemingde.com/posts/VQ077V.html" title="Innodb的MVCC实现原理">https://xuemingde.com/posts/VQ077V.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/%E9%9B%86%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 集合</a>
+              <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i> 指针</a>
+              <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
+              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
+              <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
+              <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> 并发</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/VB6XWR.html" rel="prev" title="Mysql索引原理">
+      <i class="fa fa-chevron-left"></i> Mysql索引原理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/3DS4M6Q.html" rel="next" title="Kafka面试连环炮-上">
+      Kafka面试连环炮-上 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+
+  </article>
+  
+  
+  
+
+
+
+           </div>
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+          
+<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container-1',
+        blogId: '29491-1649429697615-963',
+        name: '不闻一时',
+        qrcode: 'https://xuemingde.com/pages/image/2022/05/31093822.png',
+        keyword: 'meadel',
+    });
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AFmvcc"><span class="nav-number">1.</span> <span class="nav-text"> 一、什么是MVCC？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-innodb-mvcc%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text"> 二、Innodb MVCC实现的核心知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BA%8B%E5%8A%A1%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-number">2.1.</span> <span class="nav-text"> 2-1、事务版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%A1%A8%E6%A0%BC%E7%9A%84%E9%9A%90%E8%97%8F%E5%88%97"><span class="nav-number">2.2.</span> <span class="nav-text"> 2-2、表格的隐藏列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-undo-log"><span class="nav-number">2.3.</span> <span class="nav-text"> 2-3、Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E4%BA%8B%E5%8A%A1%E7%89%88%E6%9C%AC%E5%8F%B7-%E8%A1%A8%E6%A0%BC%E7%9A%84%E9%9A%90%E8%97%8F%E5%88%97-undo-log%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.4.</span> <span class="nav-text"> 2-4、事务版本号、表格的隐藏列、undo log的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-read-view"><span class="nav-number">2.5.</span> <span class="nav-text"> 2-5、Read view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-view-%E7%9A%84%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E5%B1%9E%E6%80%A7"><span class="nav-number">2.6.</span> <span class="nav-text"> Read view 的几个重要属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-view-%E5%8C%B9%E9%85%8D%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.7.</span> <span class="nav-text"> Read view 匹配条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-innodb%E5%AE%9E%E7%8E%B0mcc%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text"> 三、Innodb实现MCC的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%A8%A1%E6%8B%9Fmvcc%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text"> 3-1、模拟MVCC实现流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E8%A1%A5%E5%85%85"><span class="nav-number">4.</span> <span class="nav-text"> 四、补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8B%E7%9A%84read-view-%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text"> 各种事务隔离级别下的Read view 工作方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E7%85%A7%E8%AF%BB%E5%92%8C%E5%BD%93%E5%89%8D%E8%AF%BB"><span class="nav-number">4.2.</span> <span class="nav-text"> 快照读和当前读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-%E8%AE%A8%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text"> 五、讨论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mvcc%E6%98%AF%E5%90%A6%E6%9C%89%E8%A7%A3%E5%86%B3%E5%B9%BB%E8%AF%BB%E9%97%AE%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text"> MVCC是否有解决幻读问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mvcc%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%B9%BB%E8%AF%BB%E9%97%AE%E9%A2%98rr%E7%BA%A7%E5%88%AB%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-number">5.2.</span> <span class="nav-text"> MVCC不存在幻读问题（RR级别的情况下）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E8%AF%BB%E5%AD%98%E7%9A%84%E5%B9%BB%E8%AF%BB%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">5.3.</span> <span class="nav-text"> 当前读存的幻读问题解决方案</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meadel" src="/images/touxiang.jpeg">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">我的愿望，世界和平</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80MDE5NDcwMjQ0MjU4NTUyL3Bvc3Rz" title="掘金 → https://juejin.cn/user/4019470244258552/posts"><i class="fa fa-share-alt fa-fw"></i>掘金</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZV9taW5k" title="CSDN → https://blog.csdn.net/xue_mind"><i class="fa fa-th-list fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLw==" title="https://tech.meituan.com/">美团团队</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  © 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">874k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 ≈</span>
+    <span title="站点阅读时长">13:14</span>
+</div>
+  <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zindex="-1" src="../js/canvas-ribbon.js"></script>
+  <script src="../js/anime.min.js"></script>
+  <script src="../js/pjax.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/jquery.fancybox.min.js"></script>
+  <script src="../js/medium-zoom.min.js"></script>
+  <script src="../js/lozad.min.js"></script>
+  <script src="../js/pangu.min.js"></script>
+  <script src="../js/velocity.min.js"></script>
+  <script src="../js/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer="" src="../js/three.min.js"></script>
+    <script defer="" src="../js/three-waves.min.js"></script>
+    <script defer="" src="../js/canvas_lines.min.js"></script>
+    <script defer="" src="../js/canvas_sphere.min.js"></script>
+
+
+  
+  <script data-pjax="">
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+  <script data-pjax="">
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 34163,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax="">
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script data-pjax="">
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('../js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('../js/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "吐槽一下...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <div id="aplayer"></div>
+  <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+  <script type="text/javascript" src="/dist/music.js"></script>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/lazyload-plugin/lazyload.intersectionObserver.min.js"></script></body></html>
