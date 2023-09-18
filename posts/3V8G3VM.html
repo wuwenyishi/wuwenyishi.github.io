@@ -66,8 +66,8 @@
 <meta property="article:tag" content="函数">
 <meta property="article:tag" content="全局">
 <meta property="article:tag" content="Qt">
-<meta property="article:tag" content="算法">
 <meta property="article:tag" content="容器">
+<meta property="article:tag" content="算法">
 <meta property="article:tag" content="Widget">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/12/01/142148yi18pE.png">
@@ -479,8 +479,8 @@ Qt还提供一个关键字foreach(实际是<qtglobal>里定义的一个宏)用�
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
               <a href="/tags/%E5%85%A8%E5%B1%80/" rel="tag"><i class="fa fa-tag"></i> 全局</a>
               <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/Widget/" rel="tag"><i class="fa fa-tag"></i> Widget</a>
           </div>
 
@@ -670,6 +670,25 @@ Qt还提供一个关键字foreach(实际是<qtglobal>里定义的一个宏)用�
     <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/24/2021 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
 
         
 <div class="busuanzi-count">

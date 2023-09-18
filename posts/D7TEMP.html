@@ -54,11 +54,11 @@
 <meta property="article:tag" content="内存">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="栈">
+<meta property="article:tag" content="变量">
+<meta property="article:tag" content="锁">
+<meta property="article:tag" content="CPU">
 <meta property="article:tag" content="指针">
 <meta property="article:tag" content="全局">
-<meta property="article:tag" content="变量">
-<meta property="article:tag" content="CPU">
-<meta property="article:tag" content="锁">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="多线程">
@@ -626,7 +626,7 @@ Java无法直接访问底层操作系统，而是通过本地（native）方法�
       <div class="popular-posts-title"><a href="/posts/3RHZNJS.html" rel="bookmark">synchronized 实现原理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+      <div class="popular-posts-title"><a href="/posts/1Z9HSDW.html" rel="bookmark">Kafka面试连环炮-中</a></div>
     </li>
   </ul>
 
@@ -677,11 +677,11 @@ Java无法直接访问底层操作系统，而是通过本地（native）方法�
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
+              <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
+              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
+              <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i> 指针</a>
               <a href="/tags/%E5%85%A8%E5%B1%80/" rel="tag"><i class="fa fa-tag"></i> 全局</a>
-              <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
-              <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
-              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
               <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> 并发</a>
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
@@ -874,6 +874,25 @@ Java无法直接访问底层操作系统，而是通过本地（native）方法�
     <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/24/2021 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
 
         
 <div class="busuanzi-count">

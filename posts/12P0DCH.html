@@ -43,8 +43,8 @@
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="GC">
 <meta property="article:tag" content="数据库">
-<meta property="article:tag" content="锁">
 <meta property="article:tag" content="面试">
+<meta property="article:tag" content="锁">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="MQ">
 <meta property="article:tag" content="算法">
@@ -460,10 +460,10 @@
       <div class="popular-posts-title"><a href="/posts/WTSYSE.html" rel="bookmark">Java并发常见知识点&amp;面试题总结_进阶篇</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/5HB0NA.html" rel="bookmark">分布式锁的多种实现</a></div>
+      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2XZ2VHA.html" rel="bookmark">Sentinel 万字教程</a></div>
+      <div class="popular-posts-title"><a href="/posts/J71QTX.html" rel="bookmark">秒杀系统设计</a></div>
     </li>
   </ul>
 
@@ -512,8 +512,8 @@
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
               <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
-              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+              <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
               <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
               <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
@@ -530,12 +530,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/2P9AR21.html" rel="prev" title="Kafka面试连环炮-下">
-      <i class="fa fa-chevron-left"></i> Kafka面试连环炮-下
+    <a href="/posts/357C6XC.html" rel="prev" title="Java8中的Stream轻松遍历树形结构">
+      <i class="fa fa-chevron-left"></i> Java8中的Stream轻松遍历树形结构
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/3N8921N.html" rel="next" title="彻底讲透Elasticsearch">
-      彻底讲透Elasticsearch <i class="fa fa-chevron-right"></i>
+    <a href="/posts/2P9AR21.html" rel="next" title="Kafka面试连环炮-下">
+      Kafka面试连环炮-下 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -704,6 +704,25 @@
     <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/24/2021 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
 
         
 <div class="busuanzi-count">
