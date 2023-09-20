@@ -341,264 +341,217 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="Kafka-是什么-适应场景有哪些">Kafka 是什么, 适应场景有哪些</h2>
-<p>Kafka 是一个分布式的流式处理平台，用于实时构建流处理应用。主要应用在大数据实时处理领域。Kafka 凭借「<strong>高性能</strong>」、「<strong>高吞吐</strong>」、「<strong>高可用</strong>」、「<strong>低延迟</strong>」、「<strong>可伸缩</strong>」几大特性，成为「**消息队列」**的首选。</p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="Kafka-是什么-适应场景有哪些"><a href="#Kafka-是什么-适应场景有哪些" class="headerlink" title="Kafka 是什么, 适应场景有哪些"></a>Kafka 是什么, 适应场景有哪些</h2><p>Kafka 是一个分布式的流式处理平台，用于实时构建流处理应用。主要应用在大数据实时处理领域。Kafka 凭借「<strong>高性能</strong>」、「<strong>高吞吐</strong>」、「<strong>高可用</strong>」、「<strong>低延迟</strong>」、「<strong>可伸缩</strong>」几大特性，成为「<strong>消息队列」</strong>的首选。</p>
 <p><strong>其主要设计目标如下：</strong></p>
 <blockquote>
-<p>1）**高性能：**以时间复杂度为 O(1) 的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能。</p>
-<p>2）**高吞吐、低延迟：**在非常廉价的机器上也能做到单机支持每秒几十万条消息的传输，并保持毫秒级延迟。</p>
-<p>3）**持久性、可靠性：**消息最终被持久化到磁盘，且提供数据备份机制防止数据丢失。</p>
-<p>4）**容错性：**支持集群节点故障容灾恢复，即使 Kafka 集群中的某一台 Kafka 服务节点宕机，也不会影响整个系统的功能（若副本数量为N， 则允许N-1台节点故障）。</p>
-<p>5）**高并发：**可以支撑数千个客户端同时进行读写操作。</p>
+<p>1）<strong>高性能：</strong>以时间复杂度为 O(1) 的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能。</p>
+<p>2）<strong>高吞吐、低延迟：</strong>在非常廉价的机器上也能做到单机支持每秒几十万条消息的传输，并保持毫秒级延迟。</p>
+<p>3）<strong>持久性、可靠性：</strong>消息最终被持久化到磁盘，且提供数据备份机制防止数据丢失。</p>
+<p>4）<strong>容错性：</strong>支持集群节点故障容灾恢复，即使 Kafka 集群中的某一台 Kafka 服务节点宕机，也不会影响整个系统的功能（若副本数量为N， 则允许N-1台节点故障）。</p>
+<p>5）<strong>高并发：</strong>可以支撑数千个客户端同时进行读写操作。</p>
 </blockquote>
 <p><strong>其适应场景主要有：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0931-ZCwdNL.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0931-ZCwdNL.png" alt="图片"></p>
 <blockquote>
-<p>1）**日志收集方向：**可以用 Kafka 来收集各种服务的 log，然后统一输出，比如日志系统 elk，用 Kafka 进行数据中转。</p>
-<p>2）**消息系统方向：**Kafka 具备系统解耦、副本冗余、流量削峰、消息缓冲、可伸缩性、容错性等功能，同时还提供了消息顺序性保障以及消息回溯功能等。</p>
-<p>3）**大数据实时计算方向：**Kafka 提供了一套完整的流式处理框架， 被广泛应用到大数据处理，如与 flink、spark、storm 等整合。</p>
+<p>1）<strong>日志收集方向：</strong>可以用 Kafka 来收集各种服务的 log，然后统一输出，比如日志系统 elk，用 Kafka 进行数据中转。</p>
+<p>2）<strong>消息系统方向：</strong>Kafka 具备系统解耦、副本冗余、流量削峰、消息缓冲、可伸缩性、容错性等功能，同时还提供了消息顺序性保障以及消息回溯功能等。</p>
+<p>3）<strong>大数据实时计算方向：</strong>Kafka 提供了一套完整的流式处理框架， 被广泛应用到大数据处理，如与 flink、spark、storm 等整合。</p>
 </blockquote>
-<h2 id="Kafka-核心组件有哪些-分别有什么作用呢">Kafka 核心组件有哪些, 分别有什么作用呢</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0932-MsBc1g.png" alt=""></p>
+<h2 id="Kafka-核心组件有哪些-分别有什么作用呢"><a href="#Kafka-核心组件有哪些-分别有什么作用呢" class="headerlink" title="Kafka 核心组件有哪些, 分别有什么作用呢"></a>Kafka 核心组件有哪些, 分别有什么作用呢</h2><p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0932-MsBc1g.png" alt="图片"></p>
 <p><strong>Kafka 核心组件的基础概念：</strong></p>
 <blockquote>
-<p>1）**Producer：**即消息生产者，向 Kafka Broker 发消息的客户端。</p>
-<p>2）**Consumer：**即消息消费者，从 Kafka Broker 读消息的客户端。</p>
-<p>3）**Consumer Group：**即消费者组，<strong>由多个 Consumer 组成</strong>。消费者组内每个消费者负责消费不同分区的数据，以提高消费能力。<strong>一个分区只能由组内一个消费者消费，不同消费者组之间互不影响</strong>。</p>
+<p>1）<strong>Producer：</strong>即消息生产者，向 Kafka Broker 发消息的客户端。</p>
+<p>2）<strong>Consumer：</strong>即消息消费者，从 Kafka Broker 读消息的客户端。</p>
+<p>3）<strong>Consumer Group：</strong>即消费者组，<strong>由多个 Consumer 组成</strong>。消费者组内每个消费者负责消费不同分区的数据，以提高消费能力。<strong>一个分区只能由组内一个消费者消费，不同消费者组之间互不影响</strong>。</p>
 <p>4）<strong>Broker：</strong> <strong>一台 Kafka 服务节点就是一个 Broker</strong>。一个集群是由1个或者多个 Broker 组成的，且一个 Broker 可以容纳多个 Topic。</p>
-<p>5）**Topic：**一个逻辑上的概念，Topic 将消息分类，生产者和消费者面向的都是同一个 Topic, <strong>同一个 Topic 下的 Partition 的消息内容是不相同的</strong>。</p>
-<p>6）**Partition：**为了实现 Topic 扩展性，提高并发能力，一个非常大的 Topic 可以分布到多个 Broker 上，<strong>一个 Topic 可以分为多个 Partition 进行存储，且每个 Partition 是消息内容是有序的</strong>。</p>
-<p>7）<strong>Replica：<strong>即副本，为实现</strong>数据备份</strong>的功能，保证集群中的某个节点发生故障时，该节点上的 Partition 数据不丢失，且 Kafka 仍然能够继续工作，为此 Kafka 提供了副本机制，<strong>一个 Topic 的每个 Partition 都有若干个副本，一个 Leader 副本和若干个 Follower 副本</strong>。</p>
-<p>8）**Leader：**即每个分区多个副本的主副本，<strong>生产者发送数据的对象，以及消费者消费数据的对象，都是 Leader</strong>。</p>
-<p>9）**Follower：**即每个分区多个副本的从副本，<strong>会实时从 Leader 副本中同步数据，并保持和 Leader 数据的同步</strong>。Leader 发生故障时，某个 Follower 还会被选举并成为新的 Leader , 且不能跟 Leader 在同一个 Broker 上, 防止崩溃数据可恢复。</p>
-<p>10）**Offset：**消费者消费的位置信息，<strong>监控数据消费到什么位置</strong>，当消费者挂掉再重新恢复的时候，可以从消费位置继续消费。</p>
+<p>5）<strong>Topic：</strong>一个逻辑上的概念，Topic 将消息分类，生产者和消费者面向的都是同一个 Topic, <strong>同一个 Topic 下的 Partition 的消息内容是不相同的</strong>。</p>
+<p>6）<strong>Partition：</strong>为了实现 Topic 扩展性，提高并发能力，一个非常大的 Topic 可以分布到多个 Broker 上，<strong>一个 Topic 可以分为多个 Partition 进行存储，且每个 Partition 是消息内容是有序的</strong>。</p>
+<p>7）<strong>Replica：</strong>即副本，为实现<strong>数据备份</strong>的功能，保证集群中的某个节点发生故障时，该节点上的 Partition 数据不丢失，且 Kafka 仍然能够继续工作，为此 Kafka 提供了副本机制，<strong>一个 Topic 的每个 Partition 都有若干个副本，一个 Leader 副本和若干个 Follower 副本</strong>。</p>
+<p>8）<strong>Leader：</strong>即每个分区多个副本的主副本，<strong>生产者发送数据的对象，以及消费者消费数据的对象，都是 Leader</strong>。</p>
+<p>9）<strong>Follower：</strong>即每个分区多个副本的从副本，<strong>会实时从 Leader 副本中同步数据，并保持和 Leader 数据的同步</strong>。Leader 发生故障时，某个 Follower 还会被选举并成为新的 Leader , 且不能跟 Leader 在同一个 Broker 上, 防止崩溃数据可恢复。</p>
+<p>10）<strong>Offset：</strong>消费者消费的位置信息，<strong>监控数据消费到什么位置</strong>，当消费者挂掉再重新恢复的时候，可以从消费位置继续消费。</p>
 </blockquote>
-<h2 id="在-Kafka-中-Zookeeper-作用是什么">在 Kafka 中 Zookeeper 作用是什么</h2>
-<p>Kafka 集群能够正常工作，<strong>目前还是</strong>需要依赖于 ZooKeeper，主要用来「<strong>负责 Kafka集群元数据管理，集群协调工作</strong>」，在每个 Kafka 服务器启动的时候去连接并将自己注册到 Zookeeper，类似注册中心。</p>
+<h2 id="在-Kafka-中-Zookeeper-作用是什么"><a href="#在-Kafka-中-Zookeeper-作用是什么" class="headerlink" title="在 Kafka 中 Zookeeper 作用是什么"></a>在 Kafka 中 Zookeeper 作用是什么</h2><p>Kafka 集群能够正常工作，<strong>目前还是</strong>需要依赖于 ZooKeeper，主要用来「<strong>负责 Kafka集群元数据管理，集群协调工作</strong>」，在每个 Kafka 服务器启动的时候去连接并将自己注册到 Zookeeper，类似注册中心。</p>
 <p>Kafka 使用 Zookeeper 存放「<strong>集群元数据</strong>」、「<strong>集群成员管理</strong>」、 「<strong>Controller 选举</strong>」、「<strong>其他管理类任务</strong>」等。待 KRaft 提案完成后，Kafka 将完全不依赖 Zookeeper。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0934-e4kwIb.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0934-e4kwIb.png" alt="图片"></p>
 <blockquote>
-<p>1）**集群元数据：**Topic 对应 Partition 的所有数据都存放在 Zookeeper 中，且以 Zookeeper 保存的数据为准。</p>
-<p>2）**集群成员管理：**Broker 节点的注册、删除以及属性变更操作等。主要包括两个方面：<strong>成员数量的管理</strong>，主要体现在新增成员和移除现有成员；<strong>单个成员的管理</strong>，如变更单个 Broker 的数据等。</p>
-<p>3）<strong>Controller 选举：<strong>即选举 Broker 集群的控制器 Controller。其实它除了具有一般 Broker 的功能之外，还具有</strong>选举主题分区 Leader 节点的功能</strong>。在启动 Kafka系统时，其中一个 Broker 会被选举为控制器，负责管理主题分区和副本状态，还会执行分区重新分配的管理任务。如果在 Kafka  系统运行过程中，当前的控制器出现故障导致不可用，那么 Kafka 系统会从其他正常运行的 Broker 中重新选举出新的控制器。</p>
-<p>4）**其他管理类任务：**包括但不限于 Topic 的管理、参数配置等等。</p>
+<p>1）<strong>集群元数据：</strong>Topic 对应 Partition 的所有数据都存放在 Zookeeper 中，且以 Zookeeper 保存的数据为准。</p>
+<p>2）<strong>集群成员管理：</strong>Broker 节点的注册、删除以及属性变更操作等。主要包括两个方面：<strong>成员数量的管理</strong>，主要体现在新增成员和移除现有成员；<strong>单个成员的管理</strong>，如变更单个 Broker 的数据等。</p>
+<p>3）<strong>Controller 选举：</strong>即选举 Broker 集群的控制器 Controller。其实它除了具有一般 Broker 的功能之外，还具有<strong>选举主题分区 Leader 节点的功能</strong>。在启动 Kafka系统时，其中一个 Broker 会被选举为控制器，负责管理主题分区和副本状态，还会执行分区重新分配的管理任务。如果在 Kafka  系统运行过程中，当前的控制器出现故障导致不可用，那么 Kafka 系统会从其他正常运行的 Broker 中重新选举出新的控制器。</p>
+<p>4）<strong>其他管理类任务：</strong>包括但不限于 Topic 的管理、参数配置等等。</p>
 </blockquote>
 <p>Kafka 3.X 「<strong>2.8版本开始</strong>」为什么移除 Zookeeper 的依赖的原因有以下2点：</p>
 <blockquote>
-<p>1）**集群运维层面：**Kafka 本身就是一个分布式系统，如果还需要重度依赖 Zookeeper，集群运维成本和系统复杂度都很高。</p>
-<p>2）**集群性能层面：**Zookeeper 架构设计并不适合这种高频的读写更新操作, 由于之前的提交位移的操作都是保存在 Zookeeper 里面的，这样的话会严重影响 Zookeeper 集群的性能。</p>
+<p>1）<strong>集群运维层面：</strong>Kafka 本身就是一个分布式系统，如果还需要重度依赖 Zookeeper，集群运维成本和系统复杂度都很高。</p>
+<p>2）<strong>集群性能层面：</strong>Zookeeper 架构设计并不适合这种高频的读写更新操作, 由于之前的提交位移的操作都是保存在 Zookeeper 里面的，这样的话会严重影响 Zookeeper 集群的性能。</p>
 </blockquote>
-<h2 id="生产者有哪些发消息的模式">生产者有哪些发消息的模式</h2>
-<p>Kafka 生产者发送消息主要有三种模式:</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0936-L44AG0.png" alt=""></p>
-<h3 id="发后即忘发送模式">发后即忘发送模式</h3>
-<p><strong>发后即忘模式「fire-and-forget」，它只管发送消息，并不需要关心消息是否发送成功</strong>。其本质上也是一种<strong>异步发送</strong>的方式，消息先存储在缓冲区中，达到设定条件后再批量进行发送。<strong>这是 kafka 吞吐量最高的方式，但同时也是消息最不可靠的方式</strong>，因为对于发送失败的消息并没有做任何处理，某些异常情况下会导致消息丢失。</p>
+<h2 id="生产者有哪些发消息的模式"><a href="#生产者有哪些发消息的模式" class="headerlink" title="生产者有哪些发消息的模式"></a>生产者有哪些发消息的模式</h2><p>Kafka 生产者发送消息主要有三种模式:</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0936-L44AG0.png" alt="图片"></p>
+<h3 id="发后即忘发送模式"><a href="#发后即忘发送模式" class="headerlink" title="发后即忘发送模式"></a>发后即忘发送模式</h3><p><strong>发后即忘模式「fire-and-forget」，它只管发送消息，并不需要关心消息是否发送成功</strong>。其本质上也是一种<strong>异步发送</strong>的方式，消息先存储在缓冲区中，达到设定条件后再批量进行发送。<strong>这是 kafka 吞吐量最高的方式，但同时也是消息最不可靠的方式</strong>，因为对于发送失败的消息并没有做任何处理，某些异常情况下会导致消息丢失。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ProducerRecord&lt;k,v&gt; record = <span class="keyword">new</span> ProducerRecord&lt;k,v&gt;(<span class="string">"this-topic"</span>, key, value);</span><br><span class="line"><span class="keyword">try</span> {  </span><br><span class="line">  <span class="comment">//fire-and-forget 模式     </span></span><br><span class="line">  producer.send(record);</span><br><span class="line">} <span class="keyword">catch</span> (Exception e) {</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="同步发送模式">同步发送模式</h3>
-<p>同步发送模式 「<strong>sync</strong>」，调用 send() 方法会返回一个 Future 对象，再通过调用 Future 对象的 get() 方法，等待结果返回，根据返回的结果可以判断消息是否发送成功， 由于是同步发送会阻塞，只有当消息通过 <strong>get()</strong> 返回数据时，才会继续下一条消息的发送。</p>
+<h3 id="同步发送模式"><a href="#同步发送模式" class="headerlink" title="同步发送模式"></a>同步发送模式</h3><p>同步发送模式 「<strong>sync</strong>」，调用 send() 方法会返回一个 Future 对象，再通过调用 Future 对象的 get() 方法，等待结果返回，根据返回的结果可以判断消息是否发送成功， 由于是同步发送会阻塞，只有当消息通过 <strong>get()</strong> 返回数据时，才会继续下一条消息的发送。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ProducerRecord&lt;k,v&gt; record = <span class="keyword">new</span> ProducerRecord&lt;k,v&gt;(<span class="string">"this-topic"</span>, key, value);</span><br><span class="line"><span class="keyword">try</span> { <span class="comment">//sync 模式 调用future.get() </span></span><br><span class="line">  future = producer.send(record); </span><br><span class="line">  RecordMetadata metadata = future.get();</span><br><span class="line">} <span class="keyword">catch</span> (Exception e) {</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">}producer.flush();</span><br><span class="line">producer.close();</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="异步发送模式">异步发送模式</h3>
-<p>异步发送模式「<strong>async</strong>」，在调用 send() 方法的时候指定一个 callback 函数，当 Broker 接收到返回的时候，该 callback 函数会被触发执行，通过回调函数能够对异常情况进行处理，当调用了回调函数时，只有回调函数执行完毕生产者才会结束，否则一直会阻塞。</p>
+<h3 id="异步发送模式"><a href="#异步发送模式" class="headerlink" title="异步发送模式"></a>异步发送模式</h3><p>异步发送模式「<strong>async</strong>」，在调用 send() 方法的时候指定一个 callback 函数，当 Broker 接收到返回的时候，该 callback 函数会被触发执行，通过回调函数能够对异常情况进行处理，当调用了回调函数时，只有回调函数执行完毕生产者才会结束，否则一直会阻塞。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Future&lt;RecordMetadata&gt; <span class="title">send</span><span class="params">(ProducerRecord&lt;K, V&gt; record, Callback callback)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Future&lt;RecordMetadata&gt; <span class="title">send</span><span class="params">(ProducerRecord&lt;K, V&gt; record, Callback callback)</span> </span>{</span><br><span class="line">  <span class="comment">//intercept the record, which can be potentially modified; this method does not throw exceptions        </span></span><br><span class="line">  ProducerRecord&lt;K, V&gt; interceptedRecord = <span class="keyword">this</span>.interceptors == <span class="keyword">null</span> ? record :<span class="keyword">this</span>.interceptors.onSend(record);        </span><br><span class="line">  <span class="keyword">return</span> doSend(interceptedRecord, callback);}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>以上三种方式各有各的特点，具体还要看业务的应用场景适合哪一种：</strong></p>
 <blockquote>
-<p>1）**场景1：**如果业务只是关心消息的吞吐量，且允许少量消息发送失败，也不关注消息的发送顺序的话，那么可以使用发后即忘发送「<strong>fire-and-forget</strong>」的方式，配合参数 acks = 0，这样生产者并不需要等待服务器的响应，以网络能支持的最大速度发送消息。</p>
-<p>2）<strong>场景2：<strong>如果业务要求消息必须是按</strong>顺序发送</strong>的话，且数据只能落在一个 Partition 上，那么可以使用同步发送「<strong>sync</strong>」的方式，并结合参数来设置 retries 的值让消息发送失败时可以进行多次重试「<strong>retries &gt; 0</strong>」，再结合参数设置「<strong>acks=all &amp; max_in_flight_requests_per_connection=1</strong>」，可以控制生产者在收到服务器成功响应之前只能发送1条消息，在消息发送成功后立即进行 flush, 从而达到控制消息顺序发送。</p>
-<p>3）**场景3：**如果业务需要知道消息是否发送成功，但对消息的顺序并不关心的话，那么可以用「<strong>异步async + 回调 callback 函数</strong>」的方式来发送消息，并配合参数 retries=0，待发送失败时将失败的消息记录到日志文件中进行后续处理。</p>
+<p>1）<strong>场景1：</strong>如果业务只是关心消息的吞吐量，且允许少量消息发送失败，也不关注消息的发送顺序的话，那么可以使用发后即忘发送「<strong>fire-and-forget</strong>」的方式，配合参数 acks = 0，这样生产者并不需要等待服务器的响应，以网络能支持的最大速度发送消息。</p>
+<p>2）<strong>场景2：</strong>如果业务要求消息必须是按<strong>顺序发送</strong>的话，且数据只能落在一个 Partition 上，那么可以使用同步发送「<strong>sync</strong>」的方式，并结合参数来设置 retries 的值让消息发送失败时可以进行多次重试「<strong>retries &gt; 0</strong>」，再结合参数设置「<strong>acks=all &amp; max_in_flight_requests_per_connection=1</strong>」，可以控制生产者在收到服务器成功响应之前只能发送1条消息，在消息发送成功后立即进行 flush, 从而达到控制消息顺序发送。</p>
+<p>3）<strong>场景3：</strong>如果业务需要知道消息是否发送成功，但对消息的顺序并不关心的话，那么可以用「<strong>异步async + 回调 callback 函数</strong>」的方式来发送消息，并配合参数 retries=0，待发送失败时将失败的消息记录到日志文件中进行后续处理。</p>
 </blockquote>
-<h2 id="Kafka-为什么要设计分区">Kafka 为什么要设计分区</h2>
-<p>其实这个问题说来很简单, 假如不进行分区的话就如同 MySQL 单表存储一样，发消息就会被集中存储，这样会导致某台 Kafka 服务器存储 Topic  消息过多，如果在写消息压力很大的情况下，最终会导致这台 Kafka 服务器吞吐量出现瓶颈, 因此 Kafka 设计了分区的概念，同时也带来了「<strong>负载均衡</strong>」、「<strong>横向扩展</strong>」的能力，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0944-PgOS8q.png" alt=""></p>
+<h2 id="Kafka-为什么要设计分区"><a href="#Kafka-为什么要设计分区" class="headerlink" title="Kafka 为什么要设计分区"></a>Kafka 为什么要设计分区</h2><p>其实这个问题说来很简单, 假如不进行分区的话就如同 MySQL 单表存储一样，发消息就会被集中存储，这样会导致某台 Kafka 服务器存储 Topic  消息过多，如果在写消息压力很大的情况下，最终会导致这台 Kafka 服务器吞吐量出现瓶颈, 因此 Kafka 设计了分区的概念，同时也带来了「<strong>负载均衡</strong>」、「<strong>横向扩展</strong>」的能力，如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0944-PgOS8q.png" alt="图片"></p>
 <blockquote>
-<p>1）**负载均衡：**发送消息时可以根据分区的数量进行数据均匀分布，使其落在不同的分区上, 这样可以提高并发写性能；同时消费的时候多个订阅者可以从一个或者多个分区中同时消费数据，以支撑海量数据处理能力，提高读消息性能。</p>
-<p>2）**横向扩展：**可以将一个 Topic 分成了多个 Partition，将不同的 Partition 尽可能的部署在不同的物理节点上，这样扩展起来非常方便，另外一个消费者可以消费多个分区中的数据，但是这样还是不能够充分的发挥横向扩展，<strong>这时候消费者组就出现了</strong>，我们用消费者组，来消费整个的 Topic，一个消费者消费 Topic 中的一个分区。</p>
+<p>1）<strong>负载均衡：</strong>发送消息时可以根据分区的数量进行数据均匀分布，使其落在不同的分区上, 这样可以提高并发写性能；同时消费的时候多个订阅者可以从一个或者多个分区中同时消费数据，以支撑海量数据处理能力，提高读消息性能。</p>
+<p>2）<strong>横向扩展：</strong>可以将一个 Topic 分成了多个 Partition，将不同的 Partition 尽可能的部署在不同的物理节点上，这样扩展起来非常方便，另外一个消费者可以消费多个分区中的数据，但是这样还是不能够充分的发挥横向扩展，<strong>这时候消费者组就出现了</strong>，我们用消费者组，来消费整个的 Topic，一个消费者消费 Topic 中的一个分区。</p>
 </blockquote>
-<h2 id="生产者发送消息时如何选择分区的">生产者发送消息时如何选择分区的</h2>
-<p>生产者发送消息的时候选择分区的策略方式主要有以下4种：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0945-fF7vL4.png" alt=""></p>
+<h2 id="生产者发送消息时如何选择分区的"><a href="#生产者发送消息时如何选择分区的" class="headerlink" title="生产者发送消息时如何选择分区的"></a>生产者发送消息时如何选择分区的</h2><p>生产者发送消息的时候选择分区的策略方式主要有以下4种：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0945-fF7vL4.png" alt="图片"></p>
 <blockquote>
-<p>1）**轮询策略：**顺序分配消息，即按照消息顺序依次发送到某Topic下不同的分区，它总是能保证消息最大限度地被平均分配到所有分区上，<strong>如果消息在创建的时候 key 为 null， 那么Kafka 默认会采用这种策略</strong>。</p>
-<p>2）**消息key指定分区策略：**Kafka 允许为每条消息定义 key，即消息在创建的时候 key 不为空，此时 Kafka 会根据消息的 key 进行 hash, 然后根据 hash 值对 Partition 进行取模映射到指定的分区上， 这样的好处就是相同 key的消息会发送到同一个分区上， 这样 <strong>Kafka 虽然不能保证全局有序，但是可以保证每个分区的消息是有序的，这就是消息分区有序性</strong>，适应场景有下单支付的时候希望消息有序，可以通过订单 id 作为 key 发送消息达到分区有序性。</p>
-<p>3）**随机策略：**随机发送到某个分区上，看似也是将消息均匀打散分配到各个分区，但是性能还是无法跟轮询策略比，「<strong>如果追求数据的均匀分布，最好还是使用轮询策略</strong>」。</p>
-<p>4）**自定义策略：**可以通过实现 org.apache.kafka.clients.producer.Partitioner 接口，重写 partition 方法来达到自定义分区效果。</p>
+<p>1）<strong>轮询策略：</strong>顺序分配消息，即按照消息顺序依次发送到某Topic下不同的分区，它总是能保证消息最大限度地被平均分配到所有分区上，<strong>如果消息在创建的时候 key 为 null， 那么Kafka 默认会采用这种策略</strong>。</p>
+<p>2）<strong>消息key指定分区策略：</strong>Kafka 允许为每条消息定义 key，即消息在创建的时候 key 不为空，此时 Kafka 会根据消息的 key 进行 hash, 然后根据 hash 值对 Partition 进行取模映射到指定的分区上， 这样的好处就是相同 key的消息会发送到同一个分区上， 这样 <strong>Kafka 虽然不能保证全局有序，但是可以保证每个分区的消息是有序的，这就是消息分区有序性</strong>，适应场景有下单支付的时候希望消息有序，可以通过订单 id 作为 key 发送消息达到分区有序性。</p>
+<p>3）<strong>随机策略：</strong>随机发送到某个分区上，看似也是将消息均匀打散分配到各个分区，但是性能还是无法跟轮询策略比，「<strong>如果追求数据的均匀分布，最好还是使用轮询策略</strong>」。</p>
+<p>4）<strong>自定义策略：</strong>可以通过实现 org.apache.kafka.clients.producer.Partitioner 接口，重写 partition 方法来达到自定义分区效果。</p>
 </blockquote>
-<h2 id="Kafka-如何合理设置分区数-越多越好吗">Kafka 如何合理设置分区数,越多越好吗</h2>
-<p><strong>一、Kafka 如何合理设置分区数</strong></p>
+<h2 id="Kafka-如何合理设置分区数-越多越好吗"><a href="#Kafka-如何合理设置分区数-越多越好吗" class="headerlink" title="Kafka 如何合理设置分区数,越多越好吗"></a>Kafka 如何合理设置分区数,越多越好吗</h2><p><strong>一、Kafka 如何合理设置分区数</strong></p>
 <p>首先我们要<strong>了解在 Partition 级别上达到负载均衡是实现高吞吐量的关键</strong>，合适的 Partition 数量可以达到并行读写和负载均衡的目的，<strong>需要根据每个分区的生产者和消费者的目标吞吐量进行估计</strong>。</p>
 <p>此时我们可以遵循一定的步骤来计算确定分区数：</p>
 <blockquote>
 <p>1）首先根据某个 Topic 当前接收的数据量等经验来确定分区的初始值。</p>
 <p>2）然后针对这个 Topic，进行测试 Producer 端吞吐量和 Consumer 端的吞吐量。</p>
 <p>3）测试的结果， 假设此时他们的值分别是 Tp「<strong>Producer 端吞吐量</strong>」、Tc「<strong>负Consumer 端吞吐量</strong>」，总的目标吞吐量是 Tt， 单位是 MB/s， 那么结果 numPartition = Tt / max (Tp, Tc)。</p>
-<p>4）**特殊说明：**测试 Tp 通常是很容易的，因为它的逻辑非常简单，就是直接发送消息到 Kafka 就好了。而测试 Tc 通常与应用消费消息后进行其他什么处理有关，相对复杂一些。</p>
+<p>4）<strong>特殊说明：</strong>测试 Tp 通常是很容易的，因为它的逻辑非常简单，就是直接发送消息到 Kafka 就好了。而测试 Tc 通常与应用消费消息后进行其他什么处理有关，相对复杂一些。</p>
 </blockquote>
 <p><strong>二、分区设置越多越好吗？</strong></p>
 <p>首先 <strong>Kafka 高吞吐量的原因之一就是通过 Partition 将 Topic 中的消息均衡保存到 Kafka 集群中不同的 Broker 中</strong>。</p>
 <p>「<strong>理论上说，如果一个 Topic 分区越多，整个集群所能达到的吞吐量就越大</strong>」。但是，实际生产中 Kafka Topic 的分区数真的配置越多越好吗？<strong>很显然不是！分区数过多会有什么弊端和问题呢，我们可以从下面4个方向进行深度分析：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0946-lFzucv.png" alt=""></p>
-<h3 id="使用内存方面分析"><strong>使用内存方面分析</strong></h3>
-<blockquote>
-<p>1）**Broker端：**有很多组件都在内存中维护了分区级别的缓存，比如 Controller，FetcherManager 等，因此分区数越多，这类缓存的成本就越大。</p>
-<p>2）**Producer端：**比如参数 batch.size，默认是16KB。它会为每个分区缓存消息，在数据积累到一定大小或者足够的时间时，累积的消息将会从缓存中移除并发往Broker 节点。这个功能是为了提高性能而设计，但是随着分区数增多，这部分缓存所需的内存占用也会更多。</p>
-<p>3）**Consumer端：**消费者数跟分区数是直接挂钩的，在消费消息时的内存占用、以及为达到更高的吞吐性能需要开启的 Consumer 数也会随着分区数增加而增加。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0946-lFzucv.png" alt="图片"></p>
+<h3 id="使用内存方面分析"><a href="#使用内存方面分析" class="headerlink" title="使用内存方面分析"></a><strong>使用内存方面分析</strong></h3><blockquote>
+<p>1）<strong>Broker端：</strong>有很多组件都在内存中维护了分区级别的缓存，比如 Controller，FetcherManager 等，因此分区数越多，这类缓存的成本就越大。</p>
+<p>2）<strong>Producer端：</strong>比如参数 batch.size，默认是16KB。它会为每个分区缓存消息，在数据积累到一定大小或者足够的时间时，累积的消息将会从缓存中移除并发往Broker 节点。这个功能是为了提高性能而设计，但是随着分区数增多，这部分缓存所需的内存占用也会更多。</p>
+<p>3）<strong>Consumer端：</strong>消费者数跟分区数是直接挂钩的，在消费消息时的内存占用、以及为达到更高的吞吐性能需要开启的 Consumer 数也会随着分区数增加而增加。</p>
 </blockquote>
-<h3 id="消耗文件句柄方面分析"><strong>消耗文件句柄方面分析</strong></h3>
-<p><strong>在 Kafka 的 Broker 中，每个 Partition 都会对应磁盘文件系统中一个目录</strong>。在 Kafka 的日志文件目录中，每个日志数据段都会分配三个文件，两个索引文件和一个数据文件。<strong>每个 Broker 会为每个日志段文件打开两个 index 文件句柄和一个 log 数据文件句柄</strong>。因此，随着 Partition 的增多，所需要保持打开状态的文件句柄数也就越多，最终可能超过底层操作系统配置的文件句柄数量限制。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0947-XYbmGY.png" alt=""></p>
-<h3 id="端到端的延迟方面分析"><strong>端到端的延迟方面分析</strong></h3>
-<p>首先我们得先了解 Kafka 端对端延迟是什么? Producer 端发布消息到 Consumer 端接收消息所需要的时间，<strong>即 Consumer 端接收消息的时间减去 Producer 端发布消息的时间</strong>。</p>
+<h3 id="消耗文件句柄方面分析"><a href="#消耗文件句柄方面分析" class="headerlink" title="消耗文件句柄方面分析"></a><strong>消耗文件句柄方面分析</strong></h3><p><strong>在 Kafka 的 Broker 中，每个 Partition 都会对应磁盘文件系统中一个目录</strong>。在 Kafka 的日志文件目录中，每个日志数据段都会分配三个文件，两个索引文件和一个数据文件。<strong>每个 Broker 会为每个日志段文件打开两个 index 文件句柄和一个 log 数据文件句柄</strong>。因此，随着 Partition 的增多，所需要保持打开状态的文件句柄数也就越多，最终可能超过底层操作系统配置的文件句柄数量限制。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0947-XYbmGY.png" alt="图片"></p>
+<h3 id="端到端的延迟方面分析"><a href="#端到端的延迟方面分析" class="headerlink" title="端到端的延迟方面分析"></a><strong>端到端的延迟方面分析</strong></h3><p>首先我们得先了解 Kafka 端对端延迟是什么? Producer 端发布消息到 Consumer 端接收消息所需要的时间，<strong>即 Consumer 端接收消息的时间减去 Producer 端发布消息的时间</strong>。</p>
 <p>在 Kafka 中只对「<strong>已提交的消息做最大限度的持久化保证不丢失</strong>」，因此 Kafka 只有在消息提交之后，才会将消息暴露给消费者。<strong>此时如果分区越多那么副本之间需要同步的数据就会越多</strong>，假如消息需要在所有 ISR 副本集合列表同步复制完成之后才能进行暴露。<strong>因此 ISR 副本集合间复制数据所花时间将是 kafka 端对端延迟的最主要部分</strong>。</p>
 <p>此时我们可以通过加大 kafka 集群来进行缓解。比如，我们将 100 个分区 Leader 放到一个 Broker 节点和放到 10 个 Broker  节点，它们之间的延迟是不一样的。如在 10 个 Broker 节点的集群中，每个 Broker 节点平均只需要处理  10 个分区的数据复制。此时端对端的延迟将会变成原来的十分之一。</p>
-<p>**因此根据实战经验，如果你特别关心消息延迟问题的话，此时限制每个 Broker 节点的 Partition 数量是一个非常不错的主意：**对于 N 个 Broker 节点和复制副本因子「<strong>replication-factor</strong>」为 F 的 Kafka 集群，那么整个 Kafka 集群的 Partition 数量最好不超过 「<strong>100 * N * F</strong>」 个，即单个  Broker 节点 Partition 的 Leader 数量不超过100。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0948-jPFAuB.png" alt=""></p>
-<h3 id="高可用性方面分析"><strong>高可用性方面分析</strong></h3>
-<p><strong>我们知道 Kafka 是通过多副本复制技术来实现集群的高可用和稳定性的</strong>。每个 Partition 都会有多个数据副本，每个副本分别存在于不同的 Broker 上。所有的数据副本中，其中一个数据副本为 Leader，其他的数据副本为 Follower。</p>
-<p>**在Kafka集群内部，所有的数据副本采用自动化的方式管理且会确保所有副本之间的数据是保持同步状态的。**当 Broker 发生故障时，对于 Leader 副本所在 Broker 的所有 Partition 将会变得暂不可用。Kafka  将自动在其它副本中选择出一个 Leader，用于接收客户端的请求。这个过程由 Kafka Controller 节点 Broker  自动选举完成。</p>
+<p><strong>因此根据实战经验，如果你特别关心消息延迟问题的话，此时限制每个 Broker 节点的 Partition 数量是一个非常不错的主意：</strong>对于 N 个 Broker 节点和复制副本因子「<strong>replication-factor</strong>」为 F 的 Kafka 集群，那么整个 Kafka 集群的 Partition 数量最好不超过 「<strong>100 * N * F</strong>」 个，即单个  Broker 节点 Partition 的 Leader 数量不超过100。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0948-jPFAuB.png" alt="图片"></p>
+<h3 id="高可用性方面分析"><a href="#高可用性方面分析" class="headerlink" title="高可用性方面分析"></a><strong>高可用性方面分析</strong></h3><p><strong>我们知道 Kafka 是通过多副本复制技术来实现集群的高可用和稳定性的</strong>。每个 Partition 都会有多个数据副本，每个副本分别存在于不同的 Broker 上。所有的数据副本中，其中一个数据副本为 Leader，其他的数据副本为 Follower。</p>
+<p><strong>在Kafka集群内部，所有的数据副本采用自动化的方式管理且会确保所有副本之间的数据是保持同步状态的。</strong>当 Broker 发生故障时，对于 Leader 副本所在 Broker 的所有 Partition 将会变得暂不可用。Kafka  将自动在其它副本中选择出一个 Leader，用于接收客户端的请求。这个过程由 Kafka Controller 节点 Broker  自动选举完成。</p>
 <p>正常情况下，当一个 Broker 在有计划地停止服务时候，那么 Controller 会在服务停止之前，将该 Broker上 的所有 Leader  副本一个个地移走。对于单个 Leader 副本的移动速度非常快，从客户层面看，有计划的服务停服只会导致系统很短时间窗口不可用。</p>
 <p>但是，当 Broker 不是正常停止服务时「<strong>kill -9 强杀方式</strong>」，系统的不可用时间窗口将会与受影响的 Partition 数量有关。如果此时发生宕机的 Broker 是 Controller 节点时, 这时 Controller 节点故障恢复会自动的进行，<strong>但是新的 Controller 节点需要从 Zookeeper 中读取每一个 Partition 的元数据信息用于初始化数据</strong>。假设一个 Kafka 集群存在10000个 Partition，从 Zookeeper 中恢复元数据时每个 Partition 大约花费2ms，则 Controller 恢复将会增加约20秒的不可用时间窗口。</p>
-<p>**总之，通常情况下 Kafka 集群中越多的 P****artition 会带来越高的吞吐量。但是，如果 Kafka 集群中 Partition 总量过大或者单个 Broker 节点 Partition 过多，都可能会对系统的可用性和消息延迟带来潜在的负面影响，需要引起我们的重视。</p>
-<h2 id="如何保证-Kafka-中的消息是有序的">如何保证 Kafka 中的消息是有序的</h2>
-<p>我们知道在 Kafka 中，并不保证消息全局有序，但是可以**保证分区有序性，**分区与分区之间是无序的。<strong>那么如何保证 Kafka 中的消息是有序的呢？</strong> 可以从以下三个方面来入手分析：</p>
-<h3 id="生产端-Producer"><strong>生产端 Producer</strong></h3>
-<p>在第4道题「<strong>生产者有哪些发送模式</strong>」的最后的场景分析里面简单的说明了下, 这里再详细的进行分析下：</p>
+<p><strong>总之，通常情况下 Kafka 集群中越多的 P**</strong>artition 会带来越高的吞吐量。但是，如果 Kafka 集群中 Partition 总量过大或者单个 Broker 节点 Partition 过多，都可能会对系统的可用性和消息延迟带来潜在的负面影响，需要引起我们的重视。</p>
+<h2 id="如何保证-Kafka-中的消息是有序的"><a href="#如何保证-Kafka-中的消息是有序的" class="headerlink" title="如何保证 Kafka 中的消息是有序的"></a>如何保证 Kafka 中的消息是有序的</h2><p>我们知道在 Kafka 中，并不保证消息全局有序，但是可以<strong>保证分区有序性，</strong>分区与分区之间是无序的。<strong>那么如何保证 Kafka 中的消息是有序的呢？</strong> 可以从以下三个方面来入手分析：</p>
+<h3 id="生产端-Producer"><a href="#生产端-Producer" class="headerlink" title="生产端 Producer"></a><strong>生产端 Producer</strong></h3><p>在第4道题「<strong>生产者有哪些发送模式</strong>」的最后的场景分析里面简单的说明了下, 这里再详细的进行分析下：</p>
 <p>首先 Kafka 的 Producer 端发送消息，如果是不对默认参数进行任何设置且网络没有抖动的情况下，消息是可以一批批的按消息发送的顺序被发送到 Kafka Broker 端。但是，一旦有网络波动了，则消息就可能出现乱序。</p>
 <p><strong>所以，要严格保证 Kafka 发消息有序，首先要考虑用同步的方式来发送消息, 两种同步发送的方式如下:</strong></p>
 <blockquote>
-<p>1）**设置消息响应参数 acks = all &amp;  max.in.flight.requests.per.connection = 1：**发送端将会在一条消息发出后，响应必须满足 acks 设置的参数后，才会发送下一条消息。虽然在使用时还是异步发送的方式，其实底层已经是一条接一条的发送了。</p>
-<p>2）**Sync发送方式：**当调用 KafkaProducer 的 send() 后，返回的 Future 对象的 get 方式阻塞等待结果。根据返回的结果可以判断是否发送成功, <strong>由于是同步发送会阻塞, 只有当消息通过 get() 返回数据时，才会继续下一条消息的发送</strong>。</p>
+<p>1）<strong>设置消息响应参数 acks = all &amp;  max.in.flight.requests.per.connection = 1：</strong>发送端将会在一条消息发出后，响应必须满足 acks 设置的参数后，才会发送下一条消息。虽然在使用时还是异步发送的方式，其实底层已经是一条接一条的发送了。</p>
+<p>2）<strong>Sync发送方式：</strong>当调用 KafkaProducer 的 send() 后，返回的 Future 对象的 get 方式阻塞等待结果。根据返回的结果可以判断是否发送成功, <strong>由于是同步发送会阻塞, 只有当消息通过 get() 返回数据时，才会继续下一条消息的发送</strong>。</p>
 <p>通过上面方式还可能出现消息重发和幂等问题:</p>
-<p>1）**重发问题：**Kafka 在消息发送出现问题时，通过判断是否可以自动重试恢复，如果是可以自动恢复的问题，设置 retries &gt; 0，让 Kafka 自动重试。</p>
-<p>2）**幂等问题：Kafka 1.0 之后的版本，Producer 端引入了幂等特性。设置enable.idempotence = true,  幂等特性可以给消息添加序列号，即每次发送会把序列号递增 1。**开启了 Kafka Producer端的幂等特性后，我们就可以通过设置参数max.in.flight.requests.per.connection = 5 「默认值」, 这样当 Kafka 发消息的时候，由于消息有了序列号当发送消息出现错误的时候，Kafka 底层会通过获取服务器端的最近几条日志的序列号和发送端需要重新发送的消息序列号做对比，如果是连续的，那么就可以继续发送消息，保证消息顺序。</p>
+<p>1）<strong>重发问题：</strong>Kafka 在消息发送出现问题时，通过判断是否可以自动重试恢复，如果是可以自动恢复的问题，设置 retries &gt; 0，让 Kafka 自动重试。</p>
+<p>2）<strong>幂等问题：Kafka 1.0 之后的版本，Producer 端引入了幂等特性。设置enable.idempotence = true,  幂等特性可以给消息添加序列号，即每次发送会把序列号递增 1。</strong>开启了 Kafka Producer端的幂等特性后，我们就可以通过设置参数max.in.flight.requests.per.connection = 5 「默认值」, 这样当 Kafka 发消息的时候，由于消息有了序列号当发送消息出现错误的时候，Kafka 底层会通过获取服务器端的最近几条日志的序列号和发送端需要重新发送的消息序列号做对比，如果是连续的，那么就可以继续发送消息，保证消息顺序。</p>
 </blockquote>
-<h3 id="服务端-Broker"><strong>服务端 Broker</strong></h3>
-<p>在 Kafka 中，Topic 只是一个逻辑上的概念，<strong>而组成 Topic 的分区 Partition 才是真正存消息的地方</strong>。</p>
+<h3 id="服务端-Broker"><a href="#服务端-Broker" class="headerlink" title="服务端 Broker"></a><strong>服务端 Broker</strong></h3><p>在 Kafka 中，Topic 只是一个逻辑上的概念，<strong>而组成 Topic 的分区 Partition 才是真正存消息的地方</strong>。</p>
 <p>Kafka 只保证单分区内的消息是有序的，<strong>所以如果要保证业务全局严格有序，就要设置 Topic 为单分区的方式</strong>。不过对业务来说一般不需要考虑全局有序的，只需要<strong>保证业务中不同类别的消息有序</strong>即可。</p>
 <p><strong>但是这里有个必须要受到重视的问题</strong>，就是当我们对分区 Partition 进行数量改变的时候，由于是简单的 Hash 算法会把以前可能分到相同分区的消息分到别的分区上。这样就不能保证消息顺序了。面对这种情况，<strong>就需要在动态变更分区的时候，考虑对业务的影响。有可能需要根据业务和当前分区需求，重新划分消息类别</strong>。</p>
-<h3 id="消费端-Consumer"><strong>消费端 Consumer</strong></h3>
-<p>在 Consumer 端，<strong>根据 Kafka 的模型，一个 Topic 下的每个分区只能从属于这个 Topic 的消费者组中的某一个消费者</strong>。</p>
+<h3 id="消费端-Consumer"><a href="#消费端-Consumer" class="headerlink" title="消费端 Consumer"></a><strong>消费端 Consumer</strong></h3><p>在 Consumer 端，<strong>根据 Kafka 的模型，一个 Topic 下的每个分区只能从属于这个 Topic 的消费者组中的某一个消费者</strong>。</p>
 <p>当消息被发送分配到同一个 Partition 中，消费者从 Partition 中取出来数据的时候，也一定是有顺序的，没有错乱。</p>
 <p>但是消费者可能会有多个线程来并发来消费消息。如果单线程消费数据，吞吐量太低了，而多个线程并发消费的话，顺序可能就乱掉了。</p>
 <p><strong>此时可以通过写多个内存队列，将相同 key 的消息都写入同一个队列，然后对于多个线程，每个线程分别消息一个队列即可保证消息顺序</strong>。</p>
-<h2 id="Kafka-为什么不支持读写分离呢">Kafka 为什么不支持读写分离呢</h2>
-<p>在很多主从模型系统中，是允许从节点可以对外提供读服务的，<strong>只不过 Kafka 当初为了避免数据不一致的问题，而采用了通过主节点来统一提供服务的方式。</strong></p>
+<h2 id="Kafka-为什么不支持读写分离呢"><a href="#Kafka-为什么不支持读写分离呢" class="headerlink" title="Kafka 为什么不支持读写分离呢"></a>Kafka 为什么不支持读写分离呢</h2><p>在很多主从模型系统中，是允许从节点可以对外提供读服务的，<strong>只不过 Kafka 当初为了避免数据不一致的问题，而采用了通过主节点来统一提供服务的方式。</strong></p>
 <p><strong>不支持读写分离的原因有2点：</strong></p>
 <blockquote>
-<p>1）**场景不一致：**读写分离架构适用于那种读操作负载很大，但写操作相对不频繁的场景，但是 Kafka 显然不适合这种场景。</p>
-<p>2）**延迟问题：**Kafka 通过 PULL 方式来实现数据同步，因此 Leader 副本和 Follower 副本存在数据不一致的情况， 如果允许 Follower 副本提供读服务的话，就会带来消息滞后的问题。</p>
+<p>1）<strong>场景不一致：</strong>读写分离架构适用于那种读操作负载很大，但写操作相对不频繁的场景，但是 Kafka 显然不适合这种场景。</p>
+<p>2）<strong>延迟问题：</strong>Kafka 通过 PULL 方式来实现数据同步，因此 Leader 副本和 Follower 副本存在数据不一致的情况， 如果允许 Follower 副本提供读服务的话，就会带来消息滞后的问题。</p>
 </blockquote>
-<h2 id="Kafka-副本有哪两种，作用是什么">Kafka 副本有哪两种，作用是什么</h2>
-<p>在 Kafka 中，为实现「<strong>数据备份</strong>」的功能，保证集群中的某个节点发生故障时，该节点上的 Partition 数据不丢失，且 Kafka 仍然能够继续工作，<strong>为此 Kafka 提供了副本机制，</strong> <strong>一个 Topic 的每个 Partition 都有若干个副本，一个 Leader 副本和若干个 Follower 副本</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0953-dFYtYN.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0953-0rZ5gK.png" alt=""></p>
+<h2 id="Kafka-副本有哪两种，作用是什么"><a href="#Kafka-副本有哪两种，作用是什么" class="headerlink" title="Kafka 副本有哪两种，作用是什么"></a>Kafka 副本有哪两种，作用是什么</h2><p>在 Kafka 中，为实现「<strong>数据备份</strong>」的功能，保证集群中的某个节点发生故障时，该节点上的 Partition 数据不丢失，且 Kafka 仍然能够继续工作，<strong>为此 Kafka 提供了副本机制，</strong> <strong>一个 Topic 的每个 Partition 都有若干个副本，一个 Leader 副本和若干个 Follower 副本</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0953-dFYtYN.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0953-0rZ5gK.png" alt="图片"></p>
 <blockquote>
 <p>1）Leader 主副本负责对外提供读写数据服务。</p>
 <p>2）Follower 从副本只负责和 Leader 副本保持数据同步，并不对外提供任何服务。</p>
 </blockquote>
-<h2 id="Kafka-能否手动删除消息">Kafka 能否手动删除消息</h2>
-<p>首先 Kafka 是支持手动删除消息的， 当然它本身提供了消息留存策略，能够自动删除过期的消息。</p>
+<h2 id="Kafka-能否手动删除消息"><a href="#Kafka-能否手动删除消息" class="headerlink" title="Kafka 能否手动删除消息"></a>Kafka 能否手动删除消息</h2><p>首先 Kafka 是支持手动删除消息的， 当然它本身提供了消息留存策略，能够自动删除过期的消息。</p>
 <p>Kafka 将消息存储到磁盘中，随着写入数据不断增加，磁盘占用空间越来越大，为了控制占用空间就需要对消息做一定的清理操作。Kafka  存储日志结构分析中每一个分区副本（Replica）都对应一个 Log，而 Log 又可以分为多个日志分段（LogSegment），这样就便于  Kafka 对日志的清理操作。</p>
 <blockquote>
-<p>1）**普通消息：**我们可以使用 Kafka-delete-records 命令或者通过程序调用 Admin.deleteRecords 方法来删除消息。两者底层都是调用 Admin 的 deleteRecords 的方法，通过将分区的 LEO 值抬高来间接删除消息。</p>
-<p>2）**设置key且参数 cleanup.policy=delete/campact 的消息：**可以依靠 Log Cleaner 组件提供的功能删除该 Key 的消息。</p>
-<p>**日志删除（Log Retention）：**按照一定的保留策略直接删除不符合条件的日志分段（LogSegment）。</p>
-<p>**日志压缩（Log Compaction）：**针对每个消息的key进行整合，对于有相同key的不同value值，只保留最后一个版本。</p>
+<p>1）<strong>普通消息：</strong>我们可以使用 Kafka-delete-records 命令或者通过程序调用 Admin.deleteRecords 方法来删除消息。两者底层都是调用 Admin 的 deleteRecords 的方法，通过将分区的 LEO 值抬高来间接删除消息。</p>
+<p>2）<strong>设置key且参数 cleanup.policy=delete/campact 的消息：</strong>可以依靠 Log Cleaner 组件提供的功能删除该 Key 的消息。</p>
+<p><strong>日志删除（Log Retention）：</strong>按照一定的保留策略直接删除不符合条件的日志分段（LogSegment）。</p>
+<p><strong>日志压缩（Log Compaction）：</strong>针对每个消息的key进行整合，对于有相同key的不同value值，只保留最后一个版本。</p>
 </blockquote>
-<h3 id="日志删除"><strong>日志删除</strong></h3>
-<p>Kafka 的日志管理器（LogManager）中有一个专门的日志清理任务通过周期性检测和删除不符合条件的日志分段文件（LogSegment），这里我们可以通过设置 Kafka Broker 端的参数「 <strong><span class="exturl" data-url="aHR0cDovL2xvZy5yZXRlbnRpb24uY2hlY2suaW50ZXJ2YWwubXM=">log.retention.check.interval.ms<i class="fa fa-external-link-alt"></i></span></strong>」，默认值为300000，即5分钟。</p>
+<h3 id="日志删除"><a href="#日志删除" class="headerlink" title="日志删除"></a><strong>日志删除</strong></h3><p>Kafka 的日志管理器（LogManager）中有一个专门的日志清理任务通过周期性检测和删除不符合条件的日志分段文件（LogSegment），这里我们可以通过设置 Kafka Broker 端的参数「 <strong>log.retention.check.interval.ms</strong>」，默认值为300000，即5分钟。</p>
 <p>在 Kafka 中一共有3种保留策略：</p>
-<h4 id="基于时间策略">基于时间策略</h4>
-<p>日志删除任务会周期检查当前日志文件中是否有保留时间超过设定的阈值**(retentionMs)** 来寻找可删除的日志段文件集合(deletableSegments)。</p>
+<h4 id="基于时间策略"><a href="#基于时间策略" class="headerlink" title="基于时间策略"></a>基于时间策略</h4><p>日志删除任务会周期检查当前日志文件中是否有保留时间超过设定的阈值<strong>(retentionMs)</strong> 来寻找可删除的日志段文件集合(deletableSegments)。</p>
 <p>其中 <strong>retentionMs</strong> 可以通过 Kafka Broker 端的这几个参数的大小判断的</p>
 <p><code>log.retention.ms &gt; log.retention.minutes &gt; log.retention.hours</code>优先级来设置，<strong>默认情况只会配置 log.retention.hours 参数，值为168即为7天。</strong></p>
 <p>这里需要注意：删除过期的日志段文件，并不是简单的根据该日志段文件的修改时间计算的，而是要根据该日志段中最大的时间戳 largestTimeStamp  来计算的，首先要查询该日志分段所对应的时间戳索引文件，查找该时间戳索引文件的最后一条索引数据，如果时间戳值大于0，则取值，否则才会使用最近修改时间（lastModifiedTime）。</p>
 <p><strong>【删除步骤】：</strong></p>
 <ol>
-<li>
-<p>首先从 Log 对象所维护的日志段的跳跃表中移除要删除的日志段，用来确保已经没有线程来读取这些日志段。</p>
+<li><p>首先从 Log 对象所维护的日志段的跳跃表中移除要删除的日志段，用来确保已经没有线程来读取这些日志段。</p>
 </li>
-<li>
-<p>将日志段所对应的所有文件，包括索引文件都添加上“.deleted”的后缀。</p>
+<li><p>将日志段所对应的所有文件，包括索引文件都添加上“.deleted”的后缀。</p>
 </li>
-<li>
-<p>最后交给一个以“delete-file”命名的延迟任务来删除这些以“ .deleted ”为后缀的文件。默认1分钟执行一次， 可以通过 <code>file.delete.delay.ms</code> 来配置。</p>
+<li><p>最后交给一个以“delete-file”命名的延迟任务来删除这些以“ .deleted ”为后缀的文件。默认1分钟执行一次， 可以通过 <code>file.delete.delay.ms</code> 来配置。</p>
 </li>
 </ol>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0958-azAo2i.png" alt=""></p>
-<h4 id="基于日志大小策略">基于日志大小策略</h4>
-<p>日志删除任务会周期检查当前日志大小是否超过设定的阈值**(retentionSize)** 来寻找可删除的日志段文件集合**(deletableSegments)**。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0958-azAo2i.png" alt="图片"></p>
+<h4 id="基于日志大小策略"><a href="#基于日志大小策略" class="headerlink" title="基于日志大小策略"></a>基于日志大小策略</h4><p>日志删除任务会周期检查当前日志大小是否超过设定的阈值<strong>(retentionSize)</strong> 来寻找可删除的日志段文件集合<strong>(deletableSegments)</strong>。</p>
 <p>其中<strong>retentionSize</strong>这里我们可以通过 Kafka Broker 端的参数log.retention.bytes 来设置， 默认值为-1，即无穷大。</p>
 <p>这里需要注意的是 log.retention.bytes 设置的是Log中所有日志文件的大小，而不是单个日志段的大小。单个日志段可以通过参数 log.segment.bytes 来设置，默认大小为1G。</p>
 <p>【删除步骤】：</p>
 <ol>
-<li>
-<p>首先计算日志文件的总大小Size和 retentionSize 的差值，即需要删除的日志总大小。</p>
+<li><p>首先计算日志文件的总大小Size和 retentionSize 的差值，即需要删除的日志总大小。</p>
 </li>
-<li>
-<p>然后从日志文件中的第一个日志段开始进行查找可删除的日志段的文件集合(deletableSegments)</p>
+<li><p>然后从日志文件中的第一个日志段开始进行查找可删除的日志段的文件集合(deletableSegments)</p>
 </li>
-<li>
-<p>找到后就可以进行删除操作了</p>
+<li><p>找到后就可以进行删除操作了</p>
 </li>
 </ol>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0959-3TFZgh.png" alt=""></p>
-<h4 id="基于日志起始偏移量">基于日志起始偏移量</h4>
-<p>该策略判断依据是日志段的下一个日志段的起始偏移量 baseOffset 是否小于等于 logStartOffset，如果是，则可以删除此日志分段。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/0959-3TFZgh.png" alt="图片"></p>
+<h4 id="基于日志起始偏移量"><a href="#基于日志起始偏移量" class="headerlink" title="基于日志起始偏移量"></a>基于日志起始偏移量</h4><p>该策略判断依据是日志段的下一个日志段的起始偏移量 baseOffset 是否小于等于 logStartOffset，如果是，则可以删除此日志分段。</p>
 <p><strong>【如下图所示 删除步骤】：</strong></p>
 <ol>
-<li>
-<p>首先从头开始遍历每个日志段，日志段 1 的下一个日志分段的起始偏移量为20，小于 logStartOffset 的大小，将日志段1加入deletableSegments。</p>
+<li><p>首先从头开始遍历每个日志段，日志段 1 的下一个日志分段的起始偏移量为20，小于 logStartOffset 的大小，将日志段1加入deletableSegments。</p>
 </li>
-<li>
-<p>日志段2的下一个日志偏移量的起始偏移量为35，也小于 logStartOffset 的大小，将日志分段2页加入 deletableSegments。</p>
+<li><p>日志段2的下一个日志偏移量的起始偏移量为35，也小于 logStartOffset 的大小，将日志分段2页加入 deletableSegments。</p>
 </li>
-<li>
-<p>日志段3的下一个日志偏移量的起始偏移量为50，也小于 logStartOffset 的大小，将日志分段3页加入 deletableSegments。</p>
+<li><p>日志段3的下一个日志偏移量的起始偏移量为50，也小于 logStartOffset 的大小，将日志分段3页加入 deletableSegments。</p>
 </li>
-<li>
-<p>日志段4的下一个日志偏移量通过对比后，在 logStartOffset 的右侧，那么从日志段4开始的所有日志段都不会加入 deletableSegments。</p>
+<li><p>日志段4的下一个日志偏移量通过对比后，在 logStartOffset 的右侧，那么从日志段4开始的所有日志段都不会加入 deletableSegments。</p>
 </li>
-<li>
-<p>待收集完所有的可删除的日志集合后就可以直接删除了。</p>
+<li><p>待收集完所有的可删除的日志集合后就可以直接删除了。</p>
 </li>
 </ol>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1000-4Y1EXb.png" alt=""></p>
-<h3 id="日志压缩"><strong>日志压缩</strong></h3>
-<p>**日志压缩 Log Compaction 对于有相同key的不同value值，只保留最后一个版本。**如果应用只关心 key 对应的最新 value 值，则可以开启 Kafka 相应的日志清理功能，Kafka 会定期将相同 key 的消息进行合并，只保留最新的 value 值。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1000-4Y1EXb.png" alt="图片"></p>
+<h3 id="日志压缩"><a href="#日志压缩" class="headerlink" title="日志压缩"></a><strong>日志压缩</strong></h3><p><strong>日志压缩 Log Compaction 对于有相同key的不同value值，只保留最后一个版本。</strong>如果应用只关心 key 对应的最新 value 值，则可以开启 Kafka 相应的日志清理功能，Kafka 会定期将相同 key 的消息进行合并，只保留最新的 value 值。</p>
 <p>Log Compaction 可以类比 Redis 中的 RDB 的持久化模式。我们可以想象下，如果每次消息变更都存 Kafka，在某一时刻，  Kafka 异常崩溃后，如果想快速恢复，可以直接使用日志压缩策略， 这样在恢复的时候只需要恢复最新的数据即可，这样可以加快恢复速度。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1001-iEOvMX.png" alt=""></p>
-<h2 id="Kafka-读写数据这么快是如何做到的">Kafka 读写数据这么快是如何做到的</h2>
-<h3 id="顺序追加写"><strong>顺序追加写</strong></h3>
-<p>kafka 在写数据的时是以「**磁盘顺序写」**的方式来进行落盘的, 即将数据追加到文件的末尾。对于普通机械磁盘, 如果是随机写的话, 涉及到磁盘寻址的问题, 导致性能极低,  <strong>但是如果只是按照顺序的方式追加文件末尾的话, 这种磁盘顺序写的性能基本可以跟写内存的性能差不多的</strong>。下图所示普通机械磁盘的顺序I/O性能指标是53.2M values/s。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1002-MuNvh7.png" alt=""></p>
-<h3 id="Page-Cache"><strong>Page Cache</strong></h3>
-<p>首先 Kafka 为了保证磁盘写入性能，**通过 mmap 内存映射的方式利用操作系统的 Page Cache 异步写入 。**也可以称为 os cache，意思就是操作系统自己管理的缓存。<strong>那么在写磁盘文件的时候，就可以先直接写入 os cache 中，接下来由操作系统自己决定什么时候把 os cache 里的数据真正刷入到磁盘中, 这样大大提高写入效率和性能</strong>。 如下图所示:</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1002-MQuUfH.png" alt=""></p>
-<h3 id="零拷贝技术"><strong>零拷贝技术</strong></h3>
-<p>kafka 为了解决<strong>内核态和用户态数据不必要 Copy</strong> 这个问题, 在读取数据的时候就引入了「<strong>零拷贝技术</strong>」。即让操作系统的 os cache 中的数据<strong>直接发送到</strong>网卡后传出给下游的消费者，中间跳过了两次拷贝数据的步骤，从而减少拷贝的 CPU 开销, 减少用户态内核态的上下文切换次数, 从而优化数据传输的性能, <strong>而Socket缓存中仅仅会拷贝一个描述符过去，不会拷贝数据到Socket缓存</strong>，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1003-KggNcw.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1001-iEOvMX.png" alt="图片"></p>
+<h2 id="Kafka-读写数据这么快是如何做到的"><a href="#Kafka-读写数据这么快是如何做到的" class="headerlink" title="Kafka 读写数据这么快是如何做到的"></a>Kafka 读写数据这么快是如何做到的</h2><h3 id="顺序追加写"><a href="#顺序追加写" class="headerlink" title="顺序追加写"></a><strong>顺序追加写</strong></h3><p>kafka 在写数据的时是以「<strong>磁盘顺序写」</strong>的方式来进行落盘的, 即将数据追加到文件的末尾。对于普通机械磁盘, 如果是随机写的话, 涉及到磁盘寻址的问题, 导致性能极低,  <strong>但是如果只是按照顺序的方式追加文件末尾的话, 这种磁盘顺序写的性能基本可以跟写内存的性能差不多的</strong>。下图所示普通机械磁盘的顺序I/O性能指标是53.2M values/s。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1002-MuNvh7.png" alt="图片"></p>
+<h3 id="Page-Cache"><a href="#Page-Cache" class="headerlink" title="Page Cache"></a><strong>Page Cache</strong></h3><p>首先 Kafka 为了保证磁盘写入性能，<strong>通过 mmap 内存映射的方式利用操作系统的 Page Cache 异步写入 。</strong>也可以称为 os cache，意思就是操作系统自己管理的缓存。<strong>那么在写磁盘文件的时候，就可以先直接写入 os cache 中，接下来由操作系统自己决定什么时候把 os cache 里的数据真正刷入到磁盘中, 这样大大提高写入效率和性能</strong>。 如下图所示:</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1002-MQuUfH.png" alt="图片"></p>
+<h3 id="零拷贝技术"><a href="#零拷贝技术" class="headerlink" title="零拷贝技术"></a><strong>零拷贝技术</strong></h3><p>kafka 为了解决<strong>内核态和用户态数据不必要 Copy</strong> 这个问题, 在读取数据的时候就引入了「<strong>零拷贝技术</strong>」。即让操作系统的 os cache 中的数据<strong>直接发送到</strong>网卡后传出给下游的消费者，中间跳过了两次拷贝数据的步骤，从而减少拷贝的 CPU 开销, 减少用户态内核态的上下文切换次数, 从而优化数据传输的性能, <strong>而Socket缓存中仅仅会拷贝一个描述符过去，不会拷贝数据到Socket缓存</strong>，如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1003-KggNcw.png" alt="图片"></p>
 <p>在 Kafka 中主要有以下两个地方使用到了「<strong>零拷贝技术</strong>」<strong>:</strong></p>
 <blockquote>
-<p>1）<strong>基于 mmap 机制实现的索引文件：<strong>首先索引文件都是</strong>基于 MappedByBuffer 实现</strong>，即让用户态和内核态来共享内核态的数据缓冲区，此时数据不需要 Copy 到用户态空间。虽然 mmap 避免了不必要的 Copy，但是在不同操作系统下， 其创建和销毁成功是不一样的，不一定都能保证高性能。所以在 Kafka 中只有索引文件使用了 mmap。</p>
-<p>2）**基于sendfile 机制实现的日志文件读写：**在 Kafka 传输层接口中有个 TransportLayer 接口，它的实现类中有使用了 Java FileChannel 中  transferTo 方法。该方法底层就是使用 sendfile 实现的零拷贝机制， 目前只是在 I/O 通道是普通的 PLAINTEXT  的时候才会使用到零拷贝机制。</p>
+<p>1）<strong>基于 mmap 机制实现的索引文件：</strong>首先索引文件都是<strong>基于 MappedByBuffer 实现</strong>，即让用户态和内核态来共享内核态的数据缓冲区，此时数据不需要 Copy 到用户态空间。虽然 mmap 避免了不必要的 Copy，但是在不同操作系统下， 其创建和销毁成功是不一样的，不一定都能保证高性能。所以在 Kafka 中只有索引文件使用了 mmap。</p>
+<p>2）<strong>基于sendfile 机制实现的日志文件读写：</strong>在 Kafka 传输层接口中有个 TransportLayer 接口，它的实现类中有使用了 Java FileChannel 中  transferTo 方法。该方法底层就是使用 sendfile 实现的零拷贝机制， 目前只是在 I/O 通道是普通的 PLAINTEXT  的时候才会使用到零拷贝机制。</p>
 </blockquote>
-<h3 id="消息批量发送"><strong>消息批量发送</strong></h3>
-<p>Kafka 在发送消息的时候并不是一条条的发送的，而是会<strong>把多条消息合并成一个批次****Batch</strong> <strong>进行处理发送</strong>，消费消息也是同样，一次拉取一批次的消息进行消费。如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1003-aQzv4L.png" alt=""></p>
-<h3 id="数据压缩"><strong>数据压缩</strong></h3>
-<p>在 Kafka 中三个端都使用了优化后的压缩算法，<strong>压缩有助于提高吞吐量, 降低延迟并提高磁盘利用率</strong>。Kafka 底层支持多种压缩算法: <strong>lz4, snappy, gzip</strong>, 从Kafka 2.1.0 开始新增了 <strong>ZStandard</strong> 算法, 该算法是 Facebook 开源的压缩算法,  能提供超高的压缩比。</p>
+<h3 id="消息批量发送"><a href="#消息批量发送" class="headerlink" title="消息批量发送"></a><strong>消息批量发送</strong></h3><p>Kafka 在发送消息的时候并不是一条条的发送的，而是会<strong>把多条消息合并成一个批次**</strong>Batch<strong> </strong>进行处理发送**，消费消息也是同样，一次拉取一批次的消息进行消费。如下图所示：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1003-aQzv4L.png" alt="图片"></p>
+<h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a><strong>数据压缩</strong></h3><p>在 Kafka 中三个端都使用了优化后的压缩算法，<strong>压缩有助于提高吞吐量, 降低延迟并提高磁盘利用率</strong>。Kafka 底层支持多种压缩算法: <strong>lz4, snappy, gzip</strong>, 从Kafka 2.1.0 开始新增了 <strong>ZStandard</strong> 算法, 该算法是 Facebook 开源的压缩算法,  能提供超高的压缩比。</p>
 <p>在 Kafka 中, 压缩可能会发生在两个地方: <strong>生产者端和Broker端</strong>。一句话总结下压缩和解压缩, 即 Producer 端压缩, Broker 端保持, Consumer 端解压缩，这样可以节省大量的网络和磁盘开销。</p>
-<h2 id="Kafka-消费模型有哪些">Kafka 消费模型有哪些</h2>
-<p>一般情况下消息消费总共有两种模式：「<strong>推模型</strong>」和 「<strong>拉模型</strong>」。在 Kafka 中的消费模型是属于「<strong>拉模型</strong>」，此模式的消息消费方式实现有两种：「<strong>点对点方式</strong>」和 「<strong>发布订阅方式</strong>」。</p>
-<h3 id="点对点方式"><strong>点对点方式</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1005-qX8nJg.png" alt=""></p>
+<h2 id="Kafka-消费模型有哪些"><a href="#Kafka-消费模型有哪些" class="headerlink" title="Kafka 消费模型有哪些"></a>Kafka 消费模型有哪些</h2><p>一般情况下消息消费总共有两种模式：「<strong>推模型</strong>」和 「<strong>拉模型</strong>」。在 Kafka 中的消费模型是属于「<strong>拉模型</strong>」，此模式的消息消费方式实现有两种：「<strong>点对点方式</strong>」和 「<strong>发布订阅方式</strong>」。</p>
+<h3 id="点对点方式"><a href="#点对点方式" class="headerlink" title="点对点方式"></a><strong>点对点方式</strong></h3><p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1005-qX8nJg.png" alt="图片"></p>
 <p><strong>点对点方式:</strong> 假如所有消费者都同属于一个消费组的话，此时所有的消息都会被分配给每一个消费者，<strong>但是消息只会被其中一个消费者进行消费</strong>。</p>
-<h3 id="发布订阅方式"><strong>发布订阅方式</strong></h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1005-TENKds.png" alt=""></p>
+<h3 id="发布订阅方式"><a href="#发布订阅方式" class="headerlink" title="发布订阅方式"></a><strong>发布订阅方式</strong></h3><p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1005-TENKds.png" alt="图片"></p>
 <p><strong>发布订阅:</strong> 假如所有消费者属于不同的消费组，此时所有的消息都会被分配给每一个消费者，<strong>每个消费者都会收到该消息</strong>。</p>
-<h2 id="什么是消费者组-有什么作用">什么是消费者组,有什么作用</h2>
-<p>首先我来看看什么是「<strong>消费者组</strong>」:</p>
-<p>消费者组 Consumer Group，顾名思义就是由多个 Consumer 组成，且拥有一个公共且唯一的 Group ID。组内每个消费者负责消费不同分区的数据，**但一个分区只能由一个组内消费者消费，**消费者组之间互不影响。</p>
-<p><strong>为什么 Kafka 要设计 Consumer Group,  只有 Consumer 不可以吗？</strong></p>
+<h2 id="什么是消费者组-有什么作用"><a href="#什么是消费者组-有什么作用" class="headerlink" title="什么是消费者组,有什么作用"></a>什么是消费者组,有什么作用</h2><p>首先我来看看什么是「<strong>消费者组</strong>」:</p>
+<p>消费者组 Consumer Group，顾名思义就是由多个 Consumer 组成，且拥有一个公共且唯一的 Group ID。组内每个消费者负责消费不同分区的数据，<strong>但一个分区只能由一个组内消费者消费，</strong>消费者组之间互不影响。</p>
+<p><strong>为什么 Kafka 要设计 Consumer Group,  只有 Consumer 不可以吗？</strong> </p>
 <p>我们知道 Kafka 是一款高吞吐量，低延迟，高并发, 高可扩展的消息队列产品， 那么如果某个 Topic 拥有数百万到数千万的数据量， 仅仅依靠 Consumer 进程消费， 消费速度可想而知， <strong>所以需要一个扩展性较好的机制来保障消费进度， 这个时候 Consumer Group 应运而生， Consumer Group 是 Kafka 提供的可扩展且具有容错性的消费者机制</strong>。</p>
 <p>Kafka Consumer Group 特点如下:</p>
 <blockquote>
@@ -606,12 +559,10 @@
 <p>2）每个 Consumer Group 拥有一个公共且唯一的 Group ID。</p>
 <p>3）Consumer Group 在消费 Topic 的时候，Topic 的每个 Partition 只能分配给组内的某个  Consumer，只要被任何 Consumer 消费一次, 那么这条数据就可以认为被当前 Consumer Group 消费成功。</p>
 </blockquote>
-<h2 id="Kafka中Offset的作用是什么-如何进行维护">Kafka中Offset的作用是什么,如何进行维护</h2>
-<p>在 <strong>Kafka</strong> 中每个 <strong>Topic</strong> 分区下面的每条消息都被赋予了一个唯一的<strong>ID</strong>值，用来标识它在分区中的位置。这个<strong>ID</strong>值就被称为位移「<strong>Offset</strong>」或者叫偏移量，一旦消息被写入到日志分区中，它的位移值将不能被修改。</p>
-<h3 id="位移-Offset-管理方式"><strong>位移 Offset 管理方式</strong></h3>
-<p>Kafka 旧版本（0.9版本之前）是把位移保存在 ZooKeeper 中，减少 Broker 端状态存储开销。</p>
+<h2 id="Kafka中Offset的作用是什么-如何进行维护"><a href="#Kafka中Offset的作用是什么-如何进行维护" class="headerlink" title="Kafka中Offset的作用是什么,如何进行维护"></a>Kafka中Offset的作用是什么,如何进行维护</h2><p>在 <strong>Kafka</strong> 中每个 <strong>Topic</strong> 分区下面的每条消息都被赋予了一个唯一的<strong>ID</strong>值，用来标识它在分区中的位置。这个<strong>ID</strong>值就被称为位移「<strong>Offset</strong>」或者叫偏移量，一旦消息被写入到日志分区中，它的位移值将不能被修改。</p>
+<h3 id="位移-Offset-管理方式"><a href="#位移-Offset-管理方式" class="headerlink" title="位移 Offset 管理方式"></a><strong>位移 Offset 管理方式</strong></h3><p>Kafka 旧版本（0.9版本之前）是把位移保存在 ZooKeeper 中，减少 Broker 端状态存储开销。</p>
 <p>鉴于 Zookeeper 不适合频繁写更新，而 Consumer Group 的位移提交又是高频写操作，这样会拖慢 ZooKeeper 集群的性能， 于是在新版 Kafka 中， 社区采用了将位移保存在 Kafka 内部「<strong>Kafka Topic 天然支持高频写且持久化</strong>」，这就是所谓大名鼎鼎的__consumer_offsets。</p>
-<p>**__consumer_offsets：**用来保存 Kafka Consumer 提交的位移信息，另外它是由 Kafka 自动创建的，和普通的 Topic 相同，它的消息格式也是 Kafka 自己定义的，我们无法进行修改。</p>
+<p><strong>__consumer_offsets：</strong>用来保存 Kafka Consumer 提交的位移信息，另外它是由 Kafka 自动创建的，和普通的 Topic 相同，它的消息格式也是 Kafka 自己定义的，我们无法进行修改。</p>
 <p><strong>__consumer_offsets 有3种消息格式：</strong></p>
 <blockquote>
 <p>1）用来保存 Consumer Group 信息的消息。</p>
@@ -620,30 +571,19 @@
 </blockquote>
 <p><strong>__consumer_offsets 消息格式分析揭秘：</strong></p>
 <blockquote>
-<ol>
-<li>
-<p>消息格式我们可以简单理解为是一个 KV 对。Key 和 Value 分别表示消息的键值和消息体。</p>
-</li>
-<li>
-<p>那么 Key 存什么呢？既然是存储 Consumer 的位移信息，在 Kafka 中，Consumer  数量会很多，必须有字段来标识位移数据是属于哪个 Consumer 的，怎么来标识 Consumer 字段呢？我们知道 Consumer  Group 会共享一个公共且唯一的 Group ID，那么只保存它就可以了吗？我们知道 Consumer  提交位移是在分区的维度进行的，很显然，key中还应该保存 Consumer 要提交位移的分区。</p>
-</li>
-<li>
-<p>总结：位移主题的 Key 中应该保存 3 部分内容：&lt;<strong>Group ID，主题名，分区号</strong>&gt;</p>
-</li>
-<li>
-<p>value 可以简单认为存储的是 offset 值，当然底层还存储其他一些元数据，帮助 Kafka 来完成一些其他操作，比如删除过期位移数据等。</p>
-</li>
-</ol>
+<p>1) 消息格式我们可以简单理解为是一个 KV 对。Key 和 Value 分别表示消息的键值和消息体。</p>
+<p>2) 那么 Key 存什么呢？既然是存储 Consumer 的位移信息，在 Kafka 中，Consumer  数量会很多，必须有字段来标识位移数据是属于哪个 Consumer 的，怎么来标识 Consumer 字段呢？我们知道 Consumer  Group 会共享一个公共且唯一的 Group ID，那么只保存它就可以了吗？我们知道 Consumer  提交位移是在分区的维度进行的，很显然，key中还应该保存 Consumer 要提交位移的分区。</p>
+<p>3) 总结：位移主题的 Key 中应该保存 3 部分内容：&lt;<strong>Group ID，主题名，分区号</strong>&gt;</p>
+<p>4) value 可以简单认为存储的是 offset 值，当然底层还存储其他一些元数据，帮助 Kafka 来完成一些其他操作，比如删除过期位移数据等。</p>
 </blockquote>
 <p><strong>__consumer_offsets 消息格式示意图：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1009-1e9GuY.png" alt=""></p>
-<h3 id="consumer-offsets-创建"><strong>__consumer_offsets 创建</strong></h3>
-<p>__consumer_offsets 是怎么被创建出来的呢？ 当 Kafka 集群中的第一个 Consumer 启动时，Kafka 会自动创建__consumer_offsets。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1009-1e9GuY.png" alt="图片"></p>
+<h3 id="consumer-offsets-创建"><a href="#consumer-offsets-创建" class="headerlink" title="__consumer_offsets 创建"></a><strong>__consumer_offsets 创建</strong></h3><p><strong>consumer_offsets 是怎么被创建出来的呢？ 当 Kafka 集群中的第一个 Consumer 启动时，Kafka 会自动创建</strong>consumer_offsets。</p>
 <p>它就是普通的 Topic，也有对应的分区数，如果由 Kafka 自动创建的，那么分区数又是怎么设置的呢？</p>
 <p>这个依赖 Broker 端参数主题分区位移个数即「<strong>offsets.topic.num.partitions</strong>」 默认值是50，因此 Kafka 会自动创建一个有 50 个分区的 __consumer_offsets 。既然有分区数，必然就会有分区对应的副本个数，这个是依赖Broker 端另外一个参数来完成的，即 「<strong>offsets.topic.replication.factor</strong>」默认值为3。</p>
 <p>总结一下， __consumer_offsets 由 Kafka 自动创建的，那么该 Topic 的分区数是 50，副本数是 3，而具体 Consumer Group 的消费情况要存储到哪个 Partition ，根据<strong>abs(GroupId.hashCode()) % NumPartitions</strong> 来计算的，这样就可以保证 Consumer Offset 信息与 Consumer Group 对应的 Coordinator 处于同一个 Broker 节点上。如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1010-lBt3Xy.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1011-6lXNYd.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1010-lBt3Xy.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/08/1011-6lXNYd.png" alt="图片"></p>
 <hr>
 <blockquote>
 <p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvOE9BUXpaNWpaWVYyRnZ0ZzBwZlpvUQ==">【建议收藏】Kafka 面试连环炮, 看看你能撑到哪一步?（上）<i class="fa fa-external-link-alt"></i></span></p>
@@ -918,13 +858,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">896k</span>
+    <span title="站点总字数">887k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:34</span>
+    <span title="站点阅读时长">13:26</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

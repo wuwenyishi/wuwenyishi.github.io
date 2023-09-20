@@ -51,11 +51,11 @@
 <meta property="article:tag" content="内存">
 <meta property="article:tag" content="CPU">
 <meta property="article:tag" content="堆">
-<meta property="article:tag" content="Qt">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="设计模式">
 <meta property="article:tag" content="线程池">
+<meta property="article:tag" content="Qt">
 <meta property="article:tag" content="GC">
 <meta property="article:tag" content="索引">
 <meta property="article:tag" content="面试">
@@ -311,7 +311,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
+              <span>5.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -334,32 +334,29 @@
 <p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvSGtzUXRsaFlHMmhSSE1LRDg1a3Rudw==">【建议收藏】Kafka 面试连环炮, 看看你能撑到哪一步?（下）<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p>我们知道 Kafka 网络通信架构使用到了 Java NIO 以及 Reactor 设计模式。我们先从整体上看一下完整的网络通信层架构，如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0957-7aENgd.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0957-7aENgd.png" alt="图片"></p>
 <blockquote>
 <p>1）从上图中我们可以看出，Kafka 网络通信架构中用到的组件主要由两大部分构成：<code>SocketServer 和 RequestHandlerPool</code>。</p>
 <p>2）<code>SocketServer 组件是 Kafka 超高并发网络通信层中最重要的子模块</code>。它包含 Acceptor 线程、Processor 线程和 RequestChannel 等对象，都是网络通信的重要组成部分。</p>
 <p>3）<strong>RequestHandlerPool 组件</strong>就是我们常说的 I/O 工作线程池，里面定义了若干个 I/O 线程，<code>主要用来执行真实的请求处理逻辑</code>。</p>
 </blockquote>
-<h3 id="Accept-线程">Accept 线程</h3>
-<p>在经典的 Reactor 设计模式有个「<strong>Dispatcher</strong>」的角色，<code>主要用来接收外部请求并分发给下面的实际处理线程</code>。在 Kafka 网络架构设计中，这个 Dispatcher 就是「<strong>Acceptor 线程</strong>」, 用来接收和创建外部 TCP 连接的线程。在 Broker 端每个 SocketServer 实例只会创建一个 Acceptor 线程。<code>它的主要功能就是创建连接，并将接收到的 Request 请求传递给下游的 Processor 线程处理</code>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0958-SHDgkB.png" alt=""></p>
+<h3 id="Accept-线程"><a href="#Accept-线程" class="headerlink" title="Accept 线程"></a>Accept 线程</h3><p>在经典的 Reactor 设计模式有个「<strong>Dispatcher</strong>」的角色，<code>主要用来接收外部请求并分发给下面的实际处理线程</code>。在 Kafka 网络架构设计中，这个 Dispatcher 就是「<strong>Acceptor 线程</strong>」, 用来接收和创建外部 TCP 连接的线程。在 Broker 端每个 SocketServer 实例只会创建一个 Acceptor 线程。<code>它的主要功能就是创建连接，并将接收到的 Request 请求传递给下游的 Processor 线程处理</code>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/0958-SHDgkB.png" alt="图片"></p>
 <blockquote>
 <p>1）我们可以看出 Acceptor 线程主要使用了 Java NIO 的 Selector 以及 SocketChannel 的方式循环的轮询准备就绪的 I/O 事件。</p>
 <p>2）将 ServerSocketChannel 通道注册到nioSelector 上，并关注网络连接创事件：SelectionKey.OP_ACCEPT。</p>
 <p>3）事件注册好后，一旦后续接收到连接请求后，Acceptor 线程就会指定一个 Processor 线程，并将该请求交给它并创建网络连接用于后续处理。</p>
 </blockquote>
-<h3 id="Processor-线程">Processor 线程</h3>
-<p>Acceptor 只是做了请求入口连接处理的，那么，<code>真正创建网络连接以及分发网络请求是由 Processor 线程来完成的</code>。而每个 Processor 线程在创建时都会创建 3 个队列。</p>
+<h3 id="Processor-线程"><a href="#Processor-线程" class="headerlink" title="Processor 线程"></a>Processor 线程</h3><p>Acceptor 只是做了请求入口连接处理的，那么，<code>真正创建网络连接以及分发网络请求是由 Processor 线程来完成的</code>。而每个 Processor 线程在创建时都会创建 3 个队列。</p>
 <blockquote>
 <p>1）<strong>newConnections 队列:</strong> 它主要是用来保存要创建的新连接信息，也就是SocketChannel 对象，<strong>目前是硬编码队列长度大小为20</strong>。每当 Processor 线程接收到新的连接请求时，都会将对应的 SocketChannel 对象放入队列，等到后面创建连接时，从该队列中获取 SocketChannel，然后注册新的连接。</p>
-<p>2）**inflightResponse 队列：**它是一个临时的 Response 队列，当 Processor 线程将 Repsonse 返回给 Client 之后，要将 Response 放入该队列。它存在的意义：<code>由于有些 Response 回调逻辑要在 Response 被发送回 Request 发送方后，才能执行，因此需要暂存到临时队列</code>。</p>
-<p>3）**ResponseQueue 队列：**它主要是存放需要返回给Request 发送方的所有 Response 对象。每个 Processor 线程都会维护自己的 Response 队列。</p>
+<p>2）<strong>inflightResponse 队列：</strong>它是一个临时的 Response 队列，当 Processor 线程将 Repsonse 返回给 Client 之后，要将 Response 放入该队列。它存在的意义：<code>由于有些 Response 回调逻辑要在 Response 被发送回 Request 发送方后，才能执行，因此需要暂存到临时队列</code>。</p>
+<p>3）<strong>ResponseQueue 队列：</strong>它主要是存放需要返回给Request 发送方的所有 Response 对象。每个 Processor 线程都会维护自己的 Response 队列。</p>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-Vza3z2.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-x5A3wg.png" alt=""></p>
-<h3 id="RequestHandlerPool-线程池">RequestHandlerPool 线程池</h3>
-<p>Acceptor 线程和 Processor 线程只是请求和响应的「<strong>搬运工</strong>」，而「<strong>真正处理 Kafka 请求</strong>」是 <code>KafkaRequestHandlerPool</code> 线程池，在上面网络超高并发通信架构图，有两个参数跟整个流程有关系，分别是「<code>num.network.threads</code>」、「<code>num.io.threads</code>」。其中 num.io.threads 就是 I/O 工作线程池的大小配置。</p>
-<p>​        <img data-src="https://xuemingde.com/pages/image/2022/04/10/1001-NqZsqB.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-Vza3z2.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1000-x5A3wg.png" alt="图片"></p>
+<h3 id="RequestHandlerPool-线程池"><a href="#RequestHandlerPool-线程池" class="headerlink" title="RequestHandlerPool 线程池"></a>RequestHandlerPool 线程池</h3><p>Acceptor 线程和 Processor 线程只是请求和响应的「<strong>搬运工</strong>」，而「<strong>真正处理 Kafka 请求</strong>」是 <code>KafkaRequestHandlerPool</code> 线程池，在上面网络超高并发通信架构图，有两个参数跟整个流程有关系，分别是「<code>num.network.threads</code>」、「<code>num.io.threads</code>」。其中 num.io.threads 就是 I/O 工作线程池的大小配置。</p>
+<p>​        <img data-src="https://xuemingde.com/pages/image/2022/04/10/1001-NqZsqB.png" alt="图片"></p>
 <p>下面我们结合 Kafka 超高并发网络架构图来讲解下一个完整请求处理核心流程：</p>
 <blockquote>
 <p>1）Clients 发送请求给 Acceptor 线程。</p>
@@ -373,87 +370,73 @@
 <p>9）待处理完请求后，KafkaRequestHandler 线程会将 Response 对象放入 Processor 线程的 Response 队列。</p>
 <p>10）然后 Processor 线程通过 Request 中的 ProcessorID 不停地从 Response 队列中来定位并取出 Response 对象，返还给 Request 发送方。</p>
 </blockquote>
-<h2 id="了解Kafka高吞吐日志存储架构是如何设计吗">了解Kafka高吞吐日志存储架构是如何设计吗</h2>
-<p>对于 Kafka 来说， 它主要用来处理海量数据流，这个场景的特点主要包括：</p>
+<h2 id="了解Kafka高吞吐日志存储架构是如何设计吗"><a href="#了解Kafka高吞吐日志存储架构是如何设计吗" class="headerlink" title="了解Kafka高吞吐日志存储架构是如何设计吗"></a>了解Kafka高吞吐日志存储架构是如何设计吗</h2><p>对于 Kafka 来说， 它主要用来处理海量数据流，这个场景的特点主要包括：</p>
 <blockquote>
+<p>1) <strong>写操作：</strong>写并发要求非常高，基本得达到百万级 TPS，顺序追加写日志即可，无需考虑更新操作。</p>
 <ol>
-<li>**写操作：**写并发要求非常高，基本得达到百万级 TPS，顺序追加写日志即可，无需考虑更新操作。</li>
-</ol>
-<ol start="2">
-<li>**读操作：**相对写操作来说，比较简单，只要能按照一定规则高效查询即可,支持（offset或者时间戳）读取。</li>
+<li><strong>读操作：</strong>相对写操作来说，比较简单，只要能按照一定规则高效查询即可,支持（offset或者时间戳）读取。</li>
 </ol>
 </blockquote>
 <p>根据上面两点分析，对于写操作来说，直接采用「<strong>顺序追加写日志</strong>」的方式就可以满足 Kafka 对于百万TPS写入效率要求。</p>
 <p>如何解决高效查询这些日志呢？我们可以设想把消息的 Offset 设计成一个有序的字段，这样消息在日志文件中也就有序存放了，也不需要<strong>额外引入哈希表结构</strong>，可以直接将消息划分成若干个块，<code>对于每个块我们只需要索引当前块的第一条消息的 Offset ，这个是不是有点二分查找算法的意思</code>。即先根据 Offset 大小找到对应的块， 然后再从块中顺序查找。如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1003-2UplC7.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1003-2UplC7.png" alt="图片"></p>
 <p>这样就可以快速定位到要查找的消息的位置了，在 Kafka 中，我们将这种索引结构叫做「<strong>稀疏哈希索引</strong>」。</p>
 <p>上面得出了 Kafka 最终的存储实现方案， 即<code>基于顺序追加写日志 + 稀疏哈希索引</code>。</p>
 <p>接下来我们来看看 Kafka 日志存储结构：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-DqnnDS.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-DqnnDS.png" alt="图片"></p>
 <p>从上图看出来，Kafka 是基于「<code>主题 + 分区 + 副本 + 分段 + 索引</code>」的结构进行日志存储的。</p>
 <p>了解了整体的日志存储架构，我们来看下 Kafka 日志格式，Kafka 日志格式也经历了多个版本迭代，这里我们主要看下V2版本的日志格式：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-2KZQhv.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1004-2KZQhv.png" alt="图片"></p>
 <p>通过上图可以得出：<code>V2 版本日志格式主要是通过可变长度提高了消息格式的空间使用率</code>，并将某些字段抽取到消息批次（RecordBatch）中，同时消息批次可以存放多条消息，从而在批量发送消息时，可以大幅度地节省了磁盘空间。</p>
 <p>接下来我们来看看日志消息写入磁盘的整体过程如下图所示：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-Tad6Ll.png" alt=""></p>
-<h2 id="针对-Kafka-线上集群部署方案-你是怎么做的">针对 Kafka 线上集群部署方案, 你是怎么做的</h2>
-<p>这里我们从架构师必备能力出发， 以电商平台为例讲述了 Kafka 生产级容量评估方案该如何做？如何让公司领导以及运维部门得到认可， 获准你的方案。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-ikMfte.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-Tad6Ll.png" alt="图片"></p>
+<h2 id="针对-Kafka-线上集群部署方案-你是怎么做的"><a href="#针对-Kafka-线上集群部署方案-你是怎么做的" class="headerlink" title="针对 Kafka 线上集群部署方案, 你是怎么做的"></a>针对 Kafka 线上集群部署方案, 你是怎么做的</h2><p>这里我们从架构师必备能力出发， 以电商平台为例讲述了 Kafka 生产级容量评估方案该如何做？如何让公司领导以及运维部门得到认可， 获准你的方案。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1005-ikMfte.png" alt="图片"></p>
 <p>详细可以深读：<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=Mzg3MTcxMDgxNA==&amp;mid=2247488846&amp;idx=1&amp;sn=1d77a05c7e94abd8044502c433d9aeee&amp;chksm=cefb3c7ff98cb569910c99de953ecce956a454a3d8e63be9e3a2b7639f633848ba4bb989bb87&amp;scene=21#wechat_redirect"><strong>八大步骤带你深度剖析Kafka生产级容量评估方案</strong></a></p>
-<h2 id="针对-Kafka-线上系统-你是如何进行监控的">针对 Kafka 线上系统, 你是如何进行监控的</h2>
-<p>Kafka 作为大型系统架构中重要的一环，有着举足轻重的作用，因此 Kafka 集群的稳定性尤为重要，我们要对生产的 Kafka 集群进行全方位的监控， 一般线上系统可以从以下五个维度进行监控：</p>
-<h3 id="主机节点监控">主机节点监控</h3>
-<p>所谓主机节点监控就是监控 Kafka 集群 Broker 所在节点机器的性能。主机节点监控对于 Kafka 来说是最重要的，因为很多线上环境问题首先就是由于主机的某些性能出现了问题。</p>
+<h2 id="针对-Kafka-线上系统-你是如何进行监控的"><a href="#针对-Kafka-线上系统-你是如何进行监控的" class="headerlink" title="针对 Kafka 线上系统, 你是如何进行监控的"></a>针对 Kafka 线上系统, 你是如何进行监控的</h2><p>Kafka 作为大型系统架构中重要的一环，有着举足轻重的作用，因此 Kafka 集群的稳定性尤为重要，我们要对生产的 Kafka 集群进行全方位的监控， 一般线上系统可以从以下五个维度进行监控：</p>
+<h3 id="主机节点监控"><a href="#主机节点监控" class="headerlink" title="主机节点监控"></a>主机节点监控</h3><p>所谓主机节点监控就是监控 Kafka 集群 Broker 所在节点机器的性能。主机节点监控对于 Kafka 来说是最重要的，因为很多线上环境问题首先就是由于主机的某些性能出现了问题。</p>
 <p>因此对于 Kafka 来说，主机监控通常是发现问题的第一步，主要性能指标如下：</p>
 <p>「<strong>机器负载（Load）</strong>」、「<strong>CPU 使用率</strong>」、「<strong>内存使用率</strong>」、「<strong>磁盘 I/O 使用率</strong>」、「<strong>网络 I/O 使用率</strong>」、「<strong>TCP 连接数</strong>」、「<strong>打开文件数</strong>」、「<strong>inode 使用情况</strong>」。</p>
 <p>如果想要更好的监控主机性能的话，有以下两个教程可以学习和参考：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-p36iiv.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-X46ebB.png" alt=""></p>
-<h3 id="JVM-监控">JVM 监控</h3>
-<p>另一个重要的监控维度就是 JVM 监控。<code>监控 JVM 进程主要是为了让你全面地了解Kafka Broker 进程</code>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-p36iiv.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1006-X46ebB.png" alt="图片"></p>
+<h3 id="JVM-监控"><a href="#JVM-监控" class="headerlink" title="JVM 监控"></a>JVM 监控</h3><p>另一个重要的监控维度就是 JVM 监控。<code>监控 JVM 进程主要是为了让你全面地了解Kafka Broker 进程</code>。</p>
 <p>要监控 JVM 进程，需要关注 3 个指标：</p>
 <p>「<code>监控 Full GC 发生频率和时长</code>」、「<code>监控堆上活跃对象大小</code>」、「<code>监控应用线程总数</code>」</p>
-<h3 id="Kafka-集群监控">Kafka 集群监控</h3>
-<p>另外一个重要监控维度就是 Kafka Broker 集群和各类客户端的监控，主要有3个方法：</p>
+<h3 id="Kafka-集群监控"><a href="#Kafka-集群监控" class="headerlink" title="Kafka 集群监控"></a>Kafka 集群监控</h3><p>另外一个重要监控维度就是 Kafka Broker 集群和各类客户端的监控，主要有3个方法：</p>
 <blockquote>
-<p>1）**查看 Broker 端重要日志：**主要包括 Broker 端服务器日志 server.log，控制器日志 controller.log 以及主题分区状态变更日志  state-change.log。其中，server.log 是最重要的，如果你的 Kafka 集群出现了故障，你要第一时间查看  server.log，定位故障原因。</p>
-<p>2）<strong>查看 Broker 端关键线程运行状态，例如:</strong></p>
+<p>1）<strong>查看 Broker 端重要日志：</strong>主要包括 Broker 端服务器日志 server.log，控制器日志 controller.log 以及主题分区状态变更日志  state-change.log。其中，server.log 是最重要的，如果你的 Kafka 集群出现了故障，你要第一时间查看  server.log，定位故障原因。</p>
+<p>2）<strong>查看 Broker 端关键线程运行状态，例如:</strong> </p>
 <p>Log Compaction 线程：日志压缩清理。一旦它挂掉了，所有 Compaction 操作都会中断，但用户对此通常是无感知的。</p>
 <p>副本拉取消息的线程：主要执行 Follower 副本向 Leader 副本拉取消息的逻辑。如果它们挂掉了，系统会表现为 Follower 副本延迟 Leader 副本越来越大 。</p>
 <p>3）<strong>查看 Broker 端关键的 JMX 性能指标:</strong> 主要有BytesIn/BytesOut、NetworkProcessorAvgIdlePercent、RequestHandlerAvgIdlePercent、UnderReplicatedPartitions、ISRShrink/ISRExpand、ActiveControllerCount 这几个指标 。</p>
 </blockquote>
-<h3 id="Kafka-客户端监控">Kafka 客户端监控</h3>
-<p>客户端监控主要是生产者和消费者的监控，生产者往 Kafka 发送消息，此时我们要了解客户端机器与 Broker 机器之间的往返时延 RTT 是多少，对于跨数据中心或者异地集群来说，RTT 会更大，很难支撑很大的 TPS。</p>
+<h3 id="Kafka-客户端监控"><a href="#Kafka-客户端监控" class="headerlink" title="Kafka 客户端监控"></a>Kafka 客户端监控</h3><p>客户端监控主要是生产者和消费者的监控，生产者往 Kafka 发送消息，此时我们要了解客户端机器与 Broker 机器之间的往返时延 RTT 是多少，对于跨数据中心或者异地集群来说，RTT 会更大，很难支撑很大的 TPS。</p>
 <p><strong>Producer角度:</strong> request-latency 是需要重点关注的JMX指标，即消息生产请求的延时；另外 Sender 线程的运行状态也是非常重要的， 如果 Sender 线程挂了，对于用户是无感知的，表象只是 Producer 端消息发送失败。</p>
 <p><strong>Consumer角度:</strong> 对于 Consumer Group，需要重点关注 join rate 和 sync rate 指标，它表示 Rebalance 的频繁程度。另外还包括消息消费偏移量、消息堆积数量等。</p>
-<h3 id="Broker-之间的监控">Broker 之间的监控</h3>
-<p>最后一个监控维度就是 Broker 之间的监控，主要指副本拉取的性能。Follower 副本实时拉取 Leader 副本的数据，此时我们希望拉取过程越快越好。Kafka 提供了一个特别重要的 JMX 指标，叫做「<code>under replicated partitions</code>」，意思就是比如我们规定这条消息，应该在两个 Broker 上面保存，假设只有一个 Broker 上保存该消息，那么这条消息所在的分区就叫 under replicated partitions，这种情况是特别关注的，因为有可能造成数据的丢失。</p>
+<h3 id="Broker-之间的监控"><a href="#Broker-之间的监控" class="headerlink" title="Broker 之间的监控"></a>Broker 之间的监控</h3><p>最后一个监控维度就是 Broker 之间的监控，主要指副本拉取的性能。Follower 副本实时拉取 Leader 副本的数据，此时我们希望拉取过程越快越好。Kafka 提供了一个特别重要的 JMX 指标，叫做「<code>under replicated partitions</code>」，意思就是比如我们规定这条消息，应该在两个 Broker 上面保存，假设只有一个 Broker 上保存该消息，那么这条消息所在的分区就叫 under replicated partitions，这种情况是特别关注的，因为有可能造成数据的丢失。</p>
 <p>另外还有一个比较重要的指标是「<code>active controllor count</code>」。在整个 Kafka  集群中应该确保只能有一台机器的指标是1，其他全应该是0，如果发现有一台机器大于1，一定是出现脑裂了，此时应该去检查下是否出现了网络分区。Kafka本身是不能对抗脑裂的，完全依靠 Zookeeper 来做，但是如果真正出现网络分区的话，也是没有办法处理的，应该让其快速失败重启。</p>
-<h2 id="针对-Kafka-线上系统-你是如何进行调优的">针对 Kafka 线上系统, 你是如何进行调优的</h2>
-<p>对 Kafka 来说，「<strong>吞吐量</strong>」和「<strong>延时</strong>」是非常重要的优化指标。</p>
-<p>**吞吐量 TPS：**是指 Broker 端或 Client 端每秒能处理的消息数，越大越好。</p>
-<p>**延时：**表示从 Producer 端发送消息到 Broker 端持久化完成到 Consumer 端成功消费之间的时间间隔。与吞吐量 TPS 相反，延时越短越好。</p>
+<h2 id="针对-Kafka-线上系统-你是如何进行调优的"><a href="#针对-Kafka-线上系统-你是如何进行调优的" class="headerlink" title="针对 Kafka 线上系统, 你是如何进行调优的"></a>针对 Kafka 线上系统, 你是如何进行调优的</h2><p>对 Kafka 来说，「<strong>吞吐量</strong>」和「<strong>延时</strong>」是非常重要的优化指标。</p>
+<p><strong>吞吐量 TPS：</strong>是指 Broker 端或 Client 端每秒能处理的消息数，越大越好。</p>
+<p><strong>延时：</strong>表示从 Producer 端发送消息到 Broker 端持久化完成到 Consumer 端成功消费之间的时间间隔。与吞吐量 TPS 相反，延时越短越好。</p>
 <p>总之，<code>高吞吐量、低延时是我们调优 Kafka 集群的主要目标</code>。</p>
-<h3 id="提升吞吐量">提升吞吐量</h3>
-<p>首先是提升吞吐量参数和措施：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1011-xiyY76.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-TlxxM5.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-nCB2xr.png" alt=""></p>
-<h3 id="降低延时">降低延时</h3>
-<p>降低延时的目的就是尽量减少端到端的延时。</p>
+<h3 id="提升吞吐量"><a href="#提升吞吐量" class="headerlink" title="提升吞吐量"></a>提升吞吐量</h3><p>首先是提升吞吐量参数和措施：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1011-xiyY76.png" alt="image-20220410101150338"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-TlxxM5.png" alt="image-20220410101218929"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/10/1012-nCB2xr.png" alt="image-20220410101239687"></p>
+<h3 id="降低延时"><a href="#降低延时" class="headerlink" title="降低延时"></a>降低延时</h3><p>降低延时的目的就是尽量减少端到端的延时。</p>
 <p>对比上面提升吞吐量的参数，我们只能调整 Producer 端和 Consumer 端的参数配置。</p>
 <p>对于 Producer 端，此时我们希望可以快速的将消息发送出去，必须设置 linger.ms=0，同时关闭压缩，另外设置 acks = 1，减少副本同步时间。</p>
 <p>而对于 Consumer 端我们只保持 fetch.min.bytes=1 ，即 Broker 端只要有能返回的数据，就立即返回给 Consumer，减少延时。</p>
-<h3 id="合理设置分区数">合理设置分区数</h3>
-<p>分区数不是越多越好，也不是越少越好，需要搭建完集群，进行压测，再灵活调整分区个数。</p>
+<h3 id="合理设置分区数"><a href="#合理设置分区数" class="headerlink" title="合理设置分区数"></a>合理设置分区数</h3><p>分区数不是越多越好，也不是越少越好，需要搭建完集群，进行压测，再灵活调整分区个数。 </p>
 <p>这里可以用 Kafka 官方自带的脚本，对 Kafka 进行压测。</p>
 <blockquote>
-<p>**1）生产者压测：**<span class="exturl" data-url="aHR0cDovL2thZmthLXByb2R1Y2VyLXBlcmYtdGVzdC5zaA==">kafka-producer-perf-test.sh<i class="fa fa-external-link-alt"></i></span></p>
-<p>**2）消费者压测：**<span class="exturl" data-url="aHR0cDovL2thZmthLWNvbnN1bWVyLXBlcmYtdGVzdC5zaA==">kafka-consumer-perf-test.sh<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>1）生产者压测：</strong>kafka-producer-perf-test.sh</p>
+<p><strong>2）消费者压测：</strong>kafka-consumer-perf-test.sh </p>
 </blockquote>
 <hr>
 <blockquote>
-<p>备份链接：<a href="https://xuemingde.com/JavaNotes/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/20220410-Kafka%E9%9D%A2%E8%AF%95%E8%BF%9E%E7%8E%AF%E7%82%AE-%E4%B8%8B">20220410-Kafka面试连环炮-下</a></p>
+<p>备份链接：<a href="https://xuemingde.com/JavaNotes/消息队列/20220410-Kafka面试连环炮-下">20220410-Kafka面试连环炮-下</a>   </p>
 </blockquote>
 
     </div>
@@ -535,11 +518,11 @@
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
               <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
-              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
               <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> 并发</a>
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
               <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
               <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
@@ -557,12 +540,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/12P0DCH.html" rel="prev" title="RocketMQ 消息积压了，增加消费者有用吗">
-      <i class="fa fa-chevron-left"></i> RocketMQ 消息积压了，增加消费者有用吗
+    <a href="/posts/357C6XC.html" rel="prev" title="Java8中的Stream轻松遍历树形结构">
+      <i class="fa fa-chevron-left"></i> Java8中的Stream轻松遍历树形结构
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/3N8921N.html" rel="next" title="彻底讲透Elasticsearch">
-      彻底讲透Elasticsearch <i class="fa fa-chevron-right"></i>
+    <a href="/posts/12P0DCH.html" rel="next" title="RocketMQ 消息积压了，增加消费者有用吗">
+      RocketMQ 消息积压了，增加消费者有用吗 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -723,13 +706,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">896k</span>
+    <span title="站点总字数">887k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:34</span>
+    <span title="站点阅读时长">13:26</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

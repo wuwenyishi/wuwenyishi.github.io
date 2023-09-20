@@ -329,27 +329,21 @@
 </blockquote>
 <p>运行时数据区”包括程序计数器、虚拟机栈、本地方法栈和堆空间，今天我们就来了解一下方法区。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0811nMChKa.png" alt=""></p>
-<h2 id="简介">简介</h2>
-<p>创建对象时内存分配简图</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>创建对象时内存分配简图</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08128OLLNU.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08139cSMvE.png" alt=""></p>
 <p>《Java虚拟机规范》中明确说明：“尽管所有的方法区在逻辑上属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集或者进行压缩。</p>
 <p>虽然 Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。所以，方法区可以看作是一块<strong>独立</strong>于 Java 堆的内存空间。</p>
 <p>方法区与 Java 堆一样，是各个线程共享的内存区域。方法区在 JVM 启动时就会被创建，并且它的实际的物理内存空间是可以<strong>不连续</strong>的，关闭 JVM 就会释放这个区域的内存。</p>
-<h2 id="永久代、元空间">永久代、元空间</h2>
-<p>《java虚拟机规范》对如何实现方法区，不做统一要求。例如：BEA JRockit/IBM J9 中不存在永久代的概念。而对于 HotSpot 来说，在 jdk7 及以前，习惯上把方法区的实现称为<strong>永久代</strong>，而从 jdk8 开始，使用<strong>元空间</strong>取代了永久代。</p>
+<h2 id="永久代、元空间"><a href="#永久代、元空间" class="headerlink" title="永久代、元空间"></a>永久代、元空间</h2><p>《java虚拟机规范》对如何实现方法区，不做统一要求。例如：BEA JRockit/IBM J9 中不存在永久代的概念。而对于 HotSpot 来说，在 jdk7 及以前，习惯上把方法区的实现称为<strong>永久代</strong>，而从 jdk8 开始，使用<strong>元空间</strong>取代了永久代。</p>
 <blockquote>
 <p>方法区是 Java 虚拟机规范中的概念，而永久代和元空间是 HotSpot 虚拟机对方法区的一种实现。通俗点讲：如果把方法区比作接口的话，那永久代和元空间可以比作实现该接口的实现类。</p>
 </blockquote>
-<h3 id="直接内存">直接内存</h3>
-<p>永久代、元空间并不只是名字变了，内部结构也进行了调整。永久代使用的是 JVM 的内存，而元空间使用的是本地的直接内存。</p>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>永久代、元空间并不只是名字变了，内部结构也进行了调整。永久代使用的是 JVM 的内存，而元空间使用的是本地的直接内存。</p>
 <p>直接内存并不是 JVM 运行时数据区的一部分，因此不会受到 Java 堆的限制。但是它会受到本机总内存大小以及处理器寻址空间的限制，所以如果这部分内存也被频繁的使用，依然会导致 OOM 错误的出现。</p>
-<h3 id="方法区的大小">方法区的大小</h3>
-<p>方法区的大小是可以进行设置的，可以选择固定大小也可以进行扩展。</p>
-<h4 id="jdk7-及以前">jdk7 及以前</h4>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:PermSize=N //方法区 (永久代) 初始分配空间，默认值为 20.75M</span><br><span class="line">-XX:MaxPermSize=N //方法区 (永久代) 最大可分配空间。32位机器默认是64M，64位机器默认是82M</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="jdk8及以后">jdk8及以后</h4>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:MetaspaceSize=N //方法区 (元空间) 初始分配空间，如果未指定此标志，则元空间将根据运行时的应用程序需求动态地重新调整大小。</span><br><span class="line">-XX:MaxMetaspaceSize=N //方法区 (元空间) 最大可分配空间，默认值为 -1，即没有限制</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="方法区的大小"><a href="#方法区的大小" class="headerlink" title="方法区的大小"></a>方法区的大小</h3><p>方法区的大小是可以进行设置的，可以选择固定大小也可以进行扩展。</p>
+<h4 id="jdk7-及以前"><a href="#jdk7-及以前" class="headerlink" title="jdk7 及以前"></a>jdk7 及以前</h4><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:PermSize=N //方法区 (永久代) 初始分配空间，默认值为 20.75M</span><br><span class="line">-XX:MaxPermSize=N //方法区 (永久代) 最大可分配空间。32位机器默认是64M，64位机器默认是82M</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="jdk8及以后"><a href="#jdk8及以后" class="headerlink" title="jdk8及以后"></a>jdk8及以后</h4><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:MetaspaceSize=N //方法区 (元空间) 初始分配空间，如果未指定此标志，则元空间将根据运行时的应用程序需求动态地重新调整大小。</span><br><span class="line">-XX:MaxMetaspaceSize=N //方法区 (元空间) 最大可分配空间，默认值为 -1，即没有限制</span><br></pre></td></tr></tbody></table></figure>
 <p>与永久代很大的不同就是，如果不指定大小的话，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</p>
 <p>方法区的大小决定了系统可以保存多少个类，如果系统定义了太多的类，比如：加载大量的第三方 jar 包、Tomcat 部署的工程过多、大量动态生成反射类等都会导致方法区溢出，抛出内存溢出错误。</p>
 <ul>
@@ -357,14 +351,12 @@
 <li>元空间：OutOfMemoryError:Metaspace</li>
 </ul>
 <p><strong>至于如何解决 OOM 异常，将在以后的文章中讲解！</strong></p>
-<h3 id="jvisualvm">jvisualvm</h3>
-<p>我们可以通过 JDK 自带的 <strong>jvisualvm</strong> 工具来查看程序加载的类文件：</p>
+<h3 id="jvisualvm"><a href="#jvisualvm" class="headerlink" title="jvisualvm"></a>jvisualvm</h3><p>我们可以通过 JDK 自带的 <strong>jvisualvm</strong> 工具来查看程序加载的类文件：</p>
 <p><strong>例</strong></p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodAreaDemo1</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">        System.out.println(<span class="string">"start..."</span>);</span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            Thread.sleep(<span class="number">1000000</span>);</span><br><span class="line">        } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        }</span><br><span class="line">        System.out.println(<span class="string">"end..."</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>运行程序，可以看到一个简单的程序就需要加载这么多的类文件。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/08172fHLHQ.png" alt=""></p>
-<h3 id="高水位线">高水位线</h3>
-<p>对于一个64位的服务器端 JVM 来说，<code>XX：MetaspaceSize=21</code> 就是初始的高水位线，一旦触及这个水位线，Full GC 将会被触发并卸载没用的类（即这些类对应的类加载器不再存活），然后这个高水位线将会重置。</p>
+<h3 id="高水位线"><a href="#高水位线" class="headerlink" title="高水位线"></a>高水位线</h3><p>对于一个64位的服务器端 JVM 来说，<code>XX：MetaspaceSize=21</code> 就是初始的高水位线，一旦触及这个水位线，Full GC 将会被触发并卸载没用的类（即这些类对应的类加载器不再存活），然后这个高水位线将会重置。</p>
 <p>新的高水位线的值取决于 GC 后释放了多少元空间：</p>
 <ul>
 <li>如果释放的空间不足，那么在不超过 MaxMetaspaceSize 时，适当提高该值；</li>
@@ -373,24 +365,20 @@
 <blockquote>
 <p>如果初始化的高水位线设置过低，高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到 Full GC 多次调用。为了避免频繁地GC，建议将 <code>-XX ：MetaspaceSize</code> 设置为一个相对较高的值。</p>
 </blockquote>
-<h2 id="内部结构">内部结构</h2>
-<p>《深入理解Java虚拟机》书中对方法区存储内容描述如下：它用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。接下来我们就一起来看一下它的内部结构。</p>
+<h2 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h2><p>《深入理解Java虚拟机》书中对方法区存储内容描述如下：它用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。接下来我们就一起来看一下它的内部结构。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0818BTvM7A.png" alt=""></p>
-<h3 id="类型信息">类型信息</h3>
-<p>对每个加载的类型（ 类 class、接口 interface、枚举 enum、注解 annotation），JVM 必须在方法区中存储以下类型信息：</p>
+<h3 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h3><p>对每个加载的类型（ 类 class、接口 interface、枚举 enum、注解 annotation），JVM 必须在方法区中存储以下类型信息：</p>
 <ol>
 <li>这个类型的完整有效名称（全名=包名.类名）</li>
 <li>这个类型直接父类的完整有效名（对于 interface 或是 java. lang.Object ，都没有父类）</li>
 <li>这个类型的修饰符（ public ， abstract， final 的某个子集）</li>
 <li>这个类型直接接口的一个有序列表</li>
 </ol>
-<h3 id="域（Field）信息">域（Field）信息</h3>
-<ul>
+<h3 id="域（Field）信息"><a href="#域（Field）信息" class="headerlink" title="域（Field）信息"></a>域（Field）信息</h3><ul>
 <li>JVM必须在方法区中保存类型的所有域（field，也称为属性）的相关信息以及域的声明顺序；</li>
 <li>域的相关信息包括：域名称、 域类型、域修饰符（public， private，protected， static， final， volatile， transient 的某个子集）</li>
 </ul>
-<h3 id="方法（Method）信息">方法（Method）信息</h3>
-<p>JVM 必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
+<h3 id="方法（Method）信息"><a href="#方法（Method）信息" class="headerlink" title="方法（Method）信息"></a>方法（Method）信息</h3><p>JVM 必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
 <ul>
 <li>方法名称</li>
 <li>方法的返回类型（或void）</li>
@@ -399,8 +387,7 @@
 <li>方法的字节码（bytecodes）、操作数栈、局部变量表及大小（ abstract 和 native 方法除外）</li>
 <li>异常表（ abstract 和 native 方法除外）每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</li>
 </ul>
-<h3 id="non-final-的类变量">non-final 的类变量</h3>
-<ul>
+<h3 id="non-final-的类变量"><a href="#non-final-的类变量" class="headerlink" title="non-final 的类变量"></a>non-final 的类变量</h3><ul>
 <li>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分</li>
 <li>类变量被类的所有实例所共享，即使没有类实例你也可以访问它。</li>
 </ul>
@@ -411,47 +398,37 @@
 <p>可以打开 IDEA 的 Terminal 窗口，在 MethodAreaDemo2.class 所在的路径下，输入 <code>javap -v -p MethodAreaDemo2.class</code> 命令</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0820D8dllV.png" alt=""></p>
 <p>通过图片我们可以看出被声明为 final 的类变量的处理方法是不一样的，全局常量在编译的时候就被分配了。</p>
-<h3 id="运行时常量池">运行时常量池</h3>
-<p>说到运行时常量池，我们先来了解一下什么是常量池表。</p>
-<h4 id="常量池表">常量池表</h4>
-<p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息那就是常量池表（Constant Pool Table），里边存储着<strong>数量值</strong>、<strong>字符串值</strong>、<strong>类引用</strong>、<strong>字段引用</strong>和<strong>方法引用</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0821NLzPMe.png" alt=""></p>
-<h4 id="为什么字节码文件需要常量池？">为什么字节码文件需要常量池？</h4>
-<p>java 源文件中的类、接口，编译后会产生一个字节码文件。而字节码文件需要数据支持，通常这种数据会很大，以至于不能直接存放到字节码中。换一种方式，可以将指向这些数据的<strong>符号引用</strong>存到字节码文件的常量池中，这样字节码只需使用常量池就可以在运行时通过<strong>动态链接</strong>找到相应的数据并使用。</p>
-<h4 id="运行时常量池-2">运行时常量池</h4>
-<p>运行时常量池（ <code>Runtime Constant Pool</code>）是方法区的一部分，类加载器加载字节码文件时，将常量池表加载进方法区的运行时常量池。运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。此时不再是常量池中的符号地址了，这里换为<strong>真实</strong>地址。</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>说到运行时常量池，我们先来了解一下什么是常量池表。</p>
+<h4 id="常量池表"><a href="#常量池表" class="headerlink" title="常量池表"></a>常量池表</h4><p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息那就是常量池表（Constant Pool Table），里边存储着<strong>数量值</strong>、<strong>字符串值</strong>、<strong>类引用</strong>、<strong>字段引用</strong>和<strong>方法引用</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0821NLzPMe.png" alt="图片"></p>
+<h4 id="为什么字节码文件需要常量池？"><a href="#为什么字节码文件需要常量池？" class="headerlink" title="为什么字节码文件需要常量池？"></a>为什么字节码文件需要常量池？</h4><p>java 源文件中的类、接口，编译后会产生一个字节码文件。而字节码文件需要数据支持，通常这种数据会很大，以至于不能直接存放到字节码中。换一种方式，可以将指向这些数据的<strong>符号引用</strong>存到字节码文件的常量池中，这样字节码只需使用常量池就可以在运行时通过<strong>动态链接</strong>找到相应的数据并使用。</p>
+<h4 id="运行时常量池-1"><a href="#运行时常量池-1" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池（ <code>Runtime Constant Pool</code>）是方法区的一部分，类加载器加载字节码文件时，将常量池表加载进方法区的运行时常量池。运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。此时不再是常量池中的符号地址了，这里换为<strong>真实</strong>地址。</p>
 <blockquote>
 <p>运行时常量池，相对于 Class 文件常量池的另一重要特征是：具备动态性，比如 <code>String.intern()</code>。</p>
 </blockquote>
-<h2 id="演进细节">演进细节</h2>
-<p>针对的是 <strong>Hotspot</strong> 的虚拟机：</p>
+<h2 id="演进细节"><a href="#演进细节" class="headerlink" title="演进细节"></a>演进细节</h2><p>针对的是 <strong>Hotspot</strong> 的虚拟机：</p>
 <ul>
 <li>jdk1.6 及之前：有<strong>永久代</strong> ，静态变量存放在永久代上；</li>
 <li>jdk1.7：有<strong>永久代</strong>，但已经逐步“去永久代”，字符串常量池、静态变量移除，保存在堆中；</li>
 <li>jdk1.8及之后：无永久代，类型信息、字段、方法、常量保存在本地内存的<strong>元空间</strong>，但字符串常量池、静态变量仍在堆中；</li>
 </ul>
-<h3 id="演变示例图">演变示例图</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822Hj7z0e.png" alt=""></p>
+<h3 id="演变示例图"><a href="#演变示例图" class="headerlink" title="演变示例图"></a>演变示例图</h3><p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822Hj7z0e.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0822u3jIxG.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/02/0823bbxVIm.png" alt=""></p>
-<h3 id="为什么要将永久代替换为元空间呢">为什么要将永久代替换为元空间呢?</h3>
-<ol>
+<h3 id="为什么要将永久代替换为元空间呢"><a href="#为什么要将永久代替换为元空间呢" class="headerlink" title="为什么要将永久代替换为元空间呢?"></a>为什么要将永久代替换为元空间呢?</h3><ol>
 <li>永久代使用的是 JVM 的内存，受 JVM 设置的内存大小限制；元空间使用的是本地直接内存，它的最大可分配空间是系统可用内存的空间。因为元空间里存放的是类的<strong>元数据</strong>，所以随着内存空间的增大，能加载的类就更多了，相应的溢出的机率会大大减小。</li>
 <li>在 JDK8，合并 HotSpot 和 JRockit 的代码时，JRockit 从来没有一个叫永久代的东西，合并之后就没有必要额外的设置这么一个永久代的地方了。</li>
 <li>对永久代进行调优是很困难的。</li>
 </ol>
-<h3 id="StringTable-为什么要调整">StringTable 为什么要调整</h3>
-<p>因为永久代的回收效率很低，在 full gc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了<code>StringTable</code> 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存。</p>
-<h2 id="垃圾回收">垃圾回收</h2>
-<p>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。方法区的垃圾收集主要回收两部分内容：常量池中废奔的<strong>常量</strong>和不再使用的<strong>类型</strong>。</p>
+<h3 id="StringTable-为什么要调整"><a href="#StringTable-为什么要调整" class="headerlink" title="StringTable 为什么要调整"></a>StringTable 为什么要调整</h3><p>因为永久代的回收效率很低，在 full gc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了<code>StringTable</code> 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。方法区的垃圾收集主要回收两部分内容：常量池中废奔的<strong>常量</strong>和不再使用的<strong>类型</strong>。</p>
 <p>方法区内常量池中主要存放字面量和符号引用两大类常量：</p>
 <ul>
 <li>字面量比较接近 Java 语言层次的常量概念，如文本字符串、被声明为 final 的常量值等。</li>
 <li>符号引用则属于编译原理方面的概念，包括类和接口的全限定名、字段的名称和描述符、方法的名称和描述符。</li>
 </ul>
 <p>HotSpot 虚拟机对常量池的回收策略是很明确的，只要常量池中的常量没有被任何地方引用，就可以被回收。</p>
-<h3 id="类型判定">类型判定</h3>
-<p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。需要同时满足下面三个条件：</p>
+<h3 id="类型判定"><a href="#类型判定" class="headerlink" title="类型判定"></a>类型判定</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。需要同时满足下面三个条件：</p>
 <ul>
 <li>该类所有的<strong>实例</strong>都已经被回收，也就是 Java 堆中不存在该类及其任何派生子类的实例；</li>
 <li>加载该类的<strong>类加载器</strong>已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如OSGi、JSP的重加载等，否则通常是很难达成的；</li>
@@ -640,7 +617,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E4%BB%A3%E3%80%81%E5%85%83%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">永久代、元空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">直接内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.2.</span> <span class="nav-text">方法区的大小</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk7-%E5%8F%8A%E4%BB%A5%E5%89%8D"><span class="nav-number">2.2.1.</span> <span class="nav-text">jdk7 及以前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk8%E5%8F%8A%E4%BB%A5%E5%90%8E"><span class="nav-number">2.2.2.</span> <span class="nav-text">jdk8及以后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jvisualvm"><span class="nav-number">2.3.</span> <span class="nav-text">jvisualvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%B0%B4%E4%BD%8D%E7%BA%BF"><span class="nav-number">2.4.</span> <span class="nav-text">高水位线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">内部结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.</span> <span class="nav-text">类型信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%9F%EF%BC%88Field%EF%BC%89%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.</span> <span class="nav-text">域（Field）信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.</span> <span class="nav-text">方法（Method）信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#non-final-%E7%9A%84%E7%B1%BB%E5%8F%98%E9%87%8F"><span class="nav-number">3.4.</span> <span class="nav-text">non-final 的类变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="nav-number">3.5.</span> <span class="nav-text">运行时常量池</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%A1%A8"><span class="nav-number">3.5.1.</span> <span class="nav-text">常量池表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E9%9C%80%E8%A6%81%E5%B8%B8%E9%87%8F%E6%B1%A0%EF%BC%9F"><span class="nav-number">3.5.2.</span> <span class="nav-text">为什么字节码文件需要常量池？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0-2"><span class="nav-number">3.5.3.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%94%E8%BF%9B%E7%BB%86%E8%8A%82"><span class="nav-number">4.</span> <span class="nav-text">演进细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E5%8F%98%E7%A4%BA%E4%BE%8B%E5%9B%BE"><span class="nav-number">4.1.</span> <span class="nav-text">演变示例图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%B0%86%E6%B0%B8%E4%B9%85%E4%BB%A3%E6%9B%BF%E6%8D%A2%E4%B8%BA%E5%85%83%E7%A9%BA%E9%97%B4%E5%91%A2"><span class="nav-number">4.2.</span> <span class="nav-text">为什么要将永久代替换为元空间呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringTable-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%B0%83%E6%95%B4"><span class="nav-number">4.3.</span> <span class="nav-text">StringTable 为什么要调整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">5.</span> <span class="nav-text">垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%A4%E5%AE%9A"><span class="nav-number">5.1.</span> <span class="nav-text">类型判定</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E4%BB%A3%E3%80%81%E5%85%83%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">永久代、元空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">直接内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.2.</span> <span class="nav-text">方法区的大小</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk7-%E5%8F%8A%E4%BB%A5%E5%89%8D"><span class="nav-number">2.2.1.</span> <span class="nav-text">jdk7 及以前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk8%E5%8F%8A%E4%BB%A5%E5%90%8E"><span class="nav-number">2.2.2.</span> <span class="nav-text">jdk8及以后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jvisualvm"><span class="nav-number">2.3.</span> <span class="nav-text">jvisualvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%B0%B4%E4%BD%8D%E7%BA%BF"><span class="nav-number">2.4.</span> <span class="nav-text">高水位线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">内部结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.</span> <span class="nav-text">类型信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%9F%EF%BC%88Field%EF%BC%89%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.</span> <span class="nav-text">域（Field）信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.</span> <span class="nav-text">方法（Method）信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#non-final-%E7%9A%84%E7%B1%BB%E5%8F%98%E9%87%8F"><span class="nav-number">3.4.</span> <span class="nav-text">non-final 的类变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="nav-number">3.5.</span> <span class="nav-text">运行时常量池</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%A1%A8"><span class="nav-number">3.5.1.</span> <span class="nav-text">常量池表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E9%9C%80%E8%A6%81%E5%B8%B8%E9%87%8F%E6%B1%A0%EF%BC%9F"><span class="nav-number">3.5.2.</span> <span class="nav-text">为什么字节码文件需要常量池？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0-1"><span class="nav-number">3.5.3.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%94%E8%BF%9B%E7%BB%86%E8%8A%82"><span class="nav-number">4.</span> <span class="nav-text">演进细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E5%8F%98%E7%A4%BA%E4%BE%8B%E5%9B%BE"><span class="nav-number">4.1.</span> <span class="nav-text">演变示例图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%B0%86%E6%B0%B8%E4%B9%85%E4%BB%A3%E6%9B%BF%E6%8D%A2%E4%B8%BA%E5%85%83%E7%A9%BA%E9%97%B4%E5%91%A2"><span class="nav-number">4.2.</span> <span class="nav-text">为什么要将永久代替换为元空间呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringTable-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%B0%83%E6%95%B4"><span class="nav-number">4.3.</span> <span class="nav-text">StringTable 为什么要调整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">5.</span> <span class="nav-text">垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%A4%E5%AE%9A"><span class="nav-number">5.1.</span> <span class="nav-text">类型判定</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -725,13 +702,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">896k</span>
+    <span title="站点总字数">887k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:34</span>
+    <span title="站点阅读时长">13:26</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

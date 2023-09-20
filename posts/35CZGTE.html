@@ -289,7 +289,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -311,27 +311,22 @@
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p>最近接了一个新需求，业务场景上需要在原有基础上新增2个字段，接口新增参数意味着很多类和方法的逻辑都需要改变，需要先判断是否属于该业务场景，再做对应的逻辑。原本的打算是在入口处新增变量，在操作数据的时候进行逻辑判断将变量进行存储或查询。</p>
 <p>如果全链路都变更入参和结构，很明显代码上很不优雅，后续如果还要增加业务场景，又需要再改一遍。如果有一个方法可以传递全局变量，而且仅限于当前线程就好了。</p>
 <p>到此，会想到有两种解决方案：之前用的比较少的ThreadLocal或者使用redis缓存。考虑到新增字段都是些增删改查的操作，没有必要存到redis中，故使用ThreadLocal。</p>
-<h1><strong>一、ThreadLocal定义</strong></h1>
-<p>以微服务架构为例，服务提供方在收到调用方的请求后，会把这个请求分配给一个线程进行处理。一般来说，一个请求会一直由同一个线程处理，中间不会切换线程，所以如果有一个线程中共享的变量，可以当全局变量使用。</p>
+<h1 id="一、ThreadLocal定义"><a href="#一、ThreadLocal定义" class="headerlink" title="一、ThreadLocal定义"></a><strong>一、ThreadLocal定义</strong></h1><p>以微服务架构为例，服务提供方在收到调用方的请求后，会把这个请求分配给一个线程进行处理。一般来说，一个请求会一直由同一个线程处理，中间不会切换线程，所以如果有一个线程中共享的变量，可以当全局变量使用。</p>
 <p>ThreadLocal实现的就是一个线程中的全局变量，与真正的全局变量的区别在于ThreadLocal的变量是每个线程中的全局变量，也就是说不同线程访问到的值是不一样的。其填充的变量属于当前线程，该变量对于其他线程是隔离的。</p>
 <p>由定义可以发现，ThreadLocal有两个特性：每个Thread的变量只能由当前Thread使用；由于其他线程不可访问，则不存在多线程间共享的问题。</p>
-<h1><strong>二、修饰</strong></h1>
-<p>ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本。</p>
+<h1 id="二、修饰"><a href="#二、修饰" class="headerlink" title="二、修饰"></a><strong>二、修饰</strong></h1><p>ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本。</p>
 <p>ThreadLocal变量通常被private static修饰，这样的好处是当一个线程结束时，它所使用的ThreadLocal实例副本都可被回收，避免重复创建。坏处就是这样做可能正好导致内存泄漏。</p>
-<h1><strong>三、底层实现</strong></h1>
-<p>ThreadLocal最朴素的内部实现是Map&lt;threadlocal, Object&gt;，这是一个HashMap，又称为ThreadLocalMap。但Java源码并不是Map&lt;threadlocal, Object&gt;的实现。这是因为如果多个线程访问同一个map，这个map需要是线程安全的，构造比较麻烦。Java采用了更简单粗暴的做法：每个线程都有自己的ThreadLocal专属map，里面可以存放多个ThreadLocal变量，这样就解决了多线程同时操作一个map带来的多线程并发问题。</p>
+<h1 id="三、底层实现"><a href="#三、底层实现" class="headerlink" title="三、底层实现"></a><strong>三、底层实现</strong></h1><p>ThreadLocal最朴素的内部实现是Map<threadlocal, object="">，这是一个HashMap，又称为ThreadLocalMap。但Java源码并不是Map<threadlocal, object="">的实现。这是因为如果多个线程访问同一个map，这个map需要是线程安全的，构造比较麻烦。Java采用了更简单粗暴的做法：每个线程都有自己的ThreadLocal专属map，里面可以存放多个ThreadLocal变量，这样就解决了多线程同时操作一个map带来的多线程并发问题。</threadlocal,></threadlocal,></p>
 <p>因为要把ThreadLocal的变量当做全局变量使用，需要把变量与初始化函数写在通用的类中，如DDD领域模型中写在Common模块。</p>
 <p>具体的实现如下：</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">csharp</span><br><span class="line">复制代码<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ThreadLocalUtil</span> {</span><br><span class="line"> </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="title">ThreadLocal</span>&lt;<span class="title">Integer</span>&gt; THREAD_LOCAL</span> = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getScene</span>(<span class="params"></span>)</span> {</span><br><span class="line">       <span class="keyword">return</span> THREAD_LOCAL.<span class="keyword">get</span>();</span><br><span class="line">   }</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initScene</span>(<span class="params">Integer scene</span>)</span> {</span><br><span class="line">       <span class="keyword">if</span> (THREAD_LOCAL == <span class="literal">null</span>) {</span><br><span class="line">           THREAD_LOCAL = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line">       }</span><br><span class="line">       THREAD_LOCAL.<span class="keyword">set</span>(scene);</span><br><span class="line">   }</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">remove</span>(<span class="params"></span>)</span> {</span><br><span class="line">       THREAD_LOCAL.<span class="keyword">remove</span>();</span><br><span class="line">   }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<h1>四、致命点</h1>
-<p>上面提到了的ThreadLocal会带来内存泄露的问题，深入分析下：</p>
+<h1 id="四、致命点"><a href="#四、致命点" class="headerlink" title="四、致命点"></a>四、致命点</h1><p>上面提到了的ThreadLocal会带来内存泄露的问题，深入分析下：</p>
 <p>一个ThreadLocal实例对应当前线程的一个对象实例，如果把ThreadLocal声明为某个类的实例变量不是静态变量，那么每次创建一个该类的实例就会导致一个新的对象实例被创建。而这些被创建的实例是同一个类的实例，于是同一个线程可能会访问到同一个类的不同实例，这即使不会导致错误，也会导致重复创建同样的对象。如果使用static修饰后，只要相应的类没有被垃圾回收掉，那么这个类就会持有相对应的ThreadLocal实例引用。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2023/09/20/095015Mbi5fY.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2023/09/20/095015Mbi5fY.png" alt="095015Mbi5fY"></p>
 <p>ThreadLocal自身并不存储值，而是作为一个key来让线程从ThreadLocal中获取value。ThreadLocalMap中的key是弱引用，所以jvm在垃圾回收时如果外部没有强引用来引用它，ThreadLocal必然会被回收。但是，作为ThreadLocalMap中的key，ThreadLocal被回收后，ThreadLocalMap就会存在null，但value却不为null。如果当前线程一直不结束或者线程结束后不被你销毁，这会产生内存泄露（已分配空间的堆内存由于某种原因未释放或无法释放导致系统内存浪费或程序运行变慢甚至系统奔溃）。</p>
 <p>因此，<strong>key弱引用并不是导致内存泄露的原因，而是因为ThreadLocalMap的生命周期与当前线程一样长，并且没有手动删除对应的value</strong>。</p>
 <p>解决的方法也很简单，只需要打破引用路径中的ThreadLocalMap对对象实例的引用即可。也就是在使用完ThreadLocal之后，必须调用ThreadLocal.remove()。</p>
-<h1><strong>延伸：</strong></h1>
-<p>为什么要将Map中的key设置为弱引用呢？</p>
+<h1 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a><strong>延伸：</strong></h1><p>为什么要将Map中的key设置为弱引用呢？</p>
 <p>实际上，设置key为弱引用能预防大多数内存泄露的情况。如果key使用强引用，引用的ThreadLocal对象被回收，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，也会导致内存泄露。设置为弱引用后，引用的ThreadLocal对象被回收，由于ThreadLocalMap持有ThreadLocal的弱引用，即使没有手动删除，ThreadLocal也会被java GC回收。value在下一次ThreadLocalMap调用set、get、remove的时候会被清除。</p>
 
     </div>
@@ -514,7 +509,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">一、ThreadLocal定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">二、修饰</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">三、底层实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">四、致命点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">延伸：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81ThreadLocal%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">一、ThreadLocal定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BF%AE%E9%A5%B0"><span class="nav-number">2.</span> <span class="nav-text">二、修饰</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">三、底层实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%87%B4%E5%91%BD%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">四、致命点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">延伸：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -599,13 +594,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">896k</span>
+    <span title="站点总字数">887k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:34</span>
+    <span title="站点阅读时长">13:26</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

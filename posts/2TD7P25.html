@@ -324,40 +324,35 @@
 <li>保证线程间可见性</li>
 <li>禁止指令重排序</li>
 </ol>
-<h2 id="CPU的乱序执行">CPU的乱序执行</h2>
-<p><img data-src="https://xuemingde.com/pages/image/others/S8d07j.png" alt=""></p>
+<h2 id="CPU的乱序执行"><a href="#CPU的乱序执行" class="headerlink" title="CPU的乱序执行"></a>CPU的乱序执行</h2><p><img data-src="https://xuemingde.com/pages/image/others/S8d07j.png" alt=""></p>
 <p>CPU为什么支持乱序执行？是为了提高效率。</p>
 <blockquote>
 <p>CPU的速度要比内存的速度快100倍</p>
 </blockquote>
 <p>如果按顺序执行，有两条指令，第一次指令去内存中读取数据，第二个指令要等99%的时间让第一个指令执行完再去执行，浪费CPU的时间，执行效率就很低。</p>
 <p>在CPU的优化时候，有可能是这样执行的，在第一个指令执行的时候，会把第二个指令拿出来执行，但是有个前提条件，两个指令不能存在前后的依赖关系。</p>
-<h2 id="解释一下对象的创建过程">解释一下对象的创建过程</h2>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">    Object o = <span class="keyword">new</span> Object();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="解释一下对象的创建过程"><a href="#解释一下对象的创建过程" class="headerlink" title="解释一下对象的创建过程"></a>解释一下对象的创建过程</h2><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">    Object o = <span class="keyword">new</span> Object();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><img data-src="https://xuemingde.com/pages/image/others/hcd0hK.png" alt=""></p>
 <p>new 出一个对象至少需要三步：</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/xYGO2T.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/xYGO2T.png" alt=""></p>
 <p>第一步：new ，申请一块内存空间，用来装我new出来的对象。如上图所示，申请的内存空间里肯定有一个成员变量m，这个m的值是他的默认值，根据数据类型来定，所以这个m的默认值是0； <img data-src="https://xuemingde.com/pages/image/others/mY2ArO.png" alt=""></p>
 <p>第二步：给成员变量赋值，所以此时的m值变为了8。<strong>这个过程就是对象的半初始化状态。</strong> <img data-src="https://xuemingde.com/pages/image/others/zdwTUK.png" alt=""></p>
 <p>第三步：建立关联，局部变量 t ，t里面存储一个指针，这个指针就指向一个对象。 <img data-src="https://xuemingde.com/pages/image/others/6rJ0tu.png" alt=""></p>
-<h2 id="双重检锁（DCL）单例要不要加Volatile">双重检锁（DCL）单例要不要加Volatile</h2>
-<p>双重检锁（DCL）单例</p>
+<h2 id="双重检锁（DCL）单例要不要加Volatile"><a href="#双重检锁（DCL）单例要不要加Volatile" class="headerlink" title="双重检锁（DCL）单例要不要加Volatile"></a>双重检锁（DCL）单例要不要加Volatile</h2><p>双重检锁（DCL）单例</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>{</span><br><span class="line">    <span class="comment">//2.要不要加 volatile</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> TestDemo INST;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">TestDemo</span><span class="params">()</span></span>{}</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TestDemo <span class="title">getInstance</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="comment">//1.这个地方为什么要为空判断？</span></span><br><span class="line">        <span class="keyword">if</span> (INST == <span class="keyword">null</span>) {</span><br><span class="line">            <span class="keyword">synchronized</span> (TestDemo.class) {</span><br><span class="line">                <span class="keyword">if</span> (INST == <span class="keyword">null</span>) {</span><br><span class="line">                    <span class="keyword">try</span> {</span><br><span class="line">                        Thread.sleep(<span class="number">1</span>);</span><br><span class="line">                    } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    }</span><br><span class="line">                    INST = <span class="keyword">new</span> TestDemo();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> INST;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>为什么要进来就为空判断？</strong></p>
 <p>假如去掉这个判断，现在有1000个线程都来抢这把锁，上来就开始锁竞争，最终只有一个线程能够持有锁，去new对象，剩下的所有线程都参与了锁竞争过程，这样会降低效率。如果加上了判断，只要一个线程new出了对象，就不用去参与锁竞争过程了。</p>
 <p><strong>要不要加Volatile ？？？</strong></p>
 <p>答案是<strong>必须要加</strong>的。</p>
 <p>为什么呢？</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/UF3vK1.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/UF3vK1.png" alt=""></p>
 <p>前面讲了，new一个对象至少有三步，在线程1创建对象时，在申请内存空间的时候，发生了指令重排序（我们前面也讲了，CPU会有乱序执行），第二步和第三步发生了执行顺序的颠倒，线程1在执行完第一步去执行了第三步，这时候局部变量INST指向了创建的对象，此时线程2判断INST不再为null，而线程1还没有执行完第三步，此时线程2拿到的对象是一个半成品，而成员变量的值还是他的默认值。</p>
 <p>Volatile的一个作用就是禁止指令重排序，用Volatile修饰的任何内存空间（对象），在他上面执行的指令不可以乱序。</p>
-<h2 id="Volatile为什么会禁止重排的？">Volatile为什么会禁止重排的？</h2>
-<p>内存屏障！！</p>
-<h3 id="内存屏障-（JVM级别）">内存屏障 （JVM级别）</h3>
-<p>JVM级别的内存屏障分为四种</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/yGGBJz.png" alt=""></p>
+<h2 id="Volatile为什么会禁止重排的？"><a href="#Volatile为什么会禁止重排的？" class="headerlink" title="Volatile为什么会禁止重排的？"></a>Volatile为什么会禁止重排的？</h2><p>内存屏障！！</p>
+<h3 id="内存屏障-（JVM级别）"><a href="#内存屏障-（JVM级别）" class="headerlink" title="内存屏障 （JVM级别）"></a>内存屏障 （JVM级别）</h3><p>JVM级别的内存屏障分为四种</p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/yGGBJz.png" alt=""></p>
 <p>JVM是一种规范，这个规范要求被Volatile修饰的东西要实现内存屏障。但是硬件级别或者hostpot级别或者操作系统级别如何实现的，实际上与JVM的规定没有直接的关系。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/vSRQKY.png" alt=""></p>
+<p> <img data-src="https://xuemingde.com/pages/image/others/vSRQKY.png" alt=""></p>
 
     </div>
    <div>
@@ -621,13 +616,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">896k</span>
+    <span title="站点总字数">887k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:34</span>
+    <span title="站点阅读时长">13:26</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
