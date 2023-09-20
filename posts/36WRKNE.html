@@ -75,9 +75,9 @@
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="GC">
-<meta property="article:tag" content="MQ">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="Spring">
+<meta property="article:tag" content="MQ">
 <meta property="article:tag" content="事务">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
@@ -331,7 +331,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>545</span>
+              <span>553</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -350,80 +350,96 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="分布式事务（一）"><a href="#分布式事务（一）" class="headerlink" title="分布式事务（一）"></a>分布式事务（一）</h2><blockquote>
-<p>文章来源：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xODM3NTM3NzQ=">https://zhuanlan.zhihu.com/p/183753774<i class="fa fa-external-link-alt"></i></span>   、<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHl6Y3MvcC8xMzc4MDY2OC5odG1s">https://www.cnblogs.com/dyzcs/p/13780668.html<i class="fa fa-external-link-alt"></i></span>  、 </p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="分布式事务（一）">分布式事务（一）</h2>
+<blockquote>
+<p>文章来源：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xODM3NTM3NzQ=">https://zhuanlan.zhihu.com/p/183753774<i class="fa fa-external-link-alt"></i></span>   、<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHl6Y3MvcC8xMzc4MDY2OC5odG1s">https://www.cnblogs.com/dyzcs/p/13780668.html<i class="fa fa-external-link-alt"></i></span>  、</p>
 <p>具体不多讲，详情看文章来源</p>
 </blockquote>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310095052994.png" alt="image-20210310095052994"></p>
-<h3 id="分布式事务产生的情景"><a href="#分布式事务产生的情景" class="headerlink" title="分布式事务产生的情景"></a>分布式事务产生的情景</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111105762.png" alt="image-20210310111105762"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111122121.png" alt="image-20210310111122121"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111135604.png" alt="image-20210310111135604"></p>
-<h3 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111713208.png" alt="image-20210310111713208"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111823153.png" alt="image-20210310111823153"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111839653.png" alt="image-20210310111839653"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112230088.png" alt="image-20210310112230088"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112245668.png" alt="image-20210310112245668"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112305735.png" alt="image-20210310112305735"></p>
-<p><strong>重点 </strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112443572.png" alt="image-20210310112443572"></p>
+<h3 id="事务">事务</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310095052994.png" alt=""></p>
+<h3 id="分布式事务产生的情景">分布式事务产生的情景</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111105762.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111122121.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111135604.png" alt=""></p>
+<h3 id="CAP定理">CAP定理</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111713208.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111823153.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310111839653.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112230088.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112245668.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112305735.png" alt=""></p>
+<p>**重点 **</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112443572.png" alt=""></p>
 <p><strong>CPA的组合方式</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112909937.png" alt="image-20210310112909937"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112932874.png" alt="image-20210310112932874"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112909937.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310112932874.png" alt=""></p>
 <p>总结</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113100211.png" alt="image-20210310113100211"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113100211.png" alt=""></p>
 <p><strong>几个分布式架构CPA</strong></p>
 <ul>
-<li><p>zookeeper（Dubbo）：CP</p>
+<li>
+<p>zookeeper（Dubbo）：CP</p>
 </li>
-<li><p>eureka（springcloud  - netflix）：AP</p>
+<li>
+<p>eureka（springcloud  - netflix）：AP</p>
 </li>
-<li><p>nacos：（Springcloud  - alibaba）：AP</p>
+<li>
+<p>nacos：（Springcloud  - alibaba）：AP</p>
 </li>
-<li><p>redis集群：AP</p>
+<li>
+<p>redis集群：AP</p>
 </li>
 </ul>
-<h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113839296.png" alt="image-20210310113839296"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113947118.png" alt="image-20210310113947118"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114211959.png" alt="image-20210310114211959"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114558794.png" alt="image-20210310114558794"></p>
+<h3 id="BASE-理论">BASE 理论</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113839296.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310113947118.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114211959.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114558794.png" alt=""></p>
 <p>ACID 和 BASE 的区别与联系ACID 和 BASE 的区别与联系</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114325451.png" alt="image-20210310114325451"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114325451.png" alt=""></p>
 <p>CAP 与 BASE 关系</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114440621.png" alt="image-20210310114440621"></p>
-<h3 id="分布式事务解决方案"><a href="#分布式事务解决方案" class="headerlink" title="分布式事务解决方案"></a>分布式事务解决方案</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310095942828.png" alt="image-20210310095942828"></p>
-<h4 id="2PC-两阶段提交"><a href="#2PC-两阶段提交" class="headerlink" title="2PC   两阶段提交"></a><strong>2PC </strong>  两阶段提交</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310100845788.png" alt="image-20210310100845788"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114440621.png" alt=""></p>
+<h3 id="分布式事务解决方案">分布式事务解决方案</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310095942828.png" alt=""></p>
+<h4 id="2PC-两阶段提交">**2PC **  两阶段提交</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310100845788.png" alt=""></p>
 <p>假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310103855011.png" alt="image-20210310103855011"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310103855011.png" alt=""></p>
 <p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310103910529.png" alt="image-20210310103910529"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310103910529.png" alt=""></p>
 <p>如果第二阶段提交失败会如何？</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104040403.png" alt="image-20210310104040403"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104040403.png" alt=""></p>
 <p>协调者故障</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104139596.png" alt="image-20210310104139596"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104139596.png" alt=""></p>
 <p>总结</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104522151.png" alt="image-20210310104522151"></p>
-<h4 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104742475.png" alt="image-20210310104742475"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/v2-885daf4ba34102d6e1047b0b67910652_r.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104522151.png" alt=""></p>
+<h4 id="3PC">3PC</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310104742475.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/v2-885daf4ba34102d6e1047b0b67910652_r.jpg" alt=""></p>
 <p>总结</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105402382.png" alt="image-20210310105402382"></p>
-<h4 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105753937.png" alt="image-20210310105753937"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105402382.png" alt=""></p>
+<h4 id="TCC">TCC</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105753937.png" alt=""></p>
 <p>流程</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105851289.png" alt="image-20210310105851289"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg" alt="img"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110112096.png" alt="image-20210310110112096"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310105851289.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/v2-90179fa933c0a389ffa6ac04e244a58f_720w.jpg" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110112096.png" alt=""></p>
 <blockquote>
 <p><strong>幂等性：就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用</strong></p>
 </blockquote>
-<h4 id="本地消息列表"><a href="#本地消息列表" class="headerlink" title="本地消息列表"></a>本地消息列表</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110342821.png" alt="image-20210310110342821"></p>
-<h4 id="消息事务"><a href="#消息事务" class="headerlink" title="消息事务"></a>消息事务</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110553662.png" alt="image-20210310110553662"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/v2-72ba7bed684e855606c44ddda185987d_720w.jpg" alt="img"></p>
+<h4 id="本地消息列表">本地消息列表</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110342821.png" alt=""></p>
+<h4 id="消息事务">消息事务</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310110553662.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/v2-72ba7bed684e855606c44ddda185987d_720w.jpg" alt=""></p>
 <p>可以看到消息事务实现的也是最终一致性。</p>
-<h4 id="最大努力通知-（MQ就是一种）"><a href="#最大努力通知-（MQ就是一种）" class="headerlink" title="最大努力通知 （MQ就是一种）"></a>最大努力通知 （MQ就是一种）</h4><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114807940.png" alt="image-20210310114807940"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114822848.png" alt="image-20210310114822848"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114907740.png" alt="image-20210310114907740"></p>
+<h4 id="最大努力通知-（MQ就是一种）">最大努力通知 （MQ就是一种）</h4>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114807940.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114822848.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310114907740.png" alt=""></p>
 <p>总结</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310115019855.png" alt="image-20210310115019855"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310115109923.png" alt="image-20210310115109923"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310115019855.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310115109923.png" alt=""></p>
 
     </div>
    <div>
@@ -448,10 +464,10 @@
       <div class="popular-posts-title"><a href="/posts/12G3J8V.html" rel="bookmark">分布式事务_JTA</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2AGZ1Y7.html" rel="bookmark">Redisson 分布式锁</a></div>
+      <div class="popular-posts-title"><a href="/posts/QWTBG7.html" rel="bookmark">springBoot整合seata</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/QWTBG7.html" rel="bookmark">springBoot整合seata</a></div>
+      <div class="popular-posts-title"><a href="/posts/2AGZ1Y7.html" rel="bookmark">Redisson 分布式锁</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/11E73BB.html" rel="bookmark">并发场景下的幂等问题——分布式锁详解</a></div>
@@ -501,9 +517,9 @@
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
-              <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
               <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
               <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+              <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
               <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
           </div>
@@ -600,7 +616,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%88%E4%B8%80%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">分布式事务（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%BA%A7%E7%94%9F%E7%9A%84%E6%83%85%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">分布式事务产生的情景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP%E5%AE%9A%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">CAP定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BASE-%E7%90%86%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">BASE 理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.5.</span> <span class="nav-text">分布式事务解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2PC-%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="nav-number">1.5.1.</span> <span class="nav-text">2PC   两阶段提交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3PC"><span class="nav-number">1.5.2.</span> <span class="nav-text">3PC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCC"><span class="nav-number">1.5.3.</span> <span class="nav-text">TCC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF%E5%88%97%E8%A1%A8"><span class="nav-number">1.5.4.</span> <span class="nav-text">本地消息列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.5.5.</span> <span class="nav-text">消息事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%8A%AA%E5%8A%9B%E9%80%9A%E7%9F%A5-%EF%BC%88MQ%E5%B0%B1%E6%98%AF%E4%B8%80%E7%A7%8D%EF%BC%89"><span class="nav-number">1.5.6.</span> <span class="nav-text">最大努力通知 （MQ就是一种）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%88%E4%B8%80%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">分布式事务（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%BA%A7%E7%94%9F%E7%9A%84%E6%83%85%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">分布式事务产生的情景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP%E5%AE%9A%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">CAP定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BASE-%E7%90%86%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">BASE 理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.5.</span> <span class="nav-text">分布式事务解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2PC-%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="nav-number">1.5.1.</span> <span class="nav-text">**2PC **  两阶段提交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3PC"><span class="nav-number">1.5.2.</span> <span class="nav-text">3PC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCC"><span class="nav-number">1.5.3.</span> <span class="nav-text">TCC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF%E5%88%97%E8%A1%A8"><span class="nav-number">1.5.4.</span> <span class="nav-text">本地消息列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.5.5.</span> <span class="nav-text">消息事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%8A%AA%E5%8A%9B%E9%80%9A%E7%9F%A5-%EF%BC%88MQ%E5%B0%B1%E6%98%AF%E4%B8%80%E7%A7%8D%EF%BC%89"><span class="nav-number">1.5.6.</span> <span class="nav-text">最大努力通知 （MQ就是一种）</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -685,13 +701,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">887k</span>
+    <span title="站点总字数">896k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:26</span>
+    <span title="站点阅读时长">13:34</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

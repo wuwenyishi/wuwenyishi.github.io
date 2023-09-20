@@ -325,7 +325,8 @@
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p><img data-src="https://xuemingde.com/pages/image/others/LZUtcy.png" alt=""></p>
 <p>面试官：你了解JVM的内存管理模型吗？</p>
 <p>菜鸟：你指的是哪种垃圾回收器？</p>
-<h2 id="分代模型"><a href="#分代模型" class="headerlink" title="分代模型"></a>分代模型</h2><p><img data-src="https://xuemingde.com/pages/image/others/g8I7rx.png" alt=""></p>
+<h2 id="分代模型">分代模型</h2>
+<p><img data-src="https://xuemingde.com/pages/image/others/g8I7rx.png" alt=""></p>
 <p>年轻代的垃圾是容易被回收的垃圾，而老年代里是不容易被回收的垃圾。根据工业统计，年轻代的一次垃圾回收，就能回收接近90% 的垃圾。</p>
 <blockquote>
 <p>JDK1,7还有永久代</p>
@@ -336,55 +337,61 @@
 <p>第一次GC，eden里存活的对象被copy到 s1里，eden里剩余的全部被清除。</p>
 <p>第二次GC，eden和s1里存活的对象copy到s2里，eden和s1里剩余的被清除。</p>
 <p>死三次GC，eden和s2里存活的对象copy到s1里，eden和s2里剩余的被清除。</p>
-<p>………..</p>
+<p>…………</p>
 <p>依次循环。</p>
 <p>有些对象实在无法被清除，到了一定年龄就会进入老年代。</p>
 <p>年轻代与老年代的比例：1:2</p>
 <p>eden与s1和s2的比例：8:1:1</p>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/11jvPE.png" alt="11jvPE"></p>
-<h2 id="垃圾回收器组合"><a href="#垃圾回收器组合" class="headerlink" title="垃圾回收器组合"></a>垃圾回收器组合</h2><p><strong>分代模型里的垃圾回收器一定是成对出现的。</strong></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/11jvPE.png" alt=""></p>
+<h2 id="垃圾回收器组合">垃圾回收器组合</h2>
+<p><strong>分代模型里的垃圾回收器一定是成对出现的。</strong></p>
 <p>常见的有三种：</p>
 <ol>
 <li>ParNew + CMS</li>
-<li>Serial + Serial Old </li>
+<li>Serial + Serial Old</li>
 <li>Parallel Scavenge + Parallel Old <strong>（1.8默认）</strong></li>
 </ol>
 <blockquote>
 <p>JDK1.8 可用分代模型，也可不用分代模型，可用G1。JDK1.9默认G1</p>
 </blockquote>
-<h3 id="Serial-Serial-Old"><a href="#Serial-Serial-Old" class="headerlink" title="Serial + Serial Old"></a>Serial + Serial Old</h3><p>现在很少使用了，是最早的垃圾回收器组合。</p>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/SWtNk6.png" alt="SWtNk6"></p>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/q8ZlBS.png" alt="q8ZlBS"></p>
+<h3 id="Serial-Serial-Old">Serial + Serial Old</h3>
+<p>现在很少使用了，是最早的垃圾回收器组合。</p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/SWtNk6.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/q8ZlBS.png" alt=""></p>
 <p>当有线程在工作时，突然有一个<strong>单线程的垃圾回收器</strong>来回收垃圾，所有工作的线程都有停止，等垃圾回收器工作完成以后，所有工作的线程才能恢复工作。所以在实际业务中，会出现卡顿的现象，很有可能是垃圾回收器在工作。</p>
-<h3 id="Parallel-Scavenge-Parallel-Old"><a href="#Parallel-Scavenge-Parallel-Old" class="headerlink" title="Parallel Scavenge + Parallel Old"></a>Parallel Scavenge + Parallel Old</h3><p><img data-src="https://xuemingde.com/pages/2022/03/05/GkjELD.png" alt="GkjELD"></p>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/Ti59QE.png" alt="Ti59QE"></p>
+<h3 id="Parallel-Scavenge-Parallel-Old">Parallel Scavenge + Parallel Old</h3>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/GkjELD.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/Ti59QE.png" alt=""></p>
 <p>当有线程在工作时，突然有一个<strong>多线程的垃圾回收器</strong>来回收垃圾，所有工作的线程都有停止，等垃圾回收器工作完成以后，所有工作的线程才能恢复工作。所以在实际业务中，会出现卡顿的现象，很有可能是垃圾回收器在工作。</p>
 <blockquote>
 <p>Parallel Scavenge 与 Serial 的区别就是多线程和单线程</p>
 </blockquote>
-<h3 id="ParNew-CMS"><a href="#ParNew-CMS" class="headerlink" title="ParNew + CMS"></a>ParNew + CMS</h3><blockquote>
+<h3 id="ParNew-CMS">ParNew + CMS</h3>
+<blockquote>
 <p>因为Serial和Parallel Scavenge不能与CMS配对，为了与CMS配对，才有了ParNew。</p>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/hsq0A5.png" alt="hsq0A5"></p>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/mab8Ry.png" alt="mab8Ry"></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/hsq0A5.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/mab8Ry.png" alt=""></p>
 <p>CMS工作原理</p>
-<p><img data-src="https://xuemingde.com/pages/2022/03/05/GgREZm.png" alt="GgREZm"></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/GgREZm.png" alt=""></p>
 <p>初始标记：再根据根可达性算法标记垃圾的时候，此时并不会往下继续执行，而是只标记根对像就可以了，所以此处的停顿时间也是很少的，基本上也就是几百个毫秒，可以接收。</p>
 <p>并发标记：垃圾回收线程与业务线程同时运行，在运行中如有业务线程产生了垃圾，会被垃圾回收吧线程直接标记为垃圾。但这里会有一些问题，如果一个对象被标记为垃圾后，又有其他对象指向了它，如果这个对象被当做垃圾处理会出问题，此时就会产生错标的问题。此处也有可能产生浮动垃圾，就是没有被标记的垃圾，但是没关系，等下次标记的时候再次处理。</p>
 <p>重新标记：就是为了解决错标的问题。时间也和短。</p>
 <p>并发清理：清理被标记的垃圾。此处也有可能产生浮动垃圾，没关系，等下次被标记为垃圾然后清除。</p>
-<h2 id="CMS错标对象修正的算法"><a href="#CMS错标对象修正的算法" class="headerlink" title="CMS错标对象修正的算法"></a>CMS错标对象修正的算法</h2><p><strong>三色标记算法</strong></p>
+<h2 id="CMS错标对象修正的算法">CMS错标对象修正的算法</h2>
+<p><strong>三色标记算法</strong></p>
 <p>第一种情况：B—&gt;D消失，增加 A—&gt;D</p>
 <p>正常情况</p>
-<p> <img data-src="https://xuemingde.com/pages/2022/03/05/xfQbVc.png" alt="xfQbVc"></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/xfQbVc.png" alt=""></p>
 <p>此时，垃圾回收器标记，标记完了，ABD都不是垃圾。</p>
-<p> <img data-src="https://xuemingde.com/pages/2022/03/05/io2ZlR.png" alt="io2ZlR"></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/io2ZlR.png" alt=""></p>
 <p>运行过程之中，B指向D的引用消失了，D成了浮动垃圾，等下次执行的时候会被标记为垃圾清理掉。</p>
-<p> <img data-src="https://xuemingde.com/pages/2022/03/05/25pzvC.png" alt="25pzvC"></p>
+<p><img data-src="https://xuemingde.com/pages/2022/03/05/25pzvC.png" alt=""></p>
 <p>在B指向D的引用消失的与此同时，A增加了指向D的引用。因为A已经被标记为黑色了，（被标记为黑色是他的孩子都已经被标记过了，不会被重新标记），所以D，不会被找到，就会当做垃圾处理掉。</p>
 <p>如何解决这个问题：</p>
 <ul>
-<li><p>CMS解决方式</p>
+<li>
+<p>CMS解决方式</p>
 <p>Incremental Update</p>
 <p>就是把A变成灰色，就可以再次扫描标记了。</p>
 <p>会产生的问题：并发标记，产生漏标。</p>
@@ -411,10 +418,10 @@
       <div class="popular-posts-title"><a href="/posts/WTSYSE.html" rel="bookmark">Java并发常见知识点&amp;面试题总结_进阶篇</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1Z9HSDW.html" rel="bookmark">Kafka面试连环炮-中</a></div>
+      <div class="popular-posts-title"><a href="/posts/2P9AR21.html" rel="bookmark">Kafka面试连环炮-下</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2P9AR21.html" rel="bookmark">Kafka面试连环炮-下</a></div>
+      <div class="popular-posts-title"><a href="/posts/1Z9HSDW.html" rel="bookmark">Kafka面试连环炮-中</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/3WWPT6W.html" rel="bookmark">聊聊ConcurrentHashMap</a></div>
@@ -652,13 +659,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">887k</span>
+    <span title="站点总字数">896k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:26</span>
+    <span title="站点阅读时长">13:34</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

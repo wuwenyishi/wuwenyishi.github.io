@@ -376,7 +376,8 @@
 <li>如何查看事务加锁情况</li>
 <li>死锁案例分析</li>
 </ol>
-<h2 id="为什么需要加锁？"><a href="#为什么需要加锁？" class="headerlink" title="为什么需要加锁？"></a>为什么需要加锁？</h2><p>数据库为什么需要加锁呢？</p>
+<h2 id="为什么需要加锁？">为什么需要加锁？</h2>
+<p>数据库为什么需要加锁呢？</p>
 <blockquote>
 <p>在日常生活中，如果你心情不好。想要一个人静静，<strong>不想被比别人打扰</strong>，你就可以把自己关进房间里，并且<strong>反锁</strong>。</p>
 </blockquote>
@@ -384,12 +385,14 @@
 <blockquote>
 <p>专业一点的说法: 如果有多个并发请求存取数据，在数据就可能会产生多个事务同时操作同一行数据。如果并发操作不加控制，不加锁的话，就可能写入了不正确的数据，或者导致读取了不正确的数据，破坏了数据的一致性。因此需要考虑加锁。</p>
 </blockquote>
-<h3 id="事务并发存在的问题"><a href="#事务并发存在的问题" class="headerlink" title="事务并发存在的问题"></a>事务并发存在的问题</h3><ul>
+<h3 id="事务并发存在的问题">事务并发存在的问题</h3>
+<ul>
 <li><strong>脏读</strong>:一个事务A读取到事务B未提交的数据，就是<strong>脏读</strong>。</li>
 <li><strong>不可重复读</strong>：事务A被事务B干扰到了！在事务A范围内，两个相同的查询，读取同一条记录，却返回了不同的数据，这就是<strong>不可重复读</strong>。</li>
 <li><strong>幻读</strong>：事务A查询一个范围的结果集，另一个并发事务B往这个范围中<strong>插入/删除</strong>了数据，并静悄悄地提交，然后事务A再次查询相同的范围，两次读取得到的结果集不一样了，这就是幻读。</li>
 </ul>
-<h3 id="一个加锁和不加锁对比的例子"><a href="#一个加锁和不加锁对比的例子" class="headerlink" title="一个加锁和不加锁对比的例子"></a>一个加锁和不加锁对比的例子</h3><p>我们知道MySQL数据库有四大隔离级别<strong>读已提交（RC）、可重复读（RR）、串行化、读未提交</strong>。如果是<strong>读未提交隔离</strong>级别，并发情况下，它是不加锁的，因此就会存在<strong>脏读、不可重复读、幻读</strong>的问题。</p>
+<h3 id="一个加锁和不加锁对比的例子">一个加锁和不加锁对比的例子</h3>
+<p>我们知道MySQL数据库有四大隔离级别<strong>读已提交（RC）、可重复读（RR）、串行化、读未提交</strong>。如果是<strong>读未提交隔离</strong>级别，并发情况下，它是不加锁的，因此就会存在<strong>脏读、不可重复读、幻读</strong>的问题。</p>
 <p>为了更通俗易懂一点，还是给大家举个例子吧，虽然东西挺简单的。假设现在有表结构和数据如下：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `account` (</span><br><span class="line">  `id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `balance` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`),</span><br><span class="line">  <span class="keyword">UNIQUE</span> KEY `un_name_idx` (`name`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> account(id,name,balance)<span class="keyword">values</span> (<span class="number">1</span>,<span class="string">'Jay'</span>,<span class="number">100</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> account(id,name,balance)<span class="keyword">values</span> (<span class="number">2</span>,<span class="string">'Eason'</span>,<span class="number">100</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> account(id,name,balance)<span class="keyword">values</span> (<span class="number">3</span>,<span class="string">'Lin'</span>,<span class="number">100</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>在<strong>READ-UNCOMMITTED（读未提交）</strong> 隔离级别下，假设现在有两个事务A、B：</p>
@@ -408,20 +411,22 @@
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> innodb_status_output<span class="operator">=</span><span class="keyword">ON</span>;  开启输出</span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> innodb_status_output_locks<span class="operator">=</span><span class="keyword">ON</span>;  开启锁信息输出</span><br><span class="line"><span class="keyword">SHOW</span> ENGINE INNODB STATUS</span><br></pre></td></tr></tbody></table></figure>
 <p>锁相关的输出内容如下：<img data-src="https://xuemingde.com/pages/image/2022/05/06/0843-jljDOq.png" alt=""></p>
 <p>我们可以看到了这么一把锁：<code>lock_mode X locks rec but not gap</code>，它到底是一种什么锁呢？来来来，我们一起来学习下<strong>InnoDB的七种锁</strong>。</p>
-<h2 id="InnoDB的七种锁介绍"><a href="#InnoDB的七种锁介绍" class="headerlink" title="InnoDB的七种锁介绍"></a>InnoDB的七种锁介绍</h2><p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0844-6u96Tm.png" alt=""></p>
-<h3 id="共享-排他锁"><a href="#共享-排他锁" class="headerlink" title="共享/排他锁"></a>共享/排他锁</h3><p>InnoDB呢实现了两种标准的<strong>行级锁</strong>：共享锁（简称S锁）、排他锁（简称X锁）。</p>
+<h2 id="InnoDB的七种锁介绍">InnoDB的七种锁介绍</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0844-6u96Tm.png" alt=""></p>
+<h3 id="共享-排他锁">共享/排他锁</h3>
+<p>InnoDB呢实现了两种标准的<strong>行级锁</strong>：共享锁（简称S锁）、排他锁（简称X锁）。</p>
 <ul>
 <li>共享锁：简称为S锁，<strong>在事务要读取一条记录时，需要先获取该记录的S锁。</strong></li>
 <li>排他锁：简称X锁，<strong>在事务需要改动一条记录时，需要先获取该记录的X锁。</strong></li>
 </ul>
 <p>如果事务<code>T1</code>持有行R的<code>S</code>锁，那么另一个事务<code>T2</code>请求访问这条记录时，会做如下处理：</p>
 <ul>
-<li>T2 请求<code>S</code>锁立即被允许，结果<code>T1和T2</code>都持有R行的<code>S</code>锁</li>
+<li>T2 请求<code>S</code>锁立即被允许，结果<code> T1和T2</code>都持有R行的<code>S</code>锁</li>
 <li>T2 请求<code>X</code>锁不能被立即允许,此操作会阻塞</li>
 </ul>
-<p>如果<code>T1</code>持有行R的<code>X</code>锁，那么<code>T2</code>请求R的<code>X、S</code>锁都不能被立即允许，<code>T2</code>必须等待<code>T1</code>释放<code>X</code>锁才可以，因为<code>X</code>锁与任何的锁都不兼容。</p>
+<p>如果<code>T1</code>持有行R的<code>X</code>锁，那么<code>T2</code>请求R的<code>X、S</code>锁都不能被立即允许，<code>T2 </code>必须等待<code>T1</code>释放<code>X</code>锁才可以，因为<code>X</code>锁与任何的锁都不兼容。</p>
 <p><code>S锁和X锁</code>的兼容关系如下图表格：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0844-1PNaq9.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0844-1PNaq9.png" alt=""></p>
 <p><code>X</code>锁和<code>S</code>锁是对于行记录来说的话，因此可以称它们为<strong>行级锁或者行锁</strong>。我们认为行锁的粒度就比较细，其实一个事务也可以在<strong>表级别下加锁</strong>，对应的，我们称之为<strong>表锁</strong>。给表加的锁，也是可以分为<code>X</code>锁和<code>S</code>锁的哈。</p>
 <p>如果一个事务给表已经加了<code>S</code>锁，则：</p>
 <ul>
@@ -433,7 +438,8 @@
 <li>别的事务不可以获得该表的<code>S</code>锁，也不可以获得该表某些记录的<code>S</code>锁。</li>
 <li>别的事务不可以获得该表的<code>X</code>锁，也不可以继续获得该表某些记录的<code>X</code>锁。</li>
 </ul>
-<h3 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h3><p>什么是意向锁呢？意向锁是<strong>一种不与行级锁冲突的表级锁</strong>。未来的某个时刻，事务可能要加共享或者排它锁时，先提前声明一个意向。注意一下，意向锁，是一个<strong>表级别的锁哈</strong>。</p>
+<h3 id="意向锁">意向锁</h3>
+<p>什么是意向锁呢？意向锁是<strong>一种不与行级锁冲突的表级锁</strong>。未来的某个时刻，事务可能要加共享或者排它锁时，先提前声明一个意向。注意一下，意向锁，是一个<strong>表级别的锁哈</strong>。</p>
 <p><strong>为什么需要意向锁呢？</strong> 或者换个通俗的说法，为什么要加共享锁或排他锁时的时候，需要提前声明个意向锁呢呢？</p>
 <blockquote>
 <p>因为InnoDB是支持表锁和行锁共存的，如果一个事务A获取到某一行的排他锁，并未提交，这时候事务B请求获取同一个表的表共享锁。因为<strong>共享锁和排他锁是互斥的</strong>，因此事务B想对这个表加共享锁时，需要保证没有其他事务持有这个表的表排他锁，同时还要保<strong>证没有其他事务持有表中任意一行的排他锁</strong>。</p>
@@ -456,24 +462,29 @@
 </blockquote>
 <p>意向锁仅仅表明意向的锁，意向锁之间<strong>并不会互斥，是可以并行的</strong>，整体兼容性如下图所示：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0844-eSVbOP.png" alt=""></p>
-<h3 id="记录锁（Record-Lock）"><a href="#记录锁（Record-Lock）" class="headerlink" title="记录锁（Record Lock）"></a>记录锁（Record Lock）</h3><p>记录锁是最简单的行锁，仅仅锁住一行。如：<code>SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE</code>，如果c1字段是主键或者是唯一索引的话，这个SQL会加一个记录锁（Record Lock）</p>
+<h3 id="记录锁（Record-Lock）">记录锁（Record Lock）</h3>
+<p>记录锁是最简单的行锁，仅仅锁住一行。如：<code>SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE</code>，如果c1字段是主键或者是唯一索引的话，这个SQL会加一个记录锁（Record Lock）</p>
 <p>记录锁永远都是加在索引上的，即使一个表没有索引，InnoDB也会隐式的创建一个索引，并使用这个索引实施记录锁。它会阻塞其他事务对这行记录的插入、更新、删除。</p>
 <p>一般我们看死锁日志时，都是找关键词，比如<code>lock_mode X locks rec but not gap</code>），就表示一个X型的记录锁。记录锁的关键词就是<strong>rec but not gap</strong>。以下就是一个记录锁的日志：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RECORD LOCKS space id <span class="number">58</span> page <span class="keyword">no</span> <span class="number">3</span> n bits <span class="number">72</span> index `<span class="keyword">PRIMARY</span>` <span class="keyword">of</span> <span class="keyword">table</span> `test`.`t` </span><br><span class="line">trx id <span class="number">10078</span> lock_mode X locks rec but <span class="keyword">not</span> gap</span><br><span class="line">Record lock, heap <span class="keyword">no</span> <span class="number">2</span> PHYSICAL RECORD: n_fields <span class="number">3</span>; compact format; info bits <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>: len <span class="number">4</span>; hex <span class="number">8000000</span>a; <span class="keyword">asc</span>     ;;</span><br><span class="line"> <span class="number">1</span>: len <span class="number">6</span>; hex <span class="number">00000000274</span>f; <span class="keyword">asc</span>     <span class="string">'O;;</span></span><br><span class="line"><span class="string"> 2: len 7; hex b60000019d0110; asc        ;;</span></span><br></pre></td></tr></tbody></table></figure>
-<h3 id="间隙锁（Gap-Lock）"><a href="#间隙锁（Gap-Lock）" class="headerlink" title="间隙锁（Gap Lock）"></a>间隙锁（Gap Lock）</h3><p>为了解决幻读问题，InnoDB引入了间隙锁<code>(Gap Lock)</code>。间隙锁是一种加在两个索引之间的锁，或者加在第一个索引之前，或最后一个索引之后的间隙。它锁住的是<strong>一个区间</strong>，而不仅仅是这个区间中的每一条数据。</p>
+<h3 id="间隙锁（Gap-Lock）">间隙锁（Gap Lock）</h3>
+<p>为了解决幻读问题，InnoDB引入了间隙锁<code>(Gap Lock)</code>。间隙锁是一种加在两个索引之间的锁，或者加在第一个索引之前，或最后一个索引之后的间隙。它锁住的是<strong>一个区间</strong>，而不仅仅是这个区间中的每一条数据。</p>
 <p>比如<code>lock_mode X locks gap before rec</code>表示X型gap锁。以下就是一个间隙锁的日志：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RECORD LOCKS space id <span class="number">177</span> page <span class="keyword">no</span> <span class="number">4</span> n bits <span class="number">80</span> index idx_name <span class="keyword">of</span> <span class="keyword">table</span> `test2`.`account` </span><br><span class="line">trx id <span class="number">38049</span> lock_mode X locks gap before rec</span><br><span class="line">Record lock, heap <span class="keyword">no</span> <span class="number">6</span> PHYSICAL RECORD: n_fields <span class="number">2</span>; compact format; info bits <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>: len <span class="number">3</span>; hex <span class="number">576569</span>; <span class="keyword">asc</span> Wei;;</span><br><span class="line"> <span class="number">1</span>: len <span class="number">4</span>; hex <span class="number">80000002</span>; <span class="keyword">asc</span>     ;;</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="临键锁-Next-Key-Lock"><a href="#临键锁-Next-Key-Lock" class="headerlink" title="临键锁(Next-Key Lock)"></a>临键锁(Next-Key Lock)</h3><p>Next-key锁是<strong>记录锁和间隙锁的组合</strong>，它指的是加在某条记录以及这条记录前面间隙上的锁。说得更具体一点就是:临键锁会封锁索引记录本身，以及索引记录之前的区间，即它的锁区间是前开后闭，比如<code>(5,10]</code>。</p>
+<h3 id="临键锁-Next-Key-Lock">临键锁(Next-Key Lock)</h3>
+<p>Next-key锁是<strong>记录锁和间隙锁的组合</strong>，它指的是加在某条记录以及这条记录前面间隙上的锁。说得更具体一点就是:临键锁会封锁索引记录本身，以及索引记录之前的区间，即它的锁区间是前开后闭，比如<code>(5,10]</code>。</p>
 <p>如果一个会话占有了索引记录R的共享/排他锁，其他会话不能立刻在R之前的区间插入新的索引记录。官网是这么描述的：</p>
 <blockquote>
 <p>If one session has a shared or exclusive lock on record R in an index,  another session cannot insert a new index record in the gap immediately  before R in the index order.</p>
 </blockquote>
-<h3 id="插入意向锁"><a href="#插入意向锁" class="headerlink" title="插入意向锁"></a>插入意向锁</h3><p>插入意向锁,是插入一行记录操作之前设置的<strong>一种间隙锁。</strong>这个锁释放了一种插入方式的信号。它解决的问题是：多个事务，在同一个索引，同一个范围区间插入记录时，如果插入的位置不冲突，就不会阻塞彼此。</p>
+<h3 id="插入意向锁">插入意向锁</h3>
+<p>插入意向锁,是插入一行记录操作之前设置的**一种间隙锁。**这个锁释放了一种插入方式的信号。它解决的问题是：多个事务，在同一个索引，同一个范围区间插入记录时，如果插入的位置不冲突，就不会阻塞彼此。</p>
 <p>假设有索引值4、7，几个不同的事务准备插入5、6，每个锁都在获得插入行的独占锁之前用插入意向锁各自锁住了4、7之间的间隙，但是不阻塞对方因为插入行不冲突。以下就是一个插入意向锁的日志：</p>
 <figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RECORD</span> LOCKS space id <span class="number">31</span> page <span class="keyword">no</span> <span class="number">3</span> n bits <span class="number">72</span> <span class="keyword">index</span> `<span class="keyword">PRIMARY</span>` <span class="keyword">of</span> <span class="keyword">table</span> `test`.`child`</span><br><span class="line">trx id <span class="number">8731</span> lock_mode X locks gap <span class="keyword">before</span> rec <span class="keyword">insert</span> intention waiting</span><br><span class="line"><span class="type">Record</span> <span class="keyword">lock</span>, heap <span class="keyword">no</span> <span class="number">3</span> PHYSICAL <span class="type">RECORD</span>: n_fields <span class="number">3</span>; compact <span class="keyword">format</span>; <span class="keyword">info</span> bits <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>: len <span class="number">4</span>; hex <span class="number">80000066</span>; <span class="keyword">asc</span>    f;;</span><br><span class="line"> <span class="number">1</span>: len <span class="number">6</span>; hex <span class="number">000000002215</span>; <span class="keyword">asc</span>     " ;;</span><br><span class="line"> 2: len 7; hex 9000000172011c; asc     r  ;;...</span><br></pre></td></tr></tbody></table></figure>
 <p>锁模式兼容矩阵（横向是已持有锁，纵向是正在请求的锁）如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0845-cIOfdv.png" alt=""></p>
-<h3 id="自增锁"><a href="#自增锁" class="headerlink" title="自增锁"></a>自增锁</h3><p><strong>自增锁是一种特殊的表级别锁</strong>。它是专门针对<code>AUTO_INCREMENT</code>类型的列，对于这种列，如果表中新增数据时就会去持有自增锁。简言之，如果一个事务正在往表中插入记录，所有其他事务的插入必须等待，以便第一个事务插入的行，是连续的主键值。</p>
+<h3 id="自增锁">自增锁</h3>
+<p><strong>自增锁是一种特殊的表级别锁</strong>。它是专门针对<code>AUTO_INCREMENT</code>类型的列，对于这种列，如果表中新增数据时就会去持有自增锁。简言之，如果一个事务正在往表中插入记录，所有其他事务的插入必须等待，以便第一个事务插入的行，是连续的主键值。</p>
 <p>官方文档是这么描述的：</p>
 <blockquote>
 <p>An AUTO-INC lock is a special table-level lock taken by transactions  inserting into tables with AUTO_INCREMENT columns. In the simplest case, if one transaction is inserting values into the table, any other  transactions must wait to do their own inserts into that table, so that  rows inserted by the first transaction receive consecutive primary key  values.</p>
@@ -502,7 +513,8 @@
 <li><strong>Bulk inserts</strong>: 指在插入钱不能确定行数的语句，包括：INSERT … SELECT/REPLACE … SELECT/LOAD DATA。</li>
 </ul>
 </blockquote>
-<h2 id="一条SQL是如何加锁的呢？"><a href="#一条SQL是如何加锁的呢？" class="headerlink" title="一条SQL是如何加锁的呢？"></a>一条SQL是如何加锁的呢？</h2><p>介绍完InnoDB的七种锁后，我们来看下一条SQL是如何加锁的哈，现在可以分9种情况进行：</p>
+<h2 id="一条SQL是如何加锁的呢？">一条SQL是如何加锁的呢？</h2>
+<p>介绍完InnoDB的七种锁后，我们来看下一条SQL是如何加锁的哈，现在可以分9种情况进行：</p>
 <ul>
 <li>组合一：查询条件是主键，RC隔离级别</li>
 <li>组合二：查询条件是唯一索引，RC隔离级别</li>
@@ -514,7 +526,8 @@
 <li>组合八：查询条件上没有索引，RR隔离级别</li>
 <li>组合九：Serializable隔离级别</li>
 </ul>
-<h3 id="查询条件是主键-RC隔离级别"><a href="#查询条件是主键-RC隔离级别" class="headerlink" title="查询条件是主键 + RC隔离级别"></a>查询条件是主键 + RC隔离级别</h3><p>在<strong>RC（读已提交）</strong> 的隔离级别下，对查询条件列是主键id的话，会加什么锁呢？</p>
+<h3 id="查询条件是主键-RC隔离级别">查询条件是主键 + RC隔离级别</h3>
+<p>在<strong>RC（读已提交）</strong> 的隔离级别下，对查询条件列是主键id的话，会加什么锁呢？</p>
 <p>我们搞个简单的表，初始化几条数据：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1 (id <span class="type">int</span>,name <span class="type">varchar</span>(<span class="number">16</span>),<span class="keyword">primary</span> key ( id));</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t1 <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">'a'</span>),(<span class="number">3</span>,<span class="string">'c'</span>),(<span class="number">6</span>,<span class="string">'b'</span>),(<span class="number">9</span>,<span class="string">'a'</span>),(<span class="number">10</span>,<span class="string">'d'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>假设给定SQL：<code>delete from t1 where id = 6;</code>，id是主键。在RC隔离级别下，只需要将主键上<code>id = 6</code>的记录，加上<code>X锁</code>即可。</p>
@@ -530,7 +543,8 @@
 <p>如果我们事务B不是对<code>id=6</code>执行更新，而是其他记录的话，是可以顺利执行的，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0848-iVSpw0.png" alt=""></p>
 <p><strong>结论就是</strong>，在<strong>RC（读已提交）</strong> 的隔离级别下，对查询条件是主键id的场景，会加一个排他锁（X锁），或者说加一个X型的记录锁。</p>
-<h3 id="查询条件是唯一索引-RC隔离级别"><a href="#查询条件是唯一索引-RC隔离级别" class="headerlink" title="查询条件是唯一索引+RC隔离级别"></a>查询条件是唯一索引+RC隔离级别</h3><p>如果查询条件id，只是一个唯一索引呢？那在RC（读提交隔离级别下），又加了什么锁呢？我们搞个新的表，初始化几条数据：</p>
+<h3 id="查询条件是唯一索引-RC隔离级别">查询条件是唯一索引+RC隔离级别</h3>
+<p>如果查询条件id，只是一个唯一索引呢？那在RC（读提交隔离级别下），又加了什么锁呢？我们搞个新的表，初始化几条数据：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 (name <span class="type">varchar</span>(<span class="number">16</span>),id <span class="type">int</span>,<span class="keyword">primary</span> key (name),<span class="keyword">unique</span> key(id));</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t2 <span class="keyword">values</span>(<span class="string">'a'</span>,<span class="number">1</span>),(<span class="string">'c'</span>,<span class="number">3</span>),(<span class="string">'b'</span>,<span class="number">6</span>),(<span class="string">'d'</span>,<span class="number">9</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>id是唯一索引，name是主键的场景下，我们给定SQL：<code>delete from t2 where id = 6;</code>。</p>
 <p>在RC隔离级别下，该SQL需要加两个<code>X</code>锁，一个对应于id 唯一索引上的<code>id = 6</code>的记录，另一把锁对应于聚簇索引上的<code>[name=’b’,id=6]</code>的记录。</p>
@@ -539,7 +553,8 @@
 <blockquote>
 <p>如果并发的一个SQL，是通过主键索引来更新：<code>update t2 set id = 666 where name = 'b';</code>此时，如果delete语句没有将主键索引上的记录加锁，那么并发的update就会感知不到delete语句的存在，违背了同一记录上的更新/删除需要串行执行的约束。</p>
 </blockquote>
-<h3 id="查询条件是普通索引-RC隔离级别"><a href="#查询条件是普通索引-RC隔离级别" class="headerlink" title="查询条件是普通索引 + RC隔离级别"></a>查询条件是普通索引 + RC隔离级别</h3><p>如果查询条件是普通的二级索引，在RC（读提交隔离级别下），又加了什么锁呢？</p>
+<h3 id="查询条件是普通索引-RC隔离级别">查询条件是普通索引 + RC隔离级别</h3>
+<p>如果查询条件是普通的二级索引，在RC（读提交隔离级别下），又加了什么锁呢？</p>
 <blockquote>
 <p>若id列是普通索引，那么对应的所有满足SQL查询条件的记录，都会加上锁。同时，这些记录对应主键索引，也会上锁。</p>
 </blockquote>
@@ -555,7 +570,8 @@
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0847-MVh31G.png" alt=""></p>
 <p>事务会话B为什么会阻塞等待超时，是因为事务会话A的<code>delete语句</code>确实有加<strong>主键索引的X锁</strong></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0850-5TmKEB.png" alt=""></p>
-<h3 id="查询条件列无索引-RC隔离级别"><a href="#查询条件列无索引-RC隔离级别" class="headerlink" title="查询条件列无索引+RC隔离级别"></a>查询条件列无索引+RC隔离级别</h3><p>如果id没有加索引，只是一个常规的列，在RC（读提交隔离级别下），又加了什么锁呢？</p>
+<h3 id="查询条件列无索引-RC隔离级别">查询条件列无索引+RC隔离级别</h3>
+<p>如果id没有加索引，只是一个常规的列，在RC（读提交隔离级别下），又加了什么锁呢？</p>
 <blockquote>
 <p>若id列上没有索引，MySQL会走聚簇索引进行全表扫描过滤。每条记录都会加上X锁。但是，<strong>为了效率考虑，MySQL在这方面进行了改进</strong>，在扫描过程中，<strong>若记录不满足过滤条件，会进行解锁操作</strong>。同时优化违背了2PL原则。</p>
 </blockquote>
@@ -569,9 +585,12 @@
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>可以执行，MySQL因为效率问题，解锁了</span><br><span class="line">update t4 <span class="keyword">set</span> name<span class="operator">=</span><span class="string">'f'</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">3</span>;</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>阻塞等待</span><br><span class="line">update t4 <span class="keyword">set</span> name<span class="operator">=</span><span class="string">'f'</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">6</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>验证结果如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0850-CdXVfD.png" alt=""></p>
-<h3 id="查询条件是主键-RR隔离级别"><a href="#查询条件是主键-RR隔离级别" class="headerlink" title="查询条件是主键+RR隔离级别"></a>查询条件是主键+RR隔离级别</h3><p>给定SQL：<code>delete from t1 where id = 6;</code>，如果id是<strong>主键</strong>的话，在RR隔离级别下，跟RC隔离级别，加锁是一样的，也都是在<code>id = 6</code>这条记录上加上<code>X</code>锁。大家感兴趣可以照着3.1小节例子，自己验证一下哈。</p>
-<h3 id="查询条件是唯一索引-RR隔离级别"><a href="#查询条件是唯一索引-RR隔离级别" class="headerlink" title="查询条件是唯一索引+RR隔离级别"></a>查询条件是唯一索引+RR隔离级别</h3><p>给定SQL：<code>delete from t1 where id = 6;</code>，如果id是<strong>唯一索引</strong>的话，在RR隔离级别下，跟RC隔离级别，加锁也是一样的哈，加了两个<code>X</code>锁，id唯一索引满足条件的记录上一个，对应的主键索引上的记录一个。</p>
-<h3 id="查询条件是普通索引-RR隔离级别"><a href="#查询条件是普通索引-RR隔离级别" class="headerlink" title="查询条件是普通索引+RR隔离级别"></a>查询条件是普通索引+RR隔离级别</h3><p>如果查询条件是普通的二级索引，在RR（可重复读的隔离级别下），除了会加<code>X</code>锁，<strong>还会加<code>间隙Gap</code>锁</strong>。Gap锁的提出，是为了解决幻读问题引入的，它是一种加在两个索引之间的锁。</p>
+<h3 id="查询条件是主键-RR隔离级别">查询条件是主键+RR隔离级别</h3>
+<p>给定SQL：<code>delete from t1 where id = 6;</code>，如果id是<strong>主键</strong>的话，在RR隔离级别下，跟RC隔离级别，加锁是一样的，也都是在<code>id = 6</code>这条记录上加上<code>X</code>锁。大家感兴趣可以照着3.1小节例子，自己验证一下哈。</p>
+<h3 id="查询条件是唯一索引-RR隔离级别">查询条件是唯一索引+RR隔离级别</h3>
+<p>给定SQL：<code>delete from t1 where id = 6;</code>，如果id是<strong>唯一索引</strong>的话，在RR隔离级别下，跟RC隔离级别，加锁也是一样的哈，加了两个<code>X</code>锁，id唯一索引满足条件的记录上一个，对应的主键索引上的记录一个。</p>
+<h3 id="查询条件是普通索引-RR隔离级别">查询条件是普通索引+RR隔离级别</h3>
+<p>如果查询条件是普通的二级索引，在RR（可重复读的隔离级别下），除了会加<code>X</code>锁，<strong>还会加<code>间隙Gap</code>锁</strong>。Gap锁的提出，是为了解决幻读问题引入的，它是一种加在两个索引之间的锁。</p>
 <p>假设有表结构和初始化数据如下：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t5 ( id <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>, c <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, d <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, <span class="keyword">PRIMARY</span> KEY (id), KEY c (c)) ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t5 <span class="keyword">values</span>(<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>),(<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>),(<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>),(<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>),(<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>如果一条更新语句<code>update t5 set d=d+1 where c = 10</code>，加锁示意图如下：</p>
@@ -583,7 +602,8 @@
 <p>验证流程图如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0902-39Kfd7.png" alt=""></p>
 <p>为什么会阻塞呢？因此<code>c=10</code>这个记录更新时，不仅会有两把<code>X</code>锁，还会把区间<code>（10,15）</code>加间隙锁，因此要插入<code>（12,12,12）</code>记录时，会阻塞。</p>
-<h3 id="查询条件列无索引-RR隔离级别"><a href="#查询条件列无索引-RR隔离级别" class="headerlink" title="查询条件列无索引+RR隔离级别"></a>查询条件列无索引+RR隔离级别</h3><p>如果查询条件列没有索引呢？又是如何加的锁呢？</p>
+<h3 id="查询条件列无索引-RR隔离级别">查询条件列无索引+RR隔离级别</h3>
+<p>如果查询条件列没有索引呢？又是如何加的锁呢？</p>
 <p>假设有表结构和数据如下：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t5 ( id <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>, c <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, d <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, <span class="keyword">PRIMARY</span> KEY (id)) ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t5 <span class="keyword">values</span>(<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>),(<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>),(<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>),(<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>),(<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>给定一条更新语句<code>update t5 set d=d+1 where c = 10</code>，因为<code>c</code>列没有索引，加锁示意图如下：</p>
@@ -598,10 +618,12 @@
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t5 <span class="keyword">values</span>(<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>);</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>插入阻塞等待</span><br><span class="line">update t5 <span class="keyword">set</span> d<span class="operator">=</span>d<span class="operator">+</span><span class="number">1</span> <span class="keyword">where</span> c <span class="operator">=</span> <span class="number">16</span>;</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>更新阻塞等待</span><br></pre></td></tr></tbody></table></figure>
 <p>我们去更新一条不存在的<code>c=16</code>的记录，也会被X锁阻塞的。验证如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0902-9Yheuk.png" alt=""></p>
-<h3 id="Serializable串行化"><a href="#Serializable串行化" class="headerlink" title="Serializable串行化"></a>Serializable串行化</h3><p>在<strong>Serializable串行化的隔离级别</strong>下，对于写的语句，比如<code>update account set balance= balance-10 where name=‘Jay’;</code>，跟RC和RR隔离级别是一样的。不一样的地方是，在查询语句，如<code>select balance from account where name = ‘Jay’;</code>，在<strong>RC和RR</strong>是不会加锁的，但是在Serializable串行化的隔离级别，即会加锁。</p>
+<h3 id="Serializable串行化">Serializable串行化</h3>
+<p>在<strong>Serializable串行化的隔离级别</strong>下，对于写的语句，比如<code>update account set balance= balance-10 where name=‘Jay’;</code>，跟RC和RR隔离级别是一样的。不一样的地方是，在查询语句，如<code>select balance from account where name = ‘Jay’;</code>，在<strong>RC和RR</strong>是不会加锁的，但是在Serializable串行化的隔离级别，即会加锁。</p>
 <p>如文章开始第一小节的那个例子，就是类似的：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0903-hHscAN.png" alt=""></p>
-<h2 id="RR隔离级别下，加锁规则到底是怎样的呢？"><a href="#RR隔离级别下，加锁规则到底是怎样的呢？" class="headerlink" title="RR隔离级别下，加锁规则到底是怎样的呢？"></a>RR隔离级别下，加锁规则到底是怎样的呢？</h2><p>对于RC隔离级别，加的排他锁（X锁），是比较好理解的，哪里更新就锁哪里嘛。但是<strong>RR隔离级别</strong>，间隙锁是怎么加的呢？我们一起来学习一下。</p>
+<h2 id="RR隔离级别下，加锁规则到底是怎样的呢？">RR隔离级别下，加锁规则到底是怎样的呢？</h2>
+<p>对于RC隔离级别，加的排他锁（X锁），是比较好理解的，哪里更新就锁哪里嘛。但是<strong>RR隔离级别</strong>，间隙锁是怎么加的呢？我们一起来学习一下。</p>
 <p>对<strong>InnoDb</strong>的锁来说，面试的时候问的比较多，就是<code>Record lock、Gap lock、Next-key lock</code>。接下来我们来学习，RR隔离级别，到底一个锁是怎么加上去的。<strong>丁奇的MySQL45讲有讲到，RR隔离级别，是如何加锁的。大家有兴趣可以去订购看下哈，非常不错的课程。</strong></p>
 <p>首先MySQL的版本，是<code>5.x 系列 &lt;=5.7.24，8.0 系列 &lt;=8.0.13</code>。加锁规则一共包括：两个<code>原则</code>、<code>两个优化</code>和一个<code>bug</code>。</p>
 <ul>
@@ -620,10 +642,11 @@
 <li>主键索引范围锁</li>
 <li>非唯一索引范围锁</li>
 <li>唯一索引范围锁 bug</li>
-<li>普通索引上存在”等值”的例子</li>
+<li>普通索引上存在"等值"的例子</li>
 <li>limit 语句减少加锁范围</li>
 </ol>
-<h3 id="案例一：等值查询间隙锁"><a href="#案例一：等值查询间隙锁" class="headerlink" title="案例一：等值查询间隙锁"></a>案例一：等值查询间隙锁</h3><p>我们同时开启A、B、C三个会话事务，如下：</p>
+<h3 id="案例一：等值查询间隙锁">案例一：等值查询间隙锁</h3>
+<p>我们同时开启A、B、C三个会话事务，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0903-I4wc17.png" alt=""></p>
 <p>发现事务B会阻塞等待，而C可以执行成功。如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0903-ciVgJv.png" alt=""></p>
@@ -635,7 +658,8 @@
 </ul>
 <p><strong>为什么事务C可以正常执行呢？</strong></p>
 <p>这是因为锁住的区间是<code>(5,10)</code>，没有包括10，<strong>所以事务C可以正常执行</strong>。</p>
-<h3 id="案例二：非唯一索引等值锁"><a href="#案例二：非唯一索引等值锁" class="headerlink" title="案例二：非唯一索引等值锁"></a>案例二：非唯一索引等值锁</h3><p>按顺序执行事务会话A、B、C，如下：</p>
+<h3 id="案例二：非唯一索引等值锁">案例二：非唯一索引等值锁</h3>
+<p>按顺序执行事务会话A、B、C，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0903-K9ZEdt.png" alt=""></p>
 <p>发现事务B可以执行成功，而C阻塞等待。如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0904-qKvDbd.png" alt=""></p>
@@ -648,7 +672,8 @@
 <li>根据<strong>加锁原则 2</strong> ：<strong>只有访问到的对象才会加锁</strong>，事务A的这个查询使用了<strong>覆盖索引</strong>，没有回表，并不需要访问主键索引，因此主键索引上没有加任何锁，事务会话B是对主键id的更新，因此事务会话B的<code>update</code>语句不会阻塞。</li>
 <li>但是事务会话C，要插入一个（6,6,6) 的记录时，会被事务会话A的<code>间隙锁(5,10)</code>锁住，因此事务会话C阻塞了。</li>
 </ol>
-<h3 id="案例三：主键索引范围锁"><a href="#案例三：主键索引范围锁" class="headerlink" title="案例三：主键索引范围锁"></a>案例三：主键索引范围锁</h3><p>主键范围查询又是怎么加锁的呢？比如给定SQL:</p>
+<h3 id="案例三：主键索引范围锁">案例三：主键索引范围锁</h3>
+<p>主键范围查询又是怎么加锁的呢？比如给定SQL:</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t5 <span class="keyword">where</span> id<span class="operator">&gt;=</span><span class="number">10</span> <span class="keyword">and</span> id<span class="operator">&lt;</span><span class="number">11</span> <span class="keyword">for</span> update;</span><br></pre></td></tr></tbody></table></figure>
 <p>按顺序执行事务会话A、B、C，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0905-6KeA3e.png" alt=""></p>
@@ -662,7 +687,8 @@
 <li>范围查找就往后继续找，找到<code>id=15</code>这一行停下来，因此还需要加<code>next-key lock(10,15]</code>。</li>
 </ul>
 <p>事务会话A执行完后，加的锁是<code>id=10</code>这个行锁，以及临键锁<code>next-key lock(10,15]</code>。这就是为什么事务B插入6那个记录可以顺利执行，插入12就不行啦。同理，事务C那个更新id=15的记录，也是会被阻塞的。</p>
-<h3 id="案例四：非唯一索引范围锁"><a href="#案例四：非唯一索引范围锁" class="headerlink" title="案例四：非唯一索引范围锁"></a>案例四：非唯一索引范围锁</h3><p>如果是普通索引，范围查询又加什么锁呢？按顺序执行事务会话A、B、C，如下：</p>
+<h3 id="案例四：非唯一索引范围锁">案例四：非唯一索引范围锁</h3>
+<p>如果是普通索引，范围查询又加什么锁呢？按顺序执行事务会话A、B、C，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0847-q6kmuK.png" alt=""></p>
 <p>执行结果如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0905-uPcab7.png" alt=""></p>
@@ -673,15 +699,17 @@
 <li>范围查找就往后继续找，找到<code>id=15</code>这一行停下来，因此还需要加<code>next-key lock(10,15]</code>。</li>
 </ol>
 <p>因此事务B和事务C插入的<code>insert into t5 values(6,6,6);</code>和<code>Update t5 set d=d+1 where c =15;</code> 都会阻塞。</p>
-<h3 id="案例五：唯一索引范围锁-bug"><a href="#案例五：唯一索引范围锁-bug" class="headerlink" title="案例五：唯一索引范围锁 bug"></a>案例五：唯一索引范围锁 bug</h3><p>前面四种方案中，加锁的两个原则和两个优化都已经用上啦，那个唯一索引范围bug是如何触发的呢？</p>
+<h3 id="案例五：唯一索引范围锁-bug">案例五：唯一索引范围锁 bug</h3>
+<p>前面四种方案中，加锁的两个原则和两个优化都已经用上啦，那个唯一索引范围bug是如何触发的呢？</p>
 <p>按顺序执行事务会话A、B、C，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0905-caM9Bu.png" alt=""></p>
 <p>执行结果如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0905-ARS7ah.png" alt=""></p>
-<p>发现事务B的更新语句<code>Update t5 set d=d+1 where id =20;</code>和事务C<code>insert into t5 values(18,18,18);</code>的插入语句均已阻塞了。</p>
+<p>发现事务B的更新语句<code>Update t5 set d=d+1 where id =20; </code>和事务C<code>insert into t5 values(18,18,18);</code>的插入语句均已阻塞了。</p>
 <p>这是因为，事务会话A执行时，要找到第一个<code>id=15</code>的行，根据加锁原则1：加锁单位是<code>next-key lock</code>，因此会加上<code>next-key lock(10,15]</code>。因为id是主键，即唯一的，因此循环判断到 id=15 这一行就应该停止了。但是实现上，InnoDB 会往前扫描到第一个不满足条件的行为止，直到扫描到<code>id=20</code>。而且由于这是个范围扫描，因此索引id上的<code>(15,20]</code>这个 next-key lock 也会被锁上。</p>
 <p>所以，事务B要更新 id=20 这一行时，会阻塞锁住。同样地事务会话C要插入<code>id=16</code>的一行，也会被锁住。</p>
-<h3 id="案例六：普通索引上存在”等值”的例子"><a href="#案例六：普通索引上存在”等值”的例子" class="headerlink" title="案例六：普通索引上存在”等值”的例子"></a>案例六：普通索引上存在”等值”的例子</h3><p>如果查询条件列是普通索引，且存在相等的值，加锁又是怎样的呢？</p>
+<h3 id="案例六：普通索引上存在-等值-的例子">案例六：普通索引上存在"等值"的例子</h3>
+<p>如果查询条件列是普通索引，且存在相等的值，加锁又是怎样的呢？</p>
 <p>在原来t5表的数据基础上，插入：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t5 <span class="keyword">values</span>(<span class="number">28</span>,<span class="number">10</span>,<span class="number">66</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>则<code>c索引</code>树如下：</p>
@@ -698,7 +726,8 @@
 </ul>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0906-iQzyAT.png" alt=""></p>
 <p>因为c=13是这个区间内的，所以事务B插入<code>insert into t5 values(13,13,13);</code>会阻塞。因为根据优化2，已经退化成 (c=10,id=10) 到 (c=15,id=15) 的间隙Gap锁,即不包括c=15，所以事务C，<code>Update t5 set d=d+1 where c=15</code>不会阻塞</p>
-<h3 id="案例七：limit-语句减少加锁范围"><a href="#案例七：limit-语句减少加锁范围" class="headerlink" title="案例七：limit 语句减少加锁范围"></a>案例七：limit 语句减少加锁范围</h3><p>如果一个SQL有limit，会不会对加锁有什么影响呢？我们用4.6的例子，然后给查询语句加个limit：</p>
+<h3 id="案例七：limit-语句减少加锁范围">案例七：limit 语句减少加锁范围</h3>
+<p>如果一个SQL有limit，会不会对加锁有什么影响呢？我们用4.6的例子，然后给查询语句加个limit：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> <span class="operator">*</span> <span class="keyword">from</span> t5 <span class="keyword">where</span> c<span class="operator">=</span><span class="number">10</span> limit <span class="number">2</span> <span class="keyword">for</span> update;</span><br></pre></td></tr></tbody></table></figure>
 <p>事务A、B执行如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0906-e5VvVv.png" alt=""></p>
@@ -708,18 +737,21 @@
 <p>这是因为明确加了<code>limit 2</code>的限制后，因此在遍历到 (c=10, id=30) 这一行之后，满足条件的语句已经有两条，循环就结束了。因此，索引 c上的加锁范围就变成了从（c=5,id=5) 到（c=10,id=30) 这个前开后闭区间，如下图所示：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0907-KZVQB0.png" alt=""></p>
 <p>索引平时我们写SQL的时候，比如<code>查询select或者delete语句</code>时，尽量加一下<code>limit</code>哈，你看着这个例子不就减少了锁范围了嘛，哈哈。</p>
-<h2 id="如何查看事务加锁情况"><a href="#如何查看事务加锁情况" class="headerlink" title="如何查看事务加锁情况"></a>如何查看事务加锁情况</h2><p>我门怎么查看执行中的SQL加了什么锁呢？或者换个说法，如何查看事务的加锁情况呢？有这两种方法：</p>
+<h2 id="如何查看事务加锁情况">如何查看事务加锁情况</h2>
+<p>我门怎么查看执行中的SQL加了什么锁呢？或者换个说法，如何查看事务的加锁情况呢？有这两种方法：</p>
 <ul>
 <li>使用<code>infomation_schema</code>数据库中的表获取锁信息</li>
 <li>使用show engine innodb status 命令</li>
 </ul>
-<h3 id="使用infomation-schema数据库中的表获取锁信息"><a href="#使用infomation-schema数据库中的表获取锁信息" class="headerlink" title="使用infomation_schema数据库中的表获取锁信息"></a>使用infomation_schema数据库中的表获取锁信息</h3><p><code>infomation_schema</code>数据库中，有几个表跟锁紧密关联的。</p>
+<h3 id="使用infomation-schema数据库中的表获取锁信息">使用infomation_schema数据库中的表获取锁信息</h3>
+<p><code>infomation_schema</code>数据库中，有几个表跟锁紧密关联的。</p>
 <ul>
 <li><strong>INNODB_TRX</strong>：该表存储了InnoDB当前正在执行的事务信息，包括事务id、事务状态（比如事务是在运行还是在等待获取某个所）等。</li>
 <li><strong>INNODB_LOCKS</strong>：该表记录了一些锁信息，包括两个方面：1.如果一个事务想要获取某个锁，但未获取到，则记录该锁信息。2. 如果一个事务获取到了某个锁，但是这个锁阻塞了别的事务，则记录该锁信息。</li>
 <li><strong>INNODB_LOCK_WAITS</strong>:表明每个阻塞的事务是因为获取不到哪个事务持有的锁而阻塞。</li>
 </ul>
-<h4 id="INNODB-TRX"><a href="#INNODB-TRX" class="headerlink" title="INNODB_TRX"></a>INNODB_TRX</h4><p>我们在一个会话中执行加锁的语句，在另外一个会话窗口，即可查看<code>INNODB_TRX</code>的信息啦，如下：</p>
+<h4 id="INNODB-TRX">INNODB_TRX</h4>
+<p>我们在一个会话中执行加锁的语句，在另外一个会话窗口，即可查看<code>INNODB_TRX</code>的信息啦，如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0847-Zgg6SA.png" alt=""></p>
 <p>表中可以看到一个事务id为<code>1644837</code>正在运行汇中，它的隔离级别为<code>REPEATABLE READ</code>。我们一般关注这几个参数：</p>
 <ul>
@@ -727,13 +759,15 @@
 <li>trx_rows_locked：表示当前加了多少个行级锁。</li>
 <li>trx_lock_structs：表示该事务生成了多少个内存中的锁结构。</li>
 </ul>
-<h4 id="INNODB-LOCKS"><a href="#INNODB-LOCKS" class="headerlink" title="INNODB_LOCKS"></a>INNODB_LOCKS</h4><p>一般系统中，发生某个事务<strong>因为获取不到锁而被阻塞时</strong>，该表才会有记录。</p>
+<h4 id="INNODB-LOCKS">INNODB_LOCKS</h4>
+<p>一般系统中，发生某个事务<strong>因为获取不到锁而被阻塞时</strong>，该表才会有记录。</p>
 <p>事务A、B执行如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0909-NTEzcV.png" alt=""></p>
 <p>使用<code>select * from information_schema.INNODB_LOCKS;</code>查看</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0909-lWBKAm.png" alt=""></p>
 <p>可以看到两个事务Id <code>1644842</code>和<code>1644843</code>都持有什么锁，就是看那个<code>lock_mode和lock_type</code>哈。但是并看不出是哪个锁在等待那个锁导致的阻塞，这时候就可以看<code>INNODB_LOCK_WAITS</code>表啦。</p>
-<h4 id="INNODB-LOCK-WAITS"><a href="#INNODB-LOCK-WAITS" class="headerlink" title="INNODB_LOCK_WAITS"></a>INNODB_LOCK_WAITS</h4><p>INNODB_LOCK_WAITS 表明每个事务是因为获取不到哪个事务持有的锁而阻塞。</p>
+<h4 id="INNODB-LOCK-WAITS">INNODB_LOCK_WAITS</h4>
+<p>INNODB_LOCK_WAITS 表明每个事务是因为获取不到哪个事务持有的锁而阻塞。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0909-GnpSfx.png" alt=""></p>
 <ul>
 <li>requesting_trx_id：表示因为获取不到锁而被阻塞的事务的事务id</li>
@@ -741,7 +775,8 @@
 </ul>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0910-K0s0xk.png" alt=""></p>
 <p>即<code>requesting_trx_id</code>表示事务B的事务Id，<code>blocking_trx_id</code>表示事务A的事务Id。</p>
-<h3 id="show-engine-innodb-status"><a href="#show-engine-innodb-status" class="headerlink" title="show engine innodb status"></a>show engine innodb status</h3><p><strong>INNODB_LOCKS</strong> 和 <strong>INNODB_LOCK_WAITS</strong> 在MySQL 8.0已被移除，其实就是不鼓励我们用这两个表来获取表信息。而我们还可以用<code>show engine innodb status</code>获取当前系统各个事务的加锁信息。</p>
+<h3 id="show-engine-innodb-status">show engine innodb status</h3>
+<p><strong>INNODB_LOCKS</strong> 和 <strong>INNODB_LOCK_WAITS</strong> 在MySQL 8.0已被移除，其实就是不鼓励我们用这两个表来获取表信息。而我们还可以用<code>show engine innodb status</code>获取当前系统各个事务的加锁信息。</p>
 <p>在看死锁日志的时候，我们一般先把这个变量<code>innodb_status_output_locks</code>打开哈，它是MySQL 5.6.16 引入的</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span>  innodb_status_output_locks <span class="operator">=</span><span class="keyword">on</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>在RR隔离级别下，我们交替执行事务A和B：</p>
@@ -757,23 +792,26 @@
 <p>以上的锁日志，我们一般关注点，是一下这几个地方：</p>
 <ul>
 <li><code>TRX HAS BEEN WAITING 7 SEC FOR THIS LOCK TO BE GRANTED</code>表示它在等这个锁</li>
-<li><code>RECORD LOCKS space id 267 page no 4 n bits 80 index c of table</code>test2<code>.</code>t5<code>trx id 1644853 lock_mode X locks gap before rec insert intention waiting</code>表示一个锁结构，这个锁结构的Space ID是267，page number是4，n_bits属性为80，对应的索引是<code>c</code>，这个锁结构中存放的锁类型是X型的插入意向Gap锁。</li>
+<li><code>RECORD LOCKS space id 267 page no 4 n bits 80 index c of table </code>test2<code>.</code>t5<code>  trx id 1644853 lock_mode X locks gap before rec insert intention waiting</code>表示一个锁结构，这个锁结构的Space ID是267，page number是4，n_bits属性为80，对应的索引是<code>c</code>，这个锁结构中存放的锁类型是X型的插入意向Gap锁。</li>
 <li><code>0: len 4; hex 8000000a; asc     ;;</code>对应加锁记录的详细信息，8000000a代表的值就是10，a的16进制是10。</li>
-<li><code>TABLE LOCK table</code>test2<code>.</code>t5<code>trx id 1644853 lock mode IX</code> 表示一个插入意向表锁</li>
+<li><code>TABLE LOCK table </code>test2<code>.</code>t5<code>trx id 1644853 lock mode IX</code> 表示一个插入意向表锁</li>
 </ul>
 <p>这个日志例子，其实理解起来，就是事务A持有了索引c的间隙锁<code>（~，10）</code>，而事务B想获得这个gap锁，而获取不到，就一直在等待这个插入意向锁。</p>
-<h2 id="手把手死锁案例分析"><a href="#手把手死锁案例分析" class="headerlink" title="手把手死锁案例分析"></a>手把手死锁案例分析</h2><p>如果发生死锁了，我们应该如何分析呢？一般分为四个步骤：</p>
+<h2 id="手把手死锁案例分析">手把手死锁案例分析</h2>
+<p>如果发生死锁了，我们应该如何分析呢？一般分为四个步骤：</p>
 <ol>
 <li><code>show engine innodb status</code>，查看最近一次死锁日志。</li>
 <li>分析死锁日志，找到关键词<code>TRANSACTION</code></li>
 <li>分析死锁日志，查看正在执行的SQL</li>
 <li>看SQL持有什么锁，又在等待什么锁。</li>
 </ol>
-<h3 id="一个死锁的简单例子"><a href="#一个死锁的简单例子" class="headerlink" title="一个死锁的简单例子"></a>一个死锁的简单例子</h3><p>表结构和数据如下：</p>
+<h3 id="一个死锁的简单例子">一个死锁的简单例子</h3>
+<p>表结构和数据如下：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t6 ( id <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>, c <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, d <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, <span class="keyword">PRIMARY</span> KEY (id), KEY c (c)) ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t6 <span class="keyword">values</span>(<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>),(<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>我们开启A、B事务，执行流程如下：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/05/06/0847-ln71aR.png" alt=""></p>
-<h3 id="6-2-分析死锁日志"><a href="#6-2-分析死锁日志" class="headerlink" title="6.2 分析死锁日志"></a>6.2 分析死锁日志</h3><ol>
+<h3 id="6-2-分析死锁日志">6.2 分析死锁日志</h3>
+<ol>
 <li><code>show engine innodb status</code>，查看最近一次死锁日志。如下：</li>
 </ol>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">LATEST DETECTED DEADLOCK</span><br><span class="line"></span><br><span class="line">2022-05-03 22:53:22 0x2eb4</span><br><span class="line">*** (1) TRANSACTION:</span><br><span class="line">TRANSACTION 1644867, ACTIVE 31 sec starting index read</span><br><span class="line">mysql tables in use 1, locked 1</span><br><span class="line">LOCK WAIT 3 lock struct(s), heap size 1136, 2 row lock(s)</span><br><span class="line">MySQL thread id 5, OS thread handle 7068, query id 607 localhost ::1 root statistics</span><br><span class="line">Select * from t6 where id=10 for update</span><br><span class="line">*** (1) WAITING FOR THIS LOCK TO BE GRANTED:</span><br><span class="line">RECORD LOCKS space id 268 page no 3 n bits 72 index PRIMARY of table `test2`.`t6` trx id 1644867 lock_mode X locks rec but not gap waiting</span><br><span class="line">Record lock, heap no 3 PHYSICAL RECORD: n_fields 5; compact format; info bits 0</span><br><span class="line"> 0: len 4; hex 8000000a; asc     ;;</span><br><span class="line"> 1: len 6; hex 00000019193c; asc      &lt;;;</span><br><span class="line"> 2: len 7; hex dd00000191011d; asc        ;;</span><br><span class="line"> 3: len 4; hex 8000000a; asc     ;;</span><br><span class="line"> 4: len 4; hex 8000000a; asc     ;;</span><br><span class="line"></span><br><span class="line">*** (2) TRANSACTION:</span><br><span class="line">TRANSACTION 1644868, ACTIVE 17 sec starting index read, thread declared inside InnoDB 5000</span><br><span class="line">mysql tables in use 1, locked 1</span><br><span class="line">3 lock struct(s), heap size 1136, 2 row lock(s)</span><br><span class="line">MySQL thread id 7, OS thread handle 11956, query id 608 localhost ::1 root statistics</span><br><span class="line">Select * from t6 where id=5 for update</span><br><span class="line">*** (2) HOLDS THE LOCK(S):</span><br><span class="line">RECORD LOCKS space id 268 page no 3 n bits 72 index PRIMARY of table `test2`.`t6` trx id 1644868 lock_mode X locks rec but not gap</span><br><span class="line">Record lock, heap no 3 PHYSICAL RECORD: n_fields 5; compact format; info bits 0</span><br><span class="line"> 0: len 4; hex 8000000a; asc     ;;</span><br><span class="line"> 1: len 6; hex 00000019193c; asc      &lt;;;</span><br><span class="line"> 2: len 7; hex dd00000191011d; asc        ;;</span><br><span class="line"> 3: len 4; hex 8000000a; asc     ;;</span><br><span class="line"> 4: len 4; hex 8000000a; asc     ;;</span><br><span class="line"></span><br><span class="line">*** (2) WAITING FOR THIS LOCK TO BE GRANTED:</span><br><span class="line">RECORD LOCKS space id 268 page no 3 n bits 72 index PRIMARY of table `test2`.`t6` trx id 1644868 lock_mode X locks rec but not gap waiting</span><br><span class="line">Record lock, heap no 2 PHYSICAL RECORD: n_fields 5; compact format; info bits 0</span><br><span class="line"> 0: len 4; hex 80000005; asc     ;;</span><br><span class="line"> 1: len 6; hex 00000019193c; asc      &lt;;;</span><br><span class="line"> 2: len 7; hex dd000001910110; asc        ;;</span><br><span class="line"> 3: len 4; hex 80000005; asc     ;;</span><br><span class="line"> 4: len 4; hex 80000005; asc     ;;</span><br></pre></td></tr></tbody></table></figure>
@@ -971,7 +1009,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8A%A0%E9%94%81%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">为什么需要加锁？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E5%B9%B6%E5%8F%91%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">事务并发存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%8A%A0%E9%94%81%E5%92%8C%E4%B8%8D%E5%8A%A0%E9%94%81%E5%AF%B9%E6%AF%94%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">一个加锁和不加锁对比的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB%E7%9A%84%E4%B8%83%E7%A7%8D%E9%94%81%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">InnoDB的七种锁介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB-%E6%8E%92%E4%BB%96%E9%94%81"><span class="nav-number">2.1.</span> <span class="nav-text">共享/排他锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-number">2.2.</span> <span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E9%94%81%EF%BC%88Record-Lock%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">记录锁（Record Lock）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%EF%BC%88Gap-Lock%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">间隙锁（Gap Lock）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E9%94%AE%E9%94%81-Next-Key-Lock"><span class="nav-number">2.5.</span> <span class="nav-text">临键锁(Next-Key Lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-number">2.6.</span> <span class="nav-text">插入意向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%A2%9E%E9%94%81"><span class="nav-number">2.7.</span> <span class="nav-text">自增锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%9D%A1SQL%E6%98%AF%E5%A6%82%E4%BD%95%E5%8A%A0%E9%94%81%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">一条SQL是如何加锁的呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E4%B8%BB%E9%94%AE-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.1.</span> <span class="nav-text">查询条件是主键 + RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">查询条件是唯一索引+RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">查询条件是普通索引 + RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E5%88%97%E6%97%A0%E7%B4%A2%E5%BC%95-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.4.</span> <span class="nav-text">查询条件列无索引+RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E4%B8%BB%E9%94%AE-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.5.</span> <span class="nav-text">查询条件是主键+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.6.</span> <span class="nav-text">查询条件是唯一索引+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.7.</span> <span class="nav-text">查询条件是普通索引+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E5%88%97%E6%97%A0%E7%B4%A2%E5%BC%95-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.8.</span> <span class="nav-text">查询条件列无索引+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable%E4%B8%B2%E8%A1%8C%E5%8C%96"><span class="nav-number">3.9.</span> <span class="nav-text">Serializable串行化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8B%EF%BC%8C%E5%8A%A0%E9%94%81%E8%A7%84%E5%88%99%E5%88%B0%E5%BA%95%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">RR隔离级别下，加锁规则到底是怎样的呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80%EF%BC%9A%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2%E9%97%B4%E9%9A%99%E9%94%81"><span class="nav-number">4.1.</span> <span class="nav-text">案例一：等值查询间隙锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C%EF%BC%9A%E9%9D%9E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%AD%89%E5%80%BC%E9%94%81"><span class="nav-number">4.2.</span> <span class="nav-text">案例二：非唯一索引等值锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89%EF%BC%9A%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E9%94%81"><span class="nav-number">4.3.</span> <span class="nav-text">案例三：主键索引范围锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%9B%9B%EF%BC%9A%E9%9D%9E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E9%94%81"><span class="nav-number">4.4.</span> <span class="nav-text">案例四：非唯一索引范围锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%94%EF%BC%9A%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E9%94%81-bug"><span class="nav-number">4.5.</span> <span class="nav-text">案例五：唯一索引范围锁 bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%85%AD%EF%BC%9A%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%E4%B8%8A%E5%AD%98%E5%9C%A8%E2%80%9D%E7%AD%89%E5%80%BC%E2%80%9D%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">4.6.</span> <span class="nav-text">案例六：普通索引上存在”等值”的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%83%EF%BC%9Alimit-%E8%AF%AD%E5%8F%A5%E5%87%8F%E5%B0%91%E5%8A%A0%E9%94%81%E8%8C%83%E5%9B%B4"><span class="nav-number">4.7.</span> <span class="nav-text">案例七：limit 语句减少加锁范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E4%BA%8B%E5%8A%A1%E5%8A%A0%E9%94%81%E6%83%85%E5%86%B5"><span class="nav-number">5.</span> <span class="nav-text">如何查看事务加锁情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8infomation-schema%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%8E%B7%E5%8F%96%E9%94%81%E4%BF%A1%E6%81%AF"><span class="nav-number">5.1.</span> <span class="nav-text">使用infomation_schema数据库中的表获取锁信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#INNODB-TRX"><span class="nav-number">5.1.1.</span> <span class="nav-text">INNODB_TRX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INNODB-LOCKS"><span class="nav-number">5.1.2.</span> <span class="nav-text">INNODB_LOCKS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INNODB-LOCK-WAITS"><span class="nav-number">5.1.3.</span> <span class="nav-text">INNODB_LOCK_WAITS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#show-engine-innodb-status"><span class="nav-number">5.2.</span> <span class="nav-text">show engine innodb status</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E6%8A%8A%E6%89%8B%E6%AD%BB%E9%94%81%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">手把手死锁案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E6%AD%BB%E9%94%81%E7%9A%84%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90"><span class="nav-number">6.1.</span> <span class="nav-text">一个死锁的简单例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%88%86%E6%9E%90%E6%AD%BB%E9%94%81%E6%97%A5%E5%BF%97"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 分析死锁日志</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8A%A0%E9%94%81%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">为什么需要加锁？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E5%B9%B6%E5%8F%91%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">事务并发存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%8A%A0%E9%94%81%E5%92%8C%E4%B8%8D%E5%8A%A0%E9%94%81%E5%AF%B9%E6%AF%94%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">一个加锁和不加锁对比的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB%E7%9A%84%E4%B8%83%E7%A7%8D%E9%94%81%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">InnoDB的七种锁介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB-%E6%8E%92%E4%BB%96%E9%94%81"><span class="nav-number">2.1.</span> <span class="nav-text">共享/排他锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-number">2.2.</span> <span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E9%94%81%EF%BC%88Record-Lock%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">记录锁（Record Lock）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%EF%BC%88Gap-Lock%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">间隙锁（Gap Lock）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E9%94%AE%E9%94%81-Next-Key-Lock"><span class="nav-number">2.5.</span> <span class="nav-text">临键锁(Next-Key Lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-number">2.6.</span> <span class="nav-text">插入意向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%A2%9E%E9%94%81"><span class="nav-number">2.7.</span> <span class="nav-text">自增锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%9D%A1SQL%E6%98%AF%E5%A6%82%E4%BD%95%E5%8A%A0%E9%94%81%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">一条SQL是如何加锁的呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E4%B8%BB%E9%94%AE-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.1.</span> <span class="nav-text">查询条件是主键 + RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">查询条件是唯一索引+RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">查询条件是普通索引 + RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E5%88%97%E6%97%A0%E7%B4%A2%E5%BC%95-RC%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.4.</span> <span class="nav-text">查询条件列无索引+RC隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E4%B8%BB%E9%94%AE-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.5.</span> <span class="nav-text">查询条件是主键+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.6.</span> <span class="nav-text">查询条件是唯一索引+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.7.</span> <span class="nav-text">查询条件是普通索引+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E5%88%97%E6%97%A0%E7%B4%A2%E5%BC%95-RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.8.</span> <span class="nav-text">查询条件列无索引+RR隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable%E4%B8%B2%E8%A1%8C%E5%8C%96"><span class="nav-number">3.9.</span> <span class="nav-text">Serializable串行化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RR%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8B%EF%BC%8C%E5%8A%A0%E9%94%81%E8%A7%84%E5%88%99%E5%88%B0%E5%BA%95%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">RR隔离级别下，加锁规则到底是怎样的呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80%EF%BC%9A%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2%E9%97%B4%E9%9A%99%E9%94%81"><span class="nav-number">4.1.</span> <span class="nav-text">案例一：等值查询间隙锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C%EF%BC%9A%E9%9D%9E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%AD%89%E5%80%BC%E9%94%81"><span class="nav-number">4.2.</span> <span class="nav-text">案例二：非唯一索引等值锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89%EF%BC%9A%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E9%94%81"><span class="nav-number">4.3.</span> <span class="nav-text">案例三：主键索引范围锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%9B%9B%EF%BC%9A%E9%9D%9E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E9%94%81"><span class="nav-number">4.4.</span> <span class="nav-text">案例四：非唯一索引范围锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%94%EF%BC%9A%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E9%94%81-bug"><span class="nav-number">4.5.</span> <span class="nav-text">案例五：唯一索引范围锁 bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%85%AD%EF%BC%9A%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%E4%B8%8A%E5%AD%98%E5%9C%A8-%E7%AD%89%E5%80%BC-%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">4.6.</span> <span class="nav-text">案例六：普通索引上存在"等值"的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%83%EF%BC%9Alimit-%E8%AF%AD%E5%8F%A5%E5%87%8F%E5%B0%91%E5%8A%A0%E9%94%81%E8%8C%83%E5%9B%B4"><span class="nav-number">4.7.</span> <span class="nav-text">案例七：limit 语句减少加锁范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E4%BA%8B%E5%8A%A1%E5%8A%A0%E9%94%81%E6%83%85%E5%86%B5"><span class="nav-number">5.</span> <span class="nav-text">如何查看事务加锁情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8infomation-schema%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%8E%B7%E5%8F%96%E9%94%81%E4%BF%A1%E6%81%AF"><span class="nav-number">5.1.</span> <span class="nav-text">使用infomation_schema数据库中的表获取锁信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#INNODB-TRX"><span class="nav-number">5.1.1.</span> <span class="nav-text">INNODB_TRX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INNODB-LOCKS"><span class="nav-number">5.1.2.</span> <span class="nav-text">INNODB_LOCKS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INNODB-LOCK-WAITS"><span class="nav-number">5.1.3.</span> <span class="nav-text">INNODB_LOCK_WAITS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#show-engine-innodb-status"><span class="nav-number">5.2.</span> <span class="nav-text">show engine innodb status</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E6%8A%8A%E6%89%8B%E6%AD%BB%E9%94%81%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">手把手死锁案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E6%AD%BB%E9%94%81%E7%9A%84%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90"><span class="nav-number">6.1.</span> <span class="nav-text">一个死锁的简单例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%88%86%E6%9E%90%E6%AD%BB%E9%94%81%E6%97%A5%E5%BF%97"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 分析死锁日志</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1056,13 +1094,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">887k</span>
+    <span title="站点总字数">896k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:26</span>
+    <span title="站点阅读时长">13:34</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
