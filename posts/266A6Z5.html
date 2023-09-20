@@ -31,17 +31,17 @@
 <meta property="article:published_time" content="2022-02-14T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-09-05T11:51:23.197Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="C">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="数组">
+<meta property="article:tag" content="C">
 <meta property="article:tag" content="内存">
-<meta property="article:tag" content="GC">
-<meta property="article:tag" content="数据库">
 <meta property="article:tag" content="堆">
 <meta property="article:tag" content="栈">
-<meta property="article:tag" content="数组">
 <meta property="article:tag" content="变量">
 <meta property="article:tag" content="锁">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="GC">
+<meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://xuemingde.com/posts/266A6Z5.html">
@@ -137,12 +137,12 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a>
 
   </li>
         <li class="menu-item menu-item-resources">
@@ -225,7 +225,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          内存泄漏和内存溢出<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy9KVk0vMjAyMjAyMTUt5YaF5a2Y5rOE5ryP5ZKM5YaF5a2Y5rqi5Ye6Lm1k" title="编辑"><i class="fa fa-pencil-alt"></i></span>
+          内存泄漏和内存溢出<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy9qYXZhL0pWTS8yMDIyMDIxNS3lhoXlrZjms4TmvI/lkozlhoXlrZjmuqLlh7oubWQ=" title="编辑"><i class="fa fa-pencil-alt"></i></span>
         </h1>
 
         <div class="post-meta">
@@ -250,7 +250,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a>
                 </span>
             </span>
 
@@ -524,17 +528,17 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
-              <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
+              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
-              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
               <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
-              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
               <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+              <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
           </div>
 
         
@@ -644,14 +648,14 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -714,13 +718,13 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">874k</span>
+    <span title="站点总字数">854k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:14</span>
+    <span title="站点阅读时长">12:57</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
