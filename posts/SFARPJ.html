@@ -32,10 +32,10 @@
 <meta property="article:modified_time" content="2022-08-13T08:46:48.936Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
-<meta property="article:tag" content="函数">
-<meta property="article:tag" content="数据库">
 <meta property="article:tag" content="内存">
 <meta property="article:tag" content="CPU">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="数据库">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
 
@@ -306,15 +306,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p>在Redis内部，每当我们设置一个键的过期时间时，Redis就会将该键带上过期时间存放到一个<strong>过期字典</strong>中。当我们查询一个键时，Redis便首先检查该键是否存在过期字典中，如果存在，那就获取其过期时间。然后将过期时间和当前系统时间进行比对，比系统时间大，那就没有过期；反之判定该键过期。  </p>
-<h1 id="过期删除策略"><a href="#过期删除策略" class="headerlink" title="过期删除策略"></a>过期删除策略</h1><h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>在设置key的过期时间的同时，创建一个定时器，让定时器在key的过期时间来临时，立即执行对key的删除操作；  </p>
-<p>优点：定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。  </p>
-<p>缺点：对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。  </p>
-<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。  </p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p>在Redis内部，每当我们设置一个键的过期时间时，Redis就会将该键带上过期时间存放到一个<strong>过期字典</strong>中。当我们查询一个键时，Redis便首先检查该键是否存在过期字典中，如果存在，那就获取其过期时间。然后将过期时间和当前系统时间进行比对，比系统时间大，那就没有过期；反之判定该键过期。</p>
+<h1>过期删除策略</h1>
+<h2 id="定时删除">定时删除</h2>
+<p>在设置key的过期时间的同时，创建一个定时器，让定时器在key的过期时间来临时，立即执行对key的删除操作；</p>
+<p>优点：定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。</p>
+<p>缺点：对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。</p>
+<h2 id="惰性删除">惰性删除</h2>
+<p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。</p>
 <p>优点：对 CPU友好，我们只会在使用该键时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查。</p>
-<p>缺点：对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。  </p>
-<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。  </p>
-<p>优点：可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。  </p>
+<p>缺点：对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。</p>
+<h2 id="定期删除">定期删除</h2>
+<p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。</p>
+<p>优点：可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。</p>
 <p>缺点：</p>
 <ul>
 <li>难以确定删除操作执行的时长和频率。</li>
@@ -322,21 +326,22 @@
 <li>如果执行的太少，那又和惰性删除一样了，过期键占用的内存不会及时得到释放。</li>
 <li>另外最重要的是，在获取某个键时，如果某个键的过期时间已经到了，但是还没执行定期删除，那么就会返回这个键的值，这是业务不能忍受的错误。</li>
 </ul>
-<h1 id="Redis过期删除策略"><a href="#Redis过期删除策略" class="headerlink" title="Redis过期删除策略"></a>Redis过期删除策略</h1><p>单一使用某一策略都不能满足实际需求，可组合使用。</p>
+<h1>Redis过期删除策略</h1>
+<p>单一使用某一策略都不能满足实际需求，可组合使用。</p>
 <p>Redis的过期删除策略就是：惰性删除和定期删除两种策略配合使用。</p>
 <ul>
-<li><strong>惰性删除</strong>  </li>
+<li><strong>惰性删除</strong></li>
 </ul>
 <p>Redis的惰性删除策略由 db.c/expireIfNeeded 函数实现，所有键读写命令执行之前都会调用 expireIfNeeded 函数对其进行检查，如果过期，则删除该键，然后执行键不存在的操作；未过期则不作操作，继续执行原有的命令。</p>
 <ul>
-<li><strong>定期删除</strong>  </li>
+<li><strong>定期删除</strong></li>
 </ul>
 <p>由redis.c/activeExpireCycle 函数实现，函数以一定的频率运行，每次运行时，都从一定数量的数据库中取出一定数量的随机键进行检查，并删除其中的过期键。</p>
 <blockquote>
-<p>注意：并不是一次运行就检查所有的库，所有的键，而是随机检查一定数量的键。  </p>
+<p>注意：并不是一次运行就检查所有的库，所有的键，而是随机检查一定数量的键。</p>
 </blockquote>
-<p>定期删除函数的运行频率，在Redis2.6版本中，规定每秒运行10次，大概100ms运行一次。在Redis2.8版本后，可以通过修改配置文件redis.conf 的 <strong>hz</strong> 选项来调整这个次数。  </p>
-<p><strong>建议不要将这个值设置超过 100，否则会对CPU造成比较大的压力。</strong> </p>
+<p>定期删除函数的运行频率，在Redis2.6版本中，规定每秒运行10次，大概100ms运行一次。在Redis2.8版本后，可以通过修改配置文件redis.conf 的 <strong>hz</strong> 选项来调整这个次数。</p>
+<p><strong>建议不要将这个值设置超过 100，否则会对CPU造成比较大的压力。</strong></p>
 <p>通过过期删除策略，对于某些永远使用不到的键，并且多次定期删除也没选定到并删除，那么这些键同样会一直驻留在内存中，又或者在Redis中存入了大量的键，这些操作可能会导致Redis内存不够用，这时候就需要<strong>Redis的内存淘汰策略</strong>了。</p>
 
     </div>
@@ -414,10 +419,10 @@
           
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
-              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
               <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
           </div>
 
@@ -513,7 +518,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5"><span class="nav-number">1.</span> <span class="nav-text">过期删除策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%88%A0%E9%99%A4"><span class="nav-number">1.1.</span> <span class="nav-text">定时删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%B0%E6%80%A7%E5%88%A0%E9%99%A4"><span class="nav-number">1.2.</span> <span class="nav-text">惰性删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%9C%9F%E5%88%A0%E9%99%A4"><span class="nav-number">1.3.</span> <span class="nav-text">定期删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5"><span class="nav-number">2.</span> <span class="nav-text">Redis过期删除策略</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">过期删除策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%88%A0%E9%99%A4"><span class="nav-number">1.1.</span> <span class="nav-text">定时删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%B0%E6%80%A7%E5%88%A0%E9%99%A4"><span class="nav-number">1.2.</span> <span class="nav-text">惰性删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%9C%9F%E5%88%A0%E9%99%A4"><span class="nav-number">1.3.</span> <span class="nav-text">定期删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Redis过期删除策略</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -598,13 +603,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">887k</span>
+    <span title="站点总字数">896k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:26</span>
+    <span title="站点阅读时长">13:35</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

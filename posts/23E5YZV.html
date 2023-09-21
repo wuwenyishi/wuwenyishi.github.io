@@ -302,18 +302,19 @@
 
       
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><ul>
-<li><p>qt中将Frame框设置成有颜色的边框</p>
+<li>
+<p>qt中将Frame框设置成有颜色的边框</p>
 <figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QFrame{</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">10px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">1px</span> solid <span class="built_in">rgb</span>(<span class="number">100</span>, <span class="number">100</span>,<span class="number">189</span>)</span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
-<li><p>Qt的LineEdit设置无边框</p>
+<li>
+<p>Qt的LineEdit设置无边框</p>
 <figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QLineEdit{<span class="attribute">border</span>: none }</span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">QFrame{<span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line">		<span class="attribute">border-image</span>:None;	</span><br><span class="line">		<span class="attribute">border-radius</span>:<span class="number">22px</span>;</span><br><span class="line">}</span><br><span class="line">QPushButton{</span><br><span class="line"><span class="attribute">border-image</span>:None;	</span><br><span class="line"> <span class="attribute">background-color</span>: white;</span><br><span class="line"> <span class="attribute">color</span>:black;</span><br><span class="line"> <span class="attribute">border-radius</span>:<span class="number">21px</span>;</span><br><span class="line"> <span class="attribute">font</span>: <span class="number">16px</span> <span class="string">"阿里巴巴普惠体 R"</span>;</span><br><span class="line"> <span class="attribute">text-align</span>: center; </span><br><span class="line"><span class="attribute">margin-top</span>:<span class="number">0px</span>;</span><br><span class="line"><span class="attribute">margin-left</span>: <span class="number">0px</span>;</span><br><span class="line">marigin-<span class="attribute">right</span>:<span class="number">0px</span>;</span><br><span class="line">}</span><br><span class="line">QPushButton<span class="selector-pseudo">:checked</span>{</span><br><span class="line"> <span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">102</span>, <span class="number">179</span>, <span class="number">225</span>);</span><br><span class="line"> <span class="attribute">color</span>:white;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
-</ul>
-<ul>
-<li><p>Qt::FocusPolicy</p>
+<li>
+<p>Qt::FocusPolicy</p>
 <ul>
 <li>1、Qt::TabFocus：通过按下Tab键获取焦点（这时候鼠标点击获取不到焦点的）。</li>
 <li>2、Qt::ClickFocus：鼠标点击获取焦点。</li>
@@ -324,10 +325,9 @@
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">* acceptDrops</span><br><span class="line"></span><br><span class="line">&gt; acceptDrops属性表示当前部件是否接受鼠标拖放事件，鼠标拖放应该是与鼠标拖拽结合在一起的，在Qt Designer中可以通过属性acceptDrops设置部件是否接受鼠标拖放事件。如果部件接受拖放，则在鼠标拖放时，拖放事件会发送给鼠标当前光标下接受拖放的第一个部件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 如果一个部件设置了acceptDrops属性为True，则就是通知系统该部件可能接受鼠标拖放事件。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 注意：</span><br><span class="line">&gt; 1、如果当前部件是一个桌面(windowType() == Qt.Desktop), 如果此时另一应用正在使用桌面则这个属性设置可能失败；</span><br><span class="line">&gt; 2、不要在拖、放事件的处理方法中修改该属性。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 使用acceptDrops(）获取当前部件是否支持拖放；</span><br><span class="line">&gt; 使用setAcceptDrops(bool on)设置当前部件是否支持拖放。</span><br><span class="line">&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* QPushButton</span><br><span class="line"></span><br><span class="line">  flat属性用于确认按钮边框是否凸起，如果为False则凸起，如果为True则边框与背景是平坦的。</span><br><span class="line"></span><br><span class="line">  (1) default属性表示当在对话框中时有“Enter”键按下时执行此按键的click()事件。它的默认值是false；</span><br><span class="line"></span><br><span class="line">  (2)autoDefault属性设置为true时会影响按键的外观（略微突出显大），它的默认值是true。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">QFrame{</span><br><span class="line"></span><br><span class="line">border-radius:10px;</span><br><span class="line"></span><br><span class="line">border:1px solid rgb(119, 119,119)</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
-</ul>
-<ul>
-<li><p>QSqlTableModel</p>
-<p><img data-src="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png" alt="150127NvND4X"></p>
+<li>
+<p>QSqlTableModel</p>
+<p><img data-src="https://xuemingde.com/pages/image/2023/02/07/150127NvND4X.png" alt=""></p>
 <p>​</p>
 </li>
 </ul>
@@ -355,10 +355,10 @@
       <div class="popular-posts-title"><a href="/posts/3V8G3VM.html" rel="bookmark">Qt基础学习笔记01</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
+      <div class="popular-posts-title"><a href="/posts/6251YR.html" rel="bookmark">Qt开发学习笔记01</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/6251YR.html" rel="bookmark">Qt开发学习笔记01</a></div>
+      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/2AJQNK2.html" rel="bookmark">Qt开发学习笔记02</a></div>
@@ -587,13 +587,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">887k</span>
+    <span title="站点总字数">896k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:26</span>
+    <span title="站点阅读时长">13:35</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
