@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="东夕月少年">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-01T06:34:19.042Z">
-<meta property="article:modified_time" content="2023-09-15T00:39:38.523Z">
+<meta property="article:modified_time" content="2023-09-21T10:40:35.808Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="数组">
 <meta property="article:tag" content="C++">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-15 08:39:38" itemprop="dateModified" datetime="2023-09-15T08:39:38+08:00">2023-09-15</time>
+                <time title="修改时间：2023-09-21 18:40:35" itemprop="dateModified" datetime="2023-09-21T18:40:35+08:00">2023-09-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,7 +283,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.5k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -328,6 +328,12 @@
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtSerialBus/QModbusTcpClient&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QModbusDataUnit&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Modbus TCP 客户端</span></span><br><span class="line">QModbusTcpClient *modbusClient = <span class="keyword">new</span> <span class="built_in">QModbusTcpClient</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接到 Modbus 设备</span></span><br><span class="line">modbusClient-&gt;<span class="built_in">setConnectionParameter</span>(QModbusDevice::NetworkAddressParameter, <span class="string">"192.168.1.1"</span>);</span><br><span class="line">modbusClient-&gt;<span class="built_in">setConnectionParameter</span>(QModbusDevice::NetworkPortParameter, <span class="number">502</span>);</span><br><span class="line">modbusClient-&gt;<span class="built_in">connectDevice</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查连接是否成功建立</span></span><br><span class="line"><span class="keyword">if</span> (!modbusClient-&gt;<span class="built_in">state</span>() == QModbusDevice::ConnectedState) {</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"Failed to connect to Modbus device"</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Modbus 数据单元</span></span><br><span class="line"><span class="function">QModbusDataUnit <span class="title">readUnit</span><span class="params">(QModbusDataUnit::HoldingRegisters, <span class="number">0</span>, <span class="number">2</span>)</span></span>; <span class="comment">// 从寄存器地址 0 开始读取 2 个寄存器</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行读取操作</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">auto</span> *reply = modbusClient-&gt;<span class="built_in">sendReadRequest</span>(readUnit, <span class="number">1</span>)) {</span><br><span class="line">    <span class="keyword">if</span> (!reply-&gt;<span class="built_in">isFinished</span>()) {</span><br><span class="line">        <span class="comment">// 等待读取操作完成</span></span><br><span class="line">        QEventLoop loop;</span><br><span class="line">        <span class="built_in">connect</span>(reply, &amp;QModbusReply::finished, &amp;loop, &amp;QEventLoop::quit);</span><br><span class="line">        loop.<span class="built_in">exec</span>();</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (reply-&gt;<span class="built_in">error</span>() != QModbusDevice::NoError) {</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"Failed to read DINT data:"</span> &lt;&lt; reply-&gt;<span class="built_in">errorString</span>();</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        <span class="comment">// 从读取的寄存器数据中获取 DINT 值</span></span><br><span class="line">        <span class="keyword">int</span> lowInt = reply-&gt;<span class="built_in">result</span>().<span class="built_in">value</span>(<span class="number">0</span>).<span class="built_in">toUInt</span>(); <span class="comment">// 低位 INT 值</span></span><br><span class="line">        <span class="keyword">int</span> highInt = reply-&gt;<span class="built_in">result</span>().<span class="built_in">value</span>(<span class="number">1</span>).<span class="built_in">toUInt</span>(); <span class="comment">// 高位 INT 值</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 合并两个 INT 值得到 DINT 值</span></span><br><span class="line">        <span class="keyword">int</span> dintValue = (highInt &lt;&lt; <span class="number">16</span>) | lowInt;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"Read DINT data:"</span> &lt;&lt; dintValue;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 清理资源</span></span><br><span class="line">    <span class="keyword">delete</span> reply;</span><br><span class="line">} <span class="keyword">else</span> {</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"Failed to send read request"</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在上述示例中，首先创建一个 Modbus TCP 客户端，并连接到指定的 Modbus 设备。然后，创建一个 Modbus 数据单元用于读取连续的两个寄存器。接下来，使用 <code>sendReadRequest</code> 方法发送读取请求，并根据返回的响应进行错误处理和结果解析。在读取的寄存器数据中，通过合并两个 INT 值得到 DINT 值。</p>
 <p>请注意，这只是一个简单的示例代码片段，你需要根据实际情况进行适当的修改和扩展，例如设置正确的 Modbus 连接参数、处理连接错误、选择合适的寄存器地址等。</p>
+<h4 id="ModBus-数据格式">ModBus 数据格式</h4>
+<p>Folat数据格式：</p>
+<p>ABCD  ——&gt; Big-endian</p>
+<p>BADC ——&gt; Big-endian byte swap</p>
+<p>DCBA ——&gt; little-endian</p>
+<p>CDAB ——&gt; little-endian byte swap</p>
 
     </div>
    <div>
@@ -503,7 +509,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%B0%86%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BD%AC%E4%B8%BAmodbus%E9%9C%80%E8%A6%81%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9F%AD%E6%95%B4%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">C++ 将浮点数转为modbus需要的两个无符号短整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modbus%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9F%AD%E6%95%B4%E6%95%B0%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">Modbus的两个无符号短整数转浮点数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qt-modbus-%E4%B8%ADint-%E8%BD%AC-dint-%E5%86%99%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">Qt modbus 中int 转 dint 写入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qt-modbus-%E4%B8%ADint-%E8%BD%AC-dint-%E8%AF%BB%E5%8F%96"><span class="nav-number">4.</span> <span class="nav-text">Qt modbus 中int 转 dint 读取</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%B0%86%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BD%AC%E4%B8%BAmodbus%E9%9C%80%E8%A6%81%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9F%AD%E6%95%B4%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">C++ 将浮点数转为modbus需要的两个无符号短整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modbus%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9F%AD%E6%95%B4%E6%95%B0%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">Modbus的两个无符号短整数转浮点数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qt-modbus-%E4%B8%ADint-%E8%BD%AC-dint-%E5%86%99%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">Qt modbus 中int 转 dint 写入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qt-modbus-%E4%B8%ADint-%E8%BD%AC-dint-%E8%AF%BB%E5%8F%96"><span class="nav-number">4.</span> <span class="nav-text">Qt modbus 中int 转 dint 读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModBus-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">ModBus 数据格式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -594,7 +600,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:34</span>
+    <span title="站点阅读时长">13:35</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
