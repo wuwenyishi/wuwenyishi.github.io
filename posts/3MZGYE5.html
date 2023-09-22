@@ -1,0 +1,1003 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext">
+<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../js/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="../js/pace-theme-minimal.min.css">
+  <script src="../js/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuemingde.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","width":300,"display":"always","padding":18,"offset":10,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="@Transactional 注解失效的3种原因及解决办法 ">
+<meta property="og:url" content="https://xuemingde.com/posts/3MZGYE5.html">
+<meta property="og:site_name" content="东夕月少年">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xuemingde.com/pages/image/2022/04/17/1016-kIvrdM.png">
+<meta property="article:published_time" content="2022-08-13T08:46:48.923Z">
+<meta property="article:modified_time" content="2023-09-22T01:05:31.206Z">
+<meta property="article:author" content="meadel">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="堆">
+<meta property="article:tag" content="栈">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="事务">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/04/17/1016-kIvrdM.png">
+
+<link rel="canonical" href="https://xuemingde.com/posts/3MZGYE5.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>@Transactional 注解失效的3种原因及解决办法  | 东夕月少年</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">东夕月少年</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一位程序员的成长之路</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">137</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源库</a>
+
+  </li>
+        <li class="menu-item menu-item-collect">
+
+    <a href="/collect/" rel="section"><i class="fa fa-star fa-fw"></i>收藏夹</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+           <div id="container-1">
+            <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuemingde.com/posts/3MZGYE5.html">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+      <meta itemprop="name" content="meadel">
+      <meta itemprop="description" content="我的愿望，世界和平">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="东夕月少年">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          @Transactional 注解失效的3种原因及解决办法 <span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRlZS5jb20vLS9pZGUvcHJvamVjdC9tZWFkZXIvaGV4by1ibG9nL2VkaXQvbWFzdGVyLy0vc291cmNlL19wb3N0cy9qYXZhL0JVRy9AVHJhbnNhY3Rpb25hbCDms6jop6PlpLHmlYjnmoQz56eN5Y6f5Zug5Y+K6Kej5Yaz5Yqe5rOVIC5tZA==" title="编辑"><i class="fa fa-pencil-alt"></i></span>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 16:46:48" itemprop="dateCreated datePublished" datetime="2022-08-13T16:46:48+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-22 09:05:31" itemprop="dateModified" datetime="2023-09-22T09:05:31+08:00">2023-09-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/BUG/" itemprop="url" rel="index"><span itemprop="name">BUG</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/3MZGYE5.html" class="post-meta-item leancloud_visitors" data-flag-title="@Transactional 注解失效的3种原因及解决办法 " title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/3MZGYE5.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/3MZGYE5.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWnpwN2lKelVZRFJ0cFloWVVaeEZOQQ==">@Transactional 注解失效的3种原因及解决办法<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>讲解@Transactional的三种失效场景及解决办法</p>
+<h2 id="Transactional失效场景介绍">Transactional失效场景介绍</h2>
+<h3 id="第一种">第一种</h3>
+<p>Transactional注解标注方法修饰符为非public时，<code>@Transactional</code>注解将会不起作用。例如以下代码。</p>
+<p>定义一个错误的<code>@Transactional</code>标注实现，修饰一个默认访问符的方法</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhoujy  </span></span><br><span class="line"><span class="comment"> **/</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImpl</span> </span>{  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    TestMapper testMapper;  </span><br><span class="line">      </span><br><span class="line">    <span class="meta">@Transactional</span>  </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insertTestWrongModifier</span><span class="params">()</span> </span>{  </span><br><span class="line">        <span class="keyword">int</span> re = testMapper.insert(<span class="keyword">new</span> Test(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">        <span class="keyword">if</span> (re &gt; <span class="number">0</span>) {  </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NeedToInterceptException(<span class="string">"need intercept"</span>);  </span><br><span class="line">        }  </span><br><span class="line">        testMapper.insert(<span class="keyword">new</span> Test(<span class="number">210</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">    }  </span><br><span class="line">  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>在同一个包内，新建调用对象，进行访问。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokcationService</span> </span>{  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    <span class="keyword">private</span> TestServiceImpl testService;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invokeInsertTestWrongModifier</span><span class="params">()</span></span>{  </span><br><span class="line">        <span class="comment">//调用@Transactional标注的默认访问符方法  </span></span><br><span class="line">        testService.insertTestWrongModifier();  </span><br><span class="line">    }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>测试用例</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span>  </span><br><span class="line"><span class="meta">@SpringBootTest</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationTests</span> </span>{  </span><br><span class="line">   <span class="meta">@Resource</span>  </span><br><span class="line">   InvokcationService invokcationService;  </span><br><span class="line">  </span><br><span class="line">   <span class="meta">@Test</span>  </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">testInvoke</span><span class="params">()</span></span>{  </span><br><span class="line">      invokcationService.invokeInsertTestWrongModifier();  </span><br><span class="line">   }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>以上的访问方式，导致事务没开启，因此在方法抛出异常时，<code>testMapper.insert(new Test(10,20,30));</code>操作不会进行回滚。如果<code>TestServiceImpl#insertTestWrongModifier</code>方法改为public的话将会正常开启事务，<code>testMapper.insert(new Test(10,20,30));</code>将会进行回滚。</p>
+<h3 id="第二种">第二种</h3>
+<p>在类内部调用调用类内部<code>@Transactional</code>标注的方法。这种情况下也会导致事务不开启。示例代码如下。</p>
+<p>设置一个内部调用</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhoujy  </span></span><br><span class="line"><span class="comment"> **/</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title">TestService</span> </span>{  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    TestMapper testMapper;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Transactional</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTestInnerInvoke</span><span class="params">()</span> </span>{  </span><br><span class="line">        <span class="comment">//正常public修饰符的事务方法  </span></span><br><span class="line">        <span class="keyword">int</span> re = testMapper.insert(<span class="keyword">new</span> Test(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">        <span class="keyword">if</span> (re &gt; <span class="number">0</span>) {  </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NeedToInterceptException(<span class="string">"need intercept"</span>);  </span><br><span class="line">        }  </span><br><span class="line">        testMapper.insert(<span class="keyword">new</span> Test(<span class="number">210</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">    }  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInnerInvoke</span><span class="params">()</span></span>{  </span><br><span class="line">        <span class="comment">//类内部调用@Transactional标注的方法。  </span></span><br><span class="line">        insertTestInnerInvoke();  </span><br><span class="line">    }  </span><br><span class="line">  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>测试用例。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span>  </span><br><span class="line"><span class="meta">@SpringBootTest</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationTests</span> </span>{  </span><br><span class="line">  </span><br><span class="line">   <span class="meta">@Resource</span>  </span><br><span class="line">   TestServiceImpl testService;  </span><br><span class="line">  </span><br><span class="line">   <span class="comment">/**  </span></span><br><span class="line"><span class="comment">    * 测试内部调用<span class="doctag">@Transactional</span>标注方法  </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">   <span class="meta">@Test</span>  </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">testInnerInvoke</span><span class="params">()</span></span>{  </span><br><span class="line">       <span class="comment">//测试外部调用事务方法是否正常  </span></span><br><span class="line">      <span class="comment">//testService.insertTestInnerInvoke();  </span></span><br><span class="line">       <span class="comment">//测试内部调用事务方法是否正常  </span></span><br><span class="line">      testService.testInnerInvoke();  </span><br><span class="line">   }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>上面就是使用的测试代码，运行测试知道，外部调用事务方法能够征程开启事务，<code>testMapper.insert(new Test(10,20,30))</code>操作将会被回滚；</p>
+<p>然后运行另外一个测试用例，调用一个方法在类内部调用内部被<code>@Transactional</code>标注的事务方法，运行结果是事务不会正常开启，<code>testMapper.insert(new Test(10,20,30))</code>操作将会保存到数据库不会进行回滚。</p>
+<h3 id="第三种">第三种</h3>
+<p>事务方法内部捕捉了异常，没有抛出新的异常，导致事务操作不会进行回滚。示例代码如下。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhoujy  </span></span><br><span class="line"><span class="comment"> **/</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title">TestService</span> </span>{  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    TestMapper testMapper;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Transactional</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTestCatchException</span><span class="params">()</span> </span>{  </span><br><span class="line">        <span class="keyword">try</span> {  </span><br><span class="line">            <span class="keyword">int</span> re = testMapper.insert(<span class="keyword">new</span> Test(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">            <span class="keyword">if</span> (re &gt; <span class="number">0</span>) {  </span><br><span class="line">                <span class="comment">//运行期间抛异常  </span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NeedToInterceptException(<span class="string">"need intercept"</span>);  </span><br><span class="line">            }  </span><br><span class="line">            testMapper.insert(<span class="keyword">new</span> Test(<span class="number">210</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">        }<span class="keyword">catch</span> (Exception e){  </span><br><span class="line">            System.out.println(<span class="string">"i catch exception"</span>);  </span><br><span class="line">        }  </span><br><span class="line">    }  </span><br><span class="line">      </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>测试用例代码如下。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span>  </span><br><span class="line"><span class="meta">@SpringBootTest</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationTests</span> </span>{  </span><br><span class="line">  </span><br><span class="line">   <span class="meta">@Resource</span>  </span><br><span class="line">   TestServiceImpl testService;  </span><br><span class="line">  </span><br><span class="line">   <span class="meta">@Test</span>  </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCatchException</span><span class="params">()</span></span>{  </span><br><span class="line">      testService.insertTestCatchException();  </span><br><span class="line">   }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>运行测试用例发现，虽然抛出异常，但是异常被捕捉了，没有抛出到方法 外， <code>testMapper.insert(new Test(210,20,30))</code>操作并没有回滚。</p>
+<p>以上三种就是<code>@Transactional</code>注解不起作用，<code>@Transactional</code>注解失效的主要原因。下面结合spring中对于<code>@Transactional</code>的注解实现源码分析为何导致<code>@Transactional</code>注解不起作用。</p>
+<h2 id="Transactional注解不起作用原理分析">@Transactional注解不起作用原理分析</h2>
+<h3 id="第一种-2">第一种</h3>
+<p><code>@Transactional</code>注解标注方法修饰符为非public时，<code>@Transactional</code>注解将会不起作用。这里分析 的原因是，<code>@Transactional</code>是基于动态代理实现的，<code>@Transactional</code>注解实现原理中分析了实现方法，在bean初始化过程中，对含有<code>@Transactional</code>标注的bean实例创建代理对象，这里就存在一个spring扫描<code>@Transactional</code>注解信息的过程，不幸的是源码中体现，标注<code>@Transactional</code>的方法如果修饰符不是public，那么就默认方法的<code>@Transactional</code>信息为空，那么将不会对bean进行代理对象创建或者不会对方法进行代理调用</p>
+<p><code>@Transactional</code>注解实现原理中，介绍了如何判定一个bean是否创建代理对象，大概逻辑是。根据spring创建好一个aop切点<code>BeanFactoryTransactionAttributeSourceAdvisor</code>实例，遍历当前bean的class的方法对象，判断方法上面的注解信息是否包含<code>@Transactional</code>，如果bean任何一个方法包含<code>@Transactional</code>注解信息，那么就是适配这个<code>BeanFactoryTransactionAttributeSourceAdvisor</code>切点。则需要创建代理对象，然后代理逻辑为我们管理事务开闭逻辑。</p>
+<p>spring源码中，在拦截bean的创建过程，寻找bean适配的切点时，运用到下面的方法，目的就是寻找方法上面的@<code>Transactional</code>信息，如果有，就表示切点<code>BeanFactoryTransactionAttributeSourceAdvisor</code>能够应用（canApply）到bean中，</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">AopUtils#canApply(org.springframework.aop.Pointcut, java.lang.Class&lt;?&gt;, boolean)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">canApply</span><span class="params">(Pointcut pc, Class&lt;?&gt; targetClass, <span class="keyword">boolean</span> hasIntroductions)</span> </span>{  </span><br><span class="line">   Assert.notNull(pc, <span class="string">"Pointcut must not be null"</span>);  </span><br><span class="line">   <span class="keyword">if</span> (!pc.getClassFilter().matches(targetClass)) {  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">   }  </span><br><span class="line">  </span><br><span class="line">   MethodMatcher methodMatcher = pc.getMethodMatcher();  </span><br><span class="line">   <span class="keyword">if</span> (methodMatcher == MethodMatcher.TRUE) {  </span><br><span class="line">      <span class="comment">// No need to iterate the methods if we're matching any method anyway...  </span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">   }  </span><br><span class="line">  </span><br><span class="line">   IntroductionAwareMethodMatcher introductionAwareMethodMatcher = <span class="keyword">null</span>;  </span><br><span class="line">   <span class="keyword">if</span> (methodMatcher <span class="keyword">instanceof</span> IntroductionAwareMethodMatcher) {  </span><br><span class="line">      introductionAwareMethodMatcher = (IntroductionAwareMethodMatcher) methodMatcher;  </span><br><span class="line">   }  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">//遍历class的方法对象  </span></span><br><span class="line">   Set&lt;Class&lt;?&gt;&gt; classes = <span class="keyword">new</span> LinkedHashSet&lt;Class&lt;?&gt;&gt;(ClassUtils.getAllInterfacesForClassAsSet(targetClass));  </span><br><span class="line">   classes.add(targetClass);  </span><br><span class="line">   <span class="keyword">for</span> (Class&lt;?&gt; clazz : classes) {  </span><br><span class="line">      Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);  </span><br><span class="line">      <span class="keyword">for</span> (Method method : methods) {  </span><br><span class="line">         <span class="keyword">if</span> ((introductionAwareMethodMatcher != <span class="keyword">null</span> &amp;&amp;  </span><br><span class="line">               introductionAwareMethodMatcher.matches(method, targetClass, hasIntroductions)) ||  </span><br><span class="line">             <span class="comment">//适配查询方法上的@Transactional注解信息    </span></span><br><span class="line">             methodMatcher.matches(method, targetClass)) {  </span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">         }  </span><br><span class="line">      }  </span><br><span class="line">   }  </span><br><span class="line">  </span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>我们可以在上面的方法打断点，一步一步调试跟踪代码，最终上面的代码还会调用如下方法来判断。在下面的方法上断点，回头看看方法调用堆栈也是不错的方式跟踪。</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AbstractFallbackTransactionAttributeSource#getTransactionAttribute</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>AbstractFallbackTransactionAttributeSource#computeTransactionAttribute</code></li>
+</ul>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> TransactionAttribute <span class="title">computeTransactionAttribute</span><span class="params">(Method method, Class&lt;?&gt; targetClass)</span> </span>{  </span><br><span class="line">   <span class="comment">// Don't allow no-public methods as required.  </span></span><br><span class="line">   <span class="comment">//非public 方法，返回@Transactional信息一律是null  </span></span><br><span class="line">   <span class="keyword">if</span> (allowPublicMethodsOnly() &amp;&amp; !Modifier.isPublic(method.getModifiers())) {  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;  </span><br><span class="line">   }  </span><br><span class="line">   <span class="comment">//后面省略.......  </span></span><br><span class="line"> }  </span><br></pre></td></tr></tbody></table></figure>
+<p><strong>不创建代理对象</strong></p>
+<p>所以，如果所有方法上的修饰符都是非public的时候，那么将不会创建代理对象。以一开始的测试代码为例，如果正常的修饰符的testService是下面图片中的，经过cglib创建的代理对象。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/17/1016-kIvrdM.png" alt=""></p>
+<p>如果class中的方法都是非public的那么将不是代理对象。</p>
+<p><strong>不进行代理调用</strong></p>
+<p>考虑一种情况，如下面代码所示。两个方法都被<code>@Transactional</code>注解标注，但是一个有public修饰符一个没有，那么这种情况我们可以预见的话，一定会创建代理对象，因为至少有一个public修饰符的<code>@Transactional</code>注解标注方法。</p>
+<p>创建了代理对象，<code>insertTestWrongModifier</code>就会开启事务吗？答案是不会。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhoujy  </span></span><br><span class="line"><span class="comment"> **/</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title">TestService</span> </span>{  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    TestMapper testMapper;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="meta">@Transactional</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTest</span><span class="params">()</span> </span>{  </span><br><span class="line">        <span class="keyword">int</span> re = testMapper.insert(<span class="keyword">new</span> Test(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">        <span class="keyword">if</span> (re &gt; <span class="number">0</span>) {  </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NeedToInterceptException(<span class="string">"need intercept"</span>);  </span><br><span class="line">        }  </span><br><span class="line">        testMapper.insert(<span class="keyword">new</span> Test(<span class="number">210</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">    }  </span><br><span class="line">      </span><br><span class="line">    <span class="meta">@Transactional</span>  </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insertTestWrongModifier</span><span class="params">()</span> </span>{  </span><br><span class="line">        <span class="keyword">int</span> re = testMapper.insert(<span class="keyword">new</span> Test(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">        <span class="keyword">if</span> (re &gt; <span class="number">0</span>) {  </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NeedToInterceptException(<span class="string">"need intercept"</span>);  </span><br><span class="line">        }  </span><br><span class="line">        testMapper.insert(<span class="keyword">new</span> Test(<span class="number">210</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">    }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>原因是在动态代理对象进行代理逻辑调用时，在cglib创建的代理对象的拦截函数中<code>CglibAopProxy.DynamicAdvisedInterceptor#intercept</code>，有一个逻辑如下，目的是获取当前被代理对象的当前需要执行的method适配的aop逻辑。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Object&gt; chain = <span class="keyword">this</span>.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);  </span><br></pre></td></tr></tbody></table></figure>
+<p>而针对@Transactional注解查找aop逻辑过程，相似地，也是执行一次</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AbstractFallbackTransactionAttributeSource#getTransactionAttribute</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>AbstractFallbackTransactionAttributeSource#computeTransactionAttribute</code></li>
+</ul>
+<p>也就是说还需要找一个方法上的<code>@Transactional</code>注解信息，没有的话就不执行代理<code>@Transactional</code>对应的代理逻辑，直接执行方法。没有了<code>@Transactional</code>注解代理逻辑，就无法开启事务，这也是上一篇已经讲到的。</p>
+<h3 id="第二种-2">第二种</h3>
+<p>在类内部调用调用类内部<code>@Transactional</code>标注的方法。这种情况下也会导致事务不开启。</p>
+<p>经过对第一种的详细分析，对这种情况为何不开启事务管理，原因应该也能猜到；</p>
+<blockquote>
+<p>既然事务管理是基于动态代理对象的代理逻辑实现的，那么如果在类内部调用类内部的事务方法，这个调用事务方法的过程并不是通过代理对象来调用的，而是直接通过this对象来调用方法，绕过的代理对象，肯定就是没有代理逻辑了。</p>
+</blockquote>
+<p>其实我们可以这样玩，内部调用也能实现开启事务，代码如下。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhoujy  </span></span><br><span class="line"><span class="comment"> **/</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title">TestService</span> </span>{  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    TestMapper testMapper;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    TestServiceImpl testServiceImpl;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Transactional</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTestInnerInvoke</span><span class="params">()</span> </span>{  </span><br><span class="line">        <span class="keyword">int</span> re = testMapper.insert(<span class="keyword">new</span> Test(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">        <span class="keyword">if</span> (re &gt; <span class="number">0</span>) {  </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NeedToInterceptException(<span class="string">"need intercept"</span>);  </span><br><span class="line">        }  </span><br><span class="line">        testMapper.insert(<span class="keyword">new</span> Test(<span class="number">210</span>,<span class="number">20</span>,<span class="number">30</span>));  </span><br><span class="line">    }  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInnerInvoke</span><span class="params">()</span></span>{  </span><br><span class="line">        <span class="comment">//内部调用事务方法  </span></span><br><span class="line">        testServiceImpl.insertTestInnerInvoke();  </span><br><span class="line">    }  </span><br><span class="line">  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>上面就是使用了代理对象进行事务调用，所以能够开启事务管理，但是实际操作中，没人会闲的蛋疼这样子玩~</p>
+<h3 id="第三种-2">第三种</h3>
+<p>事务方法内部捕捉了异常，没有抛出新的异常，导致事务操作不会进行回滚。</p>
+<p>这种的话，可能我们比较常见，问题就出在代理逻辑中，我们先看看源码里卖弄动态代理逻辑是如何为我们管理事务的。</p>
+<figure class="highlight 1c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TransactionAspectSupport<span class="meta">#invokeWithinTransaction</span></span><br></pre></td></tr></tbody></table></figure>
+<p>代码如下。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">invokeWithinTransaction</span><span class="params">(Method method, Class&lt;?&gt; targetClass, <span class="keyword">final</span> InvocationCallback invocation)</span>  </span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> Throwable </span>{  </span><br><span class="line">  </span><br><span class="line">   <span class="comment">// If the transaction attribute is null, the method is non-transactional.  </span></span><br><span class="line">   <span class="keyword">final</span> TransactionAttribute txAttr = getTransactionAttributeSource().getTransactionAttribute(method, targetClass);  </span><br><span class="line">   <span class="keyword">final</span> PlatformTransactionManager tm = determineTransactionManager(txAttr);  </span><br><span class="line">   <span class="keyword">final</span> String joinpointIdentification = methodIdentification(method, targetClass);  </span><br><span class="line">  </span><br><span class="line">   <span class="keyword">if</span> (txAttr == <span class="keyword">null</span> || !(tm <span class="keyword">instanceof</span> CallbackPreferringPlatformTransactionManager)) {  </span><br><span class="line">      <span class="comment">// Standard transaction demarcation with getTransaction and commit/rollback calls.  </span></span><br><span class="line">       <span class="comment">//开启事务  </span></span><br><span class="line">      TransactionInfo txInfo = createTransactionIfNecessary(tm, txAttr, joinpointIdentification);  </span><br><span class="line">      Object retVal = <span class="keyword">null</span>;  </span><br><span class="line">      <span class="keyword">try</span> {  </span><br><span class="line">         <span class="comment">// This is an around advice: Invoke the next interceptor in the chain.  </span></span><br><span class="line">         <span class="comment">// This will normally result in a target object being invoked.  </span></span><br><span class="line">          <span class="comment">//反射调用业务方法  </span></span><br><span class="line">         retVal = invocation.proceedWithInvocation();  </span><br><span class="line">      }  </span><br><span class="line">      <span class="keyword">catch</span> (Throwable ex) {  </span><br><span class="line">         <span class="comment">// target invocation exception  </span></span><br><span class="line">          <span class="comment">//异常时，在catch逻辑中回滚事务  </span></span><br><span class="line">         completeTransactionAfterThrowing(txInfo, ex);  </span><br><span class="line">         <span class="keyword">throw</span> ex;  </span><br><span class="line">      }  </span><br><span class="line">      <span class="keyword">finally</span> {  </span><br><span class="line">         cleanupTransactionInfo(txInfo);  </span><br><span class="line">      }  </span><br><span class="line">       <span class="comment">//提交事务  </span></span><br><span class="line">      commitTransactionAfterReturning(txInfo);  </span><br><span class="line">      <span class="keyword">return</span> retVal;  </span><br><span class="line">   }  </span><br><span class="line">  </span><br><span class="line">   <span class="keyword">else</span> {  </span><br><span class="line">     <span class="comment">//....................  </span></span><br><span class="line">   }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
+<p>所以看了上面的代码就一目了然了，事务想要回滚，必须能够在这里捕捉到异常才行，如果异常中途被捕捉掉，那么事务将不会回滚。</p>
+<p>总结了以上几种情况。</p>
+
+    </div>
+   <div>
+        
+            <div style="text-align:left;font-size:14px;">
+    <p style="text-align:center;color: #ccc;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</p>
+            </div>
+        
+    </div>
+
+   
+    
+    
+    
+      
+  <div class="popular-posts-header">相关热门文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/2SZHQ52.html" rel="bookmark">如何优雅地记录操作日志</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/312VHNS.html" rel="bookmark">16个SpringBoot 扩展接口</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/WTSYSE.html" rel="bookmark">Java并发常见知识点&amp;面试题总结_进阶篇</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wexinPay.jpeg" alt="meadel 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/zhifubaoPay.jpeg" alt="meadel 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>meadel
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuemingde.com/posts/3MZGYE5.html" title="@Transactional 注解失效的3种原因及解决办法 ">https://xuemingde.com/posts/3MZGYE5.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
+              <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+              <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i> SpringBoot</a>
+              <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/HAXCJE.html" rel="prev" title="easypoi导入Excel表格报错">
+      <i class="fa fa-chevron-left"></i> easypoi导入Excel表格报错
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/2SZHQ52.html" rel="next" title="如何优雅地记录操作日志">
+      如何优雅地记录操作日志 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+
+  </article>
+  
+  
+  
+
+
+
+           </div>
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+          
+<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container-1',
+        blogId: '29491-1649429697615-963',
+        name: '不闻一时',
+        qrcode: 'https://xuemingde.com/pages/image/2022/05/31093822.png',
+        keyword: 'meadel',
+    });
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transactional%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Transactional失效场景介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D"><span class="nav-number">1.1.</span> <span class="nav-text">第一种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D"><span class="nav-number">1.2.</span> <span class="nav-text">第二种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D"><span class="nav-number">1.3.</span> <span class="nav-text">第三种</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transactional%E6%B3%A8%E8%A7%A3%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">@Transactional注解不起作用原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D-2"><span class="nav-number">2.1.</span> <span class="nav-text">第一种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D-2"><span class="nav-number">2.2.</span> <span class="nav-text">第二种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D-2"><span class="nav-number">2.3.</span> <span class="nav-text">第三种</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meadel" src="/images/touxiang.jpeg">
+  <p class="site-author-name" itemprop="name">meadel</p>
+  <div class="site-description" itemprop="description">我的愿望，世界和平</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80MDE5NDcwMjQ0MjU4NTUyL3Bvc3Rz" title="掘金 → https://juejin.cn/user/4019470244258552/posts"><i class="fa fa-share-alt fa-fw"></i>掘金</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZV9taW5k" title="CSDN → https://blog.csdn.net/xue_mind"><i class="fa fa-th-list fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLw==" title="https://tech.meituan.com/">美团团队</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  © 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meadel</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">875k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 ≈</span>
+    <span title="站点阅读时长">13:15</span>
+</div>
+  <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime1() { 
+        var grt= new Date("12/15/2019 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        var days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        var hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        var mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        var seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        var snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "与媳妇在一起 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime1()",250);
+</script>
+</div>
+<div>
+<span id="timeDate1">载入天数...</span><span id="times1">载入时分秒...</span>
+<script>
+    var now1 = new Date(); 
+    function createtime2() { 
+        var grt= new Date("07/24/2021 00:00:00");//在此处修改你的建站时间
+        now1.setTime(now1.getTime()+250); 
+        var days = (now1 - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        var hours = (now1 - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now1 - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        var mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        var seconds = (now1 - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        var snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate1").innerHTML = "已结婚 "+dnum+" 天 "; 
+        document.getElementById("times1").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime2()",250);
+</script>
+</div>
+<div>
+<span id="timeDate2">载入天数...</span><span id="times2">载入时分秒...</span>
+<script>
+    var now2 = new Date(); 
+    function createtime3() { 
+        var grt= new Date("03/28/1992 00:00:00");//在此处修改你的建站时间
+        now2.setTime(now2.getTime()+250); 
+        var days = (now2 - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        var hours = (now2 - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now2 - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        var mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        var seconds = (now2 - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        var snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate2").innerHTML = "我已经活了 "+dnum+" 天 "; 
+        document.getElementById("times2").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime3()",250);
+</script>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zindex="-1" src="../js/canvas-ribbon.js"></script>
+  <script src="../js/anime.min.js"></script>
+  <script src="../js/pjax.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/jquery.fancybox.min.js"></script>
+  <script src="../js/medium-zoom.min.js"></script>
+  <script src="../js/lozad.min.js"></script>
+  <script src="../js/pangu.min.js"></script>
+  <script src="../js/velocity.min.js"></script>
+  <script src="../js/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer="" src="../js/three.min.js"></script>
+    <script defer="" src="../js/three-waves.min.js"></script>
+    <script defer="" src="../js/canvas_lines.min.js"></script>
+    <script defer="" src="../js/canvas_sphere.min.js"></script>
+
+
+  
+  <script data-pjax="">
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+  <script data-pjax="">
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 34163,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax="">
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script data-pjax="">
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('../js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('../js/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'xOnoKG9QyBMz9vYupNusn9fn-gzGzoHsz',
+      appKey     : 'RfiNClAkp7Ewe9rlzrjAQEXC',
+      placeholder: "吐槽一下...",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : '',
+      requiredFields : ['nick','mail']
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <div id="aplayer"></div>
+  <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+  <script type="text/javascript" src="/dist/music.js"></script>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/lazyload-plugin/lazyload.intersectionObserver.min.js"></script></body></html>
