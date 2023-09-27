@@ -299,39 +299,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="区别">区别</h2>
-<ul>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ul>
 <li>HashTable 线程同步（线程安全），HashMap非线程同步（线程不安全）。</li>
 <li>HashTable 不允许键和值有空值，HashMap允许键和值有空值。</li>
 <li>HashTable使用Enumeration,HashMap使用iterator。</li>
 <li>HashTable的默认大小是11，扩容方式是old * 2 +1，HashMap的默认大小是16，扩容方式是2的指数倍。</li>
 <li>HashTable继承于Dictionary类，HashMap继承于AbstractMap类。</li>
 </ul>
-<h2 id="HashMap有哪些线程安全的方式">HashMap有哪些线程安全的方式</h2>
-<h3 id="Conllections-synchronizedMap">Conllections.synchronizedMap</h3>
-<p>此方法返回一个新的Map，这个新的Map就是线程安全的。<br>
-特点：<br>
-通过Conllections.synchronizedMap来封装所有不安全的HashMap方法，就连toString，hashCode都进行了封装，封装的关键点有：</p>
+<h2 id="HashMap有哪些线程安全的方式"><a href="#HashMap有哪些线程安全的方式" class="headerlink" title="HashMap有哪些线程安全的方式"></a>HashMap有哪些线程安全的方式</h2><h3 id="Conllections-synchronizedMap"><a href="#Conllections-synchronizedMap" class="headerlink" title="Conllections.synchronizedMap"></a>Conllections.synchronizedMap</h3><p>此方法返回一个新的Map，这个新的Map就是线程安全的。<br>特点：<br>通过Conllections.synchronizedMap来封装所有不安全的HashMap方法，就连toString，hashCode都进行了封装，封装的关键点有：</p>
 <ul>
 <li>使用了synchronized来进行互斥</li>
 <li>使用代理模式new一个新的类，这个类同样实现了Map接口。</li>
 </ul>
 <p>在HashMap上面，synchronized锁住的是对象，所以第一个申请的得到锁，其他线程将进入阻塞，等到唤醒。</p>
-<p>优点：<br>
-代码实现简单。</p>
-<p>缺点：<br>
-从锁的角度来看，上来就加锁，基本上锁住了尽可能大的代码块，性能比较差。</p>
-<h3 id="ConcurrentHashMap">ConcurrentHashMap</h3>
-<p>特点<br>
-重新写了HashMap，比较大的改变有以下几点：</p>
+<p>优点：<br>代码实现简单。</p>
+<p>缺点：<br>从锁的角度来看，上来就加锁，基本上锁住了尽可能大的代码块，性能比较差。</p>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>特点<br>重新写了HashMap，比较大的改变有以下几点：</p>
 <ul>
 <li>使用了新的锁机制，把Hashmap进行了拆分，拆分成了多个独立的块，这样在高并发的情况下减少了锁冲突的可能。</li>
 <li>使用的是NonfairSync，这个特性调用的是CAS指令来确保原子性与互斥性，当如果多个线程恰好操作到同一个segment上面，那么只会有一个线程能够运行。</li>
 </ul>
-<p>优点：<br>
-需要互斥的代码段比较少，性能也好，ConcurrentHashMap 把整个Map切分成多个块，发生锁碰撞的几率大大降低了，性能会比较好。</p>
-<p>缺点：<br>
-代码繁琐。</p>
+<p>优点：<br>需要互斥的代码段比较少，性能也好，ConcurrentHashMap 把整个Map切分成多个块，发生锁碰撞的几率大大降低了，性能会比较好。</p>
+<p>缺点：<br>代码繁琐。</p>
 
     </div>
    <div>
@@ -356,13 +345,13 @@
       <div class="popular-posts-title"><a href="/posts/3WWPT6W.html" rel="bookmark">聊聊ConcurrentHashMap</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/322ZD04.html" rel="bookmark">Seata 实现 TCC模式 解决分布式事务</a></div>
+      <div class="popular-posts-title"><a href="/posts/2NPWEZZ.html" rel="bookmark">InnoDB锁专题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/17B6E0W.html" rel="bookmark">分布式锁</a></div>
+      <div class="popular-posts-title"><a href="/posts/VQ077V.html" rel="bookmark">Innodb的MVCC实现原理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/5HB0NA.html" rel="bookmark">分布式锁的多种实现</a></div>
+      <div class="popular-posts-title"><a href="/posts/Y4WPCX.html" rel="bookmark">MySQL的事务隔离级别有哪些</a></div>
     </li>
   </ul>
 
@@ -427,8 +416,8 @@
       <i class="fa fa-chevron-left"></i> 聊聊ConcurrentHashMap
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/246RPYZ.html" rel="next" title="算法基础07：栈及实现简单计算器">
-      算法基础07：栈及实现简单计算器 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/357C6XC.html" rel="next" title="Java8中的Stream轻松遍历树形结构">
+      Java8中的Stream轻松遍历树形结构 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -589,13 +578,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">876k</span>
+    <span title="站点总字数">867k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:16</span>
+    <span title="站点阅读时长">13:08</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

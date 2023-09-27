@@ -305,22 +305,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="新建表">新建表</h2>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="新建表"><a href="#新建表" class="headerlink" title="新建表"></a>新建表</h2><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>主键设为自增</p>
-</blockquote>
-<h2 id="创建两条数据">创建两条数据</h2>
+<h2 id="创建两条数据"><a href="#创建两条数据" class="headerlink" title="创建两条数据"></a>创建两条数据</h2></blockquote>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t <span class="keyword">VALUES</span> (<span class="keyword">null</span>,<span class="number">30</span>, <span class="string">'c'</span>),(<span class="keyword">null</span>,<span class="number">22</span>, <span class="string">'d'</span>); </span><br></pre></td></tr></tbody></table></figure>
-<h2 id="复制插入">复制插入</h2>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
-<p><img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt=""></p>
-<h2 id="ID为UUID时。">ID为UUID时。</h2>
-<p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
+<h2 id="复制插入"><a href="#复制插入" class="headerlink" title="复制插入"></a>复制插入</h2><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">null</span>,age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p> <img data-src="https://xuemingde.com/pages/image/others/pIBzxW.png" alt="pIBzxW"></p>
+<h2 id="ID为UUID时。"><a href="#ID为UUID时。" class="headerlink" title="ID为UUID时。"></a>ID为UUID时。</h2><p>可用 REPLACE 函数将字符串中的某个字符替换即可。</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t </span><br><span class="line"><span class="keyword">SELECT</span> REPLACE(id,<span class="string">'a'</span>,<span class="string">'b'</span>),age,name</span><br><span class="line"><span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	age <span class="operator">&gt;</span> <span class="number">1</span>;  </span><br></pre></td></tr></tbody></table></figure>
-<p>将ID中的a替换成b</p>
-<h2 id="返回值时间加1个月">返回值时间加1个月</h2>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></tbody></table></figure>
+<p>将ID中的a替换成b  </p>
+<h2 id="返回值时间加1个月"><a href="#返回值时间加1个月" class="headerlink" title="返回值时间加1个月"></a>返回值时间加1个月</h2><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DATE_ADD( create_time, <span class="type">INTERVAL</span> <span class="number">1</span> <span class="keyword">MONTH</span> ) </span><br></pre></td></tr></tbody></table></figure>
 <p>create_time 为返回值，在原来的时间上加一个月。</p>
 
     </div>
@@ -343,16 +338,16 @@
       <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3V8G3VM.html" rel="bookmark">Qt基础学习笔记01</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2AJQNK2.html" rel="bookmark">Qt开发学习笔记02</a></div>
+      <div class="popular-posts-title"><a href="/posts/3V8G3VM.html" rel="bookmark">Qt基础学习笔记01</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/6251YR.html" rel="bookmark">Qt开发学习笔记01</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/2AJQNK2.html" rel="bookmark">Qt开发学习笔记02</a></div>
     </li>
   </ul>
 
@@ -579,13 +574,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">876k</span>
+    <span title="站点总字数">867k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:16</span>
+    <span title="站点阅读时长">13:08</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

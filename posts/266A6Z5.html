@@ -311,32 +311,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1>内存泄漏</h1>
-<p>是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。</p>
-<h2 id="内存泄漏产生的原因">内存泄漏产生的原因</h2>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h1><p>是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 </p>
+<h2 id="内存泄漏产生的原因"><a href="#内存泄漏产生的原因" class="headerlink" title="内存泄漏产生的原因"></a>内存泄漏产生的原因</h2><ol>
+<li>单例造成的内存泄漏 </li>
+</ol>
+<p>由于单例的静态特性使得其生命周期和应用的生命周期一样长，如果一个对象已经不再需要使用了，而单例对象还持有该对象的引用，就会使得该对象不能被正常回收，从而导致了内存泄漏。 </p>
 <ol>
-<li>单例造成的内存泄漏</li>
+<li>​非静态内部类创建静态实例造成的内存泄漏 </li>
+<li><p>​资源未关闭造成的内存泄漏 </p>
+<h2 id="如何避免内存泄漏"><a href="#如何避免内存泄漏" class="headerlink" title="如何避免内存泄漏"></a>如何避免内存泄漏</h2></li>
+<li><p>​尽量减少使用静态变量，或者使用完及时 赋值为 null。 </p>
+</li>
+<li>​各种连接（数据库连接，网络连接，IO连接）操作，务必显示调用close关闭 </li>
+<li>​减少长生命周期的对象持有短生命周期的引用； </li>
+<li>养成良好的编码习惯。<h2 id="遇到的内存泄漏"><a href="#遇到的内存泄漏" class="headerlink" title="遇到的内存泄漏"></a>遇到的内存泄漏</h2>在使用ThreadLocal时最后没有调用remove，使ThreadLocal对象没有被垃圾回收器回收，造成了内存泄漏。<h1 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h1></li>
 </ol>
-<p>由于单例的静态特性使得其生命周期和应用的生命周期一样长，如果一个对象已经不再需要使用了，而单例对象还持有该对象的引用，就会使得该对象不能被正常回收，从而导致了内存泄漏。</p>
-<ol start="2">
-<li>​非静态内部类创建静态实例造成的内存泄漏</li>
-<li>​资源未关闭造成的内存泄漏</li>
-</ol>
-<h2 id="如何避免内存泄漏">如何避免内存泄漏</h2>
-<ol>
-<li>​尽量减少使用静态变量，或者使用完及时 赋值为 null。</li>
-<li>​各种连接（数据库连接，网络连接，IO连接）操作，务必显示调用close关闭</li>
-<li>​减少长生命周期的对象持有短生命周期的引用；</li>
-<li>养成良好的编码习惯。</li>
-</ol>
-<h2 id="遇到的内存泄漏">遇到的内存泄漏</h2>
-<p>在使用ThreadLocal时最后没有调用remove，使ThreadLocal对象没有被垃圾回收器回收，造成了内存泄漏。</p>
-<h1>内存溢出</h1>
-<p>指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出。OutOfMemoryError</p>
-<h2 id="内存溢出产生的原因">内存溢出产生的原因</h2>
-<h3 id="堆溢出">堆溢出</h3>
-<blockquote>
-<p>java.lang.OutOfMemoryError: Java heap space</p>
+<p>指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错OOM,即所谓的内存溢出。OutOfMemoryError </p>
+<h2 id="内存溢出产生的原因"><a href="#内存溢出产生的原因" class="headerlink" title="内存溢出产生的原因"></a>内存溢出产生的原因</h2><h3 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h3><blockquote>
+<p>java.lang.OutOfMemoryError: Java heap space  </p>
 </blockquote>
 <p><strong>原因</strong></p>
 <ol>
@@ -348,16 +340,13 @@
 <li>检查是否存在大对象的分配，最有可能的是大数组分配。</li>
 <li>通过jmap命令，把堆内存dump下来，使用mat工具分析一下，检查是否存在内存泄露的问题。</li>
 <li>如果没有找到明显的内存泄露，使用 -Xmx 加大堆内存.</li>
-<li>还有一点容易被忽略，检查是否有大量的自定义的 Finalizable 对象，也有可能是框架内部提供的，考虑其存在的必要性</li>
+<li>还有一点容易被忽略，检查是否有大量的自定义的 Finalizable 对象，也有可能是框架内部提供的，考虑其存在的必要性  </li>
 </ol>
-<h3 id="永久代-元空间溢出">永久代/元空间溢出</h3>
-<p>报错信息：</p>
+<h3 id="永久代-元空间溢出"><a href="#永久代-元空间溢出" class="headerlink" title="永久代/元空间溢出"></a>永久代/元空间溢出</h3><p>报错信息：</p>
 <blockquote>
 <p>java.lang.OutOfMemoryError: PermGen spacejava.lang.OutOfMemoryError: Metaspace</p>
 </blockquote>
-<p><strong>原因</strong><br>
-永久代是 HotSot 虚拟机对方法区的具体实现，存放了被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等。<br>
-JDK8后，元空间替换了永久代，元空间使用的是本地内存，还有其它细节变化:</p>
+<p><strong>原因</strong><br>永久代是 HotSot 虚拟机对方法区的具体实现，存放了被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等。<br>JDK8后，元空间替换了永久代，元空间使用的是本地内存，还有其它细节变化: </p>
 <ul>
 <li>字符串常量由永久代转移到堆中</li>
 <li>和永久代相关的JVM参数已移除</li>
@@ -373,34 +362,29 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
 <blockquote>
 <p>Why does the memory usage increase when I redeploy a web application? That is because your web application has a memory leak. A common issue are “PermGen” memory leaks. They happen because the Classloader (and the Class objects it loaded) cannot be recycled unless some requirements are met (). They are stored in the permanent heap generation by the JVM, and when you redeploy a new class loader is created, which loads another copy of all these classes. This can cause OufOfMemoryErrors eventually. (*) The requirement is that all classes loaded by this classloader should be able to be gc’ed at the same time.</p>
 </blockquote>
-<p><strong>解决方法</strong><br>
-因为该OOM原因比较简单，解决方法有如下几种：</p>
+<p><strong>解决方法</strong><br>因为该OOM原因比较简单，解决方法有如下几种：</p>
 <ol>
 <li>检查是否永久代空间或者元空间设置的过小</li>
 <li>检查代码中是否存在大量的反射操作</li>
 <li>dump之后通过mat检查是否存在大量由于反射生成的代理类</li>
 <li>放大招，重启JVM</li>
 </ol>
-<h3 id="GC-overhead-limit-exceeded">GC overhead limit exceeded</h3>
-<p>这个异常比较的罕见，报错信息：</p>
+<h3 id="GC-overhead-limit-exceeded"><a href="#GC-overhead-limit-exceeded" class="headerlink" title="GC overhead limit exceeded"></a>GC overhead limit exceeded</h3><p>这个异常比较的罕见，报错信息：</p>
 <blockquote>
 <p>java.lang.OutOfMemoryError：GC overhead limit exceeded</p>
 </blockquote>
-<p><strong>原因</strong><br>
-这个是JDK6新加的错误类型，一般都是堆太小导致的。Sun 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。</p>
+<p><strong>原因</strong><br>这个是JDK6新加的错误类型，一般都是堆太小导致的。Sun 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。</p>
 <p><strong>解决方法</strong></p>
 <ol>
 <li>检查项目中是否有大量的死循环或有使用大内存的代码，优化代码。</li>
-<li>添加参数 -XX:-UseGCOverheadLimit &nbsp;禁用这个检查，其实这个参数解决不了内存问题，只是把错误的信息延后，最终出现 java.lang.OutOfMemoryError: Java heap space。</li>
+<li>添加参数 -XX:-UseGCOverheadLimit  禁用这个检查，其实这个参数解决不了内存问题，只是把错误的信息延后，最终出现 java.lang.OutOfMemoryError: Java heap space。</li>
 <li>dump内存，检查是否存在内存泄露，如果没有，加大内存。</li>
 </ol>
-<h3 id="方法栈溢出">方法栈溢出</h3>
-<p>报错信息：</p>
+<h3 id="方法栈溢出"><a href="#方法栈溢出" class="headerlink" title="方法栈溢出"></a>方法栈溢出</h3><p>报错信息：</p>
 <blockquote>
 <p>java.lang.OutOfMemoryError : unable to create new native Thread</p>
 </blockquote>
-<p><strong>原因</strong><br>
-出现这种异常，基本上都是创建的了大量的线程导致的，以前碰到过一次，通过jstack出来一共8000多个线程。</p>
+<p><strong>原因</strong><br>出现这种异常，基本上都是创建的了大量的线程导致的，以前碰到过一次，通过jstack出来一共8000多个线程。</p>
 <p><strong>解决方法</strong></p>
 <ol>
 <li>通过 -Xss 降低的每个线程栈大小的容量</li>
@@ -412,17 +396,13 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
 <li>maxuserprocess（ulimit -u）</li>
 <li>/proc/sys/vm/maxmapcount</li>
 </ul>
-<h3 id="非常规溢出">非常规溢出</h3>
-<p>下面这些OOM异常，可能大部分的同学都没有碰到过，但还是需要了解一下</p>
-<h3 id="分配超大数组">分配超大数组</h3>
-<p>报错信息 ：</p>
+<h3 id="非常规溢出"><a href="#非常规溢出" class="headerlink" title="非常规溢出"></a>非常规溢出</h3><p>下面这些OOM异常，可能大部分的同学都没有碰到过，但还是需要了解一下</p>
+<h3 id="分配超大数组"><a href="#分配超大数组" class="headerlink" title="分配超大数组"></a>分配超大数组</h3><p>报错信息 ：</p>
 <blockquote>
 <p>java.lang.OutOfMemoryError: Requested array size exceeds VM limit</p>
 </blockquote>
-<p>这种情况一般是由于不合理的数组分配请求导致的，在为数组分配内存之前，JVM 会执行一项检查。要分配的数组在该平台是否可以寻址(addressable)，如果不能寻址(addressable)就会抛出这个错误<br>
-解决方法就是检查你的代码中是否有创建超大数组的地方。</p>
-<h3 id="swap溢出">swap溢出</h3>
-<p>报错信息 ：</p>
+<p>这种情况一般是由于不合理的数组分配请求导致的，在为数组分配内存之前，JVM 会执行一项检查。要分配的数组在该平台是否可以寻址(addressable)，如果不能寻址(addressable)就会抛出这个错误<br>解决方法就是检查你的代码中是否有创建超大数组的地方。</p>
+<h3 id="swap溢出"><a href="#swap溢出" class="headerlink" title="swap溢出"></a>swap溢出</h3><p>报错信息 ：</p>
 <blockquote>
 <p>java.lang.OutOfMemoryError: Out of swap space</p>
 </blockquote>
@@ -431,23 +411,19 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
 <li>swap 分区大小分配不足；</li>
 <li>其他进程消耗了所有的内存。</li>
 </ol>
-<p>解决方案：<br>
-1、其它服务进程可以选择性的拆分出去 2、加大swap分区大小，或者加大机器内存大小</p>
-<h3 id="本地方法溢出">本地方法溢出</h3>
-<p>报错信息 ：</p>
+<p>解决方案：<br>1、其它服务进程可以选择性的拆分出去 2、加大swap分区大小，或者加大机器内存大小</p>
+<h3 id="本地方法溢出"><a href="#本地方法溢出" class="headerlink" title="本地方法溢出"></a>本地方法溢出</h3><p>报错信息 ：</p>
 <blockquote>
 <p>java.lang.OutOfMemoryError: stack_trace_with_native_method</p>
 </blockquote>
-<p>本地方法在运行时出现了内存分配失败，和之前的方法栈溢出不同，方法栈溢出发生在 JVM 代码层面，而本地方法溢出发生在JNI代码或本地方法处。<br>
-这个异常出现的概率极低，只能通过操作系统本地工具进行诊断，难度有点大，还是放弃为妙。</p>
+<p>本地方法在运行时出现了内存分配失败，和之前的方法栈溢出不同，方法栈溢出发生在 JVM 代码层面，而本地方法溢出发生在JNI代码或本地方法处。<br>这个异常出现的概率极低，只能通过操作系统本地工具进行诊断，难度有点大，还是放弃为妙。</p>
 <blockquote>
 <p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzE0NDQyMDk0LzI0NDkxNTE=">相关文章<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
-<h1>两者关系</h1>
-<ul>
-<li>内存泄漏的堆积最终会导致内存溢出</li>
-<li>内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。</li>
-<li>内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。</li>
+<h1 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h1><ul>
+<li>内存泄漏的堆积最终会导致内存溢出 </li>
+<li>内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。 </li>
+<li>内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。 </li>
 <li>内存溢出：一个盘子用尽各种方法只能装4个果子，你装了5个，结果掉倒地上不能吃了。这就是溢出。比方说栈，栈满时再做进栈必定产生空间溢出，叫上溢，栈空时再做退栈也产生空间溢出，称为下溢。就是分配的内存不足以放下数据项序列,称为内存溢出。说白了就是我承受不了那么多，那我就报错。</li>
 </ul>
 <blockquote>
@@ -480,10 +456,10 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
       <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2GN96QM.html" rel="bookmark">谈谈你对 JVM 方法区的理解</a></div>
+      <div class="popular-posts-title"><a href="/posts/1F4JVMQ.html" rel="bookmark">一文搞懂redis</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
+      <div class="popular-posts-title"><a href="/posts/2GN96QM.html" rel="bookmark">谈谈你对 JVM 方法区的理解</a></div>
     </li>
   </ul>
 
@@ -552,12 +528,12 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/2GN96QM.html" rel="prev" title="谈谈你对 JVM 方法区的理解">
-      <i class="fa fa-chevron-left"></i> 谈谈你对 JVM 方法区的理解
+    <a href="/posts/3Z8MTNB.html" rel="prev" title="垃圾回收器">
+      <i class="fa fa-chevron-left"></i> 垃圾回收器
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/2TD7P25.html" rel="next" title="Volatile的概念">
-      Volatile的概念 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/2GN96QM.html" rel="next" title="谈谈你对 JVM 方法区的理解">
+      谈谈你对 JVM 方法区的理解 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -633,7 +609,7 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">内存泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.1.</span> <span class="nav-text">内存泄漏产生的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">如何避免内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">遇到的内存泄漏</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">内存溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.</span> <span class="nav-text">内存溢出产生的原因</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.1.</span> <span class="nav-text">堆溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E4%BB%A3-%E5%85%83%E7%A9%BA%E9%97%B4%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.2.</span> <span class="nav-text">永久代/元空间溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC-overhead-limit-exceeded"><span class="nav-number">2.1.3.</span> <span class="nav-text">GC overhead limit exceeded</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.4.</span> <span class="nav-text">方法栈溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%B8%B8%E8%A7%84%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.5.</span> <span class="nav-text">非常规溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E8%B6%85%E5%A4%A7%E6%95%B0%E7%BB%84"><span class="nav-number">2.1.6.</span> <span class="nav-text">分配超大数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swap%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.7.</span> <span class="nav-text">swap溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.8.</span> <span class="nav-text">本地方法溢出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">两者关系</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">内存泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.1.</span> <span class="nav-text">内存泄漏产生的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">如何避免内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">遇到的内存泄漏</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA"><span class="nav-number">2.</span> <span class="nav-text">内存溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.</span> <span class="nav-text">内存溢出产生的原因</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.1.</span> <span class="nav-text">堆溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E4%BB%A3-%E5%85%83%E7%A9%BA%E9%97%B4%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.2.</span> <span class="nav-text">永久代/元空间溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC-overhead-limit-exceeded"><span class="nav-number">2.1.3.</span> <span class="nav-text">GC overhead limit exceeded</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.4.</span> <span class="nav-text">方法栈溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%B8%B8%E8%A7%84%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.5.</span> <span class="nav-text">非常规溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E8%B6%85%E5%A4%A7%E6%95%B0%E7%BB%84"><span class="nav-number">2.1.6.</span> <span class="nav-text">分配超大数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swap%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.7.</span> <span class="nav-text">swap溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%BA%A2%E5%87%BA"><span class="nav-number">2.1.8.</span> <span class="nav-text">本地方法溢出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">两者关系</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -718,13 +694,13 @@ JDK8后，元空间替换了永久代，元空间使用的是本地内存，还�
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">876k</span>
+    <span title="站点总字数">867k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:16</span>
+    <span title="站点阅读时长">13:08</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

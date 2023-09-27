@@ -44,9 +44,9 @@
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="容器">
 <meta property="article:tag" content="GC">
-<meta property="article:tag" content="MQ">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="MQ">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg">
 
@@ -314,106 +314,84 @@
 <p>原文： <span class="exturl" data-url="aHR0cHM6Ly94aWUuaW5mb3EuY24vYXJ0aWNsZS8xMTQwYjQ4Y2I5YTFlN2RiZmNmODU1Njk4">Docker下RabbitMQ延时队列实战两部曲之一：极速体验<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1105OoFOJe.jpg" alt=""></p>
-<h3 id="关于延时队列">关于延时队列</h3>
-<p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
+<h3 id="关于延时队列"><a href="#关于延时队列" class="headerlink" title="关于延时队列"></a>关于延时队列</h3><p>有的应用场景中，向 RabbitMQ 发出消息后，我们希望消费方不要立即消费，可以通过延时队列来实现，思路是将消息发送到 A  队列，此队列没有消费者，等消息过期后会进入 A 队列的 Dead Letter Exchange 中，B 队列绑定了这个 Dead Letter Exchange，消费方只要消费 B 队列的消息，就能实现延时消费了，如下图所示：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1106Vy0IMl.png" alt=""></p>
-<h3 id="延时的时长">延时的时长</h3>
-<ul>
+<h3 id="延时的时长"><a href="#延时的时长" class="headerlink" title="延时的时长"></a>延时的时长</h3><ul>
 <li>从上面的描述可以看出，延时时长就是消息的过期时间 TTL（Time To Live），这个参数可以通过以下两种方式设置：</li>
 </ul>
 <ol>
-<li>
-<p>生产消息时，设置该消息的 TTL；</p>
+<li><p>生产消息时，设置该消息的 TTL；</p>
 </li>
-<li>
-<p>设置整个队列的 TTL，队列中每个消息的 TTL 都是一样的；</p>
+<li><p>设置整个队列的 TTL，队列中每个消息的 TTL 都是一样的；</p>
 </li>
 </ol>
 <ul>
 <li>接下来的实战，我们将上述两种方式都体验一次；</li>
 </ul>
-<h3 id="环境信息">环境信息</h3>
-<ol>
+<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ol>
 <li>操作系统：Ubuntu 16.04.3 LTS</li>
 <li>Docker：1.12.6</li>
 <li>RabbitMQ：3.7.5-rc.1</li>
 </ol>
-<h3 id="极速体验">极速体验</h3>
-<ul>
-<li>
-<p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
+<h3 id="极速体验"><a href="#极速体验" class="headerlink" title="极速体验"></a>极速体验</h3><ul>
+<li><p>本章是《Docker 下 RabbitMQ 延时队列实战两部曲》系列的第一篇，重点是极速体验，先看一下即将体验的整体结构图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1108hShQ3h.png" alt=""></p>
 </li>
-<li>
-<p>简单说一下上图中应用的身份：</p>
+<li><p>简单说一下上图中应用的身份：</p>
 <ol>
 <li>delayrabbitmqconsumer：SpringBoot 框架的应用，连接 RabbitMQ 的两个队列，消费消息；</li>
 <li>messagettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中带有过期时间（TTL）；</li>
 <li>queuettlproducer：SpringBoot 框架的应用，收到 web 请求后向 RabbitMQ 发送消息，消息中不带过期时间（TTL），但是对应的消息队列已经设置了过期时间；</li>
 </ol>
 </li>
-<li>
-<p>开始实战：</p>
+<li><p>开始实战：</p>
 </li>
-<li>
-<p>确保当前电脑上 Docker 可用，创建 docker-compose.yml 文件，内容如下：</p>
+<li><p>确保当前电脑上 Docker 可用，创建 docker-compose.yml 文件，内容如下：</p>
 <figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'2'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rabbit1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"15672:15672"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">RABBITMQ_DEFAULT_PASS=888888</span></span><br><span class="line">  <span class="attr">rabbit2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">RAM_NODE=true</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">HA_ENABLE=true</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"15673:15672"</span></span><br><span class="line">  <span class="attr">rabbit3:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/rabbitmq-server:0.0.3</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTERED=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLUSTER_WITH=rabbit1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"15675:15672"</span></span><br><span class="line">  <span class="attr">messagettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/messagettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"18080:8080"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.exchange=message.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.source=message.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">  <span class="attr">queuettlproducer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/queuettlproducer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">messagettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"18081:8080"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.exchange=queue.ttl.exchange</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.source=queue.ttl.queue.source</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queue.ttl.value=5000</span></span><br><span class="line">  <span class="attr">delayrabbitmqconsumer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bolingcavalry/delayrabbitmqconsumer:0.0.1-SNAPSHOT</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">delayrabbitmqconsumer</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">queuettlproducer</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit1:rabbitmqhost1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit2:rabbitmqhost2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">rabbit3:rabbitmqhost3</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.username=admin</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">mq.rabbit.password=888888</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">message.ttl.queue.process=message.ttl.queue.process</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">queue.ttl.queue.process=queue.ttl.queue.process</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 </li>
-<li>
-<p>在 docker-compose.yml 文件所在目录执行命令 <strong>docker-compose up -d</strong>，docker 会先去下载镜像，然后创建多个容器，请静候启动完成，如下：</p>
+</ul>
+<ul>
+<li><p>在 docker-compose.yml 文件所在目录执行命令 <strong>docker-compose up -d</strong>，docker 会先去下载镜像，然后创建多个容器，请静候启动完成，如下：</p>
 <figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">root@willzhao-Vostro-3267:/usr/local/work/github/blog_demos/rabbitmq_docker_files/delaymq#</span> <span class="string">docker-compose</span> <span class="string">up</span> <span class="string">-d</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">network</span> <span class="string">"delaymq_default"</span> <span class="string">with</span> <span class="string">the</span> <span class="string">default</span> <span class="string">driver</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit1_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit2_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_rabbit3_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_messagettlproducer_1</span> <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_queuettlproducer_1</span>   <span class="string">...</span> <span class="string">done</span></span><br><span class="line"><span class="string">Creating</span> <span class="string">delaymq_delayrabbitmqconsumer_1</span> <span class="string">...</span> <span class="string">done</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <ul>
-<li>
-<p>一共启动了 5 个容器，将他们的名称和作用列举到下面表格中：</p>
+<li><p>一共启动了 5 个容器，将他们的名称和作用列举到下面表格中：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111M3kYEP.png" alt=""></p>
 </li>
-<li>
-<p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：http://:192.168.31.102:15672 ，可以进入 RabbitMQ 的登录页面，如下图：</p>
+<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，可以进入 RabbitMQ 的登录页面，如下图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1111USpaye.png" alt=""></p>
 </li>
-<li>
-<p>登录用户名：<strong>admin</strong>，密码：<strong>888888</strong>，登录后页面如下图，可以见到 RabbitMQ 集群已经就绪：</p>
+<li><p>登录用户名：<strong>admin</strong>，密码：<strong>888888</strong>，登录后页面如下图，可以见到 RabbitMQ 集群已经就绪：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1112mC9tZP.png" alt=""></p>
 </li>
-<li>
-<p>如果您的页面中的三个 RabbitMQ 还没有完全就绪（绿色状态），建议稍等几分钟后再刷新页面；</p>
+<li><p>如果您的页面中的三个 RabbitMQ 还没有完全就绪（绿色状态），建议稍等几分钟后再刷新页面；</p>
 </li>
-<li>
-<p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhL2JiYi8z">http://192.168.31.102:18080/messagettl/aaa/bbb/3<i class="fa fa-external-link-alt"></i></span> ，即可向 delaymq_messagettlproducer_1 容器发起一次请求，容器会发送一条带有 TTL  的消息，然后页面提示发送成功，如下图：</p>
+<li><p>我的电脑 IP 地址是 <strong>192.168.31.102</strong>，因此在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhL2JiYi8z">http://192.168.31.102:18080/messagettl/aaa/bbb/3<i class="fa fa-external-link-alt"></i></span> ，即可向 delaymq_messagettlproducer_1 容器发起一次请求，容器会发送一条带有 TTL  的消息，然后页面提示发送成功，如下图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11120vsfud.png" alt=""></p>
 </li>
-<li>
-<p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYy9kZGQ=">http://192.168.31.102:18081/queuettl/ccc/ddd<i class="fa fa-external-link-alt"></i></span> ，即可向  delaymq_queuettlproducer_1 容器发起一次请求，容器会向一个已经设置了 TTL  的队列发送一条消息，然后页面提示发送成功，如下图：</p>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYy9kZGQ=">http://192.168.31.102:18081/queuettl/ccc/ddd<i class="fa fa-external-link-alt"></i></span> ，即可向  delaymq_queuettlproducer_1 容器发起一次请求，容器会向一个已经设置了 TTL  的队列发送一条消息，然后页面提示发送成功，如下图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113xOGFtE.png" alt=""></p>
 </li>
-<li>
-<p>再次进入 RabbitMQ 管理页面 http://:192.168.31.102:15672 ，查看队列情况如下图，已经有四个队列了：</p>
+<li><p>再次进入 RabbitMQ 管理页面 <span class="exturl" data-url="aHR0cDovLzoxOTIuMTY4LjMxLjEwMjoxNTY3Mg==">http://:192.168.31.102:15672<i class="fa fa-external-link-alt"></i></span> ，查看队列情况如下图，已经有四个队列了：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/1113gawCLe.png" alt=""></p>
 </li>
-<li>
-<p>用下列表格对上述四个队列简单说明：</p>
+<li><p>用下列表格对上述四个队列简单说明：</p>
 </li>
-<li>
-<p>容器 delaymq_delayrabbitmqconsumer_1 中的 tomcat 在启动时候，由于此时队列还没创建，因此无法连接队列，会导致 tomcat 启动失败，进而导致容器退出(因为 tomcat 进程占据了控制台，它退出容器就会退出)，此时请执行 <strong>docker restart delaymq_delayrabbitmqconsumer_1</strong> 重启容器；</p>
+<li><p>容器 delaymq_delayrabbitmqconsumer_1 中的 tomcat 在启动时候，由于此时队列还没创建，因此无法连接队列，会导致 tomcat 启动失败，进而导致容器退出(因为 tomcat 进程占据了控制台，它退出容器就会退出)，此时请执行 <strong>docker restart delaymq_delayrabbitmqconsumer_1</strong> 重启容器；</p>
 </li>
-<li>
-<p>重启后，执行命令 <strong>docker logs -f delaymq_delayrabbitmqconsumer_1</strong>，开始实时打印消费者容器的日志，可以看到 SpringBoot 刚刚启动就把之前的两条消息给消费了，如下图红框所示：</p>
+<li><p>重启后，执行命令 <strong>docker logs -f delaymq_delayrabbitmqconsumer_1</strong>，开始实时打印消费者容器的日志，可以看到 SpringBoot 刚刚启动就把之前的两条消息给消费了，如下图红框所示：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/06/03/11140q4wiY.png" alt=""></p>
 </li>
-<li>
-<p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhMDEvYmJiMDEvMTA=">http://192.168.31.102:18080/messagettl/aaa01/bbb01/10<i class="fa fa-external-link-alt"></i></span> ，url 中的 10  表示延时十秒，去看 delaymq_delayrabbitmqconsumer_1 的日志，果然，10  秒钟后日志才会打印出来，如下所示，消息中的时间和日志的时间戳相差 10 秒：</p>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgwL21lc3NhZ2V0dGwvYWFhMDEvYmJiMDEvMTA=">http://192.168.31.102:18080/messagettl/aaa01/bbb01/10<i class="fa fa-external-link-alt"></i></span> ，url 中的 10  表示延时十秒，去看 delaymq_delayrabbitmqconsumer_1 的日志，果然，10  秒钟后日志才会打印出来，如下所示，消息中的时间和日志的时间戳相差 10 秒：</p>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-06-09 07:13:25.878  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.MessageTtlReceiver        : receive message : hello, aaa01 , bbb01, from queue [message.ttl.queue.source], delay 10's, 2018-06-09 07:13:15</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <ul>
-<li>
-<p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYzAxL2RkZDAx">http://192.168.31.102:18081/queuettl/ccc01/ddd01<i class="fa fa-external-link-alt"></i></span> ，会发送消息到队列  queue.ttl.queue.source，这个队列的 TTL 是 5 秒，在 delaymq_delayrabbitmqconsumer_1 的日志中可以看见发起和收到时间正好差 5 秒，如下：</p>
+<li><p>在浏览器输入：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMTAyOjE4MDgxL3F1ZXVldHRsL2NjYzAxL2RkZDAx">http://192.168.31.102:18081/queuettl/ccc01/ddd01<i class="fa fa-external-link-alt"></i></span> ，会发送消息到队列  queue.ttl.queue.source，这个队列的 TTL 是 5 秒，在 delaymq_delayrabbitmqconsumer_1 的日志中可以看见发起和收到时间正好差 5 秒，如下：</p>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-06-09 07:31:05.101  INFO 1 --- [cTaskExecutor-1] c.b.d.receiver.QueueTtlReceiver          : receive message : hello, ccc01 , ddd01, from queue [queue.ttl.queue.source], 2018-06-09 07:31:00</span><br></pre></td></tr></tbody></table></figure>
 </li>
-<li>
-<p>至此，咱们的极速体验延时队列实战就结束了，接下来的章节，我们一起实战详细的开发过程《Docker 下 RabbitMQ 延时队列实战两部曲之二：细说开发》</p>
+<li><p>至此，咱们的极速体验延时队列实战就结束了，接下来的章节，我们一起实战详细的开发过程《Docker 下 RabbitMQ 延时队列实战两部曲之二：细说开发》</p>
 </li>
 </ul>
 
@@ -446,7 +424,7 @@
       <div class="popular-posts-title"><a href="/posts/12A6AMS.html" rel="bookmark">四种WebSocket 使用方式</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/36WRKNE.html" rel="bookmark">分布式事务</a></div>
+      <div class="popular-posts-title"><a href="/posts/312VHNS.html" rel="bookmark">16个SpringBoot 扩展接口</a></div>
     </li>
   </ul>
 
@@ -494,9 +472,9 @@
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
               <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
-              <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
               <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
               <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i> SpringBoot</a>
+              <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
           </div>
 
         
@@ -676,13 +654,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">876k</span>
+    <span title="站点总字数">867k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:16</span>
+    <span title="站点阅读时长">13:08</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
