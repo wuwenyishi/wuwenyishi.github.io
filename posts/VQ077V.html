@@ -336,45 +336,54 @@
 <p>（4）怎么解决事务并发出现的问题？</p>
 <p>设置事务隔离级别，读未提交，读提交，重复读，序列化</p>
 <p>（5）数据库通过什么方式保证了事务的隔离性？</p>
-<p>通过加锁来实现事务的隔离性。 </p>
+<p>通过加锁来实现事务的隔离性。</p>
 <p>（6）频繁的加锁会带来什么问题？</p>
 <p>读数据的时候没办法修改。修改数据的时候没办法读取，极大的降低了数据库性能。</p>
 <p>（7）数据库是如何解决加锁后的性能问题的？</p>
 <p>MVCC 多版本控制实现读取数据不用加锁， 可以让读取数据同时修改。修改数据时同时可读取。</p>
-<h2 id="一、什么是MVCC？"><a href="#一、什么是MVCC？" class="headerlink" title="一、什么是MVCC？"></a>一、什么是MVCC？</h2><p>MVCC是在并发访问数据库时，通过对数据做多版本管理，避免因为写锁的阻塞而造成读数据的并发阻塞问题。</p>
+<h2 id="一、什么是MVCC？">一、什么是MVCC？</h2>
+<p>MVCC是在并发访问数据库时，通过对数据做多版本管理，避免因为写锁的阻塞而造成读数据的并发阻塞问题。</p>
 <p>通俗的讲就是MVCC通过保存数据的历史版本，根据比较版本号来处理数据的是否显示，从而达到读取数据的时候不需要加锁就可以保证事务隔离性的效果</p>
-<h2 id="二、Innodb-MVCC实现的核心知识点"><a href="#二、Innodb-MVCC实现的核心知识点" class="headerlink" title="二、Innodb MVCC实现的核心知识点"></a>二、Innodb MVCC实现的核心知识点</h2><p>1、事务版本号</p>
+<h2 id="二、Innodb-MVCC实现的核心知识点">二、Innodb MVCC实现的核心知识点</h2>
+<p>1、事务版本号</p>
 <p>2、表的隐藏列。</p>
 <p>3、undo log</p>
 <p>4、 read view</p>
-<h3 id="2-1、事务版本号"><a href="#2-1、事务版本号" class="headerlink" title="2-1、事务版本号"></a>2-1、事务版本号</h3><p>每次事务开启前都会从数据库获得一个自增长的事务ID，可以从事务ID判断事务的执行先后顺序。</p>
-<h3 id="2-2、表格的隐藏列"><a href="#2-2、表格的隐藏列" class="headerlink" title="2-2、表格的隐藏列"></a>2-2、表格的隐藏列</h3><p><strong>DB_TRX_ID:</strong>        记录操作该数据事务的事务ID；</p>
-<p><strong>DB_ROLL_PTR：</strong>指向上一个版本数据在undo log 里的位置指针；</p>
+<h3 id="2-1、事务版本号">2-1、事务版本号</h3>
+<p>每次事务开启前都会从数据库获得一个自增长的事务ID，可以从事务ID判断事务的执行先后顺序。</p>
+<h3 id="2-2、表格的隐藏列">2-2、表格的隐藏列</h3>
+<p><strong>DB_TRX_ID:</strong>        记录操作该数据事务的事务ID；</p>
+<p>**DB_ROLL_PTR：**指向上一个版本数据在undo log 里的位置指针；</p>
 <p><strong>DB_ROW_ID:</strong>      隐藏ID ，当创建表没有合适的索引作为聚集索引时，会用该隐藏ID创建聚集索引;</p>
-<h3 id="2-3、Undo-log"><a href="#2-3、Undo-log" class="headerlink" title="2-3、Undo log"></a>2-3、Undo log</h3><p>Undo log 主要用于记录数据被修改之前的日志，在表信息修改之前先会把数据拷贝到undo log 里，当事务进行回滚时可以通过undo log 里的日志进行数据还原。</p>
+<h3 id="2-3、Undo-log">2-3、Undo log</h3>
+<p>Undo log 主要用于记录数据被修改之前的日志，在表信息修改之前先会把数据拷贝到undo log 里，当事务进行回滚时可以通过undo log 里的日志进行数据还原。</p>
 <p><strong>Undo log 的用途</strong></p>
 <p>（1）保证事务进行rollback时的原子性和一致性，当事务进行回滚的时候可以用undo log的数据进行恢复。</p>
-<p> （2）用于MVCC快照读的数据，在MVCC多版本控制中，通过读取undo log的历史版本数据可以实现不同事务版本号都拥有自己独立的快照数据版本。</p>
-<h3 id="2-4、事务版本号、表格的隐藏列、undo-log的关系"><a href="#2-4、事务版本号、表格的隐藏列、undo-log的关系" class="headerlink" title="2-4、事务版本号、表格的隐藏列、undo log的关系"></a>2-4、事务版本号、表格的隐藏列、undo log的关系</h3><p>我们模拟一次数据修改的过程来让我们了解下事务版本号、表格隐藏的列和undo log他们之间的使用关系。</p>
+<p>（2）用于MVCC快照读的数据，在MVCC多版本控制中，通过读取undo log的历史版本数据可以实现不同事务版本号都拥有自己独立的快照数据版本。</p>
+<h3 id="2-4、事务版本号、表格的隐藏列、undo-log的关系">2-4、事务版本号、表格的隐藏列、undo log的关系</h3>
+<p>我们模拟一次数据修改的过程来让我们了解下事务版本号、表格隐藏的列和undo log他们之间的使用关系。</p>
 <p><strong>（1）首先准备一张原始原始数据表</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1014-pZjl2q.jpg" alt="1014-F3zJiu"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1014-pZjl2q.jpg" alt=""></p>
 <p>（2）开启一个事务A： 对user_info表执行 update  user_info set name =“李四”where id=1 会进行如下流程操作</p>
 <p>1、首先获得一个事务编号 104</p>
 <p>2、把user_info表修改前的数据拷贝到undo log</p>
 <p>3、修改user_info表 id=1的数据</p>
 <p>4、把修改后的数据事务版本号改成 当前事务版本号，并把DB_ROLL_PTR 地址指向undo log数据地址。</p>
 <p>（3）最后执行完结果如图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-gKgh48.jpg" alt="img"></p>
-<h3 id="2-5、Read-view"><a href="#2-5、Read-view" class="headerlink" title="2-5、Read view"></a>2-5、Read view</h3><p>在innodb 中每个事务开启后都会得到一个read_view。副本主要保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号，其实简单的说这个副本中保存的是系统中当前不应该被本事务看到的其他事务id列表。</p>
-<h3 id="Read-view-的几个重要属性"><a href="#Read-view-的几个重要属性" class="headerlink" title="Read view 的几个重要属性"></a>Read view 的几个重要属性</h3><p><strong>trx_ids:</strong>       当前系统活跃(未提交)事务版本号集合。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-gKgh48.jpg" alt=""></p>
+<h3 id="2-5、Read-view">2-5、Read view</h3>
+<p>在innodb 中每个事务开启后都会得到一个read_view。副本主要保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号，其实简单的说这个副本中保存的是系统中当前不应该被本事务看到的其他事务id列表。</p>
+<h3 id="Read-view-的几个重要属性">Read view 的几个重要属性</h3>
+<p><strong>trx_ids:</strong>       当前系统活跃(未提交)事务版本号集合。</p>
 <p><strong>low_limit_id:</strong>   创建当前read view 时“当前系统最大<strong>事务版本号</strong>+1”。</p>
 <p><strong>up_limit_id:</strong>    创建当前read view 时“系统正处于<strong>活跃事务</strong>最小版本号”</p>
 <p><strong>creator_trx_id:</strong>  创建当前read view的事务版本号；</p>
-<h3 id="Read-view-匹配条件"><a href="#Read-view-匹配条件" class="headerlink" title="Read view 匹配条件"></a>Read view 匹配条件</h3><p>（1）数据事务ID &lt;up_limit_id 则显示</p>
+<h3 id="Read-view-匹配条件">Read view 匹配条件</h3>
+<p>（1）数据事务ID &lt;up_limit_id 则显示</p>
 <p>如果数据事务ID小于read view中的最小活跃事务ID，则可以肯定该数据是在当前事务启之前就已经存在了的,所以可以显示。</p>
 <p>（2）数据事务ID&gt;=low_limit_id 则不显示</p>
 <p>如果数据事务ID大于read view 中的当前系统的最大事务ID，则说明该数据是在当前read view 创建之后才产生的，所以数据不予显示。</p>
-<p>（3） up_limit_id &lt;=<strong>数据事务ID&lt;</strong>low_limit_id  则与活跃事务集合<strong>trx_ids</strong>里匹配</p>
+<p>（3） up_limit_id &lt;=<strong>数据事务ID&lt;<strong>low_limit_id  则与活跃事务集合</strong>trx_ids</strong>里匹配</p>
 <p>如果数据的事务ID大于最小的活跃事务ID,同时又小于等于系统最大的事务ID，这种情况就说明这个数据有可能是在当前事务开始的时候还没有提交的。</p>
 <p>所以这时候我们需要把数据的事务ID与当前read view 中的活跃事务集合trx_ids 匹配:</p>
 <p><strong>情况1:</strong>    如果事务ID不存在于trx_ids 集合（则说明read view产生的时候事务已经commit了），这种情况数据则可以显示。</p>
@@ -382,46 +391,54 @@
 <p><strong>情况3：</strong>  如果事务ID既存在trx_ids而且又不等于creator_trx_id那就说明read view产生的时候数据还没有提交，又不是自己生成的，所以这种情况下此数据不能显示。</p>
 <p>（4）不满足read view条件时候，从undo log里面获取数据</p>
 <p>当数据的事务ID不满足read view条件时候，从undo log里面获取数据的历史版本，然后数据历史版本事务号回头再来和read view 条件匹配 ，直到找到一条满足条件的历史数据，或者找不到则返回空结果；</p>
-<h2 id="三、Innodb实现MCC的原理"><a href="#三、Innodb实现MCC的原理" class="headerlink" title="三、Innodb实现MCC的原理"></a>三、Innodb实现MCC的原理</h2><p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-C85dvp.jpg" alt="img"></p>
-<h3 id="3-1、模拟MVCC实现流程"><a href="#3-1、模拟MVCC实现流程" class="headerlink" title="3-1、模拟MVCC实现流程"></a>3-1、模拟MVCC实现流程</h3><p>下面我们通过开启两个同时进行的事务来模拟MVCC的工作流程。</p>
+<h2 id="三、Innodb实现MCC的原理">三、Innodb实现MCC的原理</h2>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-C85dvp.jpg" alt=""></p>
+<h3 id="3-1、模拟MVCC实现流程">3-1、模拟MVCC实现流程</h3>
+<p>下面我们通过开启两个同时进行的事务来模拟MVCC的工作流程。</p>
 <p><strong>（1）创建user_info表，插入一条初始化数据</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-S1wPS3.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1017-S1wPS3.jpg" alt=""></p>
 <p><strong>（2）事务A和事务B同时对user_info进行修改和查询操作</strong></p>
 <p>事务A：update user_info set name =”李四”</p>
 <p>事务B：select * fom user_info where id=1</p>
 <p><strong>问题：</strong></p>
 <p>先开启事务A ，在事务A修改数据后但未进行commit，此时执行事B。最后返回结果如何。</p>
 <p><strong>执行流程如下图：</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-WDgWpW.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-WDgWpW.jpg" alt=""></p>
 <p><strong>执行流程说明：</strong></p>
 <p><strong>（1）事务A：开启事务，首先得到一个事务编号102；</strong></p>
 <p><strong>（2）事务B：开启事务，得到事务编号103；</strong></p>
 <p><strong>（3）事务A：进行修改操作，首先把原数据拷贝到undolog,然后对数据进行修改，标记事务编号和上一个数据版本在undo log的地址。</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-1vklPX.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-1vklPX.jpg" alt=""></p>
 <p><strong>（4）事务B： 此时事务B获得一个read view ，read view对应的值如下</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-O8GlSP.jpg" alt="1018-OSba8r"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1018-O8GlSP.jpg" alt=""></p>
 <p><strong>（5）事务B： 执行查询语句，此时得到的是事务A修改后的数据</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-GRx57G.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-GRx57G.jpg" alt=""></p>
 <p><strong>（6）事务B： 把数据与read view进行匹配，</strong></p>
 <p>数据事务ID为102 等于up_limit_id （这里不小于up_limit_id）</p>
 <p>数据事务ID为102  小于low_limit_id</p>
 <p>数据事务ID为102存在于  trx_ids，</p>
 <p>数据事务ID为102不等于creator_trx_id</p>
 <p>发现不满足read view显示条件，所以从undo lo获取历史版本的数据再和read view进行匹配，最后返回数据如下。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-YvOauz.jpg" alt="img"></p>
-<h2 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h2><h3 id="各种事务隔离级别下的Read-view-工作方式"><a href="#各种事务隔离级别下的Read-view-工作方式" class="headerlink" title="各种事务隔离级别下的Read view 工作方式"></a>各种事务隔离级别下的Read view 工作方式</h3><p>RC(read commit) 级别下同一个事务里面的每一次查询都会获得一个新的read view副本。这样就可能造成同一个事务里前后读取数据可能不一致的问题（重复读）</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-x1NF8M.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-YvOauz.jpg" alt=""></p>
+<h2 id="四、补充">四、补充</h2>
+<h3 id="各种事务隔离级别下的Read-view-工作方式">各种事务隔离级别下的Read view 工作方式</h3>
+<p>RC(read commit) 级别下同一个事务里面的每一次查询都会获得一个新的read view副本。这样就可能造成同一个事务里前后读取数据可能不一致的问题（重复读）</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-x1NF8M.jpg" alt=""></p>
 <p>RR(重复读)级别下的一个事务里只会获取一次read view副本，从而保证每次查询的数据都是一样的。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-EwbKQo.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1019-EwbKQo.jpg" alt=""></p>
 <p>READ_UNCOMMITTED 级别的事务不会获取read view 副本。</p>
-<h3 id="快照读和当前读"><a href="#快照读和当前读" class="headerlink" title="快照读和当前读"></a>快照读和当前读</h3><p><strong>快照读</strong></p>
+<h3 id="快照读和当前读">快照读和当前读</h3>
+<p><strong>快照读</strong></p>
 <p>快照读是指读取数据时不是读取最新版本的数据，而是基于历史版本读取的一个快照信息（mysql读取undo log历史版本) ，快照读可以使普通的SELECT 读取数据时不用对表数据进行加锁，从而解决了因为对数据库表的加锁而导致的两个如下问题</p>
 <p>1、解决了因加锁导致的修改数据时无法对数据读取问题;</p>
 <p>2、解决了因加锁导致读取数据时无法对数据进行修改的问题;</p>
 <p><strong>当前读</strong></p>
-<p>当前读是读取的数据库最新的数据，当前读和快照读不同，因为要读取最新的数据而且要保证事务的隔离性，所以当前读是需要对数据进行加锁的（Update    delete    insert   select ….lock in share mode   select for update 为当前读）</p>
-<h2 id="五、讨论"><a href="#五、讨论" class="headerlink" title="五、讨论"></a>五、讨论</h2><h3 id="MVCC是否有解决幻读问题？"><a href="#MVCC是否有解决幻读问题？" class="headerlink" title="MVCC是否有解决幻读问题？"></a>MVCC是否有解决幻读问题？</h3><p>看到有很多网友对这个话题有讨论，这里补充一下和大家理一理这个问题，首先我通过验证得出来的结论是MVCC不存在幻读问题的，但也并不是说MVCC解决了幻读的问题，经过理论的推断和验证得到的结论是在<strong>快照读的情况下可以避免幻读问题，在当前读的情况下则需要使用间隙锁来解决幻读问题的</strong>。</p>
-<h3 id="MVCC不存在幻读问题（RR级别的情况下）"><a href="#MVCC不存在幻读问题（RR级别的情况下）" class="headerlink" title="MVCC不存在幻读问题（RR级别的情况下）"></a>MVCC不存在幻读问题（RR级别的情况下）</h3><p>首先确认一点MVCC属于快照读的，在进行快照读的情况下是不会对数据进行加锁，而是基于事务版本号和undo历史版本读取数据，其实上面的文章已经说得很清楚了，我们根据上面的MVCC流程来推导，无论如何在MVCC的情况下都是不会出现幻读的问题的，如下图。</p>
+<p>当前读是读取的数据库最新的数据，当前读和快照读不同，因为要读取最新的数据而且要保证事务的隔离性，所以当前读是需要对数据进行加锁的（Update    delete    insert   select …lock in share mode   select for update 为当前读）</p>
+<h2 id="五、讨论">五、讨论</h2>
+<h3 id="MVCC是否有解决幻读问题？">MVCC是否有解决幻读问题？</h3>
+<p>看到有很多网友对这个话题有讨论，这里补充一下和大家理一理这个问题，首先我通过验证得出来的结论是MVCC不存在幻读问题的，但也并不是说MVCC解决了幻读的问题，经过理论的推断和验证得到的结论是在<strong>快照读的情况下可以避免幻读问题，在当前读的情况下则需要使用间隙锁来解决幻读问题的</strong>。</p>
+<h3 id="MVCC不存在幻读问题（RR级别的情况下）">MVCC不存在幻读问题（RR级别的情况下）</h3>
+<p>首先确认一点MVCC属于快照读的，在进行快照读的情况下是不会对数据进行加锁，而是基于事务版本号和undo历史版本读取数据，其实上面的文章已经说得很清楚了，我们根据上面的MVCC流程来推导，无论如何在MVCC的情况下都是不会出现幻读的问题的，如下图。</p>
 <p>1、开启事务1，获得事务ID为1。</p>
 <p>2、事务1执行查询，得到readview。</p>
 <p>3、开始事务2。</p>
@@ -429,16 +446,17 @@
 <p>5、提交事务2。</p>
 <p>6、执行事务1的第二次查询 (因为这里是RR级别，所以不会再去获得readview,还是使用第一次获得的readview)</p>
 <p>7、最后得到的结果是，插入的数据不会显示，因为插入的数据事务ID大于等于 readview里的最大活跃事务ID。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-iIrKAA.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-iIrKAA.jpg" alt=""></p>
 <p><strong>实际案例：</strong></p>
 <p>首先关闭数据库的自动提交事务功能。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-8492ES.jpg" alt="img"></p>
-<p> 然后使用手动提交事务的方式，进行一次快照读，但是不提交事务，然后启动插入数据的事务，进行数据插入 commit，结果我发现在使用快照读的时候，数据是可以插入成功的，那这也就说明了一个问题，<strong>快照读的时候就根本没加锁，否则的话数据是不可能插入成功的，而且在插入数据提交成功后，我们执行第二条查询 语句是读取不到中间插入的这条数据的，这也就说明在没有加锁的情况下，基于历史版本的MVCC快照读是可以避免幻读问题的</strong>。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-iUMz8J.jpg" alt="1020-gEDxYX"></p>
-<h3 id="当前读存的幻读问题解决方案"><a href="#当前读存的幻读问题解决方案" class="headerlink" title="当前读存的幻读问题解决方案"></a>当前读存的幻读问题解决方案</h3><p>上面我们已经论证了在RR级别快照读的情况下，是不存在幻读问题的。  因为会基于历史版本读取数据，但是当前读的话就不同了，当前读每次都会读取最新的数据。所以两次读取中间如果可以插入数据，那么就肯定会造成幻读问题，所以在当前读的情况下就必须通过一种方式来解决幻读问题，而这种方式就是采用加锁来解决。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-8492ES.jpg" alt=""></p>
+<p>然后使用手动提交事务的方式，进行一次快照读，但是不提交事务，然后启动插入数据的事务，进行数据插入 commit，结果我发现在使用快照读的时候，数据是可以插入成功的，那这也就说明了一个问题，<strong>快照读的时候就根本没加锁，否则的话数据是不可能插入成功的，而且在插入数据提交成功后，我们执行第二条查询 语句是读取不到中间插入的这条数据的，这也就说明在没有加锁的情况下，基于历史版本的MVCC快照读是可以避免幻读问题的</strong>。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1020-iUMz8J.jpg" alt=""></p>
+<h3 id="当前读存的幻读问题解决方案">当前读存的幻读问题解决方案</h3>
+<p>上面我们已经论证了在RR级别快照读的情况下，是不存在幻读问题的。  因为会基于历史版本读取数据，但是当前读的话就不同了，当前读每次都会读取最新的数据。所以两次读取中间如果可以插入数据，那么就肯定会造成幻读问题，所以在当前读的情况下就必须通过一种方式来解决幻读问题，而这种方式就是采用加锁来解决。</p>
 <p><strong>实际案例：</strong></p>
 <p>首先关闭数据库的自动提交事务功能，  使用当前读的方式演示和上面一样的流程，结果发现在当前读的时候没有提交事务之前是根本无法进行数据插入的，所以这也就说明了，使用当前读的时候会对这个范围内的数据进行加锁，所以无法在查询的范围内进行数据插入，这无疑也证明了在当前读的情况下mysql是使用锁的机制来避免出现重复读和幻读问题的。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1021-hFAdty.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1021-hFAdty.jpg" alt=""></p>
 <blockquote>
 <p>原文： <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81Mjk3Nzg2Mg==">数据库基础（四）Innodb MVCC实现原理 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
@@ -469,10 +487,10 @@
       <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2NPWEZZ.html" rel="bookmark">InnoDB锁专题</a></div>
+      <div class="popular-posts-title"><a href="/posts/J71QTX.html" rel="bookmark">秒杀系统设计</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3K8NATX.html" rel="bookmark">Mysql里的锁</a></div>
+      <div class="popular-posts-title"><a href="/posts/2NPWEZZ.html" rel="bookmark">InnoDB锁专题</a></div>
     </li>
   </ul>
 
@@ -706,13 +724,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">867k</span>
+    <span title="站点总字数">876k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:08</span>
+    <span title="站点阅读时长">13:16</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

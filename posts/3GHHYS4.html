@@ -43,6 +43,7 @@
 <meta property="article:tag" content="函数">
 <meta property="article:tag" content="变量">
 <meta property="article:tag" content="bug">
+<meta property="article:tag" content="Qt">
 <meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="多线程">
@@ -53,7 +54,6 @@
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="集合">
 <meta property="article:tag" content="线程池">
-<meta property="article:tag" content="Qt">
 <meta property="article:tag" content="容器">
 <meta property="article:tag" content="Widget">
 <meta name="twitter:card" content="summary">
@@ -321,25 +321,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><h3 id="自定义控件"><a href="#自定义控件" class="headerlink" title="自定义控件"></a>自定义控件</h3><p>应该做过吧？能举几个例子吗？还有其他的吗？</p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="Qt">Qt</h2>
+<h3 id="自定义控件">自定义控件</h3>
+<p>应该做过吧？能举几个例子吗？还有其他的吗？</p>
 <p>你觉得自定义控件的方法主要是哪些？</p>
 <p>答：从外观设计上：QSS、继承绘制函数重绘、继承QStyle相关类重绘、组合拼装等等</p>
 <p>从功能行为上：重写事件函数、添加或者修改信号和槽等等</p>
-<h3 id="QSS"><a href="#QSS" class="headerlink" title="QSS"></a>QSS</h3><p>QSS平时使用的多吗？能举几个例子吗？</p>
+<h3 id="QSS">QSS</h3>
+<p>QSS平时使用的多吗？能举几个例子吗？</p>
 <p>都是如何使用，能说说吗？</p>
 <p>答：1.将QSS统一写在一个文件中，通过程序给主窗口加载；</p>
 <p>2.写成一个字符串中，通过程序给主窗口加载；</p>
 <p>3.需要使用的地方，写一个字符串，加载给对象；</p>
 <p>4.QT Designer中填写；</p>
-<h3 id="事件机制："><a href="#事件机制：" class="headerlink" title="事件机制："></a>事件机制：</h3><p><strong>QT程序是事件驱动的，事件到处都可以遇到。能说说平时经常使用到哪些事件吗？</strong></p>
+<h3 id="事件机制：">事件机制：</h3>
+<p><strong>QT程序是事件驱动的，事件到处都可以遇到。能说说平时经常使用到哪些事件吗？</strong></p>
 <p>常见的QT事件类型如下:</p>
-<p> <strong>键盘事件</strong>: 按键按下和松开    <strong>鼠标事件</strong>: 鼠标移动,鼠标按键的按下和松开</p>
-<p> <strong>拖放事件</strong>: 用鼠标进行拖放    <strong>滚轮事件:</strong> 鼠标滚轮滚动</p>
-<p> <strong>绘屏事件</strong>: 重绘屏幕的某些部分    <strong>定时事件</strong>: 定时器到时</p>
-<p> <strong>焦点事件</strong>: 键盘焦点移动   <strong>进入和离开事件</strong>: 鼠标移入widget之内,或是移出</p>
-<p> <strong>移动事件</strong>: widget的位置改变    <strong>大小改变事件</strong>: widget的大小改变</p>
-<p> <strong>显示和隐藏事件</strong>: widget显示和隐藏    <strong>窗口事件</strong>: 窗口是否为当前窗口</p>
-<h3 id="知道QT事件机制有几种级别的事件过滤吗？能大致描述下吗？"><a href="#知道QT事件机制有几种级别的事件过滤吗？能大致描述下吗？" class="headerlink" title="知道QT事件机制有几种级别的事件过滤吗？能大致描述下吗？"></a><strong>知道QT事件机制有几种级别的事件过滤吗？能大致描述下吗？</strong></h3><p>答：根据对Qt事件机制的分析, 我们可以得到5种级别的事件过滤,处理办法. 以功能从弱到强, 排列如下:</p>
+<p><strong>键盘事件</strong>: 按键按下和松开    <strong>鼠标事件</strong>: 鼠标移动,鼠标按键的按下和松开</p>
+<p><strong>拖放事件</strong>: 用鼠标进行拖放    <strong>滚轮事件:</strong> 鼠标滚轮滚动</p>
+<p><strong>绘屏事件</strong>: 重绘屏幕的某些部分    <strong>定时事件</strong>: 定时器到时</p>
+<p><strong>焦点事件</strong>: 键盘焦点移动   <strong>进入和离开事件</strong>: 鼠标移入widget之内,或是移出</p>
+<p><strong>移动事件</strong>: widget的位置改变    <strong>大小改变事件</strong>: widget的大小改变</p>
+<p><strong>显示和隐藏事件</strong>: widget显示和隐藏    <strong>窗口事件</strong>: 窗口是否为当前窗口</p>
+<h3 id="知道QT事件机制有几种级别的事件过滤吗？能大致描述下吗？"><strong>知道QT事件机制有几种级别的事件过滤吗？能大致描述下吗？</strong></h3>
+<p>答：根据对Qt事件机制的分析, 我们可以得到5种级别的事件过滤,处理办法. 以功能从弱到强, 排列如下:</p>
 <p>1）重载特定事件处理函数.</p>
 <p>最常见的事件处理办法就是重载象mousePressEvent(), keyPressEvent(), paintEvent() 这样的特定事件处理函数.</p>
 <p>2）重载event()函数.</p>
@@ -352,58 +357,70 @@
 <p>一旦我们给qApp(每个程序中唯一的QApplication对象)装上过滤器,那么所有的事件在发往任何其他的过滤器时,都要先经过当前这个 eventFilter(). 在debug的时候,这个办法就非常有用, 也常常被用来处理失效了的widget的鼠标事件,通常这些事件会被QApplication::notify()丢掉. ( 在QApplication::notify() 中, 是先调用qApp的过滤器, 再对事件进行分析, 以决定是否合并或丢弃)</p>
 <p>5） 继承QApplication类,并重载notify()函数.</p>
 <p>Qt 是用QApplication::notify()函数来分发事件的.想要在任何事件过滤器查看任何事件之前先得到这些事件,重载这个函数是唯一的办法. 通常来说事件过滤器更好用一些, 因为不需要去继承QApplication类. 而且可以给QApplication对象安装任意个数的事件。</p>
-<h3 id="QT版本："><a href="#QT版本：" class="headerlink" title="QT版本："></a><strong>QT版本：</strong></h3><p>请问使用的QT版本是？有没有使用过QT4？QT5的信号槽与QT4相比有什么改进？</p>
+<h3 id="QT版本："><strong>QT版本：</strong></h3>
+<p>请问使用的QT版本是？有没有使用过QT4？QT5的信号槽与QT4相比有什么改进？</p>
 <p>答：</p>
 <ul>
-<li>编译期：检查信号与槽是否存在，参数类型检查，Q_OBJECT是否存在</li>
+<li>
+<p>编译期：检查信号与槽是否存在，参数类型检查，Q_OBJECT是否存在</p>
+</li>
+<li>
+<p>信号可以和普通的函数、类的普通成员函数、lambda函数连接（而不再局限于信号函数和槽函数）</p>
+</li>
+<li>
+<p>参数可以是 typedef 的或使用不同的namespace specifier</p>
+</li>
+<li>
+<p>可以允许一些自动的类型转换（即信号和槽参数类型不必完全匹配）</p>
+</li>
 </ul>
-<ul>
-<li>信号可以和普通的函数、类的普通成员函数、lambda函数连接（而不再局限于信号函数和槽函数）</li>
-<li>参数可以是 typedef 的或使用不同的namespace specifier</li>
-<li>可以允许一些自动的类型转换（即信号和槽参数类型不必完全匹配）</li>
-</ul>
-<h3 id="信号槽机制："><a href="#信号槽机制：" class="headerlink" title="信号槽机制："></a><strong>信号槽机制：</strong></h3><p>能说下你的理解吗？</p>
+<h3 id="信号槽机制："><strong>信号槽机制：</strong></h3>
+<p>能说下你的理解吗？</p>
 <p>能用什么方法替代？槽函数可以是虚函数吗？</p>
 <p>答：回调函数。可以。</p>
-<h3 id="信号槽同步与异步："><a href="#信号槽同步与异步：" class="headerlink" title="信号槽同步与异步："></a><strong>信号槽同步与异步：</strong></h3><p>信号槽是同步的还是异步的？分别如何实现？</p>
+<h3 id="信号槽同步与异步："><strong>信号槽同步与异步：</strong></h3>
+<p>信号槽是同步的还是异步的？分别如何实现？</p>
 <p>答：通常使用的connect，实际上最后一个参数使用的是Qt::AutoConnection类型：Qt支持6种连接方式，其中3中最主要:</p>
 <p>1.Qt::DirectConnection（直连方式）（信号与槽函数关系类似于函数调用，同步执行）</p>
-<p>  当信号发出后，相应的槽函数将立即被调用。emit语句后的代码将在所有槽函数执行完毕后被执行。</p>
+<p>当信号发出后，相应的槽函数将立即被调用。emit语句后的代码将在所有槽函数执行完毕后被执行。</p>
 <p>2.Qt::QueuedConnection（排队方式）（此时信号被塞到信号队列里了，信号与槽函数关系类似于消息通信，异步执行）</p>
-<p>  当信号发出后，排队到信号队列中，需等到接收对象所属线程的事件循环取得控制权时才取得该信号，调用相应的槽函数。emit语句后的代码将在发出信号后立即被执行，无需等待槽函数执行完毕。</p>
+<p>当信号发出后，排队到信号队列中，需等到接收对象所属线程的事件循环取得控制权时才取得该信号，调用相应的槽函数。emit语句后的代码将在发出信号后立即被执行，无需等待槽函数执行完毕。</p>
 <p>3.Qt::AutoConnection（自动方式）</p>
-<p>  Qt的默认连接方式，如果信号的发出和接收这个信号的对象同属一个线程，那个工作方式与直连方式相同；否则工作方式与排队方式相同。</p>
+<p>Qt的默认连接方式，如果信号的发出和接收这个信号的对象同属一个线程，那个工作方式与直连方式相同；否则工作方式与排队方式相同。</p>
 <p>4.Qt::BlockingQueuedConnection(信号和槽必须在不同的线程中，否则就产生死锁)</p>
-<p>  这个是完全同步队列只有槽线程执行完成才会返回，否则发送线程也会一直等待，相当于是不同的线程可以同步起来执行。</p>
+<p>这个是完全同步队列只有槽线程执行完成才会返回，否则发送线程也会一直等待，相当于是不同的线程可以同步起来执行。</p>
 <p>5.Qt::UniqueConnection</p>
-<p>  与默认工作方式相同，只是不能重复连接相同的信号和槽，因为如果重复连接就会导致一个信号发出，对应槽函数就会执行多次。</p>
+<p>与默认工作方式相同，只是不能重复连接相同的信号和槽，因为如果重复连接就会导致一个信号发出，对应槽函数就会执行多次。</p>
 <p>6.Qt::AutoCompatConnection</p>
-<p>  是为了连接Qt4与Qt3的信号槽机制兼容方式，工作方式与Qt::AutoConnection一样。</p>
-<h3 id="如果这个参数不设置的话，默认表示的是那种方式呢？"><a href="#如果这个参数不设置的话，默认表示的是那种方式呢？" class="headerlink" title="如果这个参数不设置的话，默认表示的是那种方式呢？"></a><strong>如果这个参数不设置的话，默认表示的是那种方式呢？</strong></h3><p>  没加的话与直连方式相同：当信号发出后，相应的槽函数将立即被调用。emit语句后的代码将在所有槽函数执行完毕后被执行。在这个线程内是顺序执行、同步的，但是与其它线程之间肯定是异步的了。如果使用多线程，仍然需要手动同步。</p>
+<p>是为了连接Qt4与Qt3的信号槽机制兼容方式，工作方式与Qt::AutoConnection一样。</p>
+<h3 id="如果这个参数不设置的话，默认表示的是那种方式呢？"><strong>如果这个参数不设置的话，默认表示的是那种方式呢？</strong></h3>
+<p>没加的话与直连方式相同：当信号发出后，相应的槽函数将立即被调用。emit语句后的代码将在所有槽函数执行完毕后被执行。在这个线程内是顺序执行、同步的，但是与其它线程之间肯定是异步的了。如果使用多线程，仍然需要手动同步。</p>
 <p><strong>多线程：</strong></p>
 <p>多线程使用的多吗？能简单说说吗？QT多线程有两种方法实现。</p>
-<h3 id="知道死锁吗？死锁是如何产生的？"><a href="#知道死锁吗？死锁是如何产生的？" class="headerlink" title="知道死锁吗？死锁是如何产生的？"></a><strong>知道死锁吗？死锁是如何产生的？</strong></h3><p>答：死锁的产生有如下四个必要条件</p>
+<h3 id="知道死锁吗？死锁是如何产生的？"><strong>知道死锁吗？死锁是如何产生的？</strong></h3>
+<p>答：死锁的产生有如下四个必要条件</p>
 <p>1.　资源是互斥的,同一时刻只能有一个进程占有该资源</p>
 <p>2.　资源的释放只能有该进程自己完成</p>
 <p>3.　线程在获取到需要资源之前,不会释放已有资源</p>
 <p>4.　存在这么一条循环等待的队列,线程T1,T2,T3…, Tn</p>
 <p>T1持有自己的资源请求T2的资源,….Tn持有自己的资源请求T1的资源</p>
-<h3 id="线程同步的方法有哪些？"><a href="#线程同步的方法有哪些？" class="headerlink" title="线程同步的方法有哪些？"></a><strong>线程同步的方法有哪些？</strong></h3><p>答：</p>
+<h3 id="线程同步的方法有哪些？"><strong>线程同步的方法有哪些？</strong></h3>
+<p>答：</p>
 <ol>
 <li>互斥量（QMutex）</li>
 </ol>
 <p>​       QMutex m_Mutex;        m_Mutex.lock();        m_Mutex.unlock();</p>
-<ol>
+<ol start="2">
 <li>互斥锁（QMutexLocker）</li>
 </ol>
 <p>​        QMutexLocker mutexLocker(&amp;m_Mutex);</p>
 <p>​        从声明处开始（在构造函数中加锁），出了作用域自动解锁（在析构函数中解锁）。</p>
-<ol>
+<ol start="3">
 <li>等待条件（QWaitCondition）</li>
 </ol>
-<p>QWaitCondtion m_WaitCondition; m_WaitConditon.wait(&amp;m_muxtex, time);                 </p>
+<p>QWaitCondtion m_WaitCondition; m_WaitConditon.wait(&amp;m_muxtex, time);</p>
 <p>m_WaitCondition.wakeAll();</p>
-<ol>
+<ol start="4">
 <li>QReadWriteLock类</li>
 </ol>
 <p>》一个线程试图对一个加了读锁的互斥量进行上读锁，允许；</p>
@@ -412,33 +429,40 @@
 <p>》一个线程试图对一个加了写锁的互斥量进行上写锁，阻塞。</p>
 <p>读写锁比较适用的情况是：需要多次对共享的数据进行读操作的阅读线程。</p>
 <p>QReadWriterLock 与QMutex相似，除了它对 “read”,”write”访问进行区别对待。它使得多个读者可以共时访问数据。使用QReadWriteLock而不是QMutex，可以使得多线程程序更具有并发性。</p>
-<ol>
+<ol start="5">
 <li>信号量QSemaphore</li>
 </ol>
 <p>但是还有些互斥量（资源）的数量并不止一个，比如一个电脑安装了2个打印机，我已经申请了一个，但是我不能霸占这两个，你来访问的时候如果发现还有空闲的仍然可以申请到的。于是这个互斥量可以分为两部分，已使用和未使用。</p>
-<ol>
+<ol start="6">
 <li>QReadLocker便利类和QWriteLocker便利类对QReadWriteLock进行加解锁</li>
 </ol>
-<h3 id="设计模式："><a href="#设计模式：" class="headerlink" title="设计模式："></a><strong>设计模式：</strong></h3><p>设计模式平时有使用到吗？能不能说下常见的设计模式有哪些？能不能说说大致的概念？能不能具体说下工作中如何使用的？</p>
+<h3 id="设计模式："><strong>设计模式：</strong></h3>
+<p>设计模式平时有使用到吗？能不能说下常见的设计模式有哪些？能不能说说大致的概念？能不能具体说下工作中如何使用的？</p>
 <p>答：总体来说设计模式分为三大类：</p>
 <p><strong>创建型模式，共五种</strong>：<strong>工厂方法模式、抽象工厂模式、单例模式</strong>、建造者模式、原型模式。</p>
 <p><strong>结构型模式，共七种</strong>：<strong>适配器模式</strong>、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。</p>
 <p><strong>行为型模式，共十一种</strong>：策略模式、模板方法模式、<strong>观察者模式</strong>、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、<strong>中介者模式</strong>、解释器模式。</p>
-<h3 id="动态库"><a href="#动态库" class="headerlink" title="动态库"></a><strong>动态库</strong></h3><p>工作中有没有使用过动态库和静态库？能不能简单说下两者的区别？</p>
+<h3 id="动态库"><strong>动态库</strong></h3>
+<p>工作中有没有使用过动态库和静态库？能不能简单说下两者的区别？</p>
 <p>答：静态库：在链接阶段将汇编生成的目标文件.o与引用库一起链接打包到可执行文件中，可简单看成（.o或者.obj文件的集合）。（1）对函数库的链接是放在编译时期完成的（2）程序在运行时与函数库没有瓜葛，移植方便（3）浪费空间和资源</p>
 <p>动态库：（1）将库函数的链接载入推迟到程序运行时期（2）可以实现进程间的资源共享（因此也称为共享库）（3）将一些程序升级变得简单（4）可以真正的做到链接载入完全由程序员在程序代码中控制（显示调用）</p>
-<h3 id="动态库一般也会有个lib文件，那么和静态库lib文件有什么区别？"><a href="#动态库一般也会有个lib文件，那么和静态库lib文件有什么区别？" class="headerlink" title="动态库一般也会有个lib文件，那么和静态库lib文件有什么区别？"></a><strong>动态库一般也会有个lib文件，那么和静态库lib文件有什么区别？</strong></h3><p>动态库中的.lib文件叫做导入库，对于导入库而言，其实际的执行代码位于动态库中，导入库只包含了地址符号表等，确保程序找到对应函数的一些基本地址信息。</p>
-<p>　　静态库中的.lib叫做静态库，本身就包含了实际执行代码、符号表等等</p>
-<h3 id="TCP-UDP-HTTP-S-："><a href="#TCP-UDP-HTTP-S-：" class="headerlink" title="TCP/UDP/HTTP(S)："></a><strong>TCP/UDP/HTTP(S)：</strong></h3><p>TCP/UDP有使用过吗？能结合工作具体说说吗？</p>
+<h3 id="动态库一般也会有个lib文件，那么和静态库lib文件有什么区别？"><strong>动态库一般也会有个lib文件，那么和静态库lib文件有什么区别？</strong></h3>
+<p>动态库中的.lib文件叫做导入库，对于导入库而言，其实际的执行代码位于动态库中，导入库只包含了地址符号表等，确保程序找到对应函数的一些基本地址信息。</p>
+<p>静态库中的.lib叫做静态库，本身就包含了实际执行代码、符号表等等</p>
+<h3 id="TCP-UDP-HTTP-S-："><strong>TCP/UDP/HTTP(S)：</strong></h3>
+<p>TCP/UDP有使用过吗？能结合工作具体说说吗？</p>
 <p>HTTP协议有使用过吗？QT5中使用的相关联的主要的几个类？</p>
 <p>答：QNetworkAccessManager/QNetworkRequest/QNetworkReply。</p>
-<h3 id="算法："><a href="#算法：" class="headerlink" title="算法："></a><strong>算法：</strong></h3><p>平时使用算法比较多吗？能简单说下快排的思想吗？时间复杂度是多少？</p>
+<h3 id="算法："><strong>算法：</strong></h3>
+<p>平时使用算法比较多吗？能简单说下快排的思想吗？时间复杂度是多少？</p>
 <p>答：基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</p>
 <p>时间复杂度：平均为O(nlogn)，最好为O(nlogn)，最差为O(logn2)</p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/solution/database?from=20065&amp;from_column=20065"><strong>数据库</strong></a><strong>：</strong></p>
 <p>工作中有使用数据库吗？MySql使用多吗？</p>
-<h3 id="串口通讯："><a href="#串口通讯：" class="headerlink" title="串口通讯："></a><strong>串口通讯：</strong></h3><p>有使用到串口通讯吗？能简单说下具体应用吗？</p>
-<h3 id="SVN-Git"><a href="#SVN-Git" class="headerlink" title="SVN/Git:"></a><strong>SVN/Git:</strong></h3><p>平时团队或者公司是如何管理代码的？使用什么工具？</p>
+<h3 id="串口通讯："><strong>串口通讯：</strong></h3>
+<p>有使用到串口通讯吗？能简单说下具体应用吗？</p>
+<h3 id="SVN-Git"><strong>SVN/Git:</strong></h3>
+<p>平时团队或者公司是如何管理代码的？使用什么工具？</p>
 <p><strong>定位问题：</strong></p>
 <p>请问下，如果软件除了问题（Bug），如何快速定位？主要方法有哪些？</p>
 <p>答：打印输出/代码调试/日志记录/分析工具/找同事讨论。</p>
@@ -456,10 +480,12 @@
 <p>5、小黄鸭调试法</p>
 <p>小黄鸭调试法是程序员们经常使用的调试代码方法之一。</p>
 <p>小黄鸭不懂程序，所以我们可以向他解释每一行程序的作用，以此来激发灵感。</p>
-<h3 id="IDE-集成开发环境"><a href="#IDE-集成开发环境" class="headerlink" title="IDE(集成开发环境):"></a><strong>IDE(集成开发环境):</strong></h3><p>Windows系统主流IDE：QT Creator、Visual Studio等</p>
+<h3 id="IDE-集成开发环境"><strong>IDE(集成开发环境):</strong></h3>
+<p>Windows系统主流IDE：QT Creator、Visual Studio等</p>
 <p>Mac系统主流：XCode等</p>
 <p>问题：平时主要使用的IDE是什么？有没有做过QT跨平台？</p>
-<h3 id="引用和指针有何区别："><a href="#引用和指针有何区别：" class="headerlink" title="引用和指针有何区别："></a><strong>引用和指针有何区别：</strong></h3><p>1.指针是一个对象，而引用仅是一个对象的别名</p>
+<h3 id="引用和指针有何区别："><strong>引用和指针有何区别：</strong></h3>
+<p>1.指针是一个对象，而引用仅是一个对象的别名</p>
 <p>2.引用使用时无需解引用，指针需要</p>
 <p>3.引用只能在定义时初始化一次，而指针可变</p>
 <p>4.引用不能为空，指针可以为空</p>
@@ -468,7 +494,8 @@
 <p>7.引用自加改变引用值的内容，指针自加改变指针的指向</p>
 <p>8.sizeof含义不同，引用结果为引用类型的大小，指针始终是地址空间所占大小</p>
 <p>9.引用比指针使用起来相对更安全</p>
-<h3 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a><strong>虚函数</strong></h3><p>什么情况下使用虚函数？和纯虚函数有什么区别？虚析构函数的作用是什么？（虚函数表）</p>
+<h3 id="虚函数"><strong>虚函数</strong></h3>
+<p>什么情况下使用虚函数？和纯虚函数有什么区别？虚析构函数的作用是什么？（虚函数表）</p>
 <p>答：虚函数的主要作用是“<strong>运行时多态</strong>”。虚析构函数的作用在于使用delete删除一个对象时，能确保析构函数被正确的执行。</p>
 <p>区别：</p>
 <ol>
@@ -479,73 +506,89 @@
 <li>虚函数的定义形式：virtual {method body}</li>
 </ol>
 <p>纯虚函数的定义形式：virtual { } = 0;</p>
-<p>   在虚函数和纯虚函数的定义中不能有static标识符，原因很简单，被static修饰的函数在编译时候要求前期bind,然而虚函数却是动态绑定(run-time bind)，而且被两者修饰的函数生命周期(life recycle)也不一样。</p>
-<ol>
-<li><p>虚函数必须实现，如果不实现，编译器将报错，错误提示为：</p>
-<p>error LNK<em>**</em>: unresolved external symbol “public: virtual void __thiscall</p>
+<p>在虚函数和纯虚函数的定义中不能有static标识符，原因很简单，被static修饰的函数在编译时候要求前期bind,然而虚函数却是动态绑定(run-time bind)，而且被两者修饰的函数生命周期(life recycle)也不一样。</p>
+<ol start="6">
+<li>
+<p>虚函数必须实现，如果不实现，编译器将报错，错误提示为：</p>
+<p>error LNK****: unresolved external symbol “public: virtual void __thiscall</p>
 <p>ClassName::virtualFunctionName(void)”</p>
 </li>
-<li><p>对于虚函数来说，父类和子类都有各自的版本。由多态方式调用的时候动态绑定。</p>
+<li>
+<p>对于虚函数来说，父类和子类都有各自的版本。由多态方式调用的时候动态绑定。</p>
 </li>
-<li><p>实现了纯虚函数的子类，该纯虚函数在子类中就编程了虚函数，子类的子类即孙子类可以覆盖</p>
+<li>
+<p>实现了纯虚函数的子类，该纯虚函数在子类中就编程了虚函数，子类的子类即孙子类可以覆盖</p>
 <p>该虚函数，由多态方式调用的时候动态绑定。</p>
 </li>
-<li><p>虚函数是C++中用于实现多态(polymorphism)的机制。核心理念就是通过基类访问派生类定义的</p>
+<li>
+<p>虚函数是C++中用于实现多态(polymorphism)的机制。核心理念就是通过基类访问派生类定义的</p>
 <p>函数。</p>
 </li>
-<li><p>多态性指相同对象收到不同消息或不同对象收到相同消息时产生不同的实现动作。C++支持两种多态性：编译时多态性，运行时多态性。</p>
-<p>a.编译时多态性：通过重载函数实现</p>
-<p>b 运行时多态性：通过虚函数实现。</p>
-</li>
-<li><p>如果一个类中含有纯虚函数，那么任何试图对该类进行实例化的语句都将导致错误的产生，因为抽象基类(ABC)是不能被直接调用的。必须被子类继承重载以后，根据要求调用其子类的方法。</p>
+<li>
+<p>多态性指相同对象收到不同消息或不同对象收到相同消息时产生不同的实现动作。C++支持两种多态性：编译时多态性，运行时多态性。</p>
 </li>
 </ol>
-<pre><code>1.Qt创建线程的方式有哪些 
-2.信号槽实现原理
-3.Qt的消息传输机制
-4.QML和C++的交互方式
-5.如何在C++中定义model并在qml中使用
-6.moveToThread的优缺点
-7.Qt中的http是同步还是异步，如何实现同步
-8.Qt的信号槽是线程安全的吗，Qt信号的连接方式？
-
-Qt 支持这些信号槽连接类型：
-AutoConnection：自动连接（默认）如果信号在接收对象具有亲和性的线程中发出，则行为与直接连接相同。否则，行为与排队连接相同。
-DirectConnection：直接连接，发出信号时立即调用槽。槽在发射器的线程中执行，不一定是接收器的线程。
-Queued Connection：当控制返回到接收者线程的事件循环时调用该槽。插槽在接收者的线程中执行。
-BlockingQueuedConnection：与 Queued Connection 一样调用槽，除了当前线程阻塞，直到槽返回。
-注意：使用该类型连接同一线程中的对象会导致死锁。
-UniqueConnection：唯一连接行为 与自动连接相同，但只有在不复制现有连接时才会建立连接。即，如果相同的信号已经连接到同一对对象的相同槽，则不建立连接并且connect()返回false。
-
-可以通过将附加参数传递给connect()来指定连接类型。请注意，如果事件循环在接收者的线程中运行，则在发送者和接收者位于不同线程中时使用直接连接是不安全的，原因与调用位于另一个线程中的对象上的任何函数是不安全的原因相同。
-
-QObject::connect () 本身是线程安全的。
-
-9.元对象系统介绍
-10.QPixmap和QImage的区别 参考这里
-11.Qt跨平台的优缺点
-</code></pre><h2 id="C-基础篇"><a href="#C-基础篇" class="headerlink" title="C++基础篇"></a>C++基础篇</h2><ul>
-<li><p>1.线程同步的方式有哪些</p>
+<p>a.编译时多态性：通过重载函数实现</p>
+<p>b 运行时多态性：通过虚函数实现。</p>
+<ol start="11">
+<li>
+<p>如果一个类中含有纯虚函数，那么任何试图对该类进行实例化的语句都将导致错误的产生，因为抽象基类(ABC)是不能被直接调用的。必须被子类继承重载以后，根据要求调用其子类的方法。</p>
+<p>1.Qt创建线程的方式有哪些<br>
+2.信号槽实现原理<br>
+3.Qt的消息传输机制<br>
+4.QML和C++的交互方式<br>
+5.如何在C++中定义model并在qml中使用<br>
+6.moveToThread的优缺点<br>
+7.Qt中的http是同步还是异步，如何实现同步<br>
+8.Qt的信号槽是线程安全的吗，Qt信号的连接方式？</p>
+<p>Qt 支持这些信号槽连接类型：<br>
+AutoConnection：自动连接（默认）如果信号在接收对象具有亲和性的线程中发出，则行为与直接连接相同。否则，行为与排队连接相同。<br>
+DirectConnection：直接连接，发出信号时立即调用槽。槽在发射器的线程中执行，不一定是接收器的线程。<br>
+Queued Connection：当控制返回到接收者线程的事件循环时调用该槽。插槽在接收者的线程中执行。<br>
+BlockingQueuedConnection：与 Queued Connection 一样调用槽，除了当前线程阻塞，直到槽返回。<br>
+注意：使用该类型连接同一线程中的对象会导致死锁。<br>
+UniqueConnection：唯一连接行为 与自动连接相同，但只有在不复制现有连接时才会建立连接。即，如果相同的信号已经连接到同一对对象的相同槽，则不建立连接并且connect()返回false。</p>
+<p>可以通过将附加参数传递给connect()来指定连接类型。请注意，如果事件循环在接收者的线程中运行，则在发送者和接收者位于不同线程中时使用直接连接是不安全的，原因与调用位于另一个线程中的对象上的任何函数是不安全的原因相同。</p>
+<p>QObject::connect () 本身是线程安全的。</p>
+<p>9.元对象系统介绍<br>
+10.QPixmap和QImage的区别 参考这里<br>
+11.Qt跨平台的优缺点</p>
 </li>
-<li><p>2.线程间通信如何实现</p>
+</ol>
+<h2 id="C-基础篇">C++基础篇</h2>
+<ul>
+<li>
+<p>1.线程同步的方式有哪些</p>
 </li>
-<li><p>3.进程间通信如何实现 参考这里</p>
+<li>
+<p>2.线程间通信如何实现</p>
 </li>
-<li><p>4.IO模型用过哪些</p>
+<li>
+<p>3.进程间通信如何实现 参考这里</p>
 </li>
-<li><p>5.IO实现的方式有哪些</p>
+<li>
+<p>4.IO模型用过哪些</p>
 </li>
-<li><p>6.用过哪些STL</p>
+<li>
+<p>5.IO实现的方式有哪些</p>
 </li>
-<li><p>7.迭代器失效怎么产生的，如何避免 参考这里</p>
+<li>
+<p>6.用过哪些STL</p>
 </li>
-<li><p>8.vector、list、map实现原理</p>
+<li>
+<p>7.迭代器失效怎么产生的，如何避免 参考这里</p>
 </li>
-<li><p>9.如何实现多态</p>
+<li>
+<p>8.vector、list、map实现原理</p>
 </li>
-<li><p>10.虚函数实现原理，虚函数表结构，对于菱形继承结构，虚函数表处理方式是什么</p>
+<li>
+<p>9.如何实现多态</p>
 </li>
-<li><p>11.内存结构分配方式</p>
+<li>
+<p>10.虚函数实现原理，虚函数表结构，对于菱形继承结构，虚函数表处理方式是什么</p>
+</li>
+<li>
+<p>11.内存结构分配方式</p>
 <figure class="highlight jboss-cli"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C++ 内存分区：栈、堆、全局/静态存储区、常量存储区、代码区。</span><br><span class="line">1.栈：存放函数的局部变量、函数参数、返回地址等，由编译器自动分配和释放。</span><br><span class="line">2.堆：动态申请的内存空间，就是由 malloc 分配的内存块，由程序员控制它的分配和释放，如果程序执行结束还没有释放，操作系统会自动回收。</span><br><span class="line">3.全局区/静态存储区（<span class="string">.bss</span> 段和 <span class="string">.data</span> 段）：存放全局变量和静态变量，程序运行结束操作系统自动释放，在 C 语言中，未初始化的放在 <span class="string">.bss</span> 段中，初始化的放在 <span class="string">.data</span> 段中，C++ 中不再区分了。</span><br><span class="line">4.常量存储区（<span class="string">.data</span> 段）：存放的是常量，不允许修改，程序运行结束自动释放。</span><br><span class="line">5.代码区（<span class="string">.text</span> 段）：存放代码，不允许修改，但可以执行。编译后的二进制文件存放在这里。</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
@@ -579,22 +622,30 @@ QObject::connect () 本身是线程安全的。
 <p>33.vector中resize和reverse的区别</p>
 <figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reserve是容器预留空间，但并不真正创建元素对象，在创建对象之前，不能引用容器内的元素，因此当加入新的元素时，需要用push_back()/insert()函数。</span><br><span class="line"><span class="attribute">resize</span>是改变容器的大小，并且创建对象，因此，调用这个函数之后，就可以引用容器内的对象了，因此当加入新的元素时，用operator<span class="selector-attr">[]</span>操作符，或者用迭代器来引用元素对象。</span><br><span class="line">再者，两个函数的形式是有区别的，reserve函数之后一个参数，即需要预留的容器的空间；<span class="attribute">resize</span>函数可以有两个参数，第一个参数是容器新的大小，第二个参数是要加入容器中的新元素，如果这个参数被省略，那么就调用元素对象的默认构造函数。</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li><p>34.内存泄露的情况</p>
+<li>
+<p>34.内存泄露的情况</p>
 </li>
-<li><p>35.链表实现原理</p>
+<li>
+<p>35.链表实现原理</p>
 </li>
-<li><p>36.动态库和静态库的区别</p>
+<li>
+<p>36.动态库和静态库的区别</p>
 </li>
-<li><p>37.多线程在什么场景下使用</p>
+<li>
+<p>37.多线程在什么场景下使用</p>
 </li>
-<li><p>38.动态库导出的接口设计有哪些需要注意的。工作中有没有做过动态接口设计，如何考虑不同版本的兼容性。假如已经导出了接口给外部使用，并且该版本已经发布出去了，如果新增加了接口，那么如何保障已经发出去的版本能够调用到这个新的接口，如何设计这个兼容性问题。 参考这里</p>
+<li>
+<p>38.动态库导出的接口设计有哪些需要注意的。工作中有没有做过动态接口设计，如何考虑不同版本的兼容性。假如已经导出了接口给外部使用，并且该版本已经发布出去了，如果新增加了接口，那么如何保障已经发出去的版本能够调用到这个新的接口，如何设计这个兼容性问题。 参考这里</p>
 </li>
-<li><p>39.用过哪些设计模式，举例说明其原理 参考这里</p>
+<li>
+<p>39.用过哪些设计模式，举例说明其原理 参考这里</p>
 </li>
-<li><p>40.堆和栈的区别</p>
+<li>
+<p>40.堆和栈的区别</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.申请方式：栈是系统自动分配，堆是程序员主动申请。</span><br><span class="line">2.申请后系统响应：分配栈空间，如果剩余空间大于申请空间则分配成功，否则分配失败栈溢出；申请堆空间，堆在内存中呈现的方式类似于链表（记录空闲地址空间的链表），在链表上寻找第一个大于申请空间的节点分配给程序，将该节点从链表中删除，大多数系统中该块空间的首地址存放的是本次分配空间的大小，便于释放，将该块空间上的剩余空间再次连接在空闲链表上。</span><br><span class="line">3.栈在内存中是连续的一块空间（向低地址扩展）最大容量是系统预定好的，堆在内存中的空间（向高地址扩展）是不连续的。</span><br><span class="line">4.申请效率：栈是有系统自动分配，申请效率高，但程序员无法控制；堆是由程序员主动申请，效率低，使用起来方便但是容易产生碎片。</span><br><span class="line">5.存放的内容：栈中存放的是局部变量，函数的参数；堆中存放的内容由程序员控制。</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 </li>
-<li><p>41.什么是二叉搜索树</p>
+<li>
+<p>41.什么是二叉搜索树</p>
 <blockquote>
 <p>二叉搜索树，左子树的所有节点都小于当前节点，右子树的所有节点都大于当前节点，并且每棵子树都具有上述特点二叉搜索树，左子树的所有节点都小于当前节点，右子树的所有节点都大于当前节点，并且每棵子树都具有上述特点</p>
 </blockquote>
@@ -630,7 +681,7 @@ QObject::connect () 本身是线程安全的。
       <div class="popular-posts-title"><a href="/posts/2HNBAGV.html" rel="bookmark">基于代价的慢查询优化建议</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
     </li>
   </ul>
 
@@ -687,6 +738,7 @@ QObject::connect () 本身是线程安全的。
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
               <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
               <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
+              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
               <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
               <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
               <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
@@ -697,7 +749,6 @@ QObject::connect () 本身是线程安全的。
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E9%9B%86%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 集合</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
-              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
               <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
               <a href="/tags/Widget/" rel="tag"><i class="fa fa-tag"></i> Widget</a>
           </div>
@@ -879,13 +930,13 @@ QObject::connect () 本身是线程安全的。
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">867k</span>
+    <span title="站点总字数">876k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:08</span>
+    <span title="站点阅读时长">13:16</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

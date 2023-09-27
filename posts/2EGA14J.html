@@ -311,53 +311,69 @@
 <p>两个人同时在一个画本上画画，过程中你一笔我一笔，那么最后最后画出来的一定是一个四不像，多个事务同时操作一个数据也会和上面的情况类似，所以为了让不同的事务之间相互不存在干扰，就需要对事务的操作进行隔离，事务的隔离性也就是将操作同一个数据的事务相互分离，让操作之间分开有序的执行</p>
 <p><strong>用什么方式实现事务的隔离性</strong></p>
 <p>通常数据库里都是采用锁的机制，保证事务之间的隔离性，在一个事务对数据进行修改的时候，首先会对该数据进行加锁，在当前事务没有释放锁之前，后续的事务是无法对该数据再次进行加锁的，所以其它事务只能等待，只有前一个事务释放了锁之后，后面的事务才能进行加锁。通过加锁的方式来保证这种先来后到的顺序，以隔离多个事务对数据的操作，从而实现事务的隔离性。</p>
-<h2 id="事务并发问题与事务隔离级别"><a href="#事务并发问题与事务隔离级别" class="headerlink" title="事务并发问题与事务隔离级别"></a><strong>事务并发问题与事务隔离级别</strong></h2><p>在事务并发执行的时候，如果不进行事务隔离，那么就会产生脏写、脏读、重复读、幻读的问题。  为了解决这些问题，数据库也针对不同的场景通过加锁的形式进行了不同程度的隔离，下面我们了解下产生这些问题的根源，然后不同的事务隔离级别是通过什么方式解决这些问题的。</p>
-<h3 id="1、脏写问题"><a href="#1、脏写问题" class="headerlink" title="1、脏写问题"></a><strong>1、脏写问题</strong></h3><p>在事务并发的时候，一个事务可以修改另外一个正在进行中的事务的数据，这可能会导致一个写的事务会覆盖另外一个写的事务数据，这也就是脏写问题。</p>
-<p><strong>案例：</strong>以存取款为例，假设A与B同用一张银行卡，银行卡内余额为1000，如果两个事务可以对同一个数据进行修改时，可能会产下面 事务B 把事务A的数据覆盖了，导致事务A写入的数据丢失了。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1107-Qd4URl.jpg" alt="img"></p>
-<h3 id="如何解决脏写问题"><a href="#如何解决脏写问题" class="headerlink" title="如何解决脏写问题"></a><strong>如何解决脏写问题</strong></h3><p>在事务隔离级别<strong>READ_UNCOMMITTED</strong>  解决了脏写的问题，其原理是在READ_UNCOMMITTED事务隔离级别下，当事务对数据进行修改时，首先会对数据加写锁，加写锁成功后只有等事务提交或者回滚后才会释放，所以已经有一个事务对数据加了写锁，那么其他事务就会因为无法获取对应数据的锁而阻塞，所以在READ_UNCOMMITTED事务隔离级别下，多个事务是无法对同一个数据同时进行修改。</p>
-<h3 id="2、脏读问题"><a href="#2、脏读问题" class="headerlink" title="2、脏读问题"></a><strong>2、脏读问题</strong></h3><p>在事务并发的时候，一个事务可以读取到另外一个正在进行中的事务数据，这产生了脏读问题。</p>
+<h2 id="事务并发问题与事务隔离级别"><strong>事务并发问题与事务隔离级别</strong></h2>
+<p>在事务并发执行的时候，如果不进行事务隔离，那么就会产生脏写、脏读、重复读、幻读的问题。  为了解决这些问题，数据库也针对不同的场景通过加锁的形式进行了不同程度的隔离，下面我们了解下产生这些问题的根源，然后不同的事务隔离级别是通过什么方式解决这些问题的。</p>
+<h3 id="1、脏写问题"><strong>1、脏写问题</strong></h3>
+<p>在事务并发的时候，一个事务可以修改另外一个正在进行中的事务的数据，这可能会导致一个写的事务会覆盖另外一个写的事务数据，这也就是脏写问题。</p>
+<p>**案例：**以存取款为例，假设A与B同用一张银行卡，银行卡内余额为1000，如果两个事务可以对同一个数据进行修改时，可能会产下面 事务B 把事务A的数据覆盖了，导致事务A写入的数据丢失了。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1107-Qd4URl.jpg" alt=""></p>
+<h3 id="如何解决脏写问题"><strong>如何解决脏写问题</strong></h3>
+<p>在事务隔离级别<strong>READ_UNCOMMITTED</strong>  解决了脏写的问题，其原理是在READ_UNCOMMITTED事务隔离级别下，当事务对数据进行修改时，首先会对数据加写锁，加写锁成功后只有等事务提交或者回滚后才会释放，所以已经有一个事务对数据加了写锁，那么其他事务就会因为无法获取对应数据的锁而阻塞，所以在READ_UNCOMMITTED事务隔离级别下，多个事务是无法对同一个数据同时进行修改。</p>
+<h3 id="2、脏读问题"><strong>2、脏读问题</strong></h3>
+<p>在事务并发的时候，一个事务可以读取到另外一个正在进行中的事务数据，这产生了脏读问题。</p>
 <p><strong>案例：</strong> 以存取款为例，假设A与B同用一张银行卡，银行卡内余额为1000，此时事务B进行取款，事务A进行存款，如果一个事务可以读取到另外一个正在进行中的事务数据，那么可能产生下面问题。</p>
-<p><strong>操作：</strong> </p>
+<p><strong>操作：</strong></p>
 <p>1、事务B：进行取款1000，此时余额为0，但未提交事务。</p>
 <p>2、事务A：此时事务A对银行卡余额进行查询，查询到账户余额为0。</p>
 <p>3、事务B：撤销事务，余额恢复为1000.</p>
 <p>4、事务A：进行存款500，余额=0+500。</p>
 <p>5、事务A：提交事务，最后账户余额为500。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1108-wTOpco.jpg" alt="img"></p>
-<h3 id="如何解决脏读问题"><a href="#如何解决脏读问题" class="headerlink" title="如何解决脏读问题"></a><strong>如何解决脏读问题</strong></h3><p>在事务隔离级别<strong>READ_COMMITTED</strong>（读提交）解决了脏读的问题，其原理是在READ_COMMITTED的事务隔离级别下，当事务对数据进行修改时，得先要对数据加写锁，当事务读取数据时，首先需要对数据加读锁。 因为写锁与读锁不能共存，所以在修改数据的时候，其它事务会因为无法成功加读锁而阻塞，所以READ_COMMITTED  的事务隔离级别下，一个事务就无法读取另外一个未完成的事务所修改的数据了。</p>
-<h3 id="3、不可重复读问题"><a href="#3、不可重复读问题" class="headerlink" title="3、不可重复读问题"></a><strong>3、不可重复读问题</strong></h3><p>在事务并发的时候，一个事务里多次对同一个数据进行读取，但是读取到的结果是不一样的，这种问题称为不可重复读问题。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1108-wTOpco.jpg" alt=""></p>
+<h3 id="如何解决脏读问题"><strong>如何解决脏读问题</strong></h3>
+<p>在事务隔离级别<strong>READ_COMMITTED</strong>（读提交）解决了脏读的问题，其原理是在READ_COMMITTED的事务隔离级别下，当事务对数据进行修改时，得先要对数据加写锁，当事务读取数据时，首先需要对数据加读锁。 因为写锁与读锁不能共存，所以在修改数据的时候，其它事务会因为无法成功加读锁而阻塞，所以READ_COMMITTED  的事务隔离级别下，一个事务就无法读取另外一个未完成的事务所修改的数据了。</p>
+<h3 id="3、不可重复读问题"><strong>3、不可重复读问题</strong></h3>
+<p>在事务并发的时候，一个事务里多次对同一个数据进行读取，但是读取到的结果是不一样的，这种问题称为不可重复读问题。</p>
 <p><strong>案例：</strong>  以取款为例，假设A与B同用一张银行卡，银行卡内余额为1000。</p>
 <p><strong>操作：</strong> 如下图所示，事务A在同一个事务里两次查询同一条数据，得到的却是不同的结果。</p>
 <p>1、事务A：查询银行卡余额为1000.</p>
 <p>3、事务B：取款1000。</p>
 <p>4、事务B：提交事务（此时余额为0）。</p>
 <p>5、事务A：查询余额，余额为0。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1108-xGDuCw.jpg" alt="img"></p>
-<h3 id="如何解决不可重复读"><a href="#如何解决不可重复读" class="headerlink" title="如何解决不可重复读"></a><strong>如何解决不可重复读</strong></h3><p>不可重复读产生的核心问题是，在一个事务第1次读取和第2次读取数据的间隔过程中可以被另外一个事务修改，因为在READ_COMMITTED的事务隔离级别下，事务中每次读取数据结束后（事务未结束）就会释放读锁，而一旦读锁释放后另外一个事务就可以加写锁，最终导致事务中多次读取该数据的间隙中可以被其它事务修改。</p>
-<p>而<strong>REPEATABLE_READ</strong> <strong>（可重复读）</strong>的事务隔离级别下，一个事务中的读取操作会对数据加读锁（并且在当前事务结束之前不会释放），此时另外一个事务对该数据修改之前会尝试加写锁（此时不会成功，因为读写锁冲突），所以就避免了一个事务多次读取的数据的间隔可以被另外一个事务修改。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1108-xGDuCw.jpg" alt=""></p>
+<h3 id="如何解决不可重复读"><strong>如何解决不可重复读</strong></h3>
+<p>不可重复读产生的核心问题是，在一个事务第1次读取和第2次读取数据的间隔过程中可以被另外一个事务修改，因为在READ_COMMITTED的事务隔离级别下，事务中每次读取数据结束后（事务未结束）就会释放读锁，而一旦读锁释放后另外一个事务就可以加写锁，最终导致事务中多次读取该数据的间隙中可以被其它事务修改。</p>
+<p>而<strong>REPEATABLE_READ</strong> **（可重复读）**的事务隔离级别下，一个事务中的读取操作会对数据加读锁（并且在当前事务结束之前不会释放），此时另外一个事务对该数据修改之前会尝试加写锁（此时不会成功，因为读写锁冲突），所以就避免了一个事务多次读取的数据的间隔可以被另外一个事务修改。</p>
 <p>不过实际实现的过程中，数据库解决不可重复读的方式会有所不同，在Mysql  innodb引擎中，解决不可重复读的问题并不是通过加锁实现，而是通过MVCC机制实现，使用MVCC后读取数据的时候不会加读锁，而是读取的历史版本数据，在RR事务隔离级别里，MVCC保证了在一个事务里多次读取的数据历史版本是一致的，所以就无法看到最新修改的数据，这样也就保证了一个事务里多次读取到的数据肯定是一致的。   具体MVCC实现原理参考：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81Mjk3Nzg2Mg==">勤劳的小手：数据库基础（四）Innodb MVCC实现原理<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="4、幻读问题"><a href="#4、幻读问题" class="headerlink" title="4、幻读问题"></a><strong>4、幻读问题</strong></h3><p>在事务并发的时候，一个事务可以往另外一个正在读取的事务查询范围内插入新数据，导致另外一个事务在第二次查询数据里，要比前一次查询的数据要多，同样的SQL后面一次查询凭空多出了数据，像幻觉一样所以称为幻读。</p>
+<h3 id="4、幻读问题"><strong>4、幻读问题</strong></h3>
+<p>在事务并发的时候，一个事务可以往另外一个正在读取的事务查询范围内插入新数据，导致另外一个事务在第二次查询数据里，要比前一次查询的数据要多，同样的SQL后面一次查询凭空多出了数据，像幻觉一样所以称为幻读。</p>
 <p><strong>案例：</strong> 以打印银行卡账单存款记录为例，假设A与B同用一张银行卡，银行卡内存款记录为两条。</p>
 <p><strong>操作：</strong> 如下图所示，存款表有2条数据，A对存款表进行读取，  当A第一次读取到存款记录的时候只有2条数据； 但是与此同时B往银行卡进行了一笔存款然后提交了事务，在B提交了存款事务之后，A执行了打印操  作，最后发现打印存款表信息的时候却发现有3条数据，与之前查出的数据不一样，这种平白无故多出来 的数据就好象发生了幻觉一样所以称为幻读；</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1108-3p8bmU.png" alt="img"></p>
-<h3 id="解决幻读的两种方式"><a href="#解决幻读的两种方式" class="headerlink" title="解决幻读的两种方式"></a><strong>解决幻读的两种方式</strong></h3><h3 id="1、设置事务隔离级别为SERIALIZABLE"><a href="#1、设置事务隔离级别为SERIALIZABLE" class="headerlink" title="1、设置事务隔离级别为SERIALIZABLE"></a><strong>1、设置事务隔离级别为SERIALIZABLE</strong></h3><p>在SERIALIZABLE事务隔离级别下，所有的事务都串行化执行，一个事务的执行必须等前面的事务结束，这样的话查询的时候就无法有其他事务查询新的数据，所以不会产生幻读问题。</p>
-<h3 id="2、加间隙锁"><a href="#2、加间隙锁" class="headerlink" title="2、加间隙锁"></a><strong>2、加间隙锁</strong></h3><p>幻读问题的本质在于，没有对查询范围内的所有数据进  (包括不存在的数据）进行加锁，而导致改查询范围内可以被插入新的数据，所以使用间隙锁，对查询的范围进行加锁，此时新插入的数据的事务会因为无法加锁成功而阻塞，所以就避免了幻读。比如表数据如下图， 那么此时如果执行select * from user where id&gt;2 时  ，间隙锁会对id&gt;2的空间加锁，所以此时我们另外一个事务插入ID为3 、4、6、7……. 都会因为锁阻塞而无法成功。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1109-VOwtZ0.jpg" alt="img"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p>为解决不同场景的并发事务问题，事务定义了四种隔离级别，每个隔离级别都针对事务并发问题中的一种或几种进行解决，事务级别越高，解决的并发事务问题也就越多，同时也意味着加的锁就越多，所以性能也会越差。不同的隔离级别下它们加锁的情况如下：</p>
-<h3 id="READ-UNCOMMITTED"><a href="#READ-UNCOMMITTED" class="headerlink" title="READ_UNCOMMITTED"></a><strong>READ_UNCOMMITTED</strong></h3><p>事务读取：不加锁</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1108-3p8bmU.png" alt=""></p>
+<h3 id="解决幻读的两种方式"><strong>解决幻读的两种方式</strong></h3>
+<h3 id="1、设置事务隔离级别为SERIALIZABLE"><strong>1、设置事务隔离级别为SERIALIZABLE</strong></h3>
+<p>在SERIALIZABLE事务隔离级别下，所有的事务都串行化执行，一个事务的执行必须等前面的事务结束，这样的话查询的时候就无法有其他事务查询新的数据，所以不会产生幻读问题。</p>
+<h3 id="2、加间隙锁"><strong>2、加间隙锁</strong></h3>
+<p>幻读问题的本质在于，没有对查询范围内的所有数据进  (包括不存在的数据）进行加锁，而导致改查询范围内可以被插入新的数据，所以使用间隙锁，对查询的范围进行加锁，此时新插入的数据的事务会因为无法加锁成功而阻塞，所以就避免了幻读。比如表数据如下图， 那么此时如果执行select * from user where id&gt;2 时  ，间隙锁会对id&gt;2的空间加锁，所以此时我们另外一个事务插入ID为3 、4、6、7… 都会因为锁阻塞而无法成功。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1109-VOwtZ0.jpg" alt=""></p>
+<h2 id="总结"><strong>总结</strong></h2>
+<p>为解决不同场景的并发事务问题，事务定义了四种隔离级别，每个隔离级别都针对事务并发问题中的一种或几种进行解决，事务级别越高，解决的并发事务问题也就越多，同时也意味着加的锁就越多，所以性能也会越差。不同的隔离级别下它们加锁的情况如下：</p>
+<h3 id="READ-UNCOMMITTED"><strong>READ_UNCOMMITTED</strong></h3>
+<p>事务读取：不加锁</p>
 <p>事务写入：加写锁</p>
 <p>解决问题：脏写</p>
 <p>存在问题：脏读，不可重复读、幻读。</p>
-<h3 id="READ-COMMITTED"><a href="#READ-COMMITTED" class="headerlink" title="READ_COMMITTED"></a><strong>READ_COMMITTED</strong></h3><p>事务读取：加读锁（每次select完成都会释放读锁）</p>
+<h3 id="READ-COMMITTED"><strong>READ_COMMITTED</strong></h3>
+<p>事务读取：加读锁（每次select完成都会释放读锁）</p>
 <p>事务写入：加写锁</p>
 <p>解决问题：脏写、脏读</p>
 <p>存在问题：不可重复读、幻读。</p>
-<h3 id="REPEATABLE-READ"><a href="#REPEATABLE-READ" class="headerlink" title="REPEATABLE_READ"></a><strong>REPEATABLE_READ</strong></h3><p>事务读取：加读锁（每次select完不会释放锁，而是事务结束后才释放）（如果是Mysql的innodb还会加间隙锁）。</p>
+<h3 id="REPEATABLE-READ"><strong>REPEATABLE_READ</strong></h3>
+<p>事务读取：加读锁（每次select完不会释放锁，而是事务结束后才释放）（如果是Mysql的innodb还会加间隙锁）。</p>
 <p>事务写入：加写锁</p>
 <p>解决问题：脏写、脏读、不可重复读，幻读（如果是Mysql的innodb则已解决）</p>
 <p>存在问题：幻读 （如果是Mysql的innodb则不存在）。</p>
-<h3 id="SERIALIZABLE"><a href="#SERIALIZABLE" class="headerlink" title="SERIALIZABLE"></a><strong>SERIALIZABLE</strong></h3><p>不管读取还是修改所有的事务串行化执行，一个事务的执行必须等其他事务结束。</p>
+<h3 id="SERIALIZABLE"><strong>SERIALIZABLE</strong></h3>
+<p>不管读取还是修改所有的事务串行化执行，一个事务的执行必须等其他事务结束。</p>
 
     </div>
    <div>
@@ -376,19 +392,19 @@
   <div class="popular-posts-header">相关热门文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/2NPWEZZ.html" rel="bookmark">InnoDB锁专题</a></div>
+      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
+      <div class="popular-posts-title"><a href="/posts/2NPWEZZ.html" rel="bookmark">InnoDB锁专题</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/VQ077V.html" rel="bookmark">Innodb的MVCC实现原理</a></div>
+      <div class="popular-posts-title"><a href="/posts/J71QTX.html" rel="bookmark">秒杀系统设计</a></div>
     </li>
   </ul>
 
@@ -454,8 +470,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/2TEE5S1.html" rel="prev" title="数据库异常智能分析与诊断">
-      <i class="fa fa-chevron-left"></i> 数据库异常智能分析与诊断
+    <a href="/posts/364DCDS.html" rel="prev" title="Java中的CAS">
+      <i class="fa fa-chevron-left"></i> Java中的CAS
     </a></div>
       <div class="post-nav-item">
     <a href="/posts/1AAVASY.html" rel="next" title="nnoDB与MYISAM的区别">
@@ -620,13 +636,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">867k</span>
+    <span title="站点总字数">876k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:08</span>
+    <span title="站点阅读时长">13:16</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
