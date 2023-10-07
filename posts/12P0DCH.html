@@ -40,10 +40,10 @@
 <meta property="article:modified_time" content="2022-08-13T08:46:48.928Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
-<meta property="article:tag" content="GC">
 <meta property="article:tag" content="锁">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="数据库">
+<meta property="article:tag" content="GC">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MQ">
@@ -305,9 +305,9 @@
 <p><strong>我</strong>：这个要看具体的场景，不同的场景下情况是不一样的。</p>
 <p><strong>面试官</strong>：可以详细说一下吗？</p>
 <p><strong>我</strong>：如果消费者的数量小于 MessageQueue 的数量，增加消费者可以加快消息消费速度，减少消息积压。比如一个 Topic 有 4 个 MessageQueue，2 个消费者进行消费，如果增加一个消费者，明细可以加快拉取消息的频率。如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-EAQoGV.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-EAQoGV.png" alt=""></p>
 <p>如果消费者的数量大于等于 MessageQueue 的数量，增加消费者是没有用的。比如一个 Topic 有 4 个 MessageQueue，并且有 4 个消费者进行消费。如下图</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-Uu40Ny.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1057-Uu40Ny.png" alt=""></p>
 <p><strong>面试官</strong>：你说的第一种情况，增加消费者一定能加快消息消费的速度吗？</p>
 <p><strong>我</strong>：这…，一般情况下是可以的。</p>
 <p><strong>面试官</strong>：有特殊的情况吗？</p>
@@ -353,7 +353,7 @@
 <p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
 <p><strong>面试官</strong>：消费者延迟拉取消息，一般可能是什么原因导致的呢？</p>
 <p><strong>我</strong>：其实延迟拉取的<code>本质就是消费者消费慢</code>，导致下次去拉取的时候 ProcessQueue 中积压的消息超过阈值。以下面这张架构图为例：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1059-yKOaQS.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1059-yKOaQS.png" alt=""></p>
 <p>消费者消费慢，可是能下面的原因：</p>
 <ul>
 <li>消费者处理的业务逻辑复杂，耗时很长；</li>
@@ -382,33 +382,33 @@
 <li>对前 mod 数量消费者，每个消费者加一个，这样就获取到了每个消费者分配的 MessageQueue 数量。</li>
 </ol>
 <p>比如 4 个 MessageQueue 和 3 个消费者的情况：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-dHKsfY.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-dHKsfY.png" alt=""></p>
 <p>源代码的逻辑非常简单，如下：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AllocateMessageQueueAveragely 这个类</span></span><br><span class="line"><span class="comment">// 4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="comment">// mod = 1</span></span><br><span class="line"><span class="keyword">int</span> mod = mqAll.size() % cidAll.size();</span><br><span class="line"><span class="comment">// averageSize = 2</span></span><br><span class="line"><span class="keyword">int</span> averageSize =</span><br><span class="line">    mqAll.size() &lt;= cidAll.size() ? <span class="number">1</span> : (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod ? mqAll.size() / cidAll.size()</span><br><span class="line">                                         + <span class="number">1</span> : mqAll.size() / cidAll.size());</span><br><span class="line"><span class="comment">// startIndex = 0</span></span><br><span class="line"><span class="keyword">int</span> startIndex = (mod &gt; <span class="number">0</span> &amp;&amp; index &lt; mod) ? index * averageSize : index * averageSize + mod;</span><br><span class="line"><span class="comment">// range = 2,所以第一个消费者分配到了2个</span></span><br><span class="line"><span class="keyword">int</span> range = Math.min(averageSize, mqAll.size() - startIndex);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; range; i++) {</span><br><span class="line">    result.add(mqAll.get((startIndex + i) % mqAll.size()));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>循环分配策略:</strong></p>
 <p>这个很容易理解，遍历消费者，把 MessageQueue 分一个给遍历到的消费者，如果 MessageQueue 数量比消费者多，需要进行多次遍历，遍历次数等于  （MessageQueue 数量/消费者数量），还是以 4 个 MessageQueue 和 3 个消费者的情况，如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-4fvcvc.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1103-4fvcvc.png" alt=""></p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueAveragelyByCircle 这个类</span></span><br><span class="line"><span class="comment">//4 个 MessageQueue 和 3 个消费者的情况，假如第一个，index = 0</span></span><br><span class="line"><span class="keyword">int</span> index = cidAll.indexOf(currentCID);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; mqAll.size(); i++) {</span><br><span class="line">    <span class="keyword">if</span> (i % cidAll.size() == index) {</span><br><span class="line">        <span class="comment">//i == 0 或者 i == 3 都会走到这里</span></span><br><span class="line">        result.add(mqAll.get(i));</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>自定义分配策略：</strong></p>
 <p>这种策略在消费者启动的时候可以指定消费哪些 MessageQueue。可以参考下面代码：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AllocateMessageQueueByConfig allocateMessageQueueByConfig = <span class="keyword">new</span> AllocateMessageQueueByConfig();</span><br><span class="line"><span class="comment">//绑定消费 messageQueue1</span></span><br><span class="line">allocateMessageQueueByConfig.setMessageQueueList(Arrays.asList(<span class="keyword">new</span> MessageQueue(<span class="string">"messageQueue1"</span>,<span class="string">"broker1"</span>,<span class="number">0</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByConfig);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>按照机房分配策略：</strong></p>
 <p>这种方式 Consumer 只消费指定机房的 MessageQueue，如下图：Consumer0、Consumer1、Consumer2 绑定 room1 和 room2 这两个机房，而 room3 这个机房没有消费者。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1104-xQcBq5.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1104-xQcBq5.png" alt=""></p>
 <p>Consumer 启动的时候需要绑定机房名称。可以参考下面代码：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AllocateMessageQueueByMachineRoom allocateMessageQueueByMachineRoom = <span class="keyword">new</span> AllocateMessageQueueByMachineRoom();</span><br><span class="line"><span class="comment">//绑定消费 room1 和 room2 这两个机房</span></span><br><span class="line">allocateMessageQueueByMachineRoom.setConsumeridcs(<span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(<span class="string">"room1"</span>,<span class="string">"room2"</span>)));</span><br><span class="line">consumer.setAllocateMessageQueueStrategy(allocateMessageQueueByMachineRoom);</span><br><span class="line">consumer.start();</span><br></pre></td></tr></tbody></table></figure>
 <p>这种策略 broker 的命名必须按照格式：机房名@brokerName，因为消费者分配队列的时候，首先按照机房名称过滤出所有的 MessageQueue，然后<code>再按照平均分配策略进行分配</code>。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AllocateMessageQueueByMachineRoom 这个类</span></span><br><span class="line">List&lt;MessageQueue&gt; premqAll = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) {</span><br><span class="line">    String[] temp = mq.getBrokerName().split(<span class="string">"@"</span>);</span><br><span class="line">    <span class="keyword">if</span> (temp.length == <span class="number">2</span> &amp;&amp; consumeridcs.contains(temp[<span class="number">0</span>])) {</span><br><span class="line">        premqAll.add(mq);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">//上面按照机房名称过滤出所有的 MessageQueue 放入premqAll，后面就是平均分配策略</span></span><br></pre></td></tr></tbody></table></figure>
 <p><strong>按照机房就近分配：</strong></p>
 <p>跟按照机房分配原则相比，就近分配的好处是可以对没有消费者的机房进行分配。如下图，机房 3 的 MessageQueue 也分配到了消费者：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-GcF8UO.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-GcF8UO.png" alt=""></p>
 <p>如果一个机房没有消费者，则会把这个机房的 MessageQueue 分配给集群中所有的消费者。</p>
 <blockquote>
 <p>源码所在类：<code>AllocateMachineRoomNearby</code>。</p>
 </blockquote>
 <p><strong>一致性 Hash 算法策略：</strong></p>
 <p>把所有的消费者经过 Hash 计算分布到 Hash 环上，对所有的 MessageQueue  进行 Hash  计算，找到顺时针方向最近的消费者节点进行绑定。如下图：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-5VDzq8.png" alt="图片"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/11/1105-5VDzq8.png" alt=""></p>
 <p>源代码如下：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//所在类 AllocateMessageQueueConsistentHash</span></span><br><span class="line">Collection&lt;ClientNode&gt; cidNodes = <span class="keyword">new</span> ArrayList&lt;ClientNode&gt;();</span><br><span class="line"><span class="keyword">for</span> (String cid : cidAll) {</span><br><span class="line">    cidNodes.add(<span class="keyword">new</span> ClientNode(cid));</span><br><span class="line">}</span><br><span class="line"><span class="comment">//使用消费者构建 Hash 环，把消费者分布在 Hash 环节点上</span></span><br><span class="line"><span class="keyword">final</span> ConsistentHashRouter&lt;ClientNode&gt; router; <span class="comment">//for building hash ring</span></span><br><span class="line"><span class="keyword">if</span> (customHashFunction != <span class="keyword">null</span>) {</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt, customHashFunction);</span><br><span class="line">} <span class="keyword">else</span> {</span><br><span class="line">    router = <span class="keyword">new</span> ConsistentHashRouter&lt;ClientNode&gt;(cidNodes, virtualNodeCnt);</span><br><span class="line">}</span><br><span class="line"><span class="comment">//对 MessageQueue 做 Hash 运算，找到环上距离最近的消费者</span></span><br><span class="line">List&lt;MessageQueue&gt; results = <span class="keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line"><span class="keyword">for</span> (MessageQueue mq : mqAll) {</span><br><span class="line">    ClientNode clientNode = router.routeNode(mq.toString());</span><br><span class="line">    <span class="keyword">if</span> (clientNode != <span class="keyword">null</span> &amp;&amp; currentCID.equals(clientNode.getKey())) {</span><br><span class="line">        results.add(mq);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>面试官</strong>：恭喜你，通过了。</p>
@@ -492,10 +492,10 @@
           
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
-              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
               <a href="/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
@@ -681,13 +681,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">869k</span>
+    <span title="站点总字数">878k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:10</span>
+    <span title="站点阅读时长">13:18</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

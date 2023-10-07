@@ -34,10 +34,10 @@
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="bug">
 <meta property="article:tag" content="C">
-<meta property="article:tag" content="GC">
-<meta property="article:tag" content="const">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="集合">
+<meta property="article:tag" content="const">
+<meta property="article:tag" content="GC">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/03/08/OfMAOd.png">
@@ -302,7 +302,7 @@
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p>错误信息</p>
 <figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Handler dispatch failed; nested exception is java.lang.NoSuchMethodError: org.apache.poi.ss.usermodel.Cell.getCellType()Lorg<span class="regexp">/apache/</span>poi<span class="regexp">/ss/u</span>sermodel/CellType;</span><br></pre></td></tr></tbody></table></figure>
 <p>查看源码，发现这个地方报错</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/08/OfMAOd.png" alt="OfMAOd"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/08/OfMAOd.png" alt=""></p>
 <p>poi版本导致（3.17），到时从easypoi中去除poi，重新引用新版本的poi（5.0.0），还是会加载出3.17版本的，未找到原因，最后的解决方法是，重写了easypoi的Excel导入功能。</p>
 <p>重写代码：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelUtils</span> </span>{</span><br><span class="line"></span><br><span class="line">  	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 *  重写了 easypoi导入，因为easypoi的导入报错</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> inputstream</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> pojoClass</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> params</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">importExcelRewrite</span><span class="params">(InputStream inputstream, Class&lt;?&gt; pojoClass, ImportParams params)</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ExcelImportServiceImok().importExcelByIss(inputstream, pojoClass, params, <span class="keyword">false</span>).getList();</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
@@ -331,7 +331,7 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/33P1FY8.html" rel="bookmark">一文详解SQL关联子查询</a></div>
-        <div class="popular-posts-excerpt"><p></p><p></p><div style="text-align: center;"></div><br><p></p></div>
+        <div class="popular-posts-excerpt"><p></p><div style="text-align: center;"></div><p></p></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/N8AQ70.html" rel="bookmark">SpringBoot 内置工具类</a></div>
@@ -387,10 +387,10 @@
           <div class="post-tags">
               <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
-              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
-              <a href="/tags/const/" rel="tag"><i class="fa fa-tag"></i> const</a>
               <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
               <a href="/tags/%E9%9B%86%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 集合</a>
+              <a href="/tags/const/" rel="tag"><i class="fa fa-tag"></i> const</a>
+              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           </div>
 
@@ -573,13 +573,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">869k</span>
+    <span title="站点总字数">878k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:10</span>
+    <span title="站点阅读时长">13:18</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
