@@ -290,8 +290,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1>小数转二进制的过程</h1>
-<p><strong>示例一</strong></p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1 id="小数转二进制的过程"><a href="#小数转二进制的过程" class="headerlink" title="小数转二进制的过程"></a>小数转二进制的过程</h1><p><strong>示例一</strong></p>
 <p>4.25转为二进制的过程：</p>
 <p>拆分为整数部分和小数部分，整数部分为4，小数部分为0.25。</p>
 <p>4转二进制为：100</p>
@@ -311,8 +310,7 @@
 <p>这时小数部分为0，结束。</p>
 <p>0.625的二进制就表示为：0.101</p>
 <p>19.625的二进制表示为：10011.101</p>
-<h1>小数在计算机中的存储形式</h1>
-<p>C语言中，对于浮点类型的数据采用单精度类型<code>（float）</code>和双精度类型<code>(double)</code>来存储，<code>float</code>数据占用32bit, <code>double</code>数据占用64bit。</p>
+<h1 id="小数在计算机中的存储形式"><a href="#小数在计算机中的存储形式" class="headerlink" title="小数在计算机中的存储形式"></a>小数在计算机中的存储形式</h1><p>C语言中，对于浮点类型的数据采用单精度类型<code>（float）</code>和双精度类型<code>(double)</code>来存储，<code>float</code>数据占用32bit, <code>double</code>数据占用64bit。</p>
 <p>无论是单精度还是双精度在存储中都分为三个部分：</p>
 <ul>
 <li><strong>符号位(Sign)</strong> : 0代表正，1代表为负</li>
@@ -321,17 +319,15 @@
 </ul>
 <p><img data-src="https://xuemingde.com/pages/image/2022/11/11/1009586PctKl.png" alt=""></p>
 <ul>
-<li>符号的存储</li>
-</ul>
+<li><p>符号的存储</p>
 <p>符号的存储很容易，就像存储 short、int 等普通整数一样，单独分配出一个位（Bit）来，<strong>用 0 表示正数，用 1 表示负数</strong>。对于 19.625，这一位的值是 0。</p>
-<ul>
-<li>尾数的存储</li>
-</ul>
+</li>
+<li><p>尾数的存储</p>
 <p>计算机采用二进制形式存储浮点数，尾数部分的取值范围为 1 ≤ mantissa ＜ 2，这意味着：<strong>尾数的整数部分一定为 1，是一个恒定的值，这样就无需在内存中提现出来，可以将其直接截掉</strong>，<strong>只要把小数点后面的二进制数字放入内存中即可</strong>。对于 1.0011101，就是把 0011101 放入内存。</p>
+</li>
+</ul>
 <blockquote>
 <p>19.625的二进制为10011.101，也可表示为1.0011101 * 2^4^，所以19.625的尾数部分为1.0011101</p>
-</blockquote>
-<blockquote>
 <p>4.6的二进制为100.1001100110011001…….,小数部分出现了死循环，所有有无数位，100.1001100110011001…….可转为1.001001100110011001……. * 2^2^,又因为float的尾数部分为23bit，所以会截取23个存储，这时就出现了精度丢失。</p>
 <p><code>double</code>为64bit，尾数部分占52bit，虽然提高了精度，但也不能完全保证一致。</p>
 </blockquote>
@@ -339,8 +335,7 @@
 <li>指数的存储</li>
 </ul>
 <blockquote>
-<p>指数是一个整数，并且有正负之分，不但需要存储它的值，还得能区分出正负号来。<br>
-<strong>先确定内存中指数部分的取值范围，得到一个中间值，写入指数时加上这个中间值，读取指数时减去这个中间值，这样符号和值就都能确定下来了。</strong></p>
+<p>指数是一个整数，并且有正负之分，不但需要存储它的值，还得能区分出正负号来。<br> <strong>先确定内存中指数部分的取值范围，得到一个中间值，写入指数时加上这个中间值，读取指数时减去这个中间值，这样符号和值就都能确定下来了。</strong></p>
 </blockquote>
 <p><code>float 的指数部分占用 8 Bits，能表示从 0~255 的值，取其中间值 127，指数在写入内存前先加上127，读取时再减去127，正数负数就显而易见了</code>。</p>
 <p><code>而对于指数部分，因为指数可正可负(占1位)，所以8位的指数位能表示的指数范围就只能用7位，范围是:-127至128。所以指数部分的存储采用移位存储，存储的数据为元数据 +127。</code></p>
@@ -349,6 +344,7 @@
 <p><code>double</code>的指数部分为11</p>
 </blockquote>
 <p>结束上述的描述，19.625  float 的存储形式为：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -365,6 +361,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <blockquote>
 <p>float的尾数部分为23bit，0011101只用了7bit，后面的补0，补刀23bit为止</p>
 </blockquote>
@@ -386,6 +383,12 @@
   <div class="popular-posts-header">相关热门文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/2VB0MVT.html" rel="bookmark">C++开发学习笔记1</a></div>
     </li>
     <li class="popular-posts-item">
@@ -393,12 +396,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/1CBWCJP.html" rel="bookmark">C++开发学习笔记3</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
     </li>
   </ul>
 
@@ -539,7 +536,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">小数转二进制的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">小数在计算机中的存储形式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E6%95%B0%E8%BD%AC%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">小数转二进制的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E6%95%B0%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">小数在计算机中的存储形式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -627,13 +624,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">878k</span>
+    <span title="站点总字数">869k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:18</span>
+    <span title="站点阅读时长">13:10</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

@@ -32,9 +32,9 @@
 <meta property="article:modified_time" content="2023-10-07T03:37:02.227Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
+<meta property="article:tag" content="算法">
 <meta property="article:tag" content="堆">
 <meta property="article:tag" content="栈">
-<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://xuemingde.com/posts/3P2X38D.html">
@@ -284,8 +284,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="4种数据类型"><strong>4种数据类型</strong></h3>
-<p>Modbus协议规定，进行读写操作的数据类型，按照读写属性和类型可分为以下4种：</p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="4种数据类型"><a href="#4种数据类型" class="headerlink" title="4种数据类型"></a><strong>4种数据类型</strong></h3><p>Modbus协议规定，进行读写操作的数据类型，按照读写属性和类型可分为以下4种：</p>
 <ul>
 <li>离散量输入（Discretes Input  ）：1位，只读</li>
 <li>线圈（Coils）：1位，读写</li>
@@ -307,16 +306,14 @@
 <li>保持寄存器，区域代码+地址(从0开始)：HR0~HR65535，16进制(从0开始)：0000H~FFFFH；</li>
 </ul>
 <p>Modbus地址模型对于Modbus-RTU/ASCII和Modbus-TCP协议都是适用的。</p>
-<h3 id="3种传输模式"><strong>3种传输模式</strong></h3>
-<p>1979年，Modicon 首先推出了串行Modbus标准，后来由于网络的普及，需要更高的传输速度，1997年制定了基于TCP网络的Modbus标准。</p>
+<h3 id="3种传输模式"><a href="#3种传输模式" class="headerlink" title="3种传输模式"></a><strong>3种传输模式</strong></h3><p>1979年，Modicon 首先推出了串行Modbus标准，后来由于网络的普及，需要更高的传输速度，1997年制定了基于TCP网络的Modbus标准。</p>
 <p>所以总的可分为两个传输模式：基于<strong>串行链路</strong>的和基于<strong>以太网TCP/IP</strong>的。但是我个人还是习惯分为3种传输模式：</p>
 <ul>
 <li><strong>基于串口的Modbus-RTU</strong>数据按照<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvdG9vbHMvYmxvZy1lbnRyeT90YXJnZXQ9aHR0cHMlM0ElMkYlMkZtcC53ZWl4aW4ucXEuY29tJTJGcyUzRl9fYml6JTNETXpVek56azJOVE14TXclM0QlM0QlMjZtaWQlM0QyMjQ3NDg0MTY2JTI2aWR4JTNEMSUyNnNuJTNEZWY0Yjg5ZWQyNGVlZWI4NDdjOTEwOTNjZmUzMThiNzAlMjZzY2VuZSUzRDIxJTIzd2VjaGF0X3JlZGlyZWN0">标准串口协议<i class="fa fa-external-link-alt"></i></span>进行编码，是使用最广泛的一种Modbus协议，采用<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvdG9vbHMvYmxvZy1lbnRyeT90YXJnZXQ9aHR0cHMlM0ElMkYlMkZtcC53ZWl4aW4ucXEuY29tJTJGcyUzRl9fYml6JTNETXpVek56azJOVE14TXclM0QlM0QlMjZtaWQlM0QyMjQ3NDg1MDIzJTI2aWR4JTNEMSUyNnNuJTNEMWMwOTcyMDYyYzAzOTNmZTM4NWNkMTc3N2ViZjZkYWIlMjZzY2VuZSUzRDIxJTIzd2VjaGF0X3JlZGlyZWN0">CRC-16_Modbus校验算法<i class="fa fa-external-link-alt"></i></span>。</li>
 <li><strong>基于串口的Modbus-ASCII</strong>所有数据都是ASCII格式，一个字节的原始数据需要两个字符来表示，效率低，采用LRC校验算法。</li>
 <li><strong>基于网口的Modbus-TCP</strong>Modbus-TCP基于TCP/IP协议，占用<strong>502端口</strong>，数据帧主要包括两部分：MBAP（报文头）+PDU（帧结构），数据块与串行链路是一致的。</li>
 </ul>
-<h3 id="汇川-MB、MX、MW、MD的含义及长度">汇川 MB、MX、MW、MD的含义及长度</h3>
-<p>M表示内部存储区。MB表示长度为字节的操作数在内部存储区，MW表示长度为字的操作数在内部存储区，MD表示长度为双字的操作数在内部存储区。</p>
+<h3 id="汇川-MB、MX、MW、MD的含义及长度"><a href="#汇川-MB、MX、MW、MD的含义及长度" class="headerlink" title="汇川 MB、MX、MW、MD的含义及长度"></a>汇川 MB、MX、MW、MD的含义及长度</h3><p>M表示内部存储区。MB表示长度为字节的操作数在内部存储区，MW表示长度为字的操作数在内部存储区，MD表示长度为双字的操作数在内部存储区。</p>
 <p>操作数包含两个要素：标识符Q和标识参数。标识符用来表示操作数存放区域及操作位数；标识参数用来表示操作数在该存储区域内的具体位置。</p>
 <p>存储区域包括有：输入映像区(I)，输出映像区(Q),内部存储区(M),物理输入区(P),物理输出区(PQ),数据块(DB),数据块(DI),临时堆栈Q(L)</p>
 <p>MB：1个字节，8为</p>
@@ -399,9 +396,9 @@
           
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/%E5%A0%86/" rel="tag"><i class="fa fa-tag"></i> 堆</a>
               <a href="/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
           </div>
 
         
@@ -581,13 +578,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">878k</span>
+    <span title="站点总字数">869k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:18</span>
+    <span title="站点阅读时长">13:10</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
