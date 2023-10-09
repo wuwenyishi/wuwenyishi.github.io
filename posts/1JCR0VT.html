@@ -304,16 +304,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="产生的原因">产生的原因</h3>
-<ul>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="产生的原因"><a href="#产生的原因" class="headerlink" title="产生的原因"></a>产生的原因</h3><ul>
 <li>一种是由于用户在短时间内多次点击下单按钮，或浏览器刷新按钮导致。</li>
 <li>另一种则是由于Nginx或类似于SpringCloud Gateway的网关层，进行超时重试造成的。</li>
 <li>由于网速等原因造成页面卡顿，用户重复刷新提交页面</li>
 <li>黑客或恶意用户使用 postman 等网络工具，重复恶意提交表单</li>
 </ul>
-<h3 id="解决方案">解决方案</h3>
-<h4 id="方案一：提交订单按钮置灰">方案一：提交订单按钮置灰</h4>
-<p>这种解决方案在注册登录的场景下比较常见，当我们点击”发送验证码“按钮的时候，会进行手机短信验证码发送，且按钮就会有一分钟左右的置灰。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="方案一：提交订单按钮置灰"><a href="#方案一：提交订单按钮置灰" class="headerlink" title="方案一：提交订单按钮置灰"></a>方案一：提交订单按钮置灰</h4><p>这种解决方案在注册登录的场景下比较常见，当我们点击”发送验证码“按钮的时候，会进行手机短信验证码发送，且按钮就会有一分钟左右的置灰。</p>
 <p>有些经验不太丰富的同学，通常会简单粗暴地把这个方案直接照搬过来。</p>
 <p>但这种方案只能解决多次点击下单按钮的问题，对于Nginx或类似于SpringCloud Gateway的超时重试所导致的问题是无能为力的。</p>
 <p>当然，这种方案也不是真的没有价值。它可以在高并发场景下，从浏览器端去拦住一部分请求，减少后端服务器的处理压力。</p>
@@ -327,8 +324,7 @@
 <p>同样是幂等性场景，“如何防止重复提交订单” 比 “如何防止订单重复支付” 的解决方案要难一些。</p>
 <p>因为，后者在常规情况下，一个订单都是对应一笔支付单，所以orderID可以作为一个幂等性校验、防止订单重复支付的天然神器。</p>
 <p>但这个方案在“如何防止重复提交订单”就不适用了，</p>
-<h4 id="方案二：预生成全局唯一订单号">方案二：预生成全局唯一订单号</h4>
-<ol>
+<h4 id="方案二：预生成全局唯一订单号"><a href="#方案二：预生成全局唯一订单号" class="headerlink" title="方案二：预生成全局唯一订单号"></a>方案二：预生成全局唯一订单号</h4><ol>
 <li>后端新增一个接口，用于预生成一个“全局唯一订单号”，如：UUID 或 NanoID。</li>
 <li>进入创建订单页面时，前端请求该接口，获取该订单号。</li>
 <li>在提交订单时，请求参数里要带上这个预生成的“全局唯一订单号”，利用数据库的唯一索引特性，在插入订单记录时，如果该“全局唯一的订单号”重复，记录会插入失败。</li>
@@ -342,16 +338,14 @@
 <blockquote>
 <p>网上还有同学说，要单独弄一个生成“全局唯一订单号”的服务，我觉得还是免了吧，这不是更麻烦了吗？</p>
 </blockquote>
-<h4 id="方案三：前端生成全局唯一订单号">方案三：前端生成全局唯一订单号</h4>
-<ol>
+<h4 id="方案三：前端生成全局唯一订单号"><a href="#方案三：前端生成全局唯一订单号" class="headerlink" title="方案三：前端生成全局唯一订单号"></a>方案三：前端生成全局唯一订单号</h4><ol>
 <li>用户进入下页面时，前端程序自己生成一个“全局唯一订单号”。</li>
 <li>在提交订单时，请求参数里要带上这个预生成的“全局唯一订单号”，利用数据库的唯一索引特性，在插入订单记录时，如果该“全局唯一的订单号”重复，记录会插入失败。</li>
 </ol>
 <p><img data-src="https://xuemingde.com/pages/image/2023/10/08/092605o7uSSD.png" alt=""></p>
 <p><strong>优点</strong>：彻底解决了重复下单的问题，且技术方案做了一定简化；</p>
 <p><strong>缺点</strong>：前后端仍然都有开发工作量，且需要新增字段；</p>
-<h4 id="方案四：从订单业务的本质入手">方案四：从订单业务的本质入手</h4>
-<p>订单就是某个用户用特定的价格购买了某种商品，即：用户和商品的连接。</p>
+<h4 id="方案四：从订单业务的本质入手"><a href="#方案四：从订单业务的本质入手" class="headerlink" title="方案四：从订单业务的本质入手"></a>方案四：从订单业务的本质入手</h4><p>订单就是某个用户用特定的价格购买了某种商品，即：用户和商品的连接。</p>
 <p>那么，“如何防止重复提交订单”，其实就是<strong>防止在短时间内，用户和商品进行多次连接</strong>。弄明白问题本质，接下来我们就着手制定技术方案了。</p>
 <p>可以用 ”用户ID + 分隔符 + 商品ID“ 作为唯一标识，让持有相同标识的请求在短时间内不能重复下单，不就可以了吗？而且，Redis不正是做这种解决方案的利器吗？</p>
 <p>把”用户ID + 分隔符 + 商品ID“作为Redis key，并把”短时间所对应的秒数“设置为seconds，让它过期自动删除。</p>
@@ -369,8 +363,7 @@
 <p>以上参考文章：<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MjczMDI0NjgxNjMxNzc2ODI5I2hlYWRpbmctMg==">如何防止重复提交订单？ - 掘金<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <hr>
-<h4 id="方案五">方案五</h4>
-<p><strong>下面我们以防止重复提交订单为例，向大家介绍最简单的、成本最低的解决办法</strong>。</p>
+<h4 id="方案五"><a href="#方案五" class="headerlink" title="方案五"></a>方案五</h4><p><strong>下面我们以防止重复提交订单为例，向大家介绍最简单的、成本最低的解决办法</strong>。</p>
 <p>我们先来看一张图，这张图就是本次方案的核心流程图。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2023/10/08/100218OG14x5.png" alt=""></p>
 <p>实现的逻辑，流程如下：</p>
@@ -382,8 +375,7 @@
 <blockquote>
 <p><strong>对于下单流量不算高的系统，可以采用这种请求唯一ID+数据表增加唯一索引约束的方式，来防止接口重复提交</strong>！虽然简单粗暴，但是十分有效！</p>
 </blockquote>
-<h4 id="方案六">方案六</h4>
-<p>这张图就是本次方案的核心流程图</p>
+<h4 id="方案六"><a href="#方案六" class="headerlink" title="方案六"></a>方案六</h4><p>这张图就是本次方案的核心流程图</p>
 <p><img data-src="https://xuemingde.com/pages/image/2023/10/08/0956337U6EdQ.png" alt=""></p>
 <p>实现的逻辑，流程如下：</p>
 <ul>
@@ -399,8 +391,7 @@
 <p><strong>特别注意的地方：使用redis的分布式锁，推荐单机环境，如果redis是集群环境，可能会导致锁短暂无效</strong>！</p>
 <p>随着下单流量逐渐上升，通过查询数据库来检查当前服务请求是否重复提交这种方式，可能会让数据库的请求查询频率变得非常高，数据库的压力会倍增。</p>
 <p>此时我们可以引入<code>redis</code>缓存，将通过查询数据库来检查当前请求是否重复提交这种方式，转移到通过查询缓存来检查当前请求是否重复提交，可以很好的给数据库降压！</p>
-<h4 id="方案七">方案七</h4>
-<p>在上一篇文章中，我们详细的介绍了<strong>随着下单流量逐渐上升，为了降低数据库的访问压力，通过请求唯一ID+redis分布式锁来防止接口重复提交</strong></p>
+<h4 id="方案七"><a href="#方案七" class="headerlink" title="方案七"></a>方案七</h4><p>在上一篇文章中，我们详细的介绍了<strong>随着下单流量逐渐上升，为了降低数据库的访问压力，通过请求唯一ID+redis分布式锁来防止接口重复提交</strong></p>
 <p>每次提交的时候，需要先调用后端服务获取<code>请求唯一ID</code>，然后才能提交。</p>
 <p>对于这样的流程，不少的同学可能会感觉到非常鸡肋，尤其是单元测试，需要每次先获取<code>submitToken</code>值，然后才能提交！</p>
 <p><strong>能不能不用这么麻烦，直接服务端通过一些规则组合，生成本次请求唯一ID呢</strong>？</p>
@@ -415,12 +406,12 @@
 <li>最后一步，如果加锁成功后，需要将锁手动释放掉，以免再次请求时，提示同样的信息</li>
 </ol>
 <p>引入缓存服务后，防止重复提交的大体思路如上，实践代码如下！</p>
-<p>……</p>
+<p>…..</p>
 <p><strong>其中最关键的一个步就是将唯一请求 ID 的生成，放在服务端通过组合来实现，在保证防止接口重复提交的效果同时，也可以显著的降低接口测试复杂度</strong>！</p>
 <p>小结</p>
 <p>本次方案相比于上一个方案，最大的改进点在于：将接口请求唯一 ID 的生成逻辑，放在服务端通过规则组合来实现，不需要前端提交接口的时候强制带上这个参数，在满足防止接口重复提交的要求同时，又能减少前端和测试提交接口的复杂度！</p>
 <blockquote>
-<p>以上参考文章</p>
+<p>以上参考文章 </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHhmbHFtL3AvMTY5MTQ2NTEuaHRtbA==">如何防止用户重复提交订单？（上） - 程序员志哥 - 博客园<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHhmbHFtL3AvMTY5MTQ2NjUuaHRtbA==">如何防止用户重复提交订单？（中） - 程序员志哥 - 博客园<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHhmbHFtL3AvMTY5MTQ2NzAuaHRtbA==">如何防止用户重复提交订单？（下） - 程序员志哥 - 博客园<i class="fa fa-external-link-alt"></i></span></p>
@@ -450,10 +441,10 @@
       <div class="popular-posts-title"><a href="/posts/WTSYSE.html" rel="bookmark">Java并发常见知识点&amp;面试题总结_进阶篇</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
+      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+      <div class="popular-posts-title"><a href="/posts/1J88EXM.html" rel="bookmark">如何设计一个秒杀系统</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/1F4JVMQ.html" rel="bookmark">一文搞懂redis</a></div>
@@ -705,13 +696,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">882k</span>
+    <span title="站点总字数">874k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:22</span>
+    <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

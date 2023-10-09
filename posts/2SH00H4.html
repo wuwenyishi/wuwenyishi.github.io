@@ -328,20 +328,17 @@
 <p>把TestService1的test1方法上的<code>@Async</code>注解去掉，<code>TestService1</code>和<code>TestService2</code>都需要注入对方的实例，同样构成了循环依赖。</p>
 <p>但是重新启动项目，发现它能够正常运行。这又是为什么？</p>
 <p>带着这两个问题，让我们一起开始spring循环依赖的探秘之旅。</p>
-<h2 id="什么是循环依赖">什么是循环依赖</h2>
-<p>循环依赖：说白是一个或多个对象实例之间存在直接或间接的依赖关系，这种依赖关系构成了构成一个环形调用。</p>
+<h2 id="什么是循环依赖"><a href="#什么是循环依赖" class="headerlink" title="什么是循环依赖"></a>什么是循环依赖</h2><p>循环依赖：说白是一个或多个对象实例之间存在直接或间接的依赖关系，这种依赖关系构成了构成一个环形调用。</p>
 <p>第一种情况：自己依赖自己的直接依赖</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1018-nsvnDY.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1018-nsvnDY.png" alt="图片"></p>
 <p>第二种情况：两个对象之间的直接依赖</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1018-P6klxc.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1018-P6klxc.png" alt="图片"></p>
 <p>第三种情况：多个对象之间的间接依赖</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1018-4pepnI.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1018-4pepnI.png" alt="图片"></p>
 <p>前面两种情况的直接循环依赖比较直观，非常好识别，但是第三种间接循环依赖的情况有时候因为业务代码调用层级很深，不容易识别出来。</p>
-<h2 id="循环依赖的N种场景">循环依赖的N种场景</h2>
-<p>spring中出现循环依赖主要有以下场景：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1020-ABmjjy.png" alt=""></p>
-<h3 id="单例的setter注入">单例的setter注入</h3>
-<p>这种注入方式应该是spring用的最多的，代码如下：</p>
+<h2 id="循环依赖的N种场景"><a href="#循环依赖的N种场景" class="headerlink" title="循环依赖的N种场景"></a>循环依赖的N种场景</h2><p>spring中出现循环依赖主要有以下场景：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1020-ABmjjy.png" alt="图片"></p>
+<h3 id="单例的setter注入"><a href="#单例的setter注入" class="headerlink" title="单例的setter注入"></a>单例的setter注入</h3><p>这种注入方式应该是spring用的最多的，代码如下：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService1</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService2 testService2;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService2</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService1 testService1;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>这是一个经典的循环依赖，但是它能正常运行，得益于spring的内部机制，让我们根本无法感知它有问题，因为spring默默帮我们解决了。</p>
 <p>spring内部有三级缓存：</p>
@@ -351,7 +348,7 @@
 <li>singletonFactories 三级缓存，用于保存bean创建工厂，以便于后面扩展有机会创建代理对象。</li>
 </ul>
 <p>下面用一张图告诉你，spring是如何解决循环依赖的：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1021-HKc286.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1021-HKc286.png" alt="图片"></p>
 <p>​              图1</p>
 <p>细心的朋友可能会发现在这种场景中第二级缓存作用不大。</p>
 <p>那么问题来了，为什么要用第二级缓存呢？</p>
@@ -361,24 +358,23 @@
 <p>按照上图的流程可以把TestService1注入到TestService2，并且TestService1的实例是从第三级缓存中获取的。</p>
 <p>假设不用第二级缓存，TestService1注入到TestService3的流程如图：</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1103-WHZRkd.jpg" alt=""></p>
-<p>​</p>
+<p>​             </p>
 <p>TestService1注入到TestService3又需要从第三级缓存中获取实例，而第三级缓存里保存的并非真正的实例对象，而是<code>ObjectFactory</code>对象。说白了，两次从三级缓存中获取都是<code>ObjectFactory</code>对象，而通过它创建的实例对象每次可能都不一样的。</p>
 <p>这样不是有问题？</p>
 <p>为了解决这个问题，spring引入的第二级缓存。上面图1其实TestService1对象的实例已经被添加到第二级缓存中了，而在TestService1注入到TestService3时，只用从第二级缓存中获取该对象即可。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1022-gMDDPq.png" alt=""></p>
-<p>​</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1022-gMDDPq.png" alt="图片"></p>
+<p>​             </p>
 <p>还有个问题，第三级缓存中为什么要添加<code>ObjectFactory</code>对象，直接保存实例对象不行吗？</p>
 <p>答：不行，因为假如你想对添加到三级缓存中的实例对象进行增强，直接用实例对象是行不通的。</p>
 <p>针对这种场景spring是怎么做的呢？</p>
 <p>答案就在<code>AbstractAutowireCapableBeanFactory</code>类<code>doCreateBean</code>方法的这段代码中：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1021-Bp2Wqp.png" alt="">它定义了一个匿名内部类，通过<code>getEarlyBeanReference</code>方法获取代理对象，其实底层是通过<code>AbstractAutoProxyCreator</code>类的<code>getEarlyBeanReference</code>生成代理对象。</p>
-<h3 id="多例的setter注入">多例的setter注入</h3>
-<p>这种注入方法偶然会有，特别是在多线程的场景下，具体代码如下：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1021-Bp2Wqp.png" alt="图片">它定义了一个匿名内部类，通过<code>getEarlyBeanReference</code>方法获取代理对象，其实底层是通过<code>AbstractAutoProxyCreator</code>类的<code>getEarlyBeanReference</code>生成代理对象。</p>
+<h3 id="多例的setter注入"><a href="#多例的setter注入" class="headerlink" title="多例的setter注入"></a>多例的setter注入</h3><p>这种注入方法偶然会有，特别是在多线程的场景下，具体代码如下：</p>
 <figure class="highlight less"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="variable">@Service</span></span><br><span class="line">public class TestService1 {</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private TestService2 testService2;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">void</span> <span class="selector-tag">test1</span>() {</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="variable">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="variable">@Service</span></span><br><span class="line">public class TestService2 {</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private TestService1 testService1;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">void</span> <span class="selector-tag">test2</span>() {</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>很多人说这种情况spring容器启动会报错，其实是不对的，我非常负责任的告诉你程序能够正常启动。</p>
 <p>为什么呢？</p>
 <p>其实在<code>AbstractApplicationContext</code>类的<code>refresh</code>方法中告诉了我们答案，它会调用<code>finishBeanFactoryInitialization</code>方法，该方法的作用是为了spring容器启动的时候提前初始化一些bean。该方法的内部又调用了<code>preInstantiateSingletons</code>方法</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1023-h6giqf.png" alt="">标红的地方明显能够看出：非抽象、单例 并且非懒加载的类才能被提前初始bean。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1023-h6giqf.png" alt="图片">标红的地方明显能够看出：非抽象、单例 并且非懒加载的类才能被提前初始bean。</p>
 <p>而多例即<code>SCOPE_PROTOTYPE</code>类型的类，非单例，不会被提前初始化bean，所以程序能够正常启动。</p>
 <p>如何让他提前初始化bean呢？</p>
 <p>只需要再定义一个单例的类，在它里面注入TestService1</p>
@@ -387,25 +383,23 @@
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Requested bean is currently in creation: Is there an unresolvable circular reference?</span><br></pre></td></tr></tbody></table></figure>
 <p>果然出现了循环依赖。</p>
 <p>注意：这种循环依赖问题是无法解决的，因为它没有用缓存，每次都会生成一个新对象。</p>
-<h3 id="构造器注入">构造器注入</h3>
-<p>这种注入方式现在其实用的已经非常少了，但是我们还是有必要了解一下，看看如下代码：</p>
+<h3 id="构造器注入"><a href="#构造器注入" class="headerlink" title="构造器注入"></a>构造器注入</h3><p>这种注入方式现在其实用的已经非常少了，但是我们还是有必要了解一下，看看如下代码：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService1</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestService1</span><span class="params">(TestService2 testService2)</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService2</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestService2</span><span class="params">(TestService1 testService1)</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>运行结果：</p>
 <figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Requested bean <span class="keyword">is</span> currently <span class="keyword">in</span> creation: <span class="keyword">Is</span> there an unresolvable circular <span class="keyword">reference</span>?</span><br></pre></td></tr></tbody></table></figure>
 <p>出现了循环依赖，为什么呢？</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1025-bR1zAK.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1025-bR1zAK.png" alt="图片"></p>
 <p>从图中的流程看出构造器注入没能添加到三级缓存，也没有使用缓存，所以也无法解决循环依赖问题。</p>
-<h3 id="单例的代理对象setter注入">单例的代理对象setter注入</h3>
-<p>这种注入方式其实也比较常用，比如平时使用：<code>@Async</code>注解的场景，会通过<code>AOP</code>自动生成代理对象。</p>
+<h3 id="单例的代理对象setter注入"><a href="#单例的代理对象setter注入" class="headerlink" title="单例的代理对象setter注入"></a>单例的代理对象setter注入</h3><p>这种注入方式其实也比较常用，比如平时使用：<code>@Async</code>注解的场景，会通过<code>AOP</code>自动生成代理对象。</p>
 <p>我那位同事的问题也是这种情况。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService1</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService2 testService2;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService2</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService1 testService1;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>从前面得知程序启动会报错，出现了循环依赖：</p>
 <figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean <span class="keyword">with</span> name <span class="string">'testService1'</span>: Bean <span class="keyword">with</span> name <span class="string">'testService1'</span> has been injected <span class="keyword">into</span> other beans [testService2] <span class="keyword">in</span> its raw <span class="built_in">version</span> <span class="keyword">as</span> part <span class="keyword">of</span> <span class="keyword">a</span> circular reference, but has eventually been wrapped. This means that said other beans <span class="built_in">do</span> <span class="keyword">not</span> use <span class="keyword">the</span> final <span class="built_in">version</span> <span class="keyword">of</span> <span class="keyword">the</span> bean. This is often <span class="keyword">the</span> <span class="built_in">result</span> <span class="keyword">of</span> over-eager type matching - consider <span class="keyword">using</span> <span class="string">'getBeanNamesOfType'</span> <span class="keyword">with</span> <span class="keyword">the</span> <span class="string">'allowEagerInit'</span> flag turned off, <span class="keyword">for</span> example.</span><br></pre></td></tr></tbody></table></figure>
 <p>为什么会循环依赖呢？</p>
 <p>答案就在下面这张图中：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1026-5g0uLD.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1026-5g0uLD.png" alt="图片"></p>
 <p>说白了，bean初始化完成之后，后面还有一步去检查：第二级缓存 和 原始对象 是否相等。由于它对前面流程来说无关紧要，所以前面的流程图中省略了，但是在这里是关键点，我们重点说说：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1026-7tKNpz.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1026-7tKNpz.png" alt="图片"></p>
 <p>那位同事的问题正好是走到这段代码，发现第二级缓存 和 原始对象不相等，所以抛出了循环依赖的异常。</p>
 <p>如果这时候把TestService1改个名字，改成：TestService6，其他的都不变。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line">publicclass TestService6 {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService2 testService2;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>{</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -414,33 +408,27 @@
 <p>这就要从spring的bean加载顺序说起了，默认情况下，spring是按照文件完整路径递归查找的，按路径+文件名排序，排在前面的先加载。所以TestService1比TestService2先加载，而改了文件名称之后，TestService2比TestService6先加载。</p>
 <p>为什么TestService2比TestService6先加载就没问题呢？</p>
 <p>答案在下面这张图中：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1026-jUaYl2.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1026-jUaYl2.png" alt="图片"></p>
 <p>这种情况testService6中其实第二级缓存是空的，不需要跟原始对象判断，所以不会抛出循环依赖。</p>
-<h3 id="DependsOn循环依赖">DependsOn循环依赖</h3>
-<p>还有一种有些特殊的场景，比如我们需要在实例化Bean A之前，先实例化Bean B，这个时候就可以使用<code>@DependsOn</code>注解。</p>
+<h3 id="DependsOn循环依赖"><a href="#DependsOn循环依赖" class="headerlink" title="DependsOn循环依赖"></a>DependsOn循环依赖</h3><p>还有一种有些特殊的场景，比如我们需要在实例化Bean A之前，先实例化Bean B，这个时候就可以使用<code>@DependsOn</code>注解。</p>
 <figure class="highlight less"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@DependsOn</span>(value = <span class="string">"testService2"</span>)</span><br><span class="line"><span class="variable">@Service</span></span><br><span class="line">public class TestService1 {</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private TestService2 testService2;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">void</span> <span class="selector-tag">test1</span>() {</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="variable">@DependsOn</span>(value = <span class="string">"testService1"</span>)</span><br><span class="line"><span class="variable">@Service</span></span><br><span class="line">public class TestService2 {</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private TestService1 testService1;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">void</span> <span class="selector-tag">test2</span>() {</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>程序启动之后，执行结果：</p>
 <figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Circular <span class="keyword">depends</span>-<span class="keyword">on</span> relationship <span class="keyword">between</span> <span class="string">'testService2'</span> <span class="keyword">and</span> <span class="string">'testService1'</span></span><br></pre></td></tr></tbody></table></figure>
 <p>这个例子中本来如果TestService1和TestService2都没有加<code>@DependsOn</code>注解是没问题的，反而加了这个注解会出现循环依赖问题。</p>
 <p>这又是为什么？</p>
 <p>答案在<code>AbstractBeanFactory</code>类的<code>doGetBean</code>方法的这段代码中：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1027-K1l3xz.png" alt="">它会检查dependsOn的实例有没有循环依赖，如果有循环依赖则抛异常。</p>
-<h2 id="出现循环依赖如何解决">出现循环依赖如何解决</h2>
-<p>项目中如果出现循环依赖问题，说明是spring默认无法解决的循环依赖，要看项目的打印日志，属于哪种循环依赖。目前包含下面几种情况：</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1027-k19B41.png" alt=""></p>
-<h3 id="生成代理对象产生的循环依赖">生成代理对象产生的循环依赖</h3>
-<p>这类循环依赖问题解决方法很多，主要有：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1027-K1l3xz.png" alt="图片">它会检查dependsOn的实例有没有循环依赖，如果有循环依赖则抛异常。</p>
+<h2 id="出现循环依赖如何解决"><a href="#出现循环依赖如何解决" class="headerlink" title="出现循环依赖如何解决"></a>出现循环依赖如何解决</h2><p>项目中如果出现循环依赖问题，说明是spring默认无法解决的循环依赖，要看项目的打印日志，属于哪种循环依赖。目前包含下面几种情况：</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/18/1027-k19B41.png" alt="图片"></p>
+<h3 id="生成代理对象产生的循环依赖"><a href="#生成代理对象产生的循环依赖" class="headerlink" title="生成代理对象产生的循环依赖"></a>生成代理对象产生的循环依赖</h3><p>这类循环依赖问题解决方法很多，主要有：</p>
 <ol>
 <li>使用<code>@Lazy</code>注解，延迟加载</li>
 <li>使用<code>@DependsOn</code>注解，指定加载先后关系</li>
 <li>修改文件名称，改变循环依赖类的加载顺序</li>
 </ol>
-<h3 id="使用-DependsOn产生的循环依赖">使用@DependsOn产生的循环依赖</h3>
-<p>这类循环依赖问题要找到<code>@DependsOn</code>注解循环依赖的地方，迫使它不循环依赖就可以解决问题。</p>
-<h3 id="多例循环依赖">多例循环依赖</h3>
-<p>这类循环依赖问题可以通过把bean改成单例的解决。</p>
-<h3 id="构造器循环依赖">构造器循环依赖</h3>
-<p>这类循环依赖问题可以通过使用<code>@Lazy</code>注解解决。</p>
+<h3 id="使用-DependsOn产生的循环依赖"><a href="#使用-DependsOn产生的循环依赖" class="headerlink" title="使用@DependsOn产生的循环依赖"></a>使用@DependsOn产生的循环依赖</h3><p>这类循环依赖问题要找到<code>@DependsOn</code>注解循环依赖的地方，迫使它不循环依赖就可以解决问题。</p>
+<h3 id="多例循环依赖"><a href="#多例循环依赖" class="headerlink" title="多例循环依赖"></a>多例循环依赖</h3><p>这类循环依赖问题可以通过把bean改成单例的解决。</p>
+<h3 id="构造器循环依赖"><a href="#构造器循环依赖" class="headerlink" title="构造器循环依赖"></a>构造器循环依赖</h3><p>这类循环依赖问题可以通过使用<code>@Lazy</code>注解解决。</p>
 
     </div>
    <div>
@@ -534,12 +522,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/39ZYWX3.html" rel="prev" title="Redis高可用集群原理和实践">
-      <i class="fa fa-chevron-left"></i> Redis高可用集群原理和实践
+    <a href="/posts/11TFME1.html" rel="prev" title="BeanFactory和ApplicationContext有什么区别">
+      <i class="fa fa-chevron-left"></i> BeanFactory和ApplicationContext有什么区别
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/318CB48.html" rel="next" title="springboot的启动原理">
-      springboot的启动原理 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/1NSAYEA.html" rel="next" title="算法基础02：数据结构">
+      算法基础02：数据结构 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -715,13 +703,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">882k</span>
+    <span title="站点总字数">874k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:22</span>
+    <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

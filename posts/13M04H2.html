@@ -301,20 +301,20 @@
 <p>截图来自《算法图解》这本书</p>
 </blockquote>
 <p>它的工作原理：首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20031658147403.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20241658147424.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20441658147444.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20001658147460.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20221658147482.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20471658147507.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20071658147527.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20241658147544.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20401658147560.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20531658147573.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20061658145726.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20011658145781.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20181658145798.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20421658145822.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20031658147403.png" alt="20031658147403"> </p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20241658147424.png" alt="20241658147424"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20441658147444.png" alt="20441658147444"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20001658147460.png" alt="20001658147460"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20221658147482.png" alt="20221658147482"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20471658147507.png" alt="20471658147507"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20071658147527.png" alt="20071658147527"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20241658147544.png" alt="20241658147544"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20401658147560.png" alt="20401658147560"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20531658147573.png" alt="20531658147573"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20061658145726.png" alt="20061658145726"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20011658145781.png" alt="20011658145781"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20181658145798.png" alt="20181658145798"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/18/20421658145822.png" alt="20421658145822"></p>
 <p>代码实现：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 从小到大排序</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> ints</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] test(<span class="keyword">int</span>[] ints){</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ints.length -<span class="number">1</span>; i++) {</span><br><span class="line">        <span class="keyword">int</span> floor =  ints[i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; ints.length - <span class="number">1</span>; j++) {</span><br><span class="line">            <span class="keyword">if</span> (ints[j] &lt; floor){</span><br><span class="line">                floor = ints[j];</span><br><span class="line">                ints[j] = ints[i];</span><br><span class="line">                ints[i] = floor;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> ints;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
@@ -344,10 +344,10 @@
       <div class="popular-posts-title"><a href="/posts/3V8G3VM.html" rel="bookmark">Qt基础学习笔记01</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/32V7A68.html" rel="bookmark">算法习题01：二分查找</a></div>
+      <div class="popular-posts-title"><a href="/posts/ZNDDGW.html" rel="bookmark">HashMap集合详解</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/1AQHRFA.html" rel="bookmark">算法习题03：快速排序</a></div>
+      <div class="popular-posts-title"><a href="/posts/357C6XC.html" rel="bookmark">Java8中的Stream轻松遍历树形结构</a></div>
     </li>
   </ul>
 
@@ -587,13 +587,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">882k</span>
+    <span title="站点总字数">874k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:22</span>
+    <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

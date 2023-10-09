@@ -287,14 +287,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="查看Redis当前的内存淘汰策略（本地）">查看Redis当前的内存淘汰策略（本地）</h2>
-<p>进入redis安装目录</p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="查看Redis当前的内存淘汰策略（本地）"><a href="#查看Redis当前的内存淘汰策略（本地）" class="headerlink" title="查看Redis当前的内存淘汰策略（本地）"></a>查看Redis当前的内存淘汰策略（本地）</h2><p>进入redis安装目录</p>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//进入redis安装目录</span><br><span class="line">cd /Users/yons/Redis-service/redis-6.2.6</span><br><span class="line">//进入客户端</span><br><span class="line">redis-cli</span><br><span class="line">//获取当前内存淘汰策略</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">//获取设置的Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">//设置Redis最大占用内存大小为100M</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>内存大小：如果不设置最大内存大小或者设置最大内存大小为0，在64位操作系统下不限制内存大小，在32位操作系统下最多使用3GB内存</p>
 </blockquote>
-<h2 id="Redis定义的内存淘汰策略">Redis定义的内存淘汰策略</h2>
-<ul>
+<h2 id="Redis定义的内存淘汰策略"><a href="#Redis定义的内存淘汰策略" class="headerlink" title="Redis定义的内存淘汰策略"></a>Redis定义的内存淘汰策略</h2><ul>
 <li><strong>noeviction(默认策略)</strong> ：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</li>
 <li><strong>allkeys-lru</strong>：从所有key中使用LRU算法进行淘汰</li>
 <li><strong>volatile-lru</strong>：从设置了过期时间的key中使用LRU算法进行淘汰</li>
@@ -305,11 +303,8 @@
 <blockquote>
 <p>当使用<strong>volatile-lru</strong>、<strong>volatile-random</strong>、<strong>volatile-ttl</strong>这三种策略时，如果没有key可以被淘汰，则和<strong>noeviction</strong>一样返回错误</p>
 </blockquote>
-<h2 id="修改淘汰策略">修改淘汰策略</h2>
-<h3 id="通过命令修改">通过命令修改</h3>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="通过配置文件修改">通过配置文件修改</h3>
-<p>修改redis.conf文件</p>
+<h2 id="修改淘汰策略"><a href="#修改淘汰策略" class="headerlink" title="修改淘汰策略"></a>修改淘汰策略</h2><h3 id="通过命令修改"><a href="#通过命令修改" class="headerlink" title="通过命令修改"></a>通过命令修改</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config set maxmemory-policy allkeys-lru</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="通过配置文件修改"><a href="#通过配置文件修改" class="headerlink" title="通过配置文件修改"></a>通过配置文件修改</h3><p>修改redis.conf文件</p>
 <p><code>maxmemory-policy allkeys-lru</code></p>
 
     </div>
@@ -341,7 +336,7 @@
       <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3B8XTQD.html" rel="bookmark">算法基础12：哈希表</a></div>
+      <div class="popular-posts-title"><a href="/posts/3WWPT6W.html" rel="bookmark">聊聊ConcurrentHashMap</a></div>
     </li>
   </ul>
 
@@ -584,13 +579,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">882k</span>
+    <span title="站点总字数">874k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:22</span>
+    <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

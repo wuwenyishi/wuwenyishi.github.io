@@ -320,70 +320,48 @@
 
       
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p><qtglobal>头文件包含了Qt类库的一些全局定义，包括基本数据类型、函数和宏，一般的Qt类的头文件都会包含该文件，所以不用显式包含这个头文件也可以使用其中的定义。</qtglobal></p>
-<h2 id="数据类型定义">数据类型定义</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/142148yi18pE.png" alt=""></p>
-<h2 id="函数">函数</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/152327E1M2Pg.png" alt=""></p>
-<h2 id="容器类">容器类</h2>
-<p>字符串列表类QStringList就是从容器类QList<qstring>继承的，实现对字符串列表的添加、存储、删除等操作。</qstring></p>
+<h2 id="数据类型定义"><a href="#数据类型定义" class="headerlink" title="数据类型定义"></a>数据类型定义</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/142148yi18pE.png" alt=""></p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/152327E1M2Pg.png" alt=""></p>
+<h2 id="容器类"><a href="#容器类" class="headerlink" title="容器类"></a>容器类</h2><p>字符串列表类QStringList就是从容器类QList<qstring>继承的，实现对字符串列表的添加、存储、删除等操作。</qstring></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153248tsdG7P.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153450kFMr4y.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/153639pw8d6P.png" alt=""></p>
-<h3 id="顺序容器类">顺序容器类</h3>
-<p>Qt的顺序容器类有QList、QLinkedList、QVector、QStack和QQueue。</p>
+<h3 id="顺序容器类"><a href="#顺序容器类" class="headerlink" title="顺序容器类"></a>顺序容器类</h3><p>Qt的顺序容器类有QList、QLinkedList、QVector、QStack和QQueue。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154140lipzsB.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154228cvqtqS.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154320lPlewQ.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1544149aKShL.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154440JhsHyq.png" alt=""></p>
-<h3 id="关联容器类">关联容器类</h3>
-<p>Qt还提供关联容器类QMap、QMultiMap、QHash、QMultiHash和QSet。</p>
+<h3 id="关联容器类"><a href="#关联容器类" class="headerlink" title="关联容器类"></a>关联容器类</h3><p>Qt还提供关联容器类QMap、QMultiMap、QHash、QMultiHash和QSet。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/154749eh9GjD.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/155539JL2xWV.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/155755rEv1ya.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1600342ZL5vE.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/160134XvWC3v.png" alt=""></p>
-<h2 id="容器类的迭代">容器类的迭代</h2>
-<p>迭代器(iterator)为访问容器类里的数据项提供了统一的方法，Qt有两种迭代器类：Java类型的迭代器和STL类型的迭代器。<br>
-Java类型的迭代器更易于使用，且提供一些高级功能，而STL类型的迭代器效率更高。<br>
-Qt还提供一个关键字foreach(实际是<qtglobal>里定义的一个宏)用于方便地访问容器里所有数据项。</qtglobal></p>
-<h3 id="java类型迭代器">java类型迭代器</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/161658qhNpCu.png" alt=""></p>
+<h2 id="容器类的迭代"><a href="#容器类的迭代" class="headerlink" title="容器类的迭代"></a>容器类的迭代</h2><p>迭代器(iterator)为访问容器类里的数据项提供了统一的方法，Qt有两种迭代器类：Java类型的迭代器和STL类型的迭代器。<br>Java类型的迭代器更易于使用，且提供一些高级功能，而STL类型的迭代器效率更高。<br>Qt还提供一个关键字foreach(实际是<qtglobal>里定义的一个宏)用于方便地访问容器里所有数据项。</qtglobal></p>
+<h3 id="java类型迭代器"><a href="#java类型迭代器" class="headerlink" title="java类型迭代器"></a>java类型迭代器</h3><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/161658qhNpCu.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/162648qxdRsk.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1630500gEZ7S.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/164737i7iJef.png" alt=""></p>
-<h3 id="STL类型迭代器">STL类型迭代器</h3>
-<p>STL迭代器与Qt和STL的原生算法兼容，并且进行了速度优化。<br>
-对于每一个容器类，都有两个STL类型迭代器：一个用于只读访问，一个用于读写访问。<code>无需修改数据时一定使用只读迭代器，因为它们速度更快。</code></p>
+<h3 id="STL类型迭代器"><a href="#STL类型迭代器" class="headerlink" title="STL类型迭代器"></a>STL类型迭代器</h3><p>STL迭代器与Qt和STL的原生算法兼容，并且进行了速度优化。<br>对于每一个容器类，都有两个STL类型迭代器：一个用于只读访问，一个用于读写访问。<code>无需修改数据时一定使用只读迭代器，因为它们速度更快。</code></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/165029ahXnvM.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/165157sCic3c.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/172406EVXyOj.png" alt=""></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/172637JF92Z6.png" alt=""></p>
-<h3 id="foreach-关键字">foreach 关键字</h3>
-<p>如果只是想遍历容器中所有的项，可以使用foreach关键字。foreach是<qtglobal>头文件中定义的一个宏。</qtglobal></p>
+<h3 id="foreach-关键字"><a href="#foreach-关键字" class="headerlink" title="foreach 关键字"></a>foreach 关键字</h3><p>如果只是想遍历容器中所有的项，可以使用foreach关键字。foreach是<qtglobal>头文件中定义的一个宏。</qtglobal></p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/1728538fAXpi.png" alt=""></p>
-<h2 id="Qt类库的模块">Qt类库的模块</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173613OH5ro9.png" alt=""></p>
-<h3 id="基本模块">基本模块</h3>
-<p>Qt基本模块是Qt在所有平台上的基本功能，它们在所有的开发平台和目标平台上都可用，在Qt5所有版本上是源代码和二进制兼容的。</p>
+<h2 id="Qt类库的模块"><a href="#Qt类库的模块" class="headerlink" title="Qt类库的模块"></a>Qt类库的模块</h2><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173613OH5ro9.png" alt=""></p>
+<h3 id="基本模块"><a href="#基本模块" class="headerlink" title="基本模块"></a>基本模块</h3><p>Qt基本模块是Qt在所有平台上的基本功能，它们在所有的开发平台和目标平台上都可用，在Qt5所有版本上是源代码和二进制兼容的。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173407GFWHl1.png" alt=""></p>
 <p>Ot Core模块是Qt类库的核心，所有其他模块都依赖于此模块，如果使用qmake构建项目，则Qt Core模块是自动被加入项目的。</p>
-<p>Qt GUI模块提供了用于开发GUI应用程序的必要的类，使用qmake构建应用程序时，Qt GUI模块是自动被加入项目的。如果项目中不使用GUI功能，则需要在项目配置文件中加入如下的一行：<br>
-<code>QT -= gui</code></p>
-<p>其他的模块一般不会被自动加入到项目，如果需要在项目中使用某个模块，则可以在项目配置中添加此模块。例如，如果需要在项目中使用Qt Multimedia和Qt Multimedia Widgets模块，需要在项目配置文件中加入如下的语句：<br>
-<code>OT += multimedia multimediawidgets</code><br>
-需要在项目中使用Qt SQL模块，就在项目配置文件中加入如下的语句：<br>
-<code>OT += sql</code></p>
-<h3 id="附加模块">附加模块</h3>
-<p>Q附加模块可以实现一些特定目的。这些模块可能只在某些开发平台上有，或只能用于某些操作系统，或只是为了向后兼容。用户安装时可以选择性地安装这些附加模块。</p>
+<p>Qt GUI模块提供了用于开发GUI应用程序的必要的类，使用qmake构建应用程序时，Qt GUI模块是自动被加入项目的。如果项目中不使用GUI功能，则需要在项目配置文件中加入如下的一行：<br><code>QT -= gui</code></p>
+<p>其他的模块一般不会被自动加入到项目，如果需要在项目中使用某个模块，则可以在项目配置中添加此模块。例如，如果需要在项目中使用Qt Multimedia和Qt Multimedia Widgets模块，需要在项目配置文件中加入如下的语句：<br><code>OT += multimedia multimediawidgets</code><br>需要在项目中使用Qt SQL模块，就在项目配置文件中加入如下的语句：<br><code>OT += sql</code></p>
+<h3 id="附加模块"><a href="#附加模块" class="headerlink" title="附加模块"></a>附加模块</h3><p>Q附加模块可以实现一些特定目的。这些模块可能只在某些开发平台上有，或只能用于某些操作系统，或只是为了向后兼容。用户安装时可以选择性地安装这些附加模块。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173738uWsVMZ.png" alt=""></p>
-<h3 id="增值模块">增值模块</h3>
-<p>除了随Q5发布的上述这些模块，还有一些模块（见表3-8）是单独发布的，这些模块只在商业版许可的Qt里才有。</p>
-<h3 id="技术预览模块">技术预览模块</h3>
-<p>技术预览模块就是一些还处于开发和测试阶段的模块，一般技术预览模块经过几个版本的发布后会变成正式的模块。</p>
+<h3 id="增值模块"><a href="#增值模块" class="headerlink" title="增值模块"></a>增值模块</h3><p>除了随Q5发布的上述这些模块，还有一些模块（见表3-8）是单独发布的，这些模块只在商业版许可的Qt里才有。</p>
+<h3 id="技术预览模块"><a href="#技术预览模块" class="headerlink" title="技术预览模块"></a>技术预览模块</h3><p>技术预览模块就是一些还处于开发和测试阶段的模块，一般技术预览模块经过几个版本的发布后会变成正式的模块。</p>
 <p><img data-src="https://xuemingde.com/pages/image/2022/12/01/173948dKlybJ.png" alt=""></p>
-<h3 id="Qt工具">Qt工具</h3>
-<p><img data-src="https://xuemingde.com/pages/image/2022/12/01/174047wHXBsi.png" alt=""></p>
+<h3 id="Qt工具"><a href="#Qt工具" class="headerlink" title="Qt工具"></a>Qt工具</h3><p><img data-src="https://xuemingde.com/pages/image/2022/12/01/174047wHXBsi.png" alt=""></p>
 
     </div>
    <div>
@@ -662,13 +640,13 @@ Qt还提供一个关键字foreach(实际是<qtglobal>里定义的一个宏)用�
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">882k</span>
+    <span title="站点总字数">874k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:22</span>
+    <span title="站点阅读时长">13:14</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
