@@ -1,6 +1,8 @@
 https://xuemingde.com/posts/JHA5H1.html
 https://xuemingde.com/bookmark/index.html
+https://xuemingde.com/posts/2AJQNK2.html
 https://xuemingde.com/posts/4GWNPT.html
+https://xuemingde.com/posts/8B53TM.html
 https://xuemingde.com/posts/1JCR0VT.html
 https://xuemingde.com/posts/2SZHQ52.html
 https://xuemingde.com/posts/J71QTX.html
@@ -9,12 +11,8 @@ https://xuemingde.com/posts/3P2X38D.html
 https://xuemingde.com/posts/NHRPJF.html
 https://xuemingde.com/posts/1CBWCJP.html
 https://xuemingde.com/posts/1SE7DKH.html
-https://xuemingde.com/note/index.html
-https://xuemingde.com/note/20230927.html
 https://xuemingde.com/posts/3RP071Y.html
-https://xuemingde.com/collect/index.html
 https://xuemingde.com/posts/6251YR.html
-https://xuemingde.com/posts/2AJQNK2.html
 https://xuemingde.com/posts/2VB0MVT.html
 https://xuemingde.com/posts/QVJ0P0.html
 https://xuemingde.com/posts/APJKVT.html
@@ -63,7 +61,6 @@ https://xuemingde.com/posts/2DXJCR6.html
 https://xuemingde.com/posts/1H0GRKY.html
 https://xuemingde.com/posts/1W16KG7.html
 https://xuemingde.com/posts/28TV773.html
-https://xuemingde.com/posts/8B53TM.html
 https://xuemingde.com/posts/17Y3YRG.html
 https://xuemingde.com/posts/2E8KBMS.html
 https://xuemingde.com/posts/312VHNS.html
@@ -80,7 +77,6 @@ https://xuemingde.com/posts/1HWEQYQ.html
 https://xuemingde.com/posts/1AAVASY.html
 https://xuemingde.com/posts/1H0J6ZZ.html
 https://xuemingde.com/posts/Y4WPCX.html
-https://xuemingde.com/resources/index.html
 https://xuemingde.com/posts/23E5YZV.html
 https://xuemingde.com/posts/3SE47KD.html
 https://xuemingde.com/posts/C8CVJR.html
@@ -97,8 +93,6 @@ https://xuemingde.com/posts/3MH3EJ1.html
 https://xuemingde.com/posts/21HQZA5.html
 https://xuemingde.com/posts/WCK7NZ.html
 https://xuemingde.com/posts/15KJ31K.html
-https://xuemingde.com/video/index.html
-https://xuemingde.com/video/index222.html
 https://xuemingde.com/posts/QAQAP8.html
 https://xuemingde.com/posts/6ZR6PR.html
 https://xuemingde.com/posts/3B8XTQD.html
@@ -108,9 +102,7 @@ https://xuemingde.com/posts/1R0S1V1.html
 https://xuemingde.com/posts/2XHCMQG.html
 https://xuemingde.com/posts/246RPYZ.html
 https://xuemingde.com/categories/index.html
-https://xuemingde.com/message/index.html
 https://xuemingde.com/tags/index.html
-https://xuemingde.com/casino/index.html
 https://xuemingde.com/posts/3DM6SJ9.html
 https://xuemingde.com/posts/1NSAYEA.html
 https://xuemingde.com/posts/1V420XP.html
@@ -201,8 +193,8 @@ https://xuemingde.com/categories/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/
 https://xuemingde.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/
 https://xuemingde.com/categories/java/
 https://xuemingde.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/
-https://xuemingde.com/categories/java/BUG/
 https://xuemingde.com/categories/java/JVM/
+https://xuemingde.com/categories/java/BUG/
 https://xuemingde.com/categories/java/Spring/
 https://xuemingde.com/categories/java/SpringBoot/
 https://xuemingde.com/categories/java/%E5%88%86%E5%B8%83%E5%BC%8F/
