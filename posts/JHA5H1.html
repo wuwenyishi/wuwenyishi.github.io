@@ -29,10 +29,11 @@
 <meta property="og:site_name" content="东夕月少年">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-26T07:04:39.180Z">
-<meta property="article:modified_time" content="2023-10-09T04:41:45.781Z">
+<meta property="article:modified_time" content="2023-10-09T05:20:56.529Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="C">
+<meta property="article:tag" content="指针">
 <meta property="article:tag" content="函数">
 <meta property="article:tag" content="bug">
 <meta property="article:tag" content="Qt">
@@ -227,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-09 12:41:45" itemprop="dateModified" datetime="2023-10-09T12:41:45+08:00">2023-10-09</time>
+                <time title="修改时间：2023-10-09 13:20:56" itemprop="dateModified" datetime="2023-10-09T13:20:56+08:00">2023-10-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -303,6 +304,13 @@
 <p>要将QSS样式应用于按钮，可以使用<code>setStyleSheet</code>函数。例如：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QPushButton *button = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">"按钮"</span>);</span><br><span class="line">button-&gt;<span class="built_in">setStyleSheet</span>(<span class="string">"QPushButton { /* 按钮的默认样式 */ } QPushButton:pressed { /* 按钮被按下时的样式 */ }"</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>这样，按钮在被按下时就会显示设置的样式。</p>
+<h2 id="Qt-消息提示">Qt 消息提示</h2>
+<p>在Qt中，可以使用QMessageBox来实现消息提示的功能。QMessageBox是一个用于显示消息对话框的类，它提供了多种类型的消息框，例如信息框、警告框、错误框等。</p>
+<p>以下是一个简单的示例代码，演示如何在Qt中使用QMessageBox进行消息提示：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMessageBox&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显示一个普通的信息框</span></span><br><span class="line">    QMessageBox::<span class="built_in">information</span>(<span class="literal">nullptr</span>, <span class="string">"提示"</span>, <span class="string">"这是一个普通的消息提示框"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显示一个警告框</span></span><br><span class="line">    QMessageBox::<span class="built_in">warning</span>(<span class="literal">nullptr</span>, <span class="string">"警告"</span>, <span class="string">"这是一个警告消息框"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显示一个错误框</span></span><br><span class="line">    QMessageBox::<span class="built_in">critical</span>(<span class="literal">nullptr</span>, <span class="string">"错误"</span>, <span class="string">"这是一个错误消息框"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> app.<span class="built_in">exec</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在上述代码中，我们通过调用QMessageBox的静态函数来创建不同类型的消息框。这些函数接受三个参数：父窗口指针、标题和消息文本。其中，第一个参数为nullptr表示消息框没有父窗口，第二个参数是消息框的标题，第三个参数是消息框的内容。</p>
+<p>你可以根据需要选择合适的消息框类型，例如information()用于显示信息框，warning()用于显示警告框，critical()用于显示错误框等。</p>
+<p>运行上述示例代码，将会依次弹出三个消息框，分别是普通的信息框、警告框和错误框。用户可以点击消息框上的按钮进行相应操作。</p>
 
     </div>
    <div>
@@ -321,19 +329,19 @@
   <div class="popular-posts-header">相关热门文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/2PQ961R.html" rel="bookmark">Qt中使用ModbusTcp </a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/QVJ0P0.html" rel="bookmark">C++开发学习笔记2</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/8B53TM.html" rel="bookmark">Qt modbus数据转换</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/1QR2QPE.html" rel="bookmark">Qt基础学习笔记02</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/6251YR.html" rel="bookmark">Qt开发学习笔记01</a></div>
     </li>
   </ul>
 
@@ -380,6 +388,7 @@
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i> 指针</a>
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
               <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
               <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
@@ -478,7 +487,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-ping-Ip%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Qt ping Ip端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E8%AE%BE%E7%BD%AE%E6%8C%89%E9%92%AE%E7%9A%84%E8%A2%AB%E6%8C%89%E4%B8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">Qt 设置按钮的被按下状态</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-ping-Ip%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Qt ping Ip端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E8%AE%BE%E7%BD%AE%E6%8C%89%E9%92%AE%E7%9A%84%E8%A2%AB%E6%8C%89%E4%B8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">Qt 设置按钮的被按下状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">Qt 消息提示</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -578,13 +587,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">881k</span>
+    <span title="站点总字数">882k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:21</span>
+    <span title="站点阅读时长">13:22</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
