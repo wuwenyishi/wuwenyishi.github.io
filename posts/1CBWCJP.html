@@ -295,26 +295,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="C-中枚举的使用"><a href="#C-中枚举的使用" class="headerlink" title="C++ 中枚举的使用"></a>C++ 中枚举的使用</h2><p>在C++中，枚举常量（Enumeration Constants）是一种定义命名常量的方式。枚举类型允许我们为一组相关的常量赋予有意义的名称，并将它们作为一个独立的类型来使用。</p>
-<p>以下是定义和使用枚举常量的示例：<br></p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Color</span> {</span></span><br><span class="line">    RED,</span><br><span class="line">    GREEN,</span><br><span class="line">    BLUE</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    Color myColor = RED;</span><br><span class="line">    <span class="keyword">if</span> (myColor == GREEN) {</span><br><span class="line">        <span class="comment">// 执行GREEN相关的逻辑</span></span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (myColor == BLUE) {</span><br><span class="line">        <span class="comment">// 执行BLUE相关的逻辑</span></span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        <span class="comment">// 执行默认逻辑（RED）</span></span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="C-中枚举的使用">C++ 中枚举的使用</h2>
+<p>在C++中，枚举常量（Enumeration Constants）是一种定义命名常量的方式。枚举类型允许我们为一组相关的常量赋予有意义的名称，并将它们作为一个独立的类型来使用。</p>
+<p>以下是定义和使用枚举常量的示例：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Color</span> {</span></span><br><span class="line">    RED,</span><br><span class="line">    GREEN,</span><br><span class="line">    BLUE</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    Color myColor = RED;</span><br><span class="line">    <span class="keyword">if</span> (myColor == GREEN) {</span><br><span class="line">        <span class="comment">// 执行GREEN相关的逻辑</span></span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (myColor == BLUE) {</span><br><span class="line">        <span class="comment">// 执行BLUE相关的逻辑</span></span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        <span class="comment">// 执行默认逻辑（RED）</span></span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在上述代码中，我们定义了一个名为<code>Color</code>的枚举类型，并声明了三个枚举常量<code>RED</code>、<code>GREEN</code>和<code>BLUE</code>。这些常量都属于<code>Color</code>类型，它们实际上是整数值，默认从0开始递增。</p>
 <p>在<code>main()</code>函数中，我们创建了一个<code>myColor</code>变量，并将其初始化为<code>RED</code>枚举常量。我们可以使用<code>if</code>语句来检查<code>myColor</code>的值，根据不同的情况执行相应的逻辑。</p>
-<p>需要注意的是，枚举常量是命名的整数值，并且可以通过名称进行比较和赋值操作。此外，我们也可以指定枚举常量的具体整数值，例如：<br></p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Status</span> {</span></span><br><span class="line">    OK = <span class="number">200</span>,</span><br><span class="line">    NOT_FOUND = <span class="number">404</span>,</span><br><span class="line">    INTERNAL_ERROR = <span class="number">500</span></span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>需要注意的是，枚举常量是命名的整数值，并且可以通过名称进行比较和赋值操作。此外，我们也可以指定枚举常量的具体整数值，例如：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Status</span> {</span></span><br><span class="line">    OK = <span class="number">200</span>,</span><br><span class="line">    NOT_FOUND = <span class="number">404</span>,</span><br><span class="line">    INTERNAL_ERROR = <span class="number">500</span></span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
 <p>在这个示例中，我们为枚举常量<code>OK</code>、<code>NOT_FOUND</code>和<code>INTERNAL_ERROR</code>分别指定了整数值200、404和500。这样做可以在需要时将枚举常量与特定的整数值相关联。</p>
 <p>总之，C++中的枚举常量提供了一种定义有意义的命名常量的方式，并使得代码更易读、更具可维护性。</p>
-<h2 id="C-中程序睡眠"><a href="#C-中程序睡眠" class="headerlink" title="C++ 中程序睡眠"></a>C++ 中程序睡眠</h2><p>在 C++ 中，可以使用 <code>&lt;thread&gt;</code> 头文件中的 <code>sleep_for()</code> 函数来实现睡眠功能。<code>sleep_for()</code> 函数接受一个时间段作为参数，指定程序需要休眠的时间长度。</p>
+<h2 id="C-中程序睡眠">C++ 中程序睡眠</h2>
+<p>在 C++ 中，可以使用 <code>&lt;thread&gt;</code> 头文件中的 <code>sleep_for()</code> 函数来实现睡眠功能。<code>sleep_for()</code> 函数接受一个时间段作为参数，指定程序需要休眠的时间长度。</p>
 <p>下面是一个示例代码，展示了如何在 C++ 中使用 <code>sleep_for()</code> 函数实现睡眠功能：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span> <span class="comment">// 包含 &lt;thread&gt; 头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    std::cout &lt;&lt; <span class="string">"开始执行程序"</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 休眠 2 秒</span></span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">"休眠结束，继续执行程序"</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在上面的示例中，我们通过调用 <code>std::this_thread::sleep_for()</code> 函数并传入 `std::chrono::seconds</p>
-<h2 id="C-如何释放内存"><a href="#C-如何释放内存" class="headerlink" title="C++ 如何释放内存"></a>C++ 如何释放内存</h2><p>在C++中，可以使用以下几种方法来释放动态分配的内存：</p>
+<h2 id="C-如何释放内存">C++ 如何释放内存</h2>
+<p>在C++中，可以使用以下几种方法来释放动态分配的内存：</p>
 <ol>
-<li><p>使用<code>delete</code>释放单个对象的内存：</p>
+<li>
+<p>使用<code>delete</code>释放单个对象的内存：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* ptr = <span class="keyword">new</span> <span class="keyword">int</span>;  <span class="comment">// 动态分配一个整数对象的内存</span></span><br><span class="line"><span class="comment">// 使用分配的内存</span></span><br><span class="line"><span class="keyword">delete</span> ptr;  <span class="comment">// 释放内存</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
-<li><p>使用<code>delete[]</code>释放数组的内存：</p>
+<li>
+<p>使用<code>delete[]</code>释放数组的内存：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];  <span class="comment">// 动态分配一个整数数组的内存</span></span><br><span class="line"><span class="comment">// 使用分配的内存</span></span><br><span class="line"><span class="keyword">delete</span>[] arr;  <span class="comment">// 释放内存</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
-<li><p>使用<code>free</code>函数释放通过<code>malloc</code>、<code>calloc</code>或<code>realloc</code>分配的内存：</p>
+<li>
+<p>使用<code>free</code>函数释放通过<code>malloc</code>、<code>calloc</code>或<code>realloc</code>分配的内存：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* ptr = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>));  <span class="comment">// 分配内存</span></span><br><span class="line"><span class="comment">// 使用分配的内存</span></span><br><span class="line"><span class="built_in">free</span>(ptr);  <span class="comment">// 释放内存</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
@@ -325,9 +333,11 @@
 <li>删除或释放空指针是安全的，因此在释放内存之后最好将指针设置为<code>nullptr</code>，以防止误用。</li>
 </ul>
 <p>另外，使用智能指针（如<code>std::unique_ptr</code>和<code>std::shared_ptr</code>）等现代C++特性可以更方便地管理内存，并避免手动释放内存的问题。这些智能指针会在不再需要时自动释放它们持有的内存。</p>
-<h2 id="C-参数传递方式"><a href="#C-参数传递方式" class="headerlink" title="C++ 参数传递方式"></a>C++ 参数传递方式</h2><p>在C++中，有两种主要的参数传递方式：值传递和引用传递。</p>
+<h2 id="C-参数传递方式">C++ 参数传递方式</h2>
+<p>在C++中，有两种主要的参数传递方式：值传递和引用传递。</p>
 <ol>
-<li>值传递：<ul>
+<li>值传递：
+<ul>
 <li>值传递是将实际参数的副本传递给函数或方法。</li>
 <li>在值传递中，函数或方法使用参数的副本进行操作，对原始参数没有影响。</li>
 <li>在函数或方法内部，会为参数的副本分配新的内存空间，并在函数或方法调用结束后释放该空间。</li>
@@ -337,8 +347,9 @@
 </ol>
 <p>示例代码：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modifyValue</span><span class="params">(<span class="keyword">int</span> x)</span> </span>{</span><br><span class="line">    x = <span class="number">10</span>;  <span class="comment">// 修改参数的副本</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">modifyValue</span>(num);  <span class="comment">// 值传递</span></span><br><span class="line">    <span class="comment">// num 的值仍然是 5，没有被修改</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<ol>
-<li>引用传递：<ul>
+<ol start="2">
+<li>引用传递：
+<ul>
 <li>引用传递是将实际参数的引用传递给函数或方法。</li>
 <li>在引用传递中，函数或方法使用参数的引用直接对原始参数进行操作。</li>
 <li>在函数或方法内部，没有为参数分配新的内存空间，它直接引用了原始参数的内存空间。</li>
@@ -349,7 +360,8 @@
 <p>示例代码：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modifyValue</span><span class="params">(<span class="keyword">int</span>&amp; x)</span> </span>{</span><br><span class="line">    x = <span class="number">10</span>;  <span class="comment">// 直接修改原始参数</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">modifyValue</span>(num);  <span class="comment">// 引用传递</span></span><br><span class="line">    <span class="comment">// num 的值被修改为 10</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>需要注意的是，无论是值传递还是引用传递，都会在函数或方法调用结束后自动释放传递的参数。但是，在引用传递中，由于直接引用了原始参数的内存空间，所以可以对其进行修改并影响原始参数的值。而值传递只是操作了参数的副本，不会改变原始参数的值。</p>
-<h2 id="关于析构函数的特性"><a href="#关于析构函数的特性" class="headerlink" title="关于析构函数的特性"></a>关于析构函数的特性</h2><p>C++ 的析构函数（Destructor）是一种特殊的成员函数，用于在对象被销毁时执行清理工作。它的实现原理如下：</p>
+<h2 id="关于析构函数的特性">关于析构函数的特性</h2>
+<p>C++ 的析构函数（Destructor）是一种特殊的成员函数，用于在对象被销毁时执行清理工作。它的实现原理如下：</p>
 <ol>
 <li>析构函数的命名规则是在类名前加上一个波浪线（~），后接类名，例如<code>~ClassName</code>。</li>
 <li>析构函数没有参数，也不能被重载，每个类只能有一个析构函数。</li>
@@ -364,23 +376,28 @@
 <p>总结：C++ 的析构函数通过编译器自动调用，在对象销毁时执行必要的清理工作，它的实现原理包括命名规则、调用顺序等。合理使用析构函数可以确保资源的正确释放，避免内存泄漏和资源泄漏问题的发生。</p>
 <p>C++ 的析构函数实际上是由编译器自动生成和调用的，其实现原理如下：</p>
 <ol>
-<li><p>自动调用：当对象的生命周期结束时，编译器会自动调用适当的析构函数。这可以发生在以下几种情况下：</p>
+<li>
+<p>自动调用：当对象的生命周期结束时，编译器会自动调用适当的析构函数。这可以发生在以下几种情况下：</p>
 <ul>
 <li>对象离开其作用域：当对象在函数中定义，并且超出了其作用域范围时，编译器会自动调用该对象的析构函数。</li>
 <li>动态分配内存的对象被释放：如果通过<code>new</code>关键字动态创建了对象并进行了内存分配，在使用<code>delete</code>操作符释放内存时，编译器会自动调用该对象的析构函数。</li>
 <li>对象被销毁：当一个对象作为另一个对象的成员时，当包含它的对象被销毁时，编译器会自动调用该成员对象的析构函数。</li>
 </ul>
 </li>
-<li><p>生成默认析构函数：如果没有显式定义析构函数，编译器会自动生成一个默认的析构函数。默认析构函数的实现为空，即不执行任何操作。</p>
+<li>
+<p>生成默认析构函数：如果没有显式定义析构函数，编译器会自动生成一个默认的析构函数。默认析构函数的实现为空，即不执行任何操作。</p>
 </li>
-<li><p>显式定义析构函数：在需要进行一些清理工作的情况下，可以显式地在类中定义析构函数。在析构函数的定义中，可以编写所需的清理代码，例如释放动态分配的内存、关闭文件、释放资源等。</p>
+<li>
+<p>显式定义析构函数：在需要进行一些清理工作的情况下，可以显式地在类中定义析构函数。在析构函数的定义中，可以编写所需的清理代码，例如释放动态分配的内存、关闭文件、释放资源等。</p>
 </li>
-<li><p>调用顺序：在具有继承关系的类中，当派生类对象被销毁时，会先自动调用派生类的析构函数，然后再调用基类的析构函数。这样可以确保在对象层次结构中的每个类都能够执行必要的清理工作，并按照正确的顺序进行。</p>
+<li>
+<p>调用顺序：在具有继承关系的类中，当派生类对象被销毁时，会先自动调用派生类的析构函数，然后再调用基类的析构函数。这样可以确保在对象层次结构中的每个类都能够执行必要的清理工作，并按照正确的顺序进行。</p>
 </li>
 </ol>
 <p>需要注意的是，如果在基类中将析构函数声明为虚函数（使用<code>virtual</code>关键字），则在通过基类指针或引用删除派生类对象时，会调用正确的析构函数。这是因为虚析构函数允许动态绑定，在运行时选择正确的析构函数。</p>
 <p>总结：C++ 的析构函数实际上是由编译器自动生成和调用的，它的实现原理涉及自动调用、默认生成、显式定义和调用顺序等方面。合理使用析构函数可以确保资源的正确释放，避免内存泄漏和资源泄漏问题的发生。</p>
-<h2 id="C-全局变量"><a href="#C-全局变量" class="headerlink" title="C++ 全局变量"></a>C++ 全局变量</h2><p>C++ 中的全局变量是在函数外部定义的变量，可以在程序的任何地方使用。全局变量在整个程序中都是可见的，可以被多个函数或模块使用。</p>
+<h2 id="C-全局变量">C++ 全局变量</h2>
+<p>C++ 中的全局变量是在函数外部定义的变量，可以在程序的任何地方使用。全局变量在整个程序中都是可见的，可以被多个函数或模块使用。</p>
 <p>在C++中，全局变量的声明通常放在头文件中，并且在源文件中进行定义和初始化。全局变量可以有不同的存储类别（如 static、extern 等），它们决定了全局变量的作用域和生命周期。</p>
 <p>以下是一个示例：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 头文件 global_var.h</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> globalVar; <span class="comment">// 声明全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 源文件 main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"global_var.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> globalVar = <span class="number">10</span>; <span class="comment">// 定义并初始化全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">// 在这里可以使用全局变量 globalVar</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">// 在这里也可以使用全局变量 globalVar</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -663,13 +680,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">874k</span>
+    <span title="站点总字数">882k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:14</span>
+    <span title="站点阅读时长">13:22</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

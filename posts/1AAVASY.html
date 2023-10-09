@@ -33,8 +33,8 @@
 <meta property="article:modified_time" content="2023-09-05T11:48:22.445Z">
 <meta property="article:author" content="meadel">
 <meta property="article:tag" content="C">
-<meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="sql">
+<meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="锁">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="索引">
@@ -299,25 +299,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1 id="MYSQL基本架构"><a href="#MYSQL基本架构" class="headerlink" title="MYSQL基本架构"></a>MYSQL基本架构</h1><p> <img data-src="https://xuemingde.com/pages/image/2022/03/05/UgE8KY.png" alt="UgE8KY"></p>
-<h1 id="什么是存储引擎"><a href="#什么是存储引擎" class="headerlink" title="什么是存储引擎"></a>什么是存储引擎</h1><p>数据库存储引擎是数据库底层软件组件，数据库管理系统使用数据引擎进行创建、查询、更新和删除数据操作。不同的存储引擎提供不同的存储机制、索引技巧、锁定水平等功能，使用不同的存储引擎还可以获得特定的功能。</p>
-<h1 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h1><h2 id="数据存放"><a href="#数据存放" class="headerlink" title="数据存放"></a>数据存放</h2><ul>
-<li><p>InnoDB </p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1>MYSQL基本架构</h1>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/05/UgE8KY.png" alt=""></p>
+<h1>什么是存储引擎</h1>
+<p>数据库存储引擎是数据库底层软件组件，数据库管理系统使用数据引擎进行创建、查询、更新和删除数据操作。不同的存储引擎提供不同的存储机制、索引技巧、锁定水平等功能，使用不同的存储引擎还可以获得特定的功能。</p>
+<h1>两者区别</h1>
+<h2 id="数据存放">数据存放</h2>
+<ul>
+<li>
+<p>InnoDB</p>
 <p>数据与索引存放在同一文件下，.ibd文件。</p>
 </li>
-<li><p>MYISAM</p>
+<li>
+<p>MYISAM</p>
 <p>数据与索引存放在不同的文件下。.MYD 存放数据，.MYI存放索引。</p>
 </li>
 </ul>
-<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><ul>
+<h2 id="事务">事务</h2>
+<ul>
 <li>InnoDB 支持事务</li>
 <li>MYISAM 不支持事务</li>
 </ul>
-<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><ul>
+<h2 id="锁">锁</h2>
+<ul>
 <li>InnoDB 支持行锁和表锁，默认的是行锁，锁的是索引。（如果没有索引，就会是表级锁）</li>
 <li>MYISAM 支持表锁，不支持表锁，默认是表锁，锁的是数据。</li>
 </ul>
-<h2 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h2><ul>
+<h2 id="外键">外键</h2>
+<ul>
 <li>InnoDB支持外键</li>
 <li>MYISAM 不支持外键</li>
 </ul>
@@ -339,19 +348,19 @@
   <div class="popular-posts-header">相关热门文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/J71QTX.html" rel="bookmark">秒杀系统设计</a></div>
+      <div class="popular-posts-title"><a href="/posts/VQ077V.html" rel="bookmark">Innodb的MVCC实现原理</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/2NPWEZZ.html" rel="bookmark">InnoDB锁专题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/VQ077V.html" rel="bookmark">Innodb的MVCC实现原理</a></div>
+      <div class="popular-posts-title"><a href="/posts/3K8NATX.html" rel="bookmark">Mysql里的锁</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3K8NATX.html" rel="bookmark">Mysql里的锁</a></div>
+      <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/J71QTX.html" rel="bookmark">秒杀系统设计</a></div>
     </li>
   </ul>
 
@@ -397,8 +406,8 @@
           
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
-              <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
               <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
               <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
@@ -416,12 +425,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/2EGA14J.html" rel="prev" title="事务并发与事务隔离">
-      <i class="fa fa-chevron-left"></i> 事务并发与事务隔离
+    <a href="/posts/3K8NATX.html" rel="prev" title="Mysql里的锁">
+      <i class="fa fa-chevron-left"></i> Mysql里的锁
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/3K8NATX.html" rel="next" title="Mysql里的锁">
-      Mysql里的锁 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/1H0J6ZZ.html" rel="next" title="Mysql复制插入数据">
+      Mysql复制插入数据 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -497,7 +506,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">MYSQL基本架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">2.</span> <span class="nav-text">什么是存储引擎</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">两者区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E6%94%BE"><span class="nav-number">3.1.</span> <span class="nav-text">数据存放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81"><span class="nav-number">3.3.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E9%94%AE"><span class="nav-number">3.4.</span> <span class="nav-text">外键</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">MYSQL基本架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">什么是存储引擎</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">两者区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E6%94%BE"><span class="nav-number">3.1.</span> <span class="nav-text">数据存放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81"><span class="nav-number">3.3.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E9%94%AE"><span class="nav-number">3.4.</span> <span class="nav-text">外键</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -597,13 +606,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">874k</span>
+    <span title="站点总字数">882k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:14</span>
+    <span title="站点阅读时长">13:22</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

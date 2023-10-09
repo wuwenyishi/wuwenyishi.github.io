@@ -36,8 +36,8 @@
 <meta property="article:tag" content="内存">
 <meta property="article:tag" content="CPU">
 <meta property="article:tag" content="指针">
-<meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="sql">
+<meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="索引">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xuemingde.com/pages/image/2022/03/07/UvsXY4.png">
@@ -311,20 +311,25 @@
 <li>操作系统和硬件</li>
 </ul>
 <p>只介绍前三个</p>
-<h1 id="优化数据类型"><a href="#优化数据类型" class="headerlink" title="优化数据类型"></a>优化数据类型</h1><p>MySQL支持的数据类型非常多，选择正确的数据类型对于获得高性能至关重要。不管存储哪种类型的数据，下面几个简单的原则都有助于做出更好的选择。</p>
+<h1>优化数据类型</h1>
+<p>MySQL支持的数据类型非常多，选择正确的数据类型对于获得高性能至关重要。不管存储哪种类型的数据，下面几个简单的原则都有助于做出更好的选择。</p>
 <ul>
-<li><p><strong>更小的通常更好</strong></p>
+<li>
+<p><strong>更小的通常更好</strong></p>
 <p>一般情况下，应尽量使用正确存储数据的最小数据类型，更小的数据类型通常更快，因为占用更少的磁盘、内存和CPU缓存，并且处理时需要的CPU周期也更少。</p>
 </li>
-<li><p><strong>简单就好</strong></p>
+<li>
+<p><strong>简单就好</strong></p>
 <p>简单数据类型的操作通常需要更少的CPU周期。</p>
 </li>
-<li><p><strong>尽量避免NULL</strong></p>
+<li>
+<p><strong>尽量避免NULL</strong></p>
 <p>如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较都更复杂。</p>
 <p>通常把可为NULL的列改为NOT NULL带来的性能提升比较小，所以（调优时）没有必要首先在现有 schema中查找并修改掉这种情况，除非确定这会导致问题。但是，如果计划在列上建索引，就应该尽量避免设计成可为NULL的列。</p>
 </li>
 </ul>
-<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><p>如果存储整数类型，可以使用下面几种类型：</p>
+<h2 id="整数类型">整数类型</h2>
+<p>如果存储整数类型，可以使用下面几种类型：</p>
 <ul>
 <li>tinyint  占1个字节</li>
 <li>smallint  占2个字节</li>
@@ -333,7 +338,8 @@
 <li>bigint  占8个字节</li>
 </ul>
 <p><strong>为整数类型指点宽度是没有意义的，Mysql不会限制值得合法范围，所以int(1)和int(11)是相同的。</strong></p>
-<h2 id="实数类型"><a href="#实数类型" class="headerlink" title="实数类型"></a>实数类型</h2><blockquote>
+<h2 id="实数类型">实数类型</h2>
+<blockquote>
 <p>实数类型是带有小数部分的数字。。。。也可使用Decimal存储比bigInt还大的整数</p>
 </blockquote>
 <p>Mysql既支持精确类型，也支持不精确的类型。</p>
@@ -346,36 +352,47 @@
 </blockquote>
 <p>在Mysql5.0及以上的版本中，decimal类型允许最多65个数字。</p>
 <p><strong>浮点类型在存储同样范围的值时，通常比 DECIMAL使用更少的空间。</strong> float使用4个字节存储，double使用8个字节存储，相比float有更高的精度和更大的范围。</p>
-<p><strong>因为需要额外的空间和计算开销，所以应该尽量只在对小数进行精确计算时才使用DECIMAL。</strong>例如存储财务数据。但<strong>在数据量比较大的时候，可以考虑使用BIGINT代替DECIMAL</strong>，将需要存储的货币单位根据小数的位数乘以相应的倍数即可。</p>
-<h2 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h2><h3 id="VARCHAR"><a href="#VARCHAR" class="headerlink" title="VARCHAR"></a>VARCHAR</h3><p>存储可变长字符串。</p>
+<p><strong>因为需要额外的空间和计算开销，所以应该尽量只在对小数进行精确计算时才使用DECIMAL。<strong>例如存储财务数据。但</strong>在数据量比较大的时候，可以考虑使用BIGINT代替DECIMAL</strong>，将需要存储的货币单位根据小数的位数乘以相应的倍数即可。</p>
+<h2 id="字符串类型">字符串类型</h2>
+<h3 id="VARCHAR">VARCHAR</h3>
+<p>存储可变长字符串。</p>
 <p>需要使用1或者2个字节记录字符串的长度。</p>
 <p>在Update时可能使行变得比原来更长，需要做额外的工作，不同的存储引擎处理的方式不一样，MYISAM会拆成不同的片段存储，InnoDB会分裂页来使行可以放进页内。</p>
 <p><strong>下面这些情况下使用VARCHAR是合适的</strong>：字符串列的最大长度比平均长度大很多；列的更新很少，所以碎片不是问题，使用了像UTF-8这样复杂的字符集，每个字符都使用不同的字节数进行存储。</p>
 <p>在5.0或者更高版本，MySQL在存储和检索时会保留末尾空格。</p>
-<h3 id="CHAR"><a href="#CHAR" class="headerlink" title="CHAR"></a>CHAR</h3><p>char类型是定长的，MySQL总是根据定义的字符串长度分配足够的空间。</p>
-<p><strong>当存储CHAR值时，Mysql会删除所有末尾的空格。</strong>不会删除开头的空格，<strong>与存储引擎无关，是在服务层进行的</strong>。</p>
+<h3 id="CHAR">CHAR</h3>
+<p>char类型是定长的，MySQL总是根据定义的字符串长度分配足够的空间。</p>
+<p>**当存储CHAR值时，Mysql会删除所有末尾的空格。**不会删除开头的空格，<strong>与存储引擎无关，是在服务层进行的</strong>。</p>
 <p><strong>CHAR适合存储很短的字符串，或者所有值都接近同一个长度。</strong></p>
 <p><strong>CHAR类型不容易产生碎片</strong>。</p>
 <p>使用VARCHAR(5)和VARCHAR(200)存储’hello’的空间开销是一样的。</p>
 <p>事实证明，使用更短的列有很大的优势，更长的列会消耗更多的内存，因为Mysql通常会分配固定大小的内存块来保存内部值。</p>
 <p>所以最好的策略是<strong>只分配真正需要的空间</strong>。</p>
-<h3 id="BLOB和TEXT类型"><a href="#BLOB和TEXT类型" class="headerlink" title="BLOB和TEXT类型"></a>BLOB和TEXT类型</h3><p>为存储很大的数据而设计的字符串数据类型，分别采用二进制和字符方式存储。</p>
-<p> 与其他类型不同，MySQL把每个BLOB和TEXT值当作一个独立的对象处理。存储引擎在存储时通常会做特殊处理。当 BLOB和 TEXT值太大时，InnoDB 会使用专门的“外部”存储区域来进行存储，此时每个值在行内需要1～4个字节存储一个指针，然后在外部存储区域存储实际的值。</p>
+<h3 id="BLOB和TEXT类型">BLOB和TEXT类型</h3>
+<p>为存储很大的数据而设计的字符串数据类型，分别采用二进制和字符方式存储。</p>
+<p>与其他类型不同，MySQL把每个BLOB和TEXT值当作一个独立的对象处理。存储引擎在存储时通常会做特殊处理。当 BLOB和 TEXT值太大时，InnoDB 会使用专门的“外部”存储区域来进行存储，此时每个值在行内需要1～4个字节存储一个指针，然后在外部存储区域存储实际的值。</p>
 <p>BLOB和TEXT家族之间仅有的不同是BLOB类型存储的是二进制数据，没有排序规则或字符集，而TEXT类型有字符集和排序规则。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/03/07/UvsXY4.png" alt="UvsXY4"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/03/07/UvsXY4.png" alt=""></p>
 <blockquote>
 <p>有时间可以使用枚举替代常用的字符串类型</p>
 </blockquote>
-<h2 id="日期和时间类型"><a href="#日期和时间类型" class="headerlink" title="日期和时间类型"></a>日期和时间类型</h2><p>Mysql最小时间粒度为秒。</p>
+<h2 id="日期和时间类型">日期和时间类型</h2>
+<p>Mysql最小时间粒度为秒。</p>
 <p>Mysql提供两种时间类型：DateTime 和TimesTamp。</p>
-<h3 id="DATETIME"><a href="#DATETIME" class="headerlink" title="DATETIME"></a>DATETIME</h3><p>能保存大范围的值，从1001年到9999年，精确为秒。使用8个字节存储空间。</p>
-<h3 id="TIMESTAMP"><a href="#TIMESTAMP" class="headerlink" title="TIMESTAMP"></a>TIMESTAMP</h3><p>只能表示1970年到2038年，只使用4个字节存储空间。存储的值与时区有关。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </p>
-<h1 id="创建高性能索引"><a href="#创建高性能索引" class="headerlink" title="创建高性能索引"></a>创建高性能索引</h1><h2 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h2><ul>
+<h3 id="DATETIME">DATETIME</h3>
+<p>能保存大范围的值，从1001年到9999年，精确为秒。使用8个字节存储空间。</p>
+<h3 id="TIMESTAMP">TIMESTAMP</h3>
+<p>只能表示1970年到2038年，只使用4个字节存储空间。存储的值与时区有关。</p>
+<h1>创建高性能索引</h1>
+<h2 id="索引的优点">索引的优点</h2>
+<ul>
 <li>索引大大减少了服务器需要扫描的数据量。</li>
 <li>索引可以帮助服务器避免排序和临时表。</li>
 <li>索引可以将随机 I/O 变为顺序 I/O。</li>
 </ul>
-<h1 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h1><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<h1>SQL优化</h1>
+<h1>参考文章</h1>
+<ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MDY4MDg1MzgxODk1MjkwODk0P3V0bV9zb3VyY2U9Z29sZF9icm93c2VyX2V4dGVuc2lvbiNoZWFkaW5nLTEx">在日常工作中怎么做MySQL优化的？ - 掘金 (juejin.cn)<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 
@@ -399,13 +416,13 @@
       <div class="popular-posts-title"><a href="/posts/3N8921N.html" rel="bookmark">彻底讲透Elasticsearch</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/3DS4M6Q.html" rel="bookmark">Kafka面试连环炮-上</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/1F4JVMQ.html" rel="bookmark">一文搞懂redis</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/2HNBAGV.html" rel="bookmark">基于代价的慢查询优化建议</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/3DS4M6Q.html" rel="bookmark">Kafka面试连环炮-上</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/posts/3GHHYS4.html" rel="bookmark">Qt&amp;C++面试题</a></div>
@@ -457,8 +474,8 @@
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
               <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i> 指针</a>
-              <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
               <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
               <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
           </div>
 
@@ -554,7 +571,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">优化数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">实数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VARCHAR"><span class="nav-number">1.3.1.</span> <span class="nav-text">VARCHAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHAR"><span class="nav-number">1.3.2.</span> <span class="nav-text">CHAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLOB%E5%92%8CTEXT%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">BLOB和TEXT类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">日期和时间类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DATETIME"><span class="nav-number">1.4.1.</span> <span class="nav-text">DATETIME</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMESTAMP"><span class="nav-number">1.4.2.</span> <span class="nav-text">TIMESTAMP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%AB%98%E6%80%A7%E8%83%BD%E7%B4%A2%E5%BC%95"><span class="nav-number">2.</span> <span class="nav-text">创建高性能索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">索引的优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">SQL优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">优化数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">实数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VARCHAR"><span class="nav-number">1.3.1.</span> <span class="nav-text">VARCHAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHAR"><span class="nav-number">1.3.2.</span> <span class="nav-text">CHAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLOB%E5%92%8CTEXT%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">BLOB和TEXT类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">日期和时间类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DATETIME"><span class="nav-number">1.4.1.</span> <span class="nav-text">DATETIME</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMESTAMP"><span class="nav-number">1.4.2.</span> <span class="nav-text">TIMESTAMP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">创建高性能索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">索引的优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">SQL优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -654,13 +671,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">874k</span>
+    <span title="站点总字数">882k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:14</span>
+    <span title="站点阅读时长">13:22</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
