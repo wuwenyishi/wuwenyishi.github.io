@@ -29,18 +29,19 @@
 <meta property="og:site_name" content="东夕月少年">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-26T07:04:39.180Z">
-<meta property="article:modified_time" content="2023-10-10T04:40:21.313Z">
+<meta property="article:modified_time" content="2023-10-10T06:37:45.217Z">
 <meta property="article:author" content="meadel">
-<meta property="article:tag" content="bug">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="指针">
 <meta property="article:tag" content="const">
 <meta property="article:tag" content="函数">
 <meta property="article:tag" content="变量">
-<meta property="article:tag" content="Qt">
-<meta property="article:tag" content="GC">
+<meta property="article:tag" content="bug">
+<meta property="article:tag" content="多线程">
 <meta property="article:tag" content="数据库">
+<meta property="article:tag" content="GC">
+<meta property="article:tag" content="Qt">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://xuemingde.com/posts/JHA5H1.html">
@@ -236,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 12:40:21" itemprop="dateModified" datetime="2023-10-10T12:40:21+08:00">2023-10-10</time>
+                <time title="修改时间：2023-10-10 14:37:45" itemprop="dateModified" datetime="2023-10-10T14:37:45+08:00">2023-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,14 +283,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>2 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -327,6 +328,22 @@
 <p>要使这种方式的翻译生效，你需要确保已经提取了相应的字符串并将其添加到翻译文件（.ts文件）中。然后，你可以使用Qt的翻译工具来翻译这些字符串，并将翻译结果保存到对应的翻译文件中。</p>
 <p>请注意，为了能够正确翻译数据库检索出的字符串，确保在查询之前设置了正确的语言环境（例如使用<code>QCoreApplication::setApplicationLanguage()</code>）。</p>
 <p>希望这个回答对你有帮助！如果你还有其他问题，请随时提问。</p>
+<h2 id="Qt-C-在逻辑中创建一个线程">Qt C++ 在逻辑中创建一个线程</h2>
+<p>在Qt中，我们可以通过在逻辑中创建一个QThread对象并使用moveToThread()方法将对象移到新的线程中来创建一个线程。这种方法可以使我们在逻辑层面上更容易地控制线程的生命周期和执行流程。</p>
+<p>以下是一个例子，展示了如何在逻辑中创建并控制一个线程：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Worker</span> :</span> <span class="keyword">public</span> QObject</span><br><span class="line">{</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Worker</span><span class="params">(QObject *parent = <span class="literal">nullptr</span>)</span> : QObject(parent)</span></span><br><span class="line"><span class="function">    {</span>}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doWork</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"Worker thread:"</span> &lt;&lt; QThread::<span class="built_in">currentThreadId</span>();</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    QThread *thread = <span class="keyword">new</span> <span class="built_in">QThread</span>();</span><br><span class="line">    Worker *worker = <span class="keyword">new</span> <span class="built_in">Worker</span>();</span><br><span class="line"></span><br><span class="line">    worker-&gt;<span class="built_in">moveToThread</span>(thread);</span><br><span class="line"></span><br><span class="line">    QObject::<span class="built_in">connect</span>(thread, &amp;QThread::started, worker, &amp;Worker::doWork);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"Main thread:"</span> &lt;&lt; QThread::<span class="built_in">currentThreadId</span>();</span><br><span class="line"></span><br><span class="line">    thread-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在这个例子中，我们创建了一个继承自QObject的Worker类，该类的doWork() 槽函数实现了一个简单的任务。在main()函数中，我们实例化了一个QThread对象，并实例化了一个Worker对象。然后，我们通过worker-&gt;moveToThread(thread)方法将Worker对象移动到新的线程中。接着，我们使用connect()方法将线程的started()信号连接到Worker对象的doWork()槽函数，该槽函数在新的线程中执行。</p>
+<p>在main()函数中，我们启动了新线程并执行a.exec()函数。在输出中，我们可以看到doWork()槽函数是在新线程中执行的。注意，由于输出是异步进行的，可能会发生输出语句显示顺序不一致的情况。</p>
+<p>需要注意的是，线程结束时我们需要手动释放线程对象。在这个例子中，我们可以使用以下代码在线程执行完毕后释放线程对象：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QObject::<span class="built_in">connect</span>(thread, &amp;QThread::finished, thread, &amp;QThread::deleteLater);</span><br></pre></td></tr></tbody></table></figure>
+<p>以上代码会将线程的finished()信号连接到线程的deleteLater()槽函数，并在线程执行完毕后释放线程对象。</p>
+<h2 id="Qt-C-创建多线程">Qt C++ 创建多线程</h2>
+<p>在Qt中，使用QThread类可以创建多个线程。我们可以通过多次实例化线程对象，并调用start()方法启动每个线程。</p>
+<p>为了使线程执行有序，我们可以在每个线程中实现不同的任务，并使用QThread的finished()信号来通知其他线程并执行下一步操作。</p>
+<p>以下是一个完整的例子，展示了如何创建两个线程并使其有序执行：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> :</span> <span class="keyword">public</span> QThread</span><br><span class="line">{</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="built_in">QString</span>(<span class="string">"ThreadA %1: start"</span>).<span class="built_in">arg</span>(QThread::<span class="built_in">currentThreadId</span>());</span><br><span class="line">        <span class="built_in">sleep</span>(<span class="number">2</span>);</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="built_in">QString</span>(<span class="string">"ThreadA %1: end"</span>).<span class="built_in">arg</span>(QThread::<span class="built_in">currentThreadId</span>());</span><br><span class="line">        <span class="function">emit <span class="title">finished</span><span class="params">()</span></span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> :</span> <span class="keyword">public</span> QThread</span><br><span class="line">{</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="built_in">QString</span>(<span class="string">"ThreadB %1: start"</span>).<span class="built_in">arg</span>(QThread::<span class="built_in">currentThreadId</span>());</span><br><span class="line">        <span class="built_in">sleep</span>(<span class="number">2</span>);</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="built_in">QString</span>(<span class="string">"ThreadB %1: end"</span>).<span class="built_in">arg</span>(QThread::<span class="built_in">currentThreadId</span>());</span><br><span class="line">        <span class="function">emit <span class="title">finished</span><span class="params">()</span></span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    ThreadA *threadA = <span class="keyword">new</span> <span class="built_in">ThreadA</span>();</span><br><span class="line">    ThreadB *threadB = <span class="keyword">new</span> <span class="built_in">ThreadB</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在线程A执行完毕后启动线程B</span></span><br><span class="line">    QObject::<span class="built_in">connect</span>(threadA, &amp;ThreadA::finished, threadB, &amp;ThreadB::start);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">"main thread: start"</span>;</span><br><span class="line"></span><br><span class="line">    threadA-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在这个例子中，我们创建了两个继承自QThread的线程类ThreadA和ThreadB，并在其中实现了不同的任务。我们通过QObject的connect()方法连接了线程A和线程B的finished()信号，在线程A执行完毕后启动线程B。在main()函数中，我们实例化了ThreadA和ThreadB，并启动线程A。线程A执行完毕后，会发出finished()信号，这个信号会被QObject::connect()方法捕获，并启动线程B。</p>
+<p>运行这个例子，你会看到线程A和线程B有序地执行了各自的任务，并输出了输出语句。注意，由于输出是异步进行的，可能会发生输出语句显示顺序不一致的情况。</p>
 
     </div>
    <div>
@@ -357,7 +374,7 @@
       <div class="popular-posts-title"><a href="/posts/1QR2QPE.html" rel="bookmark">Qt基础学习笔记02</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/6251YR.html" rel="bookmark">Qt开发学习笔记01</a></div>
+      <div class="popular-posts-title"><a href="/posts/C8CVJR.html" rel="bookmark">Qt基础学习笔记03</a></div>
     </li>
   </ul>
 
@@ -402,16 +419,17 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
               <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
               <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i> 指针</a>
               <a href="/tags/const/" rel="tag"><i class="fa fa-tag"></i> const</a>
               <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
               <a href="/tags/%E5%8F%98%E9%87%8F/" rel="tag"><i class="fa fa-tag"></i> 变量</a>
-              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
-              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+              <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+              <a href="/tags/Qt/" rel="tag"><i class="fa fa-tag"></i> Qt</a>
           </div>
 
         
@@ -506,7 +524,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-ping-Ip%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Qt ping Ip端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E8%AE%BE%E7%BD%AE%E6%8C%89%E9%92%AE%E7%9A%84%E8%A2%AB%E6%8C%89%E4%B8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">Qt 设置按钮的被按下状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">Qt 消息提示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-tr%E5%90%AB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E5%87%BA%E6%9D%A5%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%AF%E4%BB%A5%E7%BF%BB%E8%AF%91%E5%90%97"><span class="nav-number">4.</span> <span class="nav-text">Qt tr含数据库查出来的字符串可以翻译吗</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-ping-Ip%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Qt ping Ip端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E8%AE%BE%E7%BD%AE%E6%8C%89%E9%92%AE%E7%9A%84%E8%A2%AB%E6%8C%89%E4%B8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">Qt 设置按钮的被按下状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">Qt 消息提示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-tr%E5%90%AB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E5%87%BA%E6%9D%A5%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%AF%E4%BB%A5%E7%BF%BB%E8%AF%91%E5%90%97"><span class="nav-number">4.</span> <span class="nav-text">Qt tr含数据库查出来的字符串可以翻译吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-C-%E5%9C%A8%E9%80%BB%E8%BE%91%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">Qt C++ 在逻辑中创建一个线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-C-%E5%88%9B%E5%BB%BA%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">Qt C++ 创建多线程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -606,13 +624,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">883k</span>
+    <span title="站点总字数">886k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:23</span>
+    <span title="站点阅读时长">13:25</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
