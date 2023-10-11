@@ -314,36 +314,24 @@
 
       
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ，<br>
-<span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ，<br>
-<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span></p>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ，<br><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
 </blockquote>
-<h2 id="数据丢失的原因">数据丢失的原因</h2>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt=""></p>
-<h2 id="消息持久化">消息持久化</h2>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt=""></p>
-<h2 id="消息确认机制">消息确认机制</h2>
-<h3 id="confirm机制">confirm机制</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt=""></p>
-<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt=""></strong></p>
-<h4 id="生产者确认模式实现原理">生产者确认模式实现原理</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt=""></p>
-<h3 id=""></h3>
-<h4 id="理解RabbitMQ-Confirm消息确认机制">理解RabbitMQ Confirm消息确认机制</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt=""></p>
-<h4 id="RabbitMQ-Confirm确认机制流程图">RabbitMQ Confirm确认机制流程图</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt=""></p>
-<h3 id="事务机制-ACK">事务机制(ACK)</h3>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt=""></p>
-<h4 id="ACK工作原理">ACK工作原理</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt=""></p>
+<h2 id="数据丢失的原因"><a href="#数据丢失的原因" class="headerlink" title="数据丢失的原因"></a>数据丢失的原因</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616125932796-190b38de-df34-41af-89dc-b05abf8e6603.png" alt="image.png"></p>
+<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><img data-src="https://xuemingde.com/pages/image/others/1616126025417-8eb9b06d-f0fa-43c0-ad8f-d04b8065ffde.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616126007166-5079fa45-6134-4ab5-ae37-abe0b0ae1ceb.png" alt="image.png"></p>
+<h2 id="消息确认机制"><a href="#消息确认机制" class="headerlink" title="消息确认机制"></a>消息确认机制</h2><h3 id="confirm机制"><a href="#confirm机制" class="headerlink" title="confirm机制"></a>confirm机制</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126107133-56e7d1aa-f8d3-40c4-b32a-8b4ad1ead2b0.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616126141908-248347ce-82e1-4e93-a90b-944f0ce1f663.png" alt="image.png"></p>
+<p><strong><img data-src="https://xuemingde.com/pages/image/others/1616061939812-fd18b222-64ad-499a-8077-c70510157ba5.png" alt="image.png"></strong></p>
+<h4 id="生产者确认模式实现原理"><a href="#生产者确认模式实现原理" class="headerlink" title="生产者确认模式实现原理"></a>生产者确认模式实现原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616120057595-7d700569-69fc-4dd4-81f3-a4028f8222bc.png" alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h4 id="理解RabbitMQ-Confirm消息确认机制"><a href="#理解RabbitMQ-Confirm消息确认机制" class="headerlink" title="理解RabbitMQ Confirm消息确认机制"></a>理解RabbitMQ Confirm消息确认机制</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119562697-fcbf2cdd-7abe-4797-8e75-54ae2c4e4c5e.png" alt="image.png"></p>
+<h4 id="RabbitMQ-Confirm确认机制流程图"><a href="#RabbitMQ-Confirm确认机制流程图" class="headerlink" title="RabbitMQ Confirm确认机制流程图"></a>RabbitMQ Confirm确认机制流程图</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616119588730-57000588-f975-418a-854c-11c80ccee25b.png" alt="image.png"></p>
+<h3 id="事务机制-ACK"><a href="#事务机制-ACK" class="headerlink" title="事务机制(ACK)"></a>事务机制(ACK)</h3><p><img data-src="https://xuemingde.com/pages/image/others/1616126238189-76f84851-3cee-4279-adf9-83c13dee0230.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616126256931-80467414-4679-44ae-8446-b50df502dc49.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616123500213-61b0b20e-ba8f-497d-aba7-5f92e0f26fe2.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1616121122072-5f1d10e2-8701-4070-8af1-b06a1a725e6d.png" alt="image.png"></p>
+<h4 id="ACK工作原理"><a href="#ACK工作原理" class="headerlink" title="ACK工作原理"></a>ACK工作原理</h4><p><img data-src="https://xuemingde.com/pages/image/others/1616121190328-6e7acd85-85e6-461a-a49b-8b294e3c19b4.png" alt="image.png"></p>
 <blockquote>
-<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span></p>
+<p>推荐文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGlhbnNoZW4uY29tL2FydGljbGUvNTg1MTIxODI2Ny8=">消息Ack确认机制<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxOTEyNTUxMg==">RabbitMQ如何处理消息丢失<i class="fa fa-external-link-alt"></i></span> ， <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9hcnRpY2xlLzc2OTg4Mg==">RabbitMQ防止数据丢失<i class="fa fa-external-link-alt"></i></span>   </p>
 </blockquote>
 
     </div>
@@ -517,7 +505,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">数据丢失的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">消息持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">消息确认机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#confirm%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.</span> <span class="nav-text">confirm机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E7%A1%AE%E8%AE%A4%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.1.</span> <span class="nav-text">生产者确认模式实现原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%90%86%E8%A7%A3RabbitMQ-Confirm%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">理解RabbitMQ Confirm消息确认机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RabbitMQ-Confirm%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">3.2.2.</span> <span class="nav-text">RabbitMQ Confirm确认机制流程图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6-ACK"><span class="nav-number">3.3.</span> <span class="nav-text">事务机制(ACK)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ACK%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.3.1.</span> <span class="nav-text">ACK工作原理</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">数据丢失的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">消息持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">消息确认机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#confirm%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.</span> <span class="nav-text">confirm机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E7%A1%AE%E8%AE%A4%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.1.</span> <span class="nav-text">生产者确认模式实现原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"> </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%90%86%E8%A7%A3RabbitMQ-Confirm%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">理解RabbitMQ Confirm消息确认机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RabbitMQ-Confirm%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">3.2.2.</span> <span class="nav-text">RabbitMQ Confirm确认机制流程图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6-ACK"><span class="nav-number">3.3.</span> <span class="nav-text">事务机制(ACK)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ACK%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.3.1.</span> <span class="nav-text">ACK工作原理</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -617,13 +605,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">886k</span>
+    <span title="站点总字数">877k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:25</span>
+    <span title="站点阅读时长">13:17</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

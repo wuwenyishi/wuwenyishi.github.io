@@ -312,23 +312,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="为什么要分布式锁">为什么要分布式锁</h3>
-<h4 id="什么是分布式锁">什么是分布式锁</h4>
-<ul>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h3 id="为什么要分布式锁"><a href="#为什么要分布式锁" class="headerlink" title="为什么要分布式锁"></a>为什么要分布式锁</h3><h4 id="什么是分布式锁"><a href="#什么是分布式锁" class="headerlink" title="什么是分布式锁"></a>什么是分布式锁</h4><ul>
 <li>当在分布式模型下，数据只有一份（或有限制），此时需要利用锁的技术控制某一时刻修改数据的进程数。</li>
 <li>与单机模式下的锁不仅需要保证进程可见，还需要考虑进程与锁之间的网络问题。（我觉得分布式情况下之所以问题变得复杂，主要就是需要考虑到网络的延时和不可靠。。。一个大坑）</li>
 <li>分布式锁还是可以将标记存在内存，只是该内存不是某个进程分配的内存而是公共内存如 Redis、Memcache。至于利用数据库、文件等做锁与单机的实现是一样的，只要保证标记能互斥就行。</li>
 </ul>
-<h4 id="无锁带来的问题实例">无锁带来的问题实例</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/1607657980932-e7be9bfa-d222-407f-bf5a-1e29054d2b54.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1607657994147-cd6b551c-aa7d-4dbc-a812-62c078e76b67.png" alt=""></p>
-<h4 id="为何需要分布式锁">为何需要分布式锁</h4>
-<ul>
+<h4 id="无锁带来的问题实例"><a href="#无锁带来的问题实例" class="headerlink" title="无锁带来的问题实例"></a>无锁带来的问题实例</h4><p><img data-src="https://xuemingde.com/pages/image/others/1607657980932-e7be9bfa-d222-407f-bf5a-1e29054d2b54.png" alt="image.png"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1607657994147-cd6b551c-aa7d-4dbc-a812-62c078e76b67.png" alt="image.png"></p>
+<h4 id="为何需要分布式锁"><a href="#为何需要分布式锁" class="headerlink" title="为何需要分布式锁"></a>为何需要分布式锁</h4><ul>
 <li>效率:使用分布式锁可以避免不同节点重复相同的工作，这些工作会浪费资源。比如用户付了钱之后有可能不同节点会发出多封短信。</li>
 <li>正确性:加分布式锁同样可以避免破坏正确性的发生，如果两个节点在同一条数据上面操作，比如多个节点机器对同一个订单操作不同的流程有可能会导致该笔订单最后状态出现错误，造成损失。</li>
 </ul>
-<h4 id="分布式锁的一些特点">分布式锁的一些特点</h4>
-<ul>
+<h4 id="分布式锁的一些特点"><a href="#分布式锁的一些特点" class="headerlink" title="分布式锁的一些特点"></a>分布式锁的一些特点</h4><ul>
 <li>互斥性:和我们本地锁一样互斥性是最基本，但是分布式锁需要保证在不同节点的不同线程的互斥。</li>
 <li>可重入性:同一个节点上的同一个线程如果获取了锁之后那么也可以再次获取这个锁。</li>
 <li>锁超时:和本地锁一样支持锁超时，防止死锁。</li>
@@ -336,8 +331,7 @@
 <li>支持阻塞和非阻塞:和ReentrantLock一样支持lock和trylock以及tryLock(long timeOut)。</li>
 <li>支持公平锁和非公平锁(可选):公平锁的意思是按照请求加锁的顺序获得锁，非公平锁就相反是无序的。这个一般来说实现的比较少。</li>
 </ul>
-<h3 id="Redis实现分布式锁">Redis实现分布式锁</h3>
-<blockquote>
+<h3 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h3><blockquote>
 <p>参考文章：<span class="exturl" data-url="aHR0cHM6Ly94aWFvbWktaW5mby5naXRodWIuaW8vMjAxOS8xMi8xNy9yZWRpcy1kaXN0cmlidXRlZC1sb2NrLw==">文章一<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p>Redis 锁主要利用 Redis 的 setnx 命令。</p>
@@ -352,48 +346,40 @@
 <blockquote>
 <p>上述锁实现方式存在一些问题：</p>
 </blockquote>
-<h4 id="SETNX-和-EXPIRE-非原子性">SETNX 和 EXPIRE 非原子性</h4>
-<p>如果 SETNX 成功，在设置锁超时时间后，服务器挂掉、重启或网络问题等，导致 EXPIRE 命令没有执行，锁没有设置超时时间变成死锁。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1607670900145-fb2a2f04-3885-424f-91d7-096327be2640.png" alt=""></p>
+<h4 id="SETNX-和-EXPIRE-非原子性"><a href="#SETNX-和-EXPIRE-非原子性" class="headerlink" title="SETNX 和 EXPIRE 非原子性"></a>SETNX 和 EXPIRE 非原子性</h4><p>如果 SETNX 成功，在设置锁超时时间后，服务器挂掉、重启或网络问题等，导致 EXPIRE 命令没有执行，锁没有设置超时时间变成死锁。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1607670900145-fb2a2f04-3885-424f-91d7-096327be2640.png" alt="image.png"></p>
 <p><strong>解决方式：</strong></p>
 <p>有很多开源代码来解决这个问题，比如使用 lua 脚本。示例：</p>
 <figure class="highlight scilab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (redis.call(<span class="string">'setnx'</span>, KEYS[<span class="number">1</span>], ARGV[<span class="number">1</span>]) &lt; <span class="number">1</span>)</span><br><span class="line"><span class="keyword">then</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line">redis.call(<span class="string">'expire'</span>, KEYS[<span class="number">1</span>], tonumber(ARGV[<span class="number">2</span>]));</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用实例</span></span><br><span class="line">EVAL <span class="string">"if (redis.call('</span>setnx',KEYS[<span class="number">1</span>],ARGV[<span class="number">1</span>]) &lt; <span class="number">1</span>) <span class="keyword">then</span> <span class="keyword">return</span> <span class="number">0</span>; <span class="keyword">end</span>; redis.call(<span class="string">'expire'</span>,KEYS[<span class="number">1</span>],tonumber(ARGV[<span class="number">2</span>])); <span class="keyword">return</span> <span class="number">1</span>;<span class="string">" 1 key value 100</span></span><br></pre></td></tr></tbody></table></figure>
-<h4 id="锁误解除">锁误解除</h4>
-<p>如果线程 A 成功获取到了锁，并且设置了过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁；随后 A 执行完成，线程 A 使用 DEL 命令来释放锁，但此时线程 B 加的锁还没有执行完成，线程 A 实际释放的线程 B 加的锁。</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1607670976467-2e7148d4-a1fb-46a1-962f-ed3344c90506.png" alt=""></p>
+<h4 id="锁误解除"><a href="#锁误解除" class="headerlink" title="锁误解除"></a>锁误解除</h4><p>如果线程 A 成功获取到了锁，并且设置了过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁；随后 A 执行完成，线程 A 使用 DEL 命令来释放锁，但此时线程 B 加的锁还没有执行完成，线程 A 实际释放的线程 B 加的锁。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1607670976467-2e7148d4-a1fb-46a1-962f-ed3344c90506.png" alt="image"></p>
 <p>解决方法：</p>
 <p>通过在 value 中设置当前线程加锁的标识，在删除之前验证 key 对应的 value 判断锁是否是当前线程持有。可生成一个 UUID 标识当前线程，作为当前线程的唯一标示。</p>
-<h4 id="超时解锁导致并发">超时解锁导致并发</h4>
-<p>如果线程 A 成功获取锁并设置过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁，线程 A 和线程 B 并发执行</p>
-<p><img data-src="https://xuemingde.com/pages/image/others/1607671455219-53c5e944-4e3d-46f7-9003-cde5f431b8ff.png" alt=""></p>
+<h4 id="超时解锁导致并发"><a href="#超时解锁导致并发" class="headerlink" title="超时解锁导致并发"></a>超时解锁导致并发</h4><p>如果线程 A 成功获取锁并设置过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁，线程 A 和线程 B 并发执行</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1607671455219-53c5e944-4e3d-46f7-9003-cde5f431b8ff.png" alt="image"></p>
 <p>A、B 两个线程发生并发显然是不被允许的，一般有两种方式解决该问题：</p>
 <ul>
 <li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成。</li>
 <li>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间。</li>
 </ul>
-<p><img data-src="https://xuemingde.com/pages/image/others/1607671510560-5da451d2-ae36-4a97-af79-7e4f953b6454.png" alt=""></p>
-<h4 id="不可重入">不可重入</h4>
-<p>当线程在持有锁的情况下再次请求加锁，如果一个锁支持一个线程多次加锁，那么这个锁就是可重入的。如果一个不可重入锁被再次加锁，由于该锁已经被持有，再次加锁会失败。Redis 可通过对锁进行重入计数，加锁时加 1，解锁时减 1，当计数归 0 时释放锁。</p>
+<p><img data-src="https://xuemingde.com/pages/image/others/1607671510560-5da451d2-ae36-4a97-af79-7e4f953b6454.png" alt="image"></p>
+<h4 id="不可重入"><a href="#不可重入" class="headerlink" title="不可重入"></a>不可重入</h4><p>当线程在持有锁的情况下再次请求加锁，如果一个锁支持一个线程多次加锁，那么这个锁就是可重入的。如果一个不可重入锁被再次加锁，由于该锁已经被持有，再次加锁会失败。Redis 可通过对锁进行重入计数，加锁时加 1，解锁时减 1，当计数归 0 时释放锁。</p>
 <p>在本地记录记录重入次数，如 Java 中使用 ThreadLocal 进行重入次数统计，简单示例代码：</p>
 <figure class="highlight processing"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Map&lt;<span class="keyword">String</span>, Integer&gt;&gt; LOCKERS = ThreadLocal.withInitial(<span class="keyword">HashMap</span>::<span class="keyword">new</span>);</span><br><span class="line"><span class="comment">// 加锁</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">boolean</span> lock(<span class="keyword">String</span> <span class="built_in">key</span>) {</span><br><span class="line">  Map&lt;<span class="keyword">String</span>, Integer&gt; lockers = LOCKERS.<span class="built_in">get</span>();</span><br><span class="line">  <span class="keyword">if</span> (lockers.containsKey(<span class="built_in">key</span>)) {</span><br><span class="line">    lockers.put(<span class="built_in">key</span>, lockers.<span class="built_in">get</span>(<span class="built_in">key</span>) + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  } <span class="keyword">else</span> {</span><br><span class="line">    <span class="keyword">if</span> (SET <span class="built_in">key</span> uuid NX EX <span class="number">30</span>) {</span><br><span class="line">      lockers.put(<span class="built_in">key</span>, <span class="number">1</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 解锁</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> unlock(<span class="keyword">String</span> <span class="built_in">key</span>) {</span><br><span class="line">  Map&lt;<span class="keyword">String</span>, Integer&gt; lockers = LOCKERS.<span class="built_in">get</span>();</span><br><span class="line">  <span class="keyword">if</span> (lockers.getOrDefault(<span class="built_in">key</span>, <span class="number">0</span>) &lt;= <span class="number">1</span>) {</span><br><span class="line">    lockers.remove(<span class="built_in">key</span>);</span><br><span class="line">    DEL <span class="built_in">key</span></span><br><span class="line">  } <span class="keyword">else</span> {</span><br><span class="line">    lockers.put(<span class="built_in">key</span>, lockers.<span class="built_in">get</span>(<span class="built_in">key</span>) - <span class="number">1</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>本地记录重入次数虽然高效，但如果考虑到过期时间和本地、Redis 一致性的问题，就会增加代码的复杂性。另一种方式是 Redis Map 数据结构来实现分布式锁，既存锁的标识也对重入次数进行计数。Redission 加锁示例：</p>
 <figure class="highlight gradle"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果 lock_key 不存在</span></span><br><span class="line"><span class="keyword">if</span> (redis.<span class="keyword">call</span>(<span class="string">'exists'</span>, KEYS[<span class="number">1</span>]) == <span class="number">0</span>)</span><br><span class="line">then</span><br><span class="line">    <span class="comment">// 设置 lock_key 线程标识 1 进行加锁</span></span><br><span class="line">    redis.<span class="keyword">call</span>(<span class="string">'hset'</span>, KEYS[<span class="number">1</span>], ARGV[<span class="number">2</span>], <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 设置过期时间</span></span><br><span class="line">    redis.<span class="keyword">call</span>(<span class="string">'pexpire'</span>, KEYS[<span class="number">1</span>], ARGV[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> nil;</span><br><span class="line">    end;</span><br><span class="line"><span class="comment">// 如果 lock_key 存在且线程标识是当前欲加锁的线程标识</span></span><br><span class="line"><span class="keyword">if</span> (redis.<span class="keyword">call</span>(<span class="string">'hexists'</span>, KEYS[<span class="number">1</span>], ARGV[<span class="number">2</span>]) == <span class="number">1</span>)</span><br><span class="line">    <span class="comment">// 自增</span></span><br><span class="line">    then redis.<span class="keyword">call</span>(<span class="string">'hincrby'</span>, KEYS[<span class="number">1</span>], ARGV[<span class="number">2</span>], <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 重置过期时间</span></span><br><span class="line">    redis.<span class="keyword">call</span>(<span class="string">'pexpire'</span>, KEYS[<span class="number">1</span>], ARGV[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> nil;</span><br><span class="line">    end;</span><br><span class="line"><span class="comment">// 如果加锁失败，返回锁剩余时间</span></span><br><span class="line"><span class="keyword">return</span> redis.<span class="keyword">call</span>(<span class="string">'pttl'</span>, KEYS[<span class="number">1</span>]);</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="无法等待锁释放">无法等待锁释放</h4>
-<p>上述命令执行都是立即返回的，如果客户端可以等待锁释放就无法使用。</p>
+<h4 id="无法等待锁释放"><a href="#无法等待锁释放" class="headerlink" title="无法等待锁释放"></a>无法等待锁释放</h4><p>上述命令执行都是立即返回的，如果客户端可以等待锁释放就无法使用。</p>
 <ul>
 <li>可以通过客户端轮询的方式解决该问题，当未获取到锁时，等待一段时间重新获取锁，直到成功获取锁或等待超时。这种方式比较消耗服务器资源，当并发量比较大时，会影响服务器的效率。</li>
 <li>另一种方式是使用 Redis 的发布订阅功能，当获取锁失败时，订阅锁释放消息，获取锁成功后释放时，发送锁释放消息。如下：</li>
 </ul>
-<p><img data-src="https://xuemingde.com/pages/image/others/1608010901340-ac6cc428-5810-47f3-b91b-423feb19b5b7.png" alt=""></p>
-<h3 id="Redisson-实现分布式锁">Redisson 实现分布式锁</h3>
-<blockquote>
+<p><img data-src="https://xuemingde.com/pages/image/others/1608010901340-ac6cc428-5810-47f3-b91b-423feb19b5b7.png" alt="image"></p>
+<h3 id="Redisson-实现分布式锁"><a href="#Redisson-实现分布式锁" class="headerlink" title="Redisson 实现分布式锁"></a>Redisson 实现分布式锁</h3><blockquote>
 <p>参考文章：<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MveV9VdzNQMkxsN3d2a19qNUZkbHVzdw==">文章一<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
-<h4 id="maven引用">maven引用</h4>
-<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<h4 id="原理图解析">原理图解析</h4>
-<p><img data-src="https://xuemingde.com/pages/image/others/1608027684749-b12735be-e685-4c0c-975b-67153a935048.jpeg" alt=""></p>
-<p>while循环获取锁是CAS机制，等待锁。</p>
+<h4 id="maven引用"><a href="#maven引用" class="headerlink" title="maven引用"></a>maven引用</h4><figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="原理图解析"><a href="#原理图解析" class="headerlink" title="原理图解析"></a>原理图解析</h4><p><img data-src="https://xuemingde.com/pages/image/others/1608027684749-b12735be-e685-4c0c-975b-67153a935048.jpeg" alt="image"></p>
+<p> while循环获取锁是CAS机制，等待锁。</p>
 
     </div>
    <div>
@@ -671,13 +657,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">886k</span>
+    <span title="站点总字数">877k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:25</span>
+    <span title="站点阅读时长">13:17</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

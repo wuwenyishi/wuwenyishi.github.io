@@ -308,26 +308,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1>怎么确定是垃圾</h1>
-<h2 id="引用计数法">引用计数法</h2>
-<p>给每个对象添加一个引用计数器，每当有一个地方引用它时，引用计数值就+1，当引用失效时，引用计数值就-1，任何时刻引用计数值为0的对象就可以被回收，当一个对象被垃圾收集器收集时，被它引用的对象引用计数值就-1，所以在这种方法中一个对象被垃圾收集会导致后续其他对象的垃圾收集行动。</p>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h1 id="怎么确定是垃圾"><a href="#怎么确定是垃圾" class="headerlink" title="怎么确定是垃圾"></a>怎么确定是垃圾</h1><h2 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h2><p>给每个对象添加一个引用计数器，每当有一个地方引用它时，引用计数值就+1，当引用失效时，引用计数值就-1，任何时刻引用计数值为0的对象就可以被回收，当一个对象被垃圾收集器收集时，被它引用的对象引用计数值就-1，所以在这种方法中一个对象被垃圾收集会导致后续其他对象的垃圾收集行动。</p>
 <p>优点：简单、高效；</p>
 <p>缺点：当两个对象相互引用的时候就无法回收，导致内存泄漏。</p>
-<h2 id="Root-Searching-（可达性分析法）">Root Searching （可达性分析法）</h2>
-<p>为了解决对象间相互引用问题，Java 采用了可达性分析法，基本实现思路为：通过一系列 “GC Roots” 对象作为起点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 “GC Roots” 没有任何引用链相连时，则称该对象是不可达的，此时，该对象还处于缓刑阶段，要真正宣判一个对象为可回收对象，至少要经历两次标记过程。</p>
+<h2 id="Root-Searching-（可达性分析法）"><a href="#Root-Searching-（可达性分析法）" class="headerlink" title="Root Searching （可达性分析法）"></a>Root Searching （可达性分析法）</h2><p>为了解决对象间相互引用问题，Java 采用了可达性分析法，基本实现思路为：通过一系列 “GC Roots” 对象作为起点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 “GC Roots” 没有任何引用链相连时，则称该对象是不可达的，此时，该对象还处于缓刑阶段，要真正宣判一个对象为可回收对象，至少要经历两次标记过程。</p>
 <blockquote>
 <p>JVM 采用的就是该方法</p>
 </blockquote>
-<h1>垃圾回收算法</h1>
-<h2 id="Mark-Sweep-（标记清除）">Mark - Sweep （标记清除）</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1700-TnRLui.jpg" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1700-sCjXPS.jpg" alt=""></p>
-<h2 id="Copying-（拷贝）">Copying （拷贝）</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1701-JeW0z5.jpg" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1701-Cnn47j.jpg" alt=""></p>
-<h2 id="Mark-Compact-（标记压缩）">Mark - Compact （标记压缩）</h2>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1701-yXfVJ7.jpg" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1702-jCjA6g.jpg" alt=""></p>
+<h1 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h1><h2 id="Mark-Sweep-（标记清除）"><a href="#Mark-Sweep-（标记清除）" class="headerlink" title="Mark - Sweep （标记清除）"></a>Mark - Sweep （标记清除）</h2><p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1700-TnRLui.jpg" alt="1700-TnRLui"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1700-sCjXPS.jpg" alt="1700-sCjXPS"></p>
+<h2 id="Copying-（拷贝）"><a href="#Copying-（拷贝）" class="headerlink" title="Copying （拷贝）"></a>Copying （拷贝）</h2><p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1701-JeW0z5.jpg" alt="1701-JeW0z5"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1701-Cnn47j.jpg" alt="1701-Cnn47j"></p>
+<h2 id="Mark-Compact-（标记压缩）"><a href="#Mark-Compact-（标记压缩）" class="headerlink" title="Mark - Compact （标记压缩）"></a>Mark - Compact （标记压缩）</h2><p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1701-yXfVJ7.jpg" alt="1701-yXfVJ7"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1702-jCjA6g.jpg" alt="1702-jCjA6g"></p>
 
     </div>
    <div>
@@ -422,12 +415,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/17Y3YRG.html" rel="prev" title="@Column注解解析">
-      <i class="fa fa-chevron-left"></i> @Column注解解析
+    <a href="/posts/2GN96QM.html" rel="prev" title="谈谈你对 JVM 方法区的理解">
+      <i class="fa fa-chevron-left"></i> 谈谈你对 JVM 方法区的理解
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/2GN96QM.html" rel="next" title="谈谈你对 JVM 方法区的理解">
-      谈谈你对 JVM 方法区的理解 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/3Z8MTNB.html" rel="next" title="垃圾回收器">
+      垃圾回收器 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -503,7 +496,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">怎么确定是垃圾</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-Searching-%EF%BC%88%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E6%B3%95%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Root Searching （可达性分析法）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mark-Sweep-%EF%BC%88%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">Mark - Sweep （标记清除）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-%EF%BC%88%E6%8B%B7%E8%B4%9D%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">Copying （拷贝）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mark-Compact-%EF%BC%88%E6%A0%87%E8%AE%B0%E5%8E%8B%E7%BC%A9%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">Mark - Compact （标记压缩）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E7%A1%AE%E5%AE%9A%E6%98%AF%E5%9E%83%E5%9C%BE"><span class="nav-number">1.</span> <span class="nav-text">怎么确定是垃圾</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-Searching-%EF%BC%88%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E6%B3%95%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Root Searching （可达性分析法）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mark-Sweep-%EF%BC%88%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">Mark - Sweep （标记清除）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-%EF%BC%88%E6%8B%B7%E8%B4%9D%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">Copying （拷贝）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mark-Compact-%EF%BC%88%E6%A0%87%E8%AE%B0%E5%8E%8B%E7%BC%A9%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">Mark - Compact （标记压缩）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -603,13 +596,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">886k</span>
+    <span title="站点总字数">877k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:25</span>
+    <span title="站点阅读时长">13:17</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

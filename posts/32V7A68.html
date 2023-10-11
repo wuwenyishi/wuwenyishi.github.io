@@ -300,13 +300,13 @@
 <blockquote>
 <p>截图来自《算法图解》这本书</p>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14261657952726.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14091657952829.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14231657952843.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14381657952858.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14521657952872.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14071657952887.png" alt=""></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14591657953479.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14261657952726.png" alt="14261657952726"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14091657952829.png" alt="14091657952829"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14231657952843.png" alt="14231657952843"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14381657952858.png" alt="14381657952858"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14521657952872.png" alt="14521657952872"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14071657952887.png" alt="14071657952887"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/07/16/14591657953479.png" alt="14591657953479"></p>
 <p>练习代码：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 需要的值是否存在</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> ints 数组</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> low 开始下下标</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> height 结束下标</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> need 基准值</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">searchBoo</span><span class="params">(Integer[] ints, Integer low, Integer height,Integer need)</span> </span>{</span><br><span class="line">       <span class="keyword">if</span> (low &gt; height){</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       }</span><br><span class="line">       <span class="keyword">int</span> mid = low + (high - low) / <span class="number">2</span>;</span><br><span class="line">       <span class="keyword">if</span> (ints[mid].equals(need)) {</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">       }<span class="keyword">else</span> <span class="keyword">if</span> (ints[mid] &gt; need) {</span><br><span class="line">           <span class="keyword">return</span> searchBoo(ints, low, mid -<span class="number">1</span>, need);</span><br><span class="line">       } <span class="keyword">else</span> <span class="keyword">if</span> (ints[mid] &lt; need) {</span><br><span class="line">           <span class="keyword">return</span> searchBoo(ints, mid + <span class="number">1</span>, height, need);</span><br><span class="line">       }<span class="keyword">else</span> {</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       }</span><br><span class="line">   }</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 需要值的下标</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> ints 数组</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> low 开始下下标</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> height 结束下标</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> need 基准值</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">searchindex</span><span class="params">(Integer[] ints, Integer low, Integer height,Integer need)</span> </span>{</span><br><span class="line">       <span class="keyword">if</span> (low &gt; height){</span><br><span class="line">           <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">       }</span><br><span class="line">       <span class="keyword">int</span> mid = low + (high - low) / <span class="number">2</span>;</span><br><span class="line">       <span class="keyword">if</span> (ints[mid].equals(need)) {</span><br><span class="line">           <span class="keyword">return</span> mid;</span><br><span class="line">       }<span class="keyword">else</span> <span class="keyword">if</span> (ints[mid] &gt; need) {</span><br><span class="line">           <span class="keyword">return</span> searchindex(ints, low, mid -<span class="number">1</span>, need);</span><br><span class="line">       } <span class="keyword">else</span> <span class="keyword">if</span> (ints[mid] &lt; need) {</span><br><span class="line">           <span class="keyword">return</span> searchindex(ints, mid + <span class="number">1</span>, height, need);</span><br><span class="line">       }</span><br><span class="line">       <span class="keyword">return</span> mid;</span><br><span class="line">   }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>这是一个经典的话题，如何计算二分查找中的中值？大家一般给出了两种计算方法：</p>
@@ -411,8 +411,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/13M04H2.html" rel="prev" title="算法习题02：选择排序">
-      <i class="fa fa-chevron-left"></i> 算法习题02：选择排序
+    <a href="/posts/1AQHRFA.html" rel="prev" title="算法习题03：快速排序">
+      <i class="fa fa-chevron-left"></i> 算法习题03：快速排序
     </a></div>
       <div class="post-nav-item">
     <a href="/posts/1F4BTHB.html" rel="next" title="搞懂 Nginx 高性能网络工作原理">
@@ -591,13 +591,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">886k</span>
+    <span title="站点总字数">877k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:25</span>
+    <span title="站点阅读时长">13:17</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
