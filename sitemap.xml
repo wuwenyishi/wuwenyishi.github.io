@@ -1280,7 +1280,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/1Z9HSDW.html</loc>
+    <loc>https://xuemingde.com/posts/12P0DCH.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1289,7 +1289,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/12P0DCH.html</loc>
+    <loc>https://xuemingde.com/posts/1Z9HSDW.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1680,20 +1680,6 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/categories/java/Spring/</loc>
-    <lastmod>2023-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xuemingde.com/categories/java/SpringBoot/</loc>
-    <lastmod>2023-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://xuemingde.com/categories/java/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -1701,7 +1687,21 @@
   </url>
   
   <url>
+    <loc>https://xuemingde.com/categories/java/Spring/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xuemingde.com/categories/java/%E5%AE%89%E5%85%A8%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2023-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xuemingde.com/categories/java/SpringBoot/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1722,14 +1722,14 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/categories/java/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</loc>
+    <loc>https://xuemingde.com/categories/java/%E6%90%9C%E7%B4%A2/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xuemingde.com/categories/java/%E6%90%9C%E7%B4%A2/</loc>
+    <loc>https://xuemingde.com/categories/java/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</loc>
     <lastmod>2023-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
