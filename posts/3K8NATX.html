@@ -310,49 +310,64 @@
       
         <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><p><strong>加锁的目的是什么</strong></p>
 <p>在了解数据库锁之前，首先我们必须要明白加锁的是为了解决什么问题，如果你还不清楚的话，那么从现在开始你就知道了，对数据加锁是为了解决事务的隔离性问题，让事务之间相互不影响，每个事务进行操作的时候都必须先对数据加上一把锁，防止其他事务同时操作数据。如果你想一个人静一静，不被别人打扰，那么请在你的房门上加上一把锁。</p>
-<h2 id="锁实是基于什么实现的"><a href="#锁实是基于什么实现的" class="headerlink" title="锁实是基于什么实现的?"></a><strong>锁实是基于什么实现的?</strong></h2><p>为了后面大家后面对锁理解的更透彻，所以必须要先解决这个问题，现实生活中家里的锁是锁在门上的，那么数据库的锁又是加在了哪里呢？我在这里可以告诉你，数据库里面的锁是基于索引实现的，在Innodb中我们的锁都是作用在索引上面的，当我们的SQL命中索引时，那么锁住的就是命中条件内的索引节点(行锁)，如果没有命中索引的话，那我们锁的就是整个索引树（表锁），如下图一下锁住的是整棵树还是某几个节点，完全取决于你的条件是否有命中到对应的索引节点。</p>
+<h2 id="锁实是基于什么实现的"><strong>锁实是基于什么实现的?</strong></h2>
+<p>为了后面大家后面对锁理解的更透彻，所以必须要先解决这个问题，现实生活中家里的锁是锁在门上的，那么数据库的锁又是加在了哪里呢？我在这里可以告诉你，数据库里面的锁是基于索引实现的，在Innodb中我们的锁都是作用在索引上面的，当我们的SQL命中索引时，那么锁住的就是命中条件内的索引节点(行锁)，如果没有命中索引的话，那我们锁的就是整个索引树（表锁），如下图一下锁住的是整棵树还是某几个节点，完全取决于你的条件是否有命中到对应的索引节点。</p>
 <p><strong>innodb索引结构图(B+ tree):</strong></p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1029-UQSDtz.jpg" alt="img"></p>
-<h2 id="锁的分类。"><a href="#锁的分类。" class="headerlink" title="锁的分类。"></a><strong>锁的分类。</strong></h2><p>数据库里有的锁有很多种，为了方面理解，所以我根据其相关性”人为”的对锁进行了一个分类，分别如下</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1029-UQSDtz.jpg" alt=""></p>
+<h2 id="锁的分类。"><strong>锁的分类。</strong></h2>
+<p>数据库里有的锁有很多种，为了方面理解，所以我根据其相关性"人为"的对锁进行了一个分类，分别如下</p>
 <p>基于锁的属性分类：共享锁、排他锁。</p>
 <p>基于锁的粒度分类：表锁、行锁、记录锁、间隙锁、临键锁。</p>
 <p>基于锁的状态分类：意向共享锁、意向排它锁。</p>
-<h2 id="属性锁"><a href="#属性锁" class="headerlink" title="属性锁"></a><strong>属性锁</strong></h2><h3 id="共享锁-Share-Lock"><a href="#共享锁-Share-Lock" class="headerlink" title="共享锁(Share Lock)"></a><strong>共享锁(Share Lock)</strong></h3><p>共享锁又称读锁，简称S锁。当一个事务对数据加上读锁之后，其他事务只能对该数据加读锁，而无法对数据加写锁，直到所有的读锁释放之后其他事务才能对其进行加持写锁。  加了共享锁之后，无法再加排它锁，这也就可以避免读取数据的时候会被其它事务修改，从而导致重复读问题。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1029-C3JaXH.jpg" alt="img"></p>
-<h3 id="排他锁（eXclusive-Lock）"><a href="#排他锁（eXclusive-Lock）" class="headerlink" title="排他锁（eXclusive Lock）"></a><strong>排他锁（eXclusive Lock）</strong></h3><p>排他锁又称写锁，简称X锁；当一个事务对数据加上写锁之后，其他事务将不能再为数据加任何锁，直到该锁释放之后，其他事务才能对数据进行加锁。加了排他锁之后，其它事务就无法再对数进行读取和修改，所以也就出现脏写和脏读的问题。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1030-7folzQ.jpg" alt="img"></p>
-<h2 id="粒度锁"><a href="#粒度锁" class="headerlink" title="粒度锁"></a><strong>粒度锁</strong></h2><h2 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a><strong>表锁</strong></h2><p>表锁是指上锁的时候锁住的是整个表，当下一个事务访问该表的时候，必须等前一个事务释放了锁才能进行对表进行访问；</p>
+<h2 id="属性锁"><strong>属性锁</strong></h2>
+<h3 id="共享锁-Share-Lock"><strong>共享锁(Share Lock)</strong></h3>
+<p>共享锁又称读锁，简称S锁。当一个事务对数据加上读锁之后，其他事务只能对该数据加读锁，而无法对数据加写锁，直到所有的读锁释放之后其他事务才能对其进行加持写锁。  加了共享锁之后，无法再加排它锁，这也就可以避免读取数据的时候会被其它事务修改，从而导致重复读问题。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1029-C3JaXH.jpg" alt=""></p>
+<h3 id="排他锁（eXclusive-Lock）"><strong>排他锁（eXclusive Lock）</strong></h3>
+<p>排他锁又称写锁，简称X锁；当一个事务对数据加上写锁之后，其他事务将不能再为数据加任何锁，直到该锁释放之后，其他事务才能对数据进行加锁。加了排他锁之后，其它事务就无法再对数进行读取和修改，所以也就出现脏写和脏读的问题。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1030-7folzQ.jpg" alt=""></p>
+<h2 id="粒度锁"><strong>粒度锁</strong></h2>
+<h2 id="表锁"><strong>表锁</strong></h2>
+<p>表锁是指上锁的时候锁住的是整个表，当下一个事务访问该表的时候，必须等前一个事务释放了锁才能进行对表进行访问；</p>
 <p>特点： 粒度大，加锁简单，容易冲突；</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1030-PJKzGs.jpg" alt="img"></p>
-<h2 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a><strong>行锁</strong></h2><p>行锁是对所有行级别锁的一个统称，比如下面说的记录锁、间隙锁、临键锁都是属于行锁，  行锁是指加锁的时候锁住的是表的某一行或多行记录，多个事务访问同一张表时，只有被锁住的记录不能访问，其他的记录可正常访问；</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1030-PJKzGs.jpg" alt=""></p>
+<h2 id="行锁"><strong>行锁</strong></h2>
+<p>行锁是对所有行级别锁的一个统称，比如下面说的记录锁、间隙锁、临键锁都是属于行锁，  行锁是指加锁的时候锁住的是表的某一行或多行记录，多个事务访问同一张表时，只有被锁住的记录不能访问，其他的记录可正常访问；</p>
 <p>特点：粒度小，加锁比表锁麻烦，不容易冲突，相比表锁支持的并发要高；</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1031-BPV25T.jpg" alt="img"></p>
-<h2 id="记录锁-Record-Lock"><a href="#记录锁-Record-Lock" class="headerlink" title="记录锁(Record Lock)"></a><strong>记录锁(Record Lock)</strong></h2><p>记录锁属于行锁中的一种，记录锁的范围只是表中的某一条记录，记录锁是说事务在加锁后锁住的只是表的某一条记录。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1031-a3WNay.jpg" alt="img"></p>
-<p><strong>触发条件：</strong>精准条件命中，并且命中索引；</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1031-BPV25T.jpg" alt=""></p>
+<h2 id="记录锁-Record-Lock"><strong>记录锁(Record Lock)</strong></h2>
+<p>记录锁属于行锁中的一种，记录锁的范围只是表中的某一条记录，记录锁是说事务在加锁后锁住的只是表的某一条记录。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1031-a3WNay.jpg" alt=""></p>
+<p>**触发条件：**精准条件命中，并且命中索引；</p>
 <p><strong>例如：</strong><code>update  user_info  set name=’张三’  where id=1</code> ,这里的id是索引。</p>
-<p><strong>记录锁的作用：</strong>加了记录锁之后数据可以避免数据在查询的时候被修改的重复读问题，也避免了在修改的事务未提交前被其他事务读取的脏读问题。</p>
-<h2 id="间隙锁-Gap-Lock"><a href="#间隙锁-Gap-Lock" class="headerlink" title="间隙锁(Gap Lock)"></a><strong>间隙锁(Gap Lock)</strong></h2><p>间隙锁属于行锁中的一种，间隙锁是在事务加锁后其锁住的是表记录的某一个区间，当表的相邻ID之间出现空隙则会形成一个区间，遵循左开右闭原则。</p>
+<p>**记录锁的作用：**加了记录锁之后数据可以避免数据在查询的时候被修改的重复读问题，也避免了在修改的事务未提交前被其他事务读取的脏读问题。</p>
+<h2 id="间隙锁-Gap-Lock"><strong>间隙锁(Gap Lock)</strong></h2>
+<p>间隙锁属于行锁中的一种，间隙锁是在事务加锁后其锁住的是表记录的某一个区间，当表的相邻ID之间出现空隙则会形成一个区间，遵循左开右闭原则。</p>
 <p>比如下面的表里面的数据ID 为 1,4,5,7,10 ,那么会形成以下几个间隙区间，-n-1区间，1-4区间，7-10区间，10-n区间 （-n代表负无穷大，n代表正无穷大）</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1032-pesciR.jpg" alt="img"></p>
-<p><strong>触发条件：</strong>范围查询，查询条件必须命中索引、间隙锁只会出现在REPEATABLE_READ（重复读)的事务级别中。</p>
-<p><strong>例如</strong>：对应上图的表执行<code>select * from  user_info   where id&gt;1 and id&lt;4</code>(这里的id是唯一索引) ，这个SQL查询不到对应的记录，那么此时会使用间隙锁。  </p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1032-pesciR.jpg" alt=""></p>
+<p>**触发条件：**范围查询，查询条件必须命中索引、间隙锁只会出现在REPEATABLE_READ（重复读)的事务级别中。</p>
+<p><strong>例如</strong>：对应上图的表执行<code>select * from  user_info   where id&gt;1 and id&lt;4</code>(这里的id是唯一索引) ，这个SQL查询不到对应的记录，那么此时会使用间隙锁。</p>
 <p><strong>间隙锁作用</strong>：防止幻读问题，事务并发的时候，如果没有间隙锁，就会发生如下图的问题，在同一个事务里，A事务的两次查询出的结果会不一样。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1032-RaUbEx.jpg" alt="img"></p>
-<h2 id="临键锁-Next-Key-Lock"><a href="#临键锁-Next-Key-Lock" class="headerlink" title="临键锁(Next-Key Lock)"></a><strong>临键锁(Next-Key Lock)</strong></h2><p>临键锁也属于行锁的一种，并且它是INNODB的行锁默认算法，总结来说它就是记录锁和间隙锁的组合，临键锁会把查询出来的记录锁住，同时也会把该范围查询内的所有间隙空间也会锁住，再之它会把相邻的下一个区间也会锁住。</p>
-<p><strong>例如：</strong>下面表的数据执行 <code>select * from user_info where id&gt;1 and id&lt;=13 for update ;</code></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1032-RaUbEx.jpg" alt=""></p>
+<h2 id="临键锁-Next-Key-Lock"><strong>临键锁(Next-Key Lock)</strong></h2>
+<p>临键锁也属于行锁的一种，并且它是INNODB的行锁默认算法，总结来说它就是记录锁和间隙锁的组合，临键锁会把查询出来的记录锁住，同时也会把该范围查询内的所有间隙空间也会锁住，再之它会把相邻的下一个区间也会锁住。</p>
+<p>**例如：**下面表的数据执行 <code>select * from user_info where id&gt;1 and id&lt;=13 for update ;</code></p>
 <p>会锁住ID为5,10的记录；同时会锁住，1至5,5至10,10至15的区间。</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1033-cQMHbj.jpg" alt="img"></p>
-<p><strong>触发条件：</strong>范围查询，条件命中了索引。</p>
-<p><strong>临键锁的作用：</strong>结合记录锁和间隙锁的特性，临键锁避免了在范围查询时出现脏读、重复读、幻读问题。加了临键锁之后，在范围区间内数据不允许被修改和插入。</p>
-<h2 id="状态锁"><a href="#状态锁" class="headerlink" title="状态锁"></a><strong>状态锁</strong></h2><p>状态锁包括意向共享锁和意向排它锁，把他们区分为状态锁的一个核心逻辑，是因为这两个锁都是都是描述是否可以对某一个表进行加表锁的状态。</p>
-<p><strong>意向锁的解释</strong>：当一个事务试图对<strong>整个表</strong>进行加锁（共享锁或排它锁）之前，首先需要获得对应类型的意向锁（意向共享锁或意向共享锁） </p>
-<h3 id="意向共享锁"><a href="#意向共享锁" class="headerlink" title="意向共享锁"></a><strong>意向共享锁</strong></h3><p>当一个事务试图对<strong>整个表</strong>进行加共享锁之前，首先需要获得这个表的意向共享锁。</p>
-<h3 id="意向排他锁"><a href="#意向排他锁" class="headerlink" title="意向排他锁"></a><strong>意向排他锁</strong></h3><p>当一个事务试图对<strong>整个表</strong>进行加排它锁之前，首先需要获得这个表的意向排它锁。</p>
-<h3 id="为什么我们需要意向锁？"><a href="#为什么我们需要意向锁？" class="headerlink" title="为什么我们需要意向锁？"></a><strong>为什么我们需要意向锁？</strong></h3><p>意向锁光从概念上可能有点难理解，所以我们有必要从一个案例来分析其作用，这里首先我们先要有一个概念那就是innodb加锁的方式是基于索引，并且加锁粒度是行锁，然后我们来看下面的案例。</p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1033-cQMHbj.jpg" alt=""></p>
+<p>**触发条件：**范围查询，条件命中了索引。</p>
+<p>**临键锁的作用：**结合记录锁和间隙锁的特性，临键锁避免了在范围查询时出现脏读、重复读、幻读问题。加了临键锁之后，在范围区间内数据不允许被修改和插入。</p>
+<h2 id="状态锁"><strong>状态锁</strong></h2>
+<p>状态锁包括意向共享锁和意向排它锁，把他们区分为状态锁的一个核心逻辑，是因为这两个锁都是都是描述是否可以对某一个表进行加表锁的状态。</p>
+<p><strong>意向锁的解释</strong>：当一个事务试图对<strong>整个表</strong>进行加锁（共享锁或排它锁）之前，首先需要获得对应类型的意向锁（意向共享锁或意向共享锁）</p>
+<h3 id="意向共享锁"><strong>意向共享锁</strong></h3>
+<p>当一个事务试图对<strong>整个表</strong>进行加共享锁之前，首先需要获得这个表的意向共享锁。</p>
+<h3 id="意向排他锁"><strong>意向排他锁</strong></h3>
+<p>当一个事务试图对<strong>整个表</strong>进行加排它锁之前，首先需要获得这个表的意向排它锁。</p>
+<h3 id="为什么我们需要意向锁？"><strong>为什么我们需要意向锁？</strong></h3>
+<p>意向锁光从概念上可能有点难理解，所以我们有必要从一个案例来分析其作用，这里首先我们先要有一个概念那就是innodb加锁的方式是基于索引，并且加锁粒度是行锁，然后我们来看下面的案例。</p>
 <p><strong>第一步：</strong></p>
 <p>事务A对user_info表执行一个SQL:update user_info set name =”张三” where id=6  加锁情况如下图;</p>
-<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1034-ec6pp9.jpg" alt="img"></p>
+<p><img data-src="https://xuemingde.com/pages/image/2022/04/07/1034-ec6pp9.jpg" alt=""></p>
 <p><strong>第二步：</strong></p>
 <p>与此同时数据库又接收到事务B修改数据的请求：SQL: update user_info set name =”李四”；</p>
 <p>1、因为事务B是对整个表进行修改操作，那么此SQL是需要对整个表进行加排它锁的（update加锁类型为排他锁）；</p>
@@ -360,8 +375,8 @@
 <p>3、因为INNODB锁的机制是基于行锁，那么这个时候我们会对整个索引每个节点一个个检查，我们需要检查每个节点是否被别的事务加了共享锁或排它锁。</p>
 <p>4、最后检查到索引ID为6的节点被事务A锁住了，最后导致事务B只能等待事务A锁的释放才能进行加锁操作。</p>
 <p><strong>思考：</strong></p>
-<p>在A事务的操作过程中，后面的每个需要对user_info加持表锁的事务都需要遍历整个索引树才能知道自己是否能够进行加锁，这种方式是不是太浪费时间和损耗数据库性能了？ </p>
-<p><strong>所以就有了意向锁的概念：</strong>如果当事务A加锁成功之后就设置一个状态告诉后面的人，已经有人对表里的行加了一个排他锁了，你们不能对整个表加共享锁或排它锁了，那么后面需要对整个表加锁的人只需要获取这个状态就知道自己是不是可以对表加锁，避免了对整个索引树的每个节点扫描是否加锁，而这个状态就是我们的意向锁。</p>
+<p>在A事务的操作过程中，后面的每个需要对user_info加持表锁的事务都需要遍历整个索引树才能知道自己是否能够进行加锁，这种方式是不是太浪费时间和损耗数据库性能了？</p>
+<p>**所以就有了意向锁的概念：**如果当事务A加锁成功之后就设置一个状态告诉后面的人，已经有人对表里的行加了一个排他锁了，你们不能对整个表加共享锁或排它锁了，那么后面需要对整个表加锁的人只需要获取这个状态就知道自己是不是可以对表加锁，避免了对整个索引树的每个节点扫描是否加锁，而这个状态就是我们的意向锁。</p>
 <p><strong>在测试锁的实操过程中需要注意的问题。</strong></p>
 <p>看了这么多理论，相信很多人都会去实际操作一下，一是验证逻辑，而是加深自己的理解，为了避免大家少踩坑，在这里提醒几个需要注意的地方。</p>
 <p>1、关闭自动提交事务功能，自己手动begin   commit  rollback。</p>
@@ -652,13 +667,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">877k</span>
+    <span title="站点总字数">886k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:17</span>
+    <span title="站点阅读时长">13:25</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>

@@ -306,7 +306,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="分布式事务（二）"><a href="#分布式事务（二）" class="headerlink" title="分布式事务（二）"></a>分布式事务（二）</h2><blockquote>
+        <style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style><h2 id="分布式事务（二）">分布式事务（二）</h2>
+<blockquote>
 <p>文章来源：</p>
 <ul>
 <li><span class="exturl" data-url="aHR0cDovL2NvZGluLmltLzIwMTgvMDYvMjUvaW1wbGVtZW50aW5nLWRpc3RyaWJ1dGVkLXRyYW5zYWN0aW9uLXdpdGgtc3ByaW5nLw==">http://codin.im/2018/06/25/implementing-distributed-transaction-with-spring/<i class="fa fa-external-link-alt"></i></span></li>
@@ -314,18 +315,20 @@
 <li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppYW5neXUxMDEzL2FydGljbGUvZGV0YWlscy84NDM5NzM2Ng==">https://blog.csdn.net/jiangyu1013/article/details/84397366<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 </blockquote>
-<h3 id="Transactional-详解"><a href="#Transactional-详解" class="headerlink" title="@Transactional 详解"></a>@Transactional 详解</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt="image-20210310134240771"></p>
+<h3 id="Transactional-详解">@Transactional 详解</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310134240771.png" alt=""></p>
 <blockquote>
 <ul>
 <li><strong>编程式事务</strong>使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。</li>
 <li><strong>声明式事务</strong>是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中</li>
 </ul>
 </blockquote>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt="image-20210310140333912"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt="image-20210310141931318"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt="img"></p>
-<h3 id="JTA"><a href="#JTA" class="headerlink" title="JTA"></a>JTA</h3><p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt="image-20210310133454787"></p>
-<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt="image-20210310133718647"></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310140333912.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310141931318.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/20181123164638554.png" alt=""></p>
+<h3 id="JTA">JTA</h3>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133454787.png" alt=""></p>
+<p><img data-src="https://xuemingde.com/pages/image/others/image-20210310133718647.png" alt=""></p>
 
     </div>
    <div>
@@ -422,8 +425,8 @@
       <i class="fa fa-chevron-left"></i> 分布式事务_seata
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/36WRKNE.html" rel="next" title="分布式事务">
-      分布式事务 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/QWTBG7.html" rel="next" title="springBoot整合seata">
+      springBoot整合seata <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -599,13 +602,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">877k</span>
+    <span title="站点总字数">886k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 ≈</span>
-    <span title="站点阅读时长">13:17</span>
+    <span title="站点阅读时长">13:25</span>
 </div>
   <div class="powered-by">这个世界会好吗？我是那么热爱这个世界。  </div>
 <div>
