@@ -947,7 +947,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/categories/index.html</loc>
+    <loc>https://xuemingde.com/tags/index.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -956,7 +956,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/tags/index.html</loc>
+    <loc>https://xuemingde.com/categories/index.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1001,7 +1001,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/2K0EYDH.html</loc>
+    <loc>https://xuemingde.com/posts/2N1HMJH.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1010,7 +1010,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/2N1HMJH.html</loc>
+    <loc>https://xuemingde.com/posts/2K0EYDH.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1262,7 +1262,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/33KCKKX.html</loc>
+    <loc>https://xuemingde.com/posts/2P9AR21.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1271,7 +1271,7 @@
   </url>
   
   <url>
-    <loc>https://xuemingde.com/posts/2P9AR21.html</loc>
+    <loc>https://xuemingde.com/posts/33KCKKX.html</loc>
     
     <lastmod>2022-08-13</lastmod>
     
@@ -1426,6 +1426,20 @@
   </url>
   
   <url>
+    <loc>https://xuemingde.com/tags/%E5%B9%B6%E5%8F%91/</loc>
+    <lastmod>2023-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xuemingde.com/tags/GC/</loc>
+    <lastmod>2023-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xuemingde.com/tags/Mysql/</loc>
     <lastmod>2023-10-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -1441,13 +1455,6 @@
   
   <url>
     <loc>https://xuemingde.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2023-10-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xuemingde.com/tags/%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2023-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1504,13 +1511,6 @@
   
   <url>
     <loc>https://xuemingde.com/tags/Widget/</loc>
-    <lastmod>2023-10-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xuemingde.com/tags/GC/</loc>
     <lastmod>2023-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
